@@ -1,0 +1,7 @@
+"0","```r
+ControlParamteres <- trainControl(method = \"cv\",
+                                  number = 5,
+                                  savePredictions = TRUE,
+                                  classProbs = TRUE
+)
+```"

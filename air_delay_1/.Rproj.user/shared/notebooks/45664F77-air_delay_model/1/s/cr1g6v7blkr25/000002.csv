@@ -1,0 +1,29 @@
+"0","```r
+#Parameter for the function.
+#parameter 1 :- Number of correct predictions for class 0
+#parameter 2 :- Number of wrong predictions for class 0
+#parameter 3 :- Number of correct predictions for class 1
+#parameter 4 :- Number of wrong predictions for class 1
+graphConfusionMatrix<-function(correct_class_a,wrong_class_a,correct_class_b,wrong_class_b){
+  
+  #Creating the data for the plot.
+  x <- data.frame(\"About_results\" = c(\"Correct_Prediction\",\"Wrong_Prediction\"), \"Values\" = c(correct_class_a,wrong_class_a))
+  y <- data.frame(\"About_results\" = c(\"Correct_Prediction\",\"Wrong_Prediction\"), \"Values\" = c(correct_class_b,wrong_class_b))
+  
+  #ploting the graph.
+  p <- plot_ly() %>%
+   add_pie(data = count(x,About_results), labels = ~About_results, values =x$Values ,
+         name = \"class 0\", domain = list(row = 0, column = 0)) %>%
+ add_pie(data = count(y,About_results), labels = ~About_results, values = y$Values,
+         name = \"class 1\", domain = list(row = 0, column = 1)) %>%
+   layout(title = \"Visualization Of Confusion Matrix\",showlegend = T,
+        grid=list(rows=1, columns=2),
+        xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+        yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+  #Displaying the graphs
+  p
+  #removing unwanted dataframes.
+  #rm(x)
+  #rm(y)
+}
+```"

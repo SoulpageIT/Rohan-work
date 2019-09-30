@@ -1,0 +1,25 @@
+"0","```r
+summary(commute)
+```"
+"1","     OFIPS                 DFIPS                OSTFIPS         OCTFIPS          OTRFIPS      
+ Min.   : 1001020100   Min.   : 1001020100   Min.   : 1.00   Min.   :  1.00   Min.   :   100  
+ 1st Qu.:12099001908   1st Qu.:12095013202   1st Qu.:12.00   1st Qu.: 29.00   1st Qu.: 11128  
+ Median :27053005901   Median :27053020400   Median :27.00   Median : 59.00   Median : 51100  
+ Mean   :27401013501   Mean   :27314622353   Mean   :27.32   Mean   : 82.43   Mean   :226249  
+ 3rd Qu.:40097040501   3rd Qu.:40017301007   3rd Qu.:40.00   3rd Qu.:103.00   3rd Qu.:404903  
+ Max.   :56045951300   Max.   :56045951300   Max.   :56.00   Max.   :840.00   Max.   :990101  
+    DSTFIPS         DCTFIPS          DTRFIPS            FLOW               MOE              LENKM         
+ Min.   : 1.00   Min.   :  1.00   Min.   :   100   Min.   :    4.00   Min.   :   1.00   Min.   :   0.000  
+ 1st Qu.:12.00   1st Qu.: 31.00   1st Qu.:  9302   1st Qu.:   10.00   1st Qu.:  18.00   1st Qu.:   8.295  
+ Median :27.00   Median : 59.00   Median : 40200   Median :   15.00   Median :  26.00   Median :  16.999  
+ Mean   :27.23   Mean   : 83.64   Mean   :198714   Mean   :   31.32   Mean   :  34.75   Mean   :  44.074  
+ 3rd Qu.:40.00   3rd Qu.:103.00   3rd Qu.:310700   3rd Qu.:   30.00   3rd Qu.:  42.00   3rd Qu.:  31.978  
+ Max.   :56.00   Max.   :840.00   Max.   :990100   Max.   :20950.00   Max.   :2516.00   Max.   :8271.692  
+   ESTDIVMOE      
+ Min.   : 0.0300  
+ 1st Qu.: 0.5700  
+ Median : 0.6700  
+ Mean   : 0.7736  
+ 3rd Qu.: 0.8300  
+ Max.   :33.3300  
+"

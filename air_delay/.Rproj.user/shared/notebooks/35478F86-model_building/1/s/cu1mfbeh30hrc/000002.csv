@@ -1,0 +1,7 @@
+"0","```r
+table(Actualvalue = test$Attrition, Predictedvalue = y_pred > 0.5)
+```"
+"1","ã¤¼ã¸±>ã¤¼ã¸² not meaningful for factors
+"
+"1","< table of extent 2 x 0 >
+"

@@ -1,0 +1,4 @@
+"0","```r
+x<-ggplot(hr[MonthlyIncome<=5000 & TotalWorkingYears == 1 &Attrition==\"Yes\"& (EnvironmentSatisfaction==3 | EnvironmentSatisfaction==4)&JobRole==\"Research Scientist\",.N,by=list(OverTime,MonthlyIncome,YearsAtCompany,WorkLifeBalance)],aes(YearsAtCompany,MonthlyIncome,fill= WorkLifeBalance ))+geom_point()+facet_wrap(~OverTime)+labs(x = \"\",y=\"Monthly_Income\")+labs(title = \"Over Time\",x=\"years at the company\",fill=\"Work Life Balance\")
+ggplotly(x)
+```"

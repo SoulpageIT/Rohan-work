@@ -1,0 +1,108 @@
+"0","```r
+summary(logistic_regression)
+```"
+"1","
+Call:
+glm(formula = Attrition ~ Age + DailyRate + DistanceFromHome + 
+    HourlyRate + MonthlyIncome + MonthlyRate + NumCompaniesWorked + 
+    PercentSalaryHike + TotalWorkingYears + TrainingTimesLastYear + 
+    YearsAtCompany + YearsInCurrentRole + YearsSinceLastPromotion + 
+    YearsWithCurrManager + BusinessTravel.xTravel_Frequently + 
+    BusinessTravel.xTravel_Rarely + Department.xResearch...Development + 
+    Department.xSales + Education.x2 + Education.x3 + Education.x4 + 
+    Education.x5 + EducationField.xLife.Sciences + EducationField.xMarketing + 
+    EducationField.xMedical + EducationField.xOther + EducationField.xTechnical.Degree + 
+    EnvironmentSatisfaction.x2 + EnvironmentSatisfaction.x3 + 
+    EnvironmentSatisfaction.x4 + Gender + JobInvolvement.x2 + 
+    JobInvolvement.x3 + JobInvolvement.x4 + JobLevel.x2 + JobLevel.x3 + 
+    JobLevel.x4 + JobLevel.x5 + JobRole.xHuman.Resources + JobRole.xLaboratory.Technician + 
+    JobRole.xManager + JobRole.xManufacturing.Director + JobRole.xResearch.Director + 
+    JobRole.xResearch.Scientist + JobRole.xSales.Executive + 
+    JobRole.xSales.Representative + JobSatisfaction.x2 + JobSatisfaction.x3 + 
+    JobSatisfaction.x4 + MaritalStatus.xMarried + MaritalStatus.xSingle + 
+    OverTime + PerformanceRating + RelationshipSatisfaction.x2 + 
+    RelationshipSatisfaction.x3 + RelationshipSatisfaction.x4 + 
+    StockOptionLevel.x1 + StockOptionLevel.x2 + StockOptionLevel.x3 + 
+    WorkLifeBalance.x2 + WorkLifeBalance.x3 + WorkLifeBalance.x4, 
+    family = \"binomial\", data = train)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.7632  -0.4383  -0.1822  -0.0508   3.4030  
+
+Coefficients:
+                                     Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                        -9.482e+00  6.181e+02  -0.015 0.987761    
+Age                                -2.240e-02  1.629e-02  -1.375 0.169175    
+DailyRate                          -4.812e-04  2.667e-04  -1.804 0.071170 .  
+DistanceFromHome                    5.389e-02  1.316e-02   4.094 4.24e-05 ***
+HourlyRate                          8.409e-03  5.508e-03   1.527 0.126867    
+MonthlyIncome                      -4.105e-05  1.101e-04  -0.373 0.709258    
+MonthlyRate                         1.391e-05  1.510e-05   0.922 0.356692    
+NumCompaniesWorked                  2.052e-01  4.766e-02   4.305 1.67e-05 ***
+PercentSalaryHike                  -3.125e-02  4.793e-02  -0.652 0.514416    
+TotalWorkingYears                  -8.734e-02  3.560e-02  -2.453 0.014163 *  
+TrainingTimesLastYear              -2.550e-01  8.797e-02  -2.899 0.003745 ** 
+YearsAtCompany                      1.392e-01  4.854e-02   2.868 0.004134 ** 
+YearsInCurrentRole                 -1.593e-01  5.834e-02  -2.731 0.006317 ** 
+YearsSinceLastPromotion             1.774e-01  5.128e-02   3.460 0.000540 ***
+YearsWithCurrManager               -1.509e-01  5.503e-02  -2.742 0.006113 ** 
+BusinessTravel.xTravel_Frequently   2.311e+00  5.187e-01   4.455 8.39e-06 ***
+BusinessTravel.xTravel_Rarely       1.161e+00  4.783e-01   2.428 0.015200 *  
+Department.xResearch...Development  1.233e+01  6.181e+02   0.020 0.984081    
+Department.xSales                   1.204e+01  6.181e+02   0.019 0.984460    
+Education.x2                        4.132e-01  4.043e-01   1.022 0.306792    
+Education.x3                        3.387e-01  3.595e-01   0.942 0.346169    
+Education.x4                        1.727e-01  3.965e-01   0.435 0.663208    
+Education.x5                        4.536e-01  6.690e-01   0.678 0.497709    
+EducationField.xLife.Sciences      -8.937e-01  1.052e+00  -0.849 0.395632    
+EducationField.xMarketing          -3.986e-01  1.098e+00  -0.363 0.716656    
+EducationField.xMedical            -1.206e+00  1.057e+00  -1.142 0.253629    
+EducationField.xOther              -3.551e-01  1.125e+00  -0.316 0.752301    
+EducationField.xTechnical.Degree    3.563e-01  1.074e+00   0.332 0.740150    
+EnvironmentSatisfaction.x2         -1.127e+00  3.369e-01  -3.345 0.000823 ***
+EnvironmentSatisfaction.x3         -1.239e+00  3.115e-01  -3.977 6.99e-05 ***
+EnvironmentSatisfaction.x4         -1.466e+00  3.133e-01  -4.678 2.89e-06 ***
+Gender                              2.780e-01  2.227e-01   1.248 0.211980    
+JobInvolvement.x2                  -1.273e+00  4.382e-01  -2.905 0.003676 ** 
+JobInvolvement.x3                  -1.761e+00  4.170e-01  -4.222 2.42e-05 ***
+JobInvolvement.x4                  -2.134e+00  5.478e-01  -3.896 9.80e-05 ***
+JobLevel.x2                        -1.879e+00  5.575e-01  -3.371 0.000749 ***
+JobLevel.x3                        -3.325e-01  8.341e-01  -0.399 0.690143    
+JobLevel.x4                        -1.545e+00  1.440e+00  -1.073 0.283408    
+JobLevel.x5                         9.869e-01  1.800e+00   0.548 0.583537    
+JobRole.xHuman.Resources            1.266e+01  6.181e+02   0.020 0.983655    
+JobRole.xLaboratory.Technician      3.599e-01  6.574e-01   0.548 0.584021    
+JobRole.xManager                   -7.193e-01  1.131e+00  -0.636 0.524733    
+JobRole.xManufacturing.Director    -6.178e-01  6.810e-01  -0.907 0.364321    
+JobRole.xResearch.Director         -1.740e+00  1.199e+00  -1.452 0.146617    
+JobRole.xResearch.Scientist        -8.368e-01  6.910e-01  -1.211 0.225906    
+JobRole.xSales.Executive            1.331e+00  1.342e+00   0.992 0.321348    
+JobRole.xSales.Representative       9.769e-01  1.451e+00   0.673 0.500721    
+JobSatisfaction.x2                 -5.609e-01  3.312e-01  -1.694 0.090326 .  
+JobSatisfaction.x3                 -5.791e-01  2.899e-01  -1.998 0.045730 *  
+JobSatisfaction.x4                 -1.129e+00  3.065e-01  -3.685 0.000228 ***
+MaritalStatus.xMarried              5.917e-01  3.373e-01   1.754 0.079419 .  
+MaritalStatus.xSingle               8.700e-01  4.829e-01   1.802 0.071612 .  
+OverTime                            2.225e+00  2.401e-01   9.269  < 2e-16 ***
+PerformanceRating                   4.365e-01  4.825e-01   0.905 0.365588    
+RelationshipSatisfaction.x2        -7.966e-01  3.397e-01  -2.345 0.019012 *  
+RelationshipSatisfaction.x3        -1.006e+00  3.043e-01  -3.307 0.000942 ***
+RelationshipSatisfaction.x4        -8.703e-01  2.969e-01  -2.931 0.003374 ** 
+StockOptionLevel.x1                -1.192e+00  3.710e-01  -3.213 0.001315 ** 
+StockOptionLevel.x2                -1.054e+00  5.088e-01  -2.072 0.038221 *  
+StockOptionLevel.x3                -2.541e-01  5.351e-01  -0.475 0.634865    
+WorkLifeBalance.x2                 -4.856e-01  4.625e-01  -1.050 0.293727    
+WorkLifeBalance.x3                 -1.062e+00  4.340e-01  -2.448 0.014371 *  
+WorkLifeBalance.x4                 -7.234e-01  5.314e-01  -1.361 0.173436    
+---
+Signif. codes:  0 â€˜***â€™ 0.001 â€˜**â€™ 0.01 â€˜*â€™ 0.05 â€˜.â€™ 0.1 â€˜ â€™ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1040.18  on 1175  degrees of freedom
+Residual deviance:  611.16  on 1113  degrees of freedom
+AIC: 737.16
+
+Number of Fisher Scoring iterations: 14
+"

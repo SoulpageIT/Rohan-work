@@ -1,0 +1,7 @@
+"0","```r
+gg<-ggplot(daa,aes(x=pages,y =number_of_affile)) +
+  geom_segment( aes(x=pages, xend=pages, y=0, yend=number_of_affile)) +
+  geom_point( size=5, color=\"steelblue\", fill=alpha(\"steelblue\", 0.3), alpha=0.7, shape=21, stroke=2)+theme(panel.background = element_rect(fill = ' white'))+geom_text(aes(label=number_of_affile), vjust=-1.5, color=\"black\", size=3.4)+labs(x =\"Type of pages\",y = \"Number of affiliates\" , fill = NULL, title = \"The Total Number of affiliates ran on particular page \")+ylim(0,4000)+ theme(plot.title = element_text(hjust = 0.5))
+ggsave(\"affiliate_number.jpg\",plot=gg,unit=\"in\",width=7,height = 7,dpi=300)
+gg
+```"

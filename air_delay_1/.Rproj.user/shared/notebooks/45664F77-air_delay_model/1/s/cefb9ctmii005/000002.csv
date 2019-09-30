@@ -1,0 +1,6 @@
+"0","#this command is use to extract months"
+"0","train$months<-as.factor(month(train$`Date (MM/DD/YYYY)`))"
+"0","#this command is used to extract weekdays"
+"0","train$weekDays<-as.factor(weekdays(train$`Date (MM/DD/YYYY)`))"
+"0","#Removing Date column"
+"0","#train$`Date (MM/DD/YYYY)`<-NULL"

@@ -1,0 +1,234 @@
+  ---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(data.table)
+library(mice)
+library(randomForest)
+library(xgboost)
+library(caTools)
+library(caret)
+library(plotROC)
+library(ROCR)
+library(pROC)
+library(DMwR) #for smote library
+library(rpart)
+```
+
+
+```{r}
+labels<-fread("https://archive.ics.uci.edu/ml/machine-learning-databases/secom/secom_labels.data")
+data<-fread("https://archive.ics.uci.edu/ml/machine-learning-databases/secom/secom.data")
+```
+```{r}
+#View(labels)
+#View(data)
+#now we should re-name the column in the table 2 v1 :- target variable ,v2 :- dates
+colnames(labels)<-c("target","dates")
+#now we are joinig the two table by columns
+data<-cbind(labels,data)
+```
+
+now we are doing data imputation.
+```{r}
+#checking the missing value
+sum(is.na(data))
+```
+```{r}
+#md.pattern(data)
+data$target<-factor(data$target,levels = c(-1,1),labels = c(1,0))
+```
+
+```{r}
+table(data$target)
+```
+
+-1 = pass
+1= fail
+
+1=pass
+0=fail
+```{r}
+  #its not working
+ #imputed_Data <- mice(data, m=5, maxit = 50, method = 'pmm', seed = 500)
+```
+
+```{r}
+impute<-rfImpute(data$target~. , data[,-"dates"])
+```
+
+```{r}
+unique(impute$`data$target`)
+```
+
+```{r}
+sum(is.na(impute))
+```
+
+```{r}
+colnames(impute)[colnames(impute) == "data$target"] <- 'target'
+```
+dividing the data into train test.
+```{r}
+set.seed(4)
+sample = sample.split(impute$target, SplitRatio = .70)
+train = subset(impute, sample == TRUE)
+test  = subset(impute, sample == FALSE)
+#View(train)
+#View(test)
+```
+
+
+```{r}
+train<-as.data.table(train)
+train[,.N,by=target]
+```
+now we are handling unbalance data set.
+```{r}
+train_smote <- SMOTE(target  ~., train, perc.over = 600,perc.under=100)
+```
+
+```{r}
+train_smote<-as.data.table(train_smote)
+```
+
+```{r}
+train_smote[,.N,by=target]
+```
+
+
+```{r}
+#train_smote$target.1=NULL
+#test$target.1=NULL
+```
+```{r}
+train_smote[,-"target"]
+```
+
+
+```{r}
+xgb <- xgboost(data = as.matrix(train_smote[,-"target"]),label = as.matrix(train_smote[,"target"]),eta = 0.2,max_depth = 30,nround=5,subsample = 0.5,colsample_bytree = 0.5,seed = 4,
+objective = "binary:logistic",
+nthread = 3
+)
+```
+```{r}
+#colnames(train_smote)
+#colnames(test[,-1])
+#test<-as.data.table(test)
+y_pred<-predict(xgb,as.matrix(test[,-1]))
+```
+
+
+```{r}
+y_pred <-ifelse(y_pred > 0.5,1,0)
+y_pred<-as.factor(y_pred)
+```
+
+```{r}
+unique(y_pred)
+```
+
+confusion matrix
+```{r}
+caret::confusionMatrix(test$target,as.factor(y_pred))
+```
+
+```{r}
+pred1 <- prediction(y_pred,test$target)
+perf1 <- performance(pred1,"tpr","fpr")
+plot(perf1)
+```
+
+```{r}
+plot(roc(test$target,y_pred),
+    col="yellow", lwd=3)
+```
+
+
+```{r}
+names <- dimnames(data.matrix(impute[,-1]))[[2]]
+importance_matrix <- xgb.importance(names, model = xgb)
+xgb.plot.importance(importance_matrix[1:10,])
+```
+1= pass
+0 = fail
+```{r}
+y_pred<-as.data.frame(y_pred)
+y_pred<-ifelse(y_pred>0.5,1,0)
+unique(y_pred)
+```
+
+random forest
+```{r}
+chip.rf<-randomForest(target ~ ., data=train_smote)
+```
+
+```{r}
+y_pred <- predict(chip.rf, test[,-1])
+y_pred
+```
+
+
+```{r}
+confusionMatrix(test$target,y_pred)
+```
+drawing the ROC curve.
+```{r}
+pred1 <- prediction(,)
+perf1 <- performance(pred1,"tpr","fpr")
+plot(perf1)
+```
+
+logistic regression
+```{r}
+model <- glm (target~., data = train,family = binomial)
+```
+
+
+```{r}
+y_pred <- predict(model, test[,-1])
+y_pred<-ifelse(y_pred>0.5,1,0)
+y_pred<-as.factor(y_pred)
+```
+
+```{r}
+confusionMatrix(test$target,y_pred)
+```
+for xgboost
+roc curve by ggplot in r
+```{r}
+ggplot(test, aes(d = D, m = M1)) + geom_roc()
+basicplot
+```
+
+
+PCA
+```{r}
+after_pca <-prcomp(impute[,-1], center = TRUE,scale. = FALSE)
+```
+
+```{r}
+summary(after_pca)
+```
+
+```{r}
+str(after_pca)
+```
+decision tree 
+```{r}
+mod<-rpart(target~., method ="class", data=train,control=rpart.control(minsplit=30, maxdepth = 8,cp=0.001))
+```
+
+```{r}
+y_pred <- predict(mod, test[,-1])
+y_pred<-ifelse(y_pred>0.5,1,0)
+y_pred<-as.data.table(as.factor(y_pred))
+```
+
+```{r}
+confusionMatrix(test$target,y_pred)
+```
+

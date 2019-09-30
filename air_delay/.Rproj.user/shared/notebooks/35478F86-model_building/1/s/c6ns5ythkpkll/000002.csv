@@ -1,0 +1,7 @@
+"0","```r
+# creating a dataframe of categorical features
+hr<-as.data.frame(hr)
+num_data<-hr[,numberic_columns]
+fact_data<- hr[,factor_columns]
+hr<-as.data.table(hr)
+```"

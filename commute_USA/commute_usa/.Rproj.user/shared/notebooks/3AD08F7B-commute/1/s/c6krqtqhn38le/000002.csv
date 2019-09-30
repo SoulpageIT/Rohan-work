@@ -1,0 +1,7 @@
+"0","```r
+col_order<-c(   \"OFIPS\" ,  \"DFIPS\"   , \"OSTFIPS\"    , \"OCTFIPS\"  ,   \"OTRFIPS\"  ,   \"DSTFIPS\" ,    \"DCTFIPS\", \"DTRFIPS\"  ,   \"FLOW\"   ,     \"MOE\"    ,     \"LENKM\"    ,   \"ESTDIVMOE\" ,  \"USPS\"     ,   \"POP10\"  ,    
+ \"HU10\"     ,   \"ALAND\"     ,  \"AWATER\"    ,  \"ALAND_SQMI\" , \"AWATER_SQMI\" ,\"INTPTLAT\"   , \"INTPTLONG\" )
+d2<-as.data.frame(d2)
+d2 <- d2[,col_order]
+d2<-as.data.table(d2)
+```"

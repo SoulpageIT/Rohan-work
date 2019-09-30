@@ -1,0 +1,2 @@
+"0","setkey(train,`Tail Number`)"
+"0","train<-train[!""""]"

@@ -1,0 +1,17 @@
+"0","```r
+# plotting reference lines across each facet:
+referenceLines <- Bikedata[, .N, by = list(year=year(`Start Time`),month(`Start Time`),`Start Station Name`)]
+  # \/ Rename
+colnames(referenceLines)[2] <- \"groupVar\"
+zp <- ggplot(Bikedata[, .N, by = list(year=year(`Start Time`),month(`Start Time`),`Start Station Name`)]
+,
+             aes(x = factor(year), y = N))
+zp <- zp + geom_line(data = referenceLines,  # Plotting the \"underlayer\"
+                     aes(x = factor(year), y = N, group = groupVar),
+                     colour = \"GRAY\", alpha = 1/2, size = 1/2)
+zp <- zp + geom_line(size = 1)  # Drawing the \"overlayer\"
+zp <- zp + facet_wrap(~ groupVar)
+zp <- zp + theme_bw()
+zp <- zp + ggtitle(\"Total Number of Trips from Start Location by Year and Months\")
+ggplotly()
+```"

@@ -1,0 +1,9 @@
+"0","```r
+data_1 <-  data.table(`Start Time` =seq.POSIXt(min(Bikedata$`Start Time`),max(Bikedata$`Start Time`),by=30*60))
+data_1[,ts:=`Start Time`]
+setkey(data_1,`Start Time`)
+setkey(Bikedata, `Start Time`)
+Bikedata <- data_1[Bikedata, roll = +Inf] #Join statement
+forecast<-Bikedata[,.N,by=list(ts,Gender)]
+forecast[Gender==1]
+```"

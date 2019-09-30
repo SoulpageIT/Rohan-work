@@ -1,0 +1,10 @@
+"0","```r
+q<-ggplot(important_user_not_viewed,aes(x=products_viewed))+geom_bar(bin=50,fill=\"steelblue\")+labs(title = \"Total Number of producted pages viewed by the customers.\")+theme(plot.title = element_text(hjust = 0.5,face = \"bold\",color = \"blue\"))+xlim(-1,30)+annotate(\"text\", x=0, y=64029 , label=\"64029\")+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = \"black\"))
+```"
+"1","Ignoring unknown parameters: bin
+"
+"0","```r
+ggsave(\"zzzzzzz.jpg\",plot=q,unit=\"in\",width=7,height = 4,dpi=300)
+q
+```"

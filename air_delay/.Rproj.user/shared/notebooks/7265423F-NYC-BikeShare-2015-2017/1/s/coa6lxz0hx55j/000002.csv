@@ -1,0 +1,5 @@
+"0","```r
+```r
+laggedTS <- lag(eventdata, 3) # shifted 3 periods earlier. Use `-3` to shift by 3 periods forward.
+```
+```"

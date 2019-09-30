@@ -1,0 +1,9 @@
+"0","```r
+```r
+# both acf() and pacf() generates plots by default
+acfRes <- acf(eventdata) # autocorrelation
+pacfRes <- pacf(eventdata)  # partial autocorrelation
+# ccfRes <- ccf(mdeaths, fdeaths, ylab = \cross-correlation\) # computes cross correlation between 2 timeseries.
+# head(ccfRes[[1]])
+```
+```"

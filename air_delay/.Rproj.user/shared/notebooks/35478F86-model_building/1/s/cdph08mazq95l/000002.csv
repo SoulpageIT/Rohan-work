@@ -1,0 +1,4 @@
+"0","```r
+#hr$monthbydaily<-hr$MonthlyRate/hr$DailyRate
+#hr$dailybyhourly<-hr$DailyRate/hr$HourlyRate
+```"

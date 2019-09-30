@@ -1,0 +1,2 @@
+"0","#creating the target variable which is categorical variable."
+"0","Total_data$Delay<-as.factor(ifelse((Total_data$`Actual elapsed time (Minutes)`- Total_data$`Scheduled elapsed time (Minutes)`)+Total_data$`Departure delay (Minutes)` <= 0,0,1))"

@@ -1,0 +1,7 @@
+"0","```r
+prop.table(table(train$Attrition))
+```"
+"1","
+       No       Yes 
+0.8384354 0.1615646 
+"

@@ -1,0 +1,7 @@
+"0","```r
+fit <- randomForest(target~.,   data=trainData,importance=TRUE)
+plot(fit)
+print(fit) # view results 
+importance(fit)
+varImpPlot(fit,type = 2)
+```"

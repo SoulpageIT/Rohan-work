@@ -1,0 +1,4 @@
+"0","```r
+# Final dataset
+hr_final<- cbind(num_data,dummies) 
+```"

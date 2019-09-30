@@ -1,0 +1,4 @@
+"0","```r
+imp<-importance(rf)
+imp[order(imp[,1], decreasing = TRUE),]
+```"

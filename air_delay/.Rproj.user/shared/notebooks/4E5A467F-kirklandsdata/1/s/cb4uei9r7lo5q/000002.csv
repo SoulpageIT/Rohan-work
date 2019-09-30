@@ -1,0 +1,14 @@
+"0","```r
+# Confusion matrix table 
+prob <- predict(logit,type=\"response\",testData)
+head(prob)
+confusion<-table(prob>0.5,testData$target)
+confusion
+#threshold for dichotomizing according to predicted probability=0.5
+
+# Model Accuracy 
+Accuracy<-sum(diag(confusion)/sum(confusion))
+Accuracy
+
+
+```"

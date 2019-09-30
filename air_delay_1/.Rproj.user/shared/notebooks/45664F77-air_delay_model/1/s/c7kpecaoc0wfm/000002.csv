@@ -1,0 +1,5 @@
+"0","#Checking the NA 'S at entire data set of train and test"
+"0","cat(""The Number of blank cells  at Training data set: "", sum(train==""""))"
+"1","The Number of blank cells  at Training data set: "
+"1"," "
+"1","0"

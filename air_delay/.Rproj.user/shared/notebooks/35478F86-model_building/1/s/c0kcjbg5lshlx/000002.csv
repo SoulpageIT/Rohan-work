@@ -1,0 +1,6 @@
+"0","```r
+fact_columns<-c(\"Education\", \"EnvironmentSatisfaction\",\"JobInvolvement\",\"JobLevel\",\"JobSatisfaction\",\"PerformanceRating\",\"RelationshipSatisfaction\",\"StockOptionLevel\",\"WorkLifeBalance\")
+hr<-as.data.frame(hr)
+hr[fact_columns]<-lapply(hr[fact_columns], as.factor)
+hr<-as.data.table(hr)
+```"

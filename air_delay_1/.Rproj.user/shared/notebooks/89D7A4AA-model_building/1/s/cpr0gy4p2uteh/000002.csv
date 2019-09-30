@@ -1,0 +1,4 @@
+"0","Total_data1<-rbind(setDT(train_2016), setDT(train_2017), fill=TRUE)"
+"0","#removing unwanted data set"
+"0","rm(train_2016)"
+"0","rm(train_2017)"

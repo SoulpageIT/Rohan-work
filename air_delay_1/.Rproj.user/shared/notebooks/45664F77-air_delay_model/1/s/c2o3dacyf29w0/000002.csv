@@ -1,0 +1,4 @@
+"0","#Here i am combinig two data.tables by rows and creating new table test."
+"0","test<-rbind(setDT(test), setDT(test1), fill=TRUE)"
+"0","#Now removing the unwanted duplicate data.table from the r session"
+"0","rm(test1)"

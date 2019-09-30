@@ -1,0 +1,16 @@
+"0","```r
+bikes[,age_group :=as.factor( ifelse(
+  `Birth Year` >= 1960 &  `Birth Year`<= 1975, 'A',
+    ifelse(`Birth Year` > 1975 & `Birth Year`<= 1986,'B' ,
+      ifelse(`Birth Year` > 1986 & `Birth Year`<=1997, 'C', 'D')
+    )
+  )
+)
+]
+colnames(bikes)
+```"
+"1"," [1] \"Trip Duration\"           \"Start Time\"              \"Stop Time\"               \"Start Station ID\"        \"Start Station Name\"      \"Start Station Latitude\" 
+ [7] \"Start Station Longitude\" \"End Station ID\"          \"End Station Name\"        \"End Station Latitude\"    \"End Station Longitude\"   \"Bike ID\"                
+[13] \"User Type\"               \"Birth Year\"              \"Gender\"                  \"Trip_Duration_in_min\"    \"dist\"                    \"seasons\"                
+[19] \"age_group\"              
+"

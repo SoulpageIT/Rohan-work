@@ -1,0 +1,6 @@
+"0","```r
+Bikedata<-fread(\"nyc.csv\", drop = \"V1\")
+anyNA(Bikedata)
+```"
+"1","[1] FALSE
+"

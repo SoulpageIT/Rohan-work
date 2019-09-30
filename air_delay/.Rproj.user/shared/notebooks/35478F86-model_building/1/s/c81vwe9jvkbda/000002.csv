@@ -1,0 +1,28 @@
+"0","```r
+vif(logistic_regression)
+```"
+"1","                               Age                          DailyRate                   DistanceFromHome                         HourlyRate                        MonthlyRate 
+                      2.053166e+00                       1.132263e+00                       1.173844e+00                       1.151202e+00                       1.112054e+00 
+                NumCompaniesWorked                  PercentSalaryHike                  TotalWorkingYears              TrainingTimesLastYear                     YearsAtCompany 
+                      1.515539e+00                       2.666837e+00                       5.268413e+00                       1.093719e+00                       7.476796e+00 
+                YearsInCurrentRole            YearsSinceLastPromotion               YearsWithCurrManager  BusinessTravel.xTravel_Frequently      BusinessTravel.xTravel_Rarely 
+                      3.330885e+00                       2.680831e+00                       2.949204e+00                       4.690734e+00                       4.550508e+00 
+Department.xResearch...Development                  Department.xSales                       Education.x2                       Education.x3                       Education.x4 
+                      8.713134e+06                       8.325844e+06                       2.403626e+00                       2.906828e+00                       2.694784e+00 
+                      Education.x5      EducationField.xLife.Sciences          EducationField.xMarketing            EducationField.xMedical              EducationField.xOther 
+                      1.408706e+00                       2.454174e+01                       1.379415e+01                       2.114175e+01                       6.054977e+00 
+  EducationField.xTechnical.Degree         EnvironmentSatisfaction.x2         EnvironmentSatisfaction.x3         EnvironmentSatisfaction.x4                             Gender 
+                      1.118782e+01                       1.641000e+00                       1.807509e+00                       1.866023e+00                       1.102578e+00 
+                 JobInvolvement.x2                  JobInvolvement.x3                  JobInvolvement.x4                        JobLevel.x2                        JobLevel.x3 
+                      3.561065e+00                       3.956321e+00                       2.046957e+00                       3.907136e+00                       3.481118e+00 
+                       JobLevel.x4           JobRole.xHuman.Resources     JobRole.xLaboratory.Technician                   JobRole.xManager    JobRole.xManufacturing.Director 
+                      1.638549e+00                       1.535473e+06                       6.723653e+00                       2.356113e+00                       1.683859e+00 
+        JobRole.xResearch.Director        JobRole.xResearch.Scientist           JobRole.xSales.Executive      JobRole.xSales.Representative                 JobSatisfaction.x2 
+                      1.467405e+00                       6.340248e+00                       3.105836e+01                       1.622378e+01                       1.516024e+00 
+                JobSatisfaction.x3                 JobSatisfaction.x4             MaritalStatus.xMarried              MaritalStatus.xSingle                           OverTime 
+                      1.701663e+00                       1.661068e+00                       2.622649e+00                       5.274368e+00                       1.323299e+00 
+                 PerformanceRating        RelationshipSatisfaction.x2        RelationshipSatisfaction.x3        RelationshipSatisfaction.x4                StockOptionLevel.x1 
+                      2.606996e+00                       1.580779e+00                       1.698856e+00                       1.740378e+00                       2.747788e+00 
+               StockOptionLevel.x2                StockOptionLevel.x3                 WorkLifeBalance.x2                 WorkLifeBalance.x3                 WorkLifeBalance.x4 
+                      1.667039e+00                       1.639285e+00                       3.730265e+00                       4.309959e+00                       2.455052e+00 
+"

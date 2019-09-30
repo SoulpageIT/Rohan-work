@@ -1,0 +1,3 @@
+"0","```r
+y_pred <- predict(RandomForestModel, test[,-\"Delay\"],type = \"class\")
+```"

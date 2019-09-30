@@ -1,0 +1,7 @@
+"0","```r
+modelxgboost <- train(Class~., 
+                  data = trainDF,
+                  method = \"xgbTree\",
+                  trControl = ControlParamteres,
+                  tuneGrid=parametersGrid)
+```"

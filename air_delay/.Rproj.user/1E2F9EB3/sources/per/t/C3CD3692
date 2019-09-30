@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1555936712650.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "C3CD3692",
+    "lastKnownWriteTime" : 8030888409031647264,
+    "last_content_update" : 1555936712650,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "id" : "bf6816dc48dc434ea7074bb74bdfc229",
+        "name" : "train_encoded",
+        "title" : "train_encoded"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "object_explorer"
+}

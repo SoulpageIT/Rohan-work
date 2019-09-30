@@ -1,0 +1,7 @@
+"0","xgb.save(xgb1, 'xgb_all_data.model')"
+"1","[1]"
+"1"," TRUE"
+"1","
+"
+"0","#bst <- xgb.load('xgb.model')"
+"0","#pred <- predict(bst, test$data)"

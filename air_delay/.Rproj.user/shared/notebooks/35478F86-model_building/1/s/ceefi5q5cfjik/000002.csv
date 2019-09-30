@@ -1,0 +1,4 @@
+"0","```r
+xgboost_model <- xgboost(data = as.matrix(hr1),, max_depth = 5,
+               eta = 1, nthread = 2, nrounds = 10,objective = \"binary:logistic\")
+```"

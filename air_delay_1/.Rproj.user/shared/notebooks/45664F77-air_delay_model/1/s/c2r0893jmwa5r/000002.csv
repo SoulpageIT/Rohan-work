@@ -1,0 +1,5 @@
+"0","#subsetting the data of NewYork."
+"0","Dallas<-test[OriginAirPort==""Dallas""]"
+"0","#Adding the columns Longitude and Latitude."
+"0","Dallas$`Start Station Longitude`<- -96.9830"
+"0","Dallas$`Start Station Latitude`<- 32.9614"

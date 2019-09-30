@@ -1,0 +1,77 @@
+---
+title: "Data Cleaning on weather data set."
+output: html_notebook
+---
+
+#About the data set.
+
+It's covers hourly weather data from 122 weathers stations of southeast region (Brazil). The southeast include the states of Rio de Janeiro, São Paulo, Minas Gerais e Espirito Santo.
+
+
+libraries needed
+```{r}
+#used for reading the data ,data subsetting
+library(data.table)
+#used for anabling parallel processing
+library(doMC)
+library(rapportools)
+```
+
+As the data set is large so we are doing parallel processing.
+```{r}
+registerDoMC(cores = 6)
+```
+
+
+so now we are importing the into R.
+As the data is huge the due to limitations of hardware support we are considering our data from 2012 to 2016
+```{r}
+data<-fread("sudeste.csv")
+#subsetting the data 
+#we are subsetting our data.
+data<-data[yr>2011]
+```
+
+```{r}
+cat("\nThe Tota number of row in the data set :- ",nrow(data))
+cat("\nThe Total number of columns in the data set :- ",ncol(data))
+```
+so as we see above that total number of row we have is 4745736,and the column we have is 31.
+
+Now we are going to look at summary of the data set.
+```{r}
+summary(data)
+```
+Just viewing the columns for more clarity
+```{r}
+colnames(data)
+```
+checking whether there are any blank spaces in the data set.
+```{r}
+#Checking the NA 'S at entire data set.
+cat("The Number of NA 'S in the data: ", sum(data=="NA"))
+#checking for the empty sells in the entire data set.
+cat("\nThe Number of blank cell 'S in the data: ", sum(data==""))
+```
+```{r}
+apply(data,2,function(x)sum(is.na(x)))
+```
+```{r}
+apply(data,2,function(x)sum(is.empty(x,trim = TRUE)))
+```
+
+```{r}
+#This command is use to see all the empty rows.
+data[gbrd==""]
+```
+```{r}
+data[is.na(prcp)==TRUE]
+```
+```{r}
+#is.empty(data$temp)
+data[is.empty(prcp)==TRUE]
+```
+```{r}
+rowSums()
+```
+

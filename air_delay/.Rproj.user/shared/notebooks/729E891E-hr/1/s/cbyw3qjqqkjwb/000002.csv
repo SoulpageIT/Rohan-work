@@ -1,0 +1,11 @@
+"0","```r
+colnames(hr)
+```"
+"1"," [1] \"Age\"                      \"Attrition\"                \"BusinessTravel\"           \"DailyRate\"                \"Department\"              
+ [6] \"DistanceFromHome\"         \"Education\"                \"EducationField\"           \"EnvironmentSatisfaction\"  \"Gender\"                  
+[11] \"HourlyRate\"               \"JobInvolvement\"           \"JobLevel\"                 \"JobRole\"                  \"JobSatisfaction\"         
+[16] \"MaritalStatus\"            \"MonthlyIncome\"            \"MonthlyRate\"              \"NumCompaniesWorked\"       \"OverTime\"                
+[21] \"PercentSalaryHike\"        \"PerformanceRating\"        \"RelationshipSatisfaction\" \"StockOptionLevel\"         \"TotalWorkingYears\"       
+[26] \"TrainingTimesLastYear\"    \"WorkLifeBalance\"          \"YearsAtCompany\"           \"YearsInCurrentRole\"       \"YearsSinceLastPromotion\" 
+[31] \"YearsWithCurrManager\"    
+"

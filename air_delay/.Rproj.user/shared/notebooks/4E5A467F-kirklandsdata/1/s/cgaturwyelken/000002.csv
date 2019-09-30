@@ -1,0 +1,10 @@
+"0","```r
+kirklandsdata<-fread(\"kirklandsdata.csv\",na.strings = \"NA\")
+kirklandsdata$target<-ifelse (kirklandsdata$coupon_run_on_cart|kirklandsdata$coupon_run_on_checkout|kirklandsdata$coupon_run_on_product==1,1,0)
+kirklandsdata<-kirklandsdata[,-c(\"coupon_run_on_cart\",\"coupon_run_on_checkout\",\"coupon_run_on_product\")]
+table(kirklandsdata$target)
+```"
+"1","
+     0      1 
+766574   8624 
+"

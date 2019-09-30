@@ -1,0 +1,6 @@
+"0","```r
+colnames(data)
+```"
+"1"," [1] \"wsid\" \"wsnm\" \"elvt\" \"lat\"  \"lon\"  \"inme\" \"city\" \"prov\" \"mdct\" \"date\" \"yr\"   \"mo\"   \"da\"   \"hr\"   \"prcp\" \"stp\"  \"smax\" \"smin\" \"gbrd\" \"temp\" \"dewp\"
+[22] \"tmax\" \"dmax\" \"tmin\" \"dmin\" \"hmdy\" \"hmax\" \"hmin\" \"wdsp\" \"wdct\" \"gust\"
+"

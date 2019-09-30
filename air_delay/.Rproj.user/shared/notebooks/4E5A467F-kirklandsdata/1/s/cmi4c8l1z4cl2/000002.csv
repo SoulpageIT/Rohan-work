@@ -1,0 +1,14 @@
+"0","```r
+# Confusion matrix table 
+prob_scale <- predict(logit_scale,type=\"response\",S_testData)
+head(prob_scale)
+confusion<-table(prob_scale>0.5,S_testData$target)
+confusion
+
+
+# Model Accuracy 
+Accuracy<-sum(diag(confusion)/sum(confusion))
+Accuracy
+
+
+```"

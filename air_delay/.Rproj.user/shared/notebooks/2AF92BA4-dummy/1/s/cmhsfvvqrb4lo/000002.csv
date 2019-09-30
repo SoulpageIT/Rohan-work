@@ -1,0 +1,8 @@
+"0","```r
+```r
+apply(dummy,2,function(x)sum(is.na(x)))
+```
+```"
+"1"," x  y  z 
+15  1  9 
+"

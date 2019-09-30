@@ -1,0 +1,22 @@
+"0","```r
+```r
+network_graph <- function(starting_place){
+  if(starting_place %in% bikes$`Start Station Name`){
+  setkey(bikes,`Start Station Name`)
+  ggplot(bikes[`Start Station Name` == starting_place,list(unique(`End Station Name`)), by = list(`Start Station Name`, dist)], aes(x=as.factor(V1), y=dist))+
+  geom_bar(stat=\identity\, fill=alpha(\skyblue\, 0.7)) +
+  ylim(0.00000,6.42068) +
+  theme_minimal() +
+  theme(
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank(),
+    plot.margin = unit(rep(-1,4), \cm\)
+  ) +
+  coord_polar(start = 0)+ geom_text(data=bikes[starting_place,list(unique(`End Station Name`)), by = list(`Start Station Name`, dist)],aes(x=as.factor(V1), y=dist, label=as.factor(V1)), color=\black\, fontface=\bold\,alpha=0.9, size=2, inherit.aes = FALSE)
+  }else{
+    print(\***** Oops sorry the place you have given is not defined.*****\)
+  }
+}
+```
+```"

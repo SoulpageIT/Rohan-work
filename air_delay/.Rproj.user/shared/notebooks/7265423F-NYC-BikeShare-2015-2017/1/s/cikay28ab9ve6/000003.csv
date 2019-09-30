@@ -1,0 +1,4 @@
+"0","```r
+bikes$`Start Station Name`=as.factor(bikes$`Start Station Name`)
+bikes$`End Station Name`=as.factor(bikes$`End Station Name`)
+```"

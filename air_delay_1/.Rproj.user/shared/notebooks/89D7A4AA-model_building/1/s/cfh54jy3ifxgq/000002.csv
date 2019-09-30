@@ -1,0 +1,1 @@
+"0","xgbpred <- predict (model,dtestfinal,type = ""class"")"

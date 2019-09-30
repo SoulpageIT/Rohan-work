@@ -1,0 +1,8 @@
+"0","```r
+#common<-fintersect(setDT(d1), setDT(d2),all = FALSE)
+colnames(d2)
+```"
+"1"," [1] \"DFIPS\"       \"OFIPS\"       \"OSTFIPS\"     \"OCTFIPS\"     \"OTRFIPS\"     \"DSTFIPS\"     \"DCTFIPS\"    
+ [8] \"DTRFIPS\"     \"FLOW\"        \"MOE\"         \"LENKM\"       \"ESTDIVMOE\"   \"USPS\"        \"POP10\"      
+[15] \"HU10\"        \"ALAND\"       \"AWATER\"      \"ALAND_SQMI\"  \"AWATER_SQMI\" \"INTPTLAT\"    \"INTPTLONG\"  
+"

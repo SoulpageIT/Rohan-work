@@ -1,0 +1,7 @@
+"0","```r
+prop.table(table(hr$Attrition))
+```"
+"1","
+       No       Yes 
+0.8387755 0.1612245 
+"

@@ -1,0 +1,2 @@
+"0","setkey(Total_data,`Tail Number`)"
+"0","Total_data<-Total_data[!""""]"

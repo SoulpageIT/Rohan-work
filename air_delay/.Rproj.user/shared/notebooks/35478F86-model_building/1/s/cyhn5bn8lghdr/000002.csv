@@ -1,0 +1,9 @@
+"0","```r
+trainingMatrix <- as.matrix(hr_encoded)
+# execute PCA on training data
+pcaTraining <- prcomp(trainingMatrix, scale. = FALSE)
+pcaTraining
+summary(pcaTraining)
+# plot cummulated R2 with respect to number of components
+#plotData <- data.frame(component = 1:nFeature, R2 = pcaTraining$importance[3, ])
+```"

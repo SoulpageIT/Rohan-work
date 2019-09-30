@@ -1,0 +1,10 @@
+"0","```r
+X.quanti <- splitmix(trainData)$X.quanti
+X.quali <- splitmix(trainData)$X.quali
+#pca<-PCAmix(X.quanti,X.quali,ndim=4)
+pca<-PCAmix(X.quanti,X.quali[,-10],ndim=19,graph=FALSE,rename.level = TRUE)
+pca$eig
+PCscores<-as.data.frame(pca$ind$coord)
+PCscores<-cbind(PCscores,X.quali$target)
+dim(PCscores)
+```"

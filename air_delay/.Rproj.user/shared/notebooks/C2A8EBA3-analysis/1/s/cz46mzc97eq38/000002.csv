@@ -1,0 +1,14 @@
+"0","```r
+```r
+ggplot(daa,aes(x=pages,y =number_of_affile))+geom_bar(bin = 50,width = 0.2,fill=\steelblue\,col=\black\,stat=\identity\)+labs(title = \The max of Total number of affiliate run on the pages \)+theme(plot.title = element_text(hjust = 0.5,face = \bold\,color = \blue\))+theme(panel.background = element_rect(fill = 'gray'))+  geom_text(aes(label=number_of_affile), vjust=-0.3, color=\black\, size=3.5)
+```
+```"
+"1","Ignoring unknown parameters: bin
+"
+"0","```r
+```r
+ggsave(\maxtotalaffiliate.png\)
+```
+```"
+"1","Saving 7.29 x 4.5 in image
+"

@@ -1,0 +1,12 @@
+"0","```r
+SVM_fit_train <- train(S_trainData[,1:28], S_trainData$target, data = S_trainData, method = \"svmLinear\", trControl=trctrl,tuneLength =10,metric=\"Accuracy\",na.action=na.fail)
+save(SVM_fit_train,file=\"SVM_fit_train.rda\")
+load(\"SVM_fit_train.rda\")
+
+SVM_pred_test <- predict(SVM_fit_train, newdata = S_testData[,-29])
+
+#Test set Statistics 
+confusionMatrix(table(SVM_pred_test, S_testData$target))  
+
+
+```"

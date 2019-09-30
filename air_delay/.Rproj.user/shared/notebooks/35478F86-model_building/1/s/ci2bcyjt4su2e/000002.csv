@@ -1,0 +1,5 @@
+"0","```r
+# creating dummy variables for factor attributes
+dummies<- data.frame(sapply(fact_data, 
+                            function(x) data.frame(model.matrix(~x-1,data =fact_data))[,-1]))
+```"

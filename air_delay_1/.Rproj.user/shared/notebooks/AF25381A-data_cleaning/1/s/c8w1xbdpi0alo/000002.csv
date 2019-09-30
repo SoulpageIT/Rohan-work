@@ -1,0 +1,12 @@
+"0","```r
+cat(\"\nThe Tota number of row in the data set :- \",nrow(data))
+```"
+"1","
+The Tota number of row in the data set :-  4745736
+"
+"0","```r
+cat(\"\nThe Total number of columns in the data set :- \",ncol(data))
+```"
+"1","
+The Total number of columns in the data set :-  31
+"

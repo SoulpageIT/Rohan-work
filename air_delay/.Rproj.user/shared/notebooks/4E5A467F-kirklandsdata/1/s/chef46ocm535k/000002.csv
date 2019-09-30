@@ -1,0 +1,7 @@
+"0","```r
+SVM_pred <- predict(SVM_fit, newdata = PCscores_test)
+
+#Test set Statistics 
+confusionMatrix(table(SVM_pred, testData$target))  
+
+```"

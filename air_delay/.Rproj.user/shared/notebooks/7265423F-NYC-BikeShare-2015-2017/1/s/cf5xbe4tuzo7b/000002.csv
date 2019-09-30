@@ -1,0 +1,8 @@
+"0","```r
+df=forecast[Gender==2]
+# time_index <- seq(from = as.POSIXct(\"2017-03-31 23:23:16 IST\"), 
+#                   to = as.POSIXct(\"2015-09-21 14:53:16 IST\"), by = \"30*60\")
+eventdata <- xts(df$N, order.by = df$ts)
+```"
+"1","Error in xts(df$N, order.by = df$ts) : could not find function \"xts\"
+"

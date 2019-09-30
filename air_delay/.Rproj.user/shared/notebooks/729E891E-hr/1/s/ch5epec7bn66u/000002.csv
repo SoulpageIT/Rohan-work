@@ -1,0 +1,4 @@
+"0","```r
+x<-ggplot(hr[MonthlyIncome <= 5000 & TotalWorkingYears <= 1 & JobLevel == 1  &Attrition==\"Yes\",.N,by=list(JobRole,EnvironmentSatisfaction,Age)],aes(x=JobRole,y=N,fill=Age))+geom_bar(stat=\"identity\",width = 0.3) +facet_wrap(~EnvironmentSatisfaction ,ncol = 1,scales = \"free\")+coord_flip()+labs(title = \"EnvironmentSatisfaction Rating (1-4)\",y=\"The Number of Employees moving out of the company. \",fill=\"Age Group\")
+ggplotly(x)
+```"

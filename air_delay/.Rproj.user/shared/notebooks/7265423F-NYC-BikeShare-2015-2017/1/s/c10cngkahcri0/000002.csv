@@ -1,0 +1,3 @@
+"0","```r
+ggparallel(list(\"Start Station Name\",\"End Station Name\"),bikes[year(`Start Time`)==2015,.N,by=list(`Start Station Name`,`End Station Name`)][order(-N)][1:5], weight = 'N' ,order = -1)
+```"

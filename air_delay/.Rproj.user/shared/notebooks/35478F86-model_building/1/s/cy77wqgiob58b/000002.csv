@@ -1,0 +1,5 @@
+"0","```r
+y_pred <- predict(logistic_regression, newdata = test,type = \"response\")
+```"
+"1","prediction from a rank-deficient fit may be misleading
+"

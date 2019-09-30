@@ -1,0 +1,48 @@
+---
+title: "the airport"
+output: html_notebook
+---
+The main goal of this project is to find what kind of problems we can solve by this data set.
+finding out the insights of the data set.
+
+
+The libraries used in the projects.
+```{r}
+library(data.table)
+library(dplyr)
+library(ggplot2)
+library(gganimate)
+library(leaflet)
+library(plotly)
+```
+Now getting data into the r propgram.
+```{r}
+air_data<-fread("Airports2.csv")
+```
+
+Now viewing and understanding the data.
+```{r}
+str(air_data)
+View()
+```
+
+
+
+```{r}
+summary(air_data)
+```
+found some na values ,as we can not replace NA 's of lat ,lon so i am removing all NA 's from my data set.
+```{r}
+air_data_no_na<-na.omit(air_data)
+```
+Now checking seing the structure and summary of the new data set.
+```{r}
+summary(air_data_no_na)
+
+```
+
+```{r}
+ p<- ggplot(air_data, aes(Passengers,Seats)) + geom_boxplot(outlier.size=1)
+  ggplotly(p)
+```
+

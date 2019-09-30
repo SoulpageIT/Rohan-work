@@ -1,0 +1,6 @@
+"0","```r
+convert_to_character <- c(\"Attrition\", \"BusinessTravel\",\"Department\",\"Education\",\"EducationField\",\"EnvironmentSatisfaction\",\"Gender\",\"JobInvolvement\",\"JobLevel\",\"JobRole\",\"JobSatisfaction\",\"MaritalStatus\",\"OverTime\",\"PerformanceRating\",\"RelationshipSatisfaction\",\"StockOptionLevel\",\"WorkLifeBalance\")
+hr_encoded=hr
+hr_encoded[, convert_to_character] <- hr[, lapply(.SD, as.numeric), .SDcols = convert_to_character]
+
+```"

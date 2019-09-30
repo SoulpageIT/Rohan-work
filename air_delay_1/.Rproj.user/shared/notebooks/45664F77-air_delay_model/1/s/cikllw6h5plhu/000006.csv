@@ -1,0 +1,49 @@
+"0","print(cv, verbose=TRUE)"
+"1","##### xgb.cv "
+"1","5"
+"1","-folds
+"
+"1","call:
+  "
+"1","xgb.cv(params = params, data = dtrain, nrounds = 1000, nfold = 5, 
+"
+"1","    showsd = T, stratified = T, maximize = F, gamma = 0, print.every.n = 10, 
+"
+"1","    early.stop.round = 20)
+"
+"1","params (as set within xgb.cv):
+"
+"1","  "
+"1","booster = ""gbtree"", objective = ""binary:logistic"", eta = ""0.2"", max_depth = ""4"", min_child_weight = ""2"", subsample = ""1"", colsample_bytree = ""1"", gamma = ""0"", print_every_n = ""10"", early_stop_round = ""20"", silent = ""1"""
+"1","
+"
+"1","callbacks:
+"
+"1","  "
+"1","cb.print.evaluation(period = print_every_n, showsd = showsd)
+"
+"1","  "
+"1","cb.evaluation.log()
+"
+"1","  "
+"1","cb.early.stop(stopping_rounds = early_stopping_rounds, maximize = maximize, 
+"
+"1","    verbose = verbose)
+"
+"1","niter"
+"1",": "
+"1","347"
+"1","
+"
+"1","best_iteration"
+"1",": "
+"1","327"
+"1","
+"
+"1","best_ntreelimit"
+"1",": "
+"1","327"
+"1","
+"
+"1","evaluation_log:
+"

@@ -1,0 +1,17 @@
+"0","```r
+colnames(train)
+```"
+"1"," [1] \"Age\"                                \"DailyRate\"                          \"DistanceFromHome\"                   \"HourlyRate\"                         \"MonthlyIncome\"                     
+ [6] \"MonthlyRate\"                        \"NumCompaniesWorked\"                 \"PercentSalaryHike\"                  \"TotalWorkingYears\"                  \"TrainingTimesLastYear\"             
+[11] \"YearsAtCompany\"                     \"YearsInCurrentRole\"                 \"YearsSinceLastPromotion\"            \"YearsWithCurrManager\"               \"Attrition\"                         
+[16] \"BusinessTravel.xTravel_Frequently\"  \"BusinessTravel.xTravel_Rarely\"      \"Department.xResearch...Development\" \"Department.xSales\"                  \"Education.x2\"                      
+[21] \"Education.x3\"                       \"Education.x4\"                       \"Education.x5\"                       \"EducationField.xLife.Sciences\"      \"EducationField.xMarketing\"         
+[26] \"EducationField.xMedical\"            \"EducationField.xOther\"              \"EducationField.xTechnical.Degree\"   \"EnvironmentSatisfaction.x2\"         \"EnvironmentSatisfaction.x3\"        
+[31] \"EnvironmentSatisfaction.x4\"         \"Gender\"                             \"JobInvolvement.x2\"                  \"JobInvolvement.x3\"                  \"JobInvolvement.x4\"                 
+[36] \"JobLevel.x2\"                        \"JobLevel.x3\"                        \"JobLevel.x4\"                        \"JobLevel.x5\"                        \"JobRole.xHuman.Resources\"          
+[41] \"JobRole.xLaboratory.Technician\"     \"JobRole.xManager\"                   \"JobRole.xManufacturing.Director\"    \"JobRole.xResearch.Director\"         \"JobRole.xResearch.Scientist\"       
+[46] \"JobRole.xSales.Executive\"           \"JobRole.xSales.Representative\"      \"JobSatisfaction.x2\"                 \"JobSatisfaction.x3\"                 \"JobSatisfaction.x4\"                
+[51] \"MaritalStatus.xMarried\"             \"MaritalStatus.xSingle\"              \"OverTime\"                           \"PerformanceRating\"                  \"RelationshipSatisfaction.x2\"       
+[56] \"RelationshipSatisfaction.x3\"        \"RelationshipSatisfaction.x4\"        \"StockOptionLevel.x1\"                \"StockOptionLevel.x2\"                \"StockOptionLevel.x3\"               
+[61] \"WorkLifeBalance.x2\"                 \"WorkLifeBalance.x3\"                 \"WorkLifeBalance.x4\"                
+"

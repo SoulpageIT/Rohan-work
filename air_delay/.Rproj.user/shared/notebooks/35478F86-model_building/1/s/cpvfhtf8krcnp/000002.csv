@@ -1,0 +1,4 @@
+"0","```r
+# converting target variable attrition from No/Yes character to factorwith levels 0/1 
+dummies$Attrition<- as.numeric(dummies$Attrition)
+```"

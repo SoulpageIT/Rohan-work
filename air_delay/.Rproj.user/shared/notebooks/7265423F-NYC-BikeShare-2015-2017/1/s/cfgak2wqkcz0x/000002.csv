@@ -1,0 +1,223 @@
+"0","```r
+str(Bikedata)
+```"
+"1","Classes â€˜data.tableâ€™ and 'data.frame':	735502 obs. of  16 variables:
+ $ Trip Duration          : int  376 739 2714 275 561 365 139 1299 647 233 ...
+ $ Start Time             : chr  \"2015-10-01 00:16:26\" \"2015-10-01 00:27:12\" \"2015-10-01 00:32:46\" \"2015-10-01 00:34:31\" ...
+ $ Stop Time              : chr  \"2015-10-01 00:22:42\" \"2015-10-01 00:39:32\" \"2015-10-01 01:18:01\" \"2015-10-01 00:39:06\" ...
+ $ Start Station ID       : int  3212 3207 3193 3199 3183 3198 3206 3197 3213 3194 ...
+ $ Start Station Name     : chr  \"Christ Hospital\" \"Oakland Ave\" \"Lincoln Park\" \"Newport Pkwy\" ...
+ $ Start Station Latitude : num  40.7 40.7 40.7 40.7 40.7 ...
+ $ Start Station Longitude: num  -74.1 -74.1 -74.1 -74 -74 ...
+ $ End Station ID         : int  3207 3212 3193 3187 3192 3215 3195 3215 3190 3195 ...
+ $ End Station Name       : chr  \"Oakland Ave\" \"Christ Hospital\" \"Lincoln Park\" \"Warren St\" ...
+ $ End Station Latitude   : num  40.7 40.7 40.7 40.7 40.7 ...
+ $ End Station Longitude  : num  -74.1 -74.1 -74.1 -74 -74.1 ...
+ $ Bike ID                : int  24470 24481 24628 24613 24668 24644 24482 24550 24650 24584 ...
+ $ User Type              : chr  \"Subscriber\" \"Subscriber\" \"Subscriber\" \"Subscriber\" ...
+ $ Birth Year             : num  1960 1960 1983 1975 1984 ...
+ $ Gender                 : int  1 1 1 1 0 0 1 0 1 2 ...
+ $ Trip_Duration_in_min   : int  6 12 45 5 9 6 2 22 11 4 ...
+ - attr(*, \".internal.selfref\")=<externalptr> 
+"
+"0","```r
+summary(Bikedata)
+```"
+"1"," Trip Duration      Start Time                 Stop Time                  Start Station ID Start Station Name             Start Station Latitude
+ Min.   :      61   NULL:2015-10-01 00:16:26   NULL:2015-10-01 00:22:42   Min.   :3183     NULL:Christ Hospital           Min.   :40.69         
+ 1st Qu.:     246   NULL:2015-10-01 00:27:12   NULL:2015-10-01 00:39:32   1st Qu.:3186     NULL:Oakland Ave               1st Qu.:40.72         
+ Median :     383   NULL:2015-10-01 00:32:46   NULL:2015-10-01 01:18:01   Median :3202     NULL:Lincoln Park              Median :40.72         
+ Mean   :     934   NULL:2015-10-01 00:34:31   NULL:2015-10-01 00:39:06   Mean   :3207     NULL:Newport Pkwy              Mean   :40.72         
+ 3rd Qu.:     652   NULL:2015-10-01 00:40:12   NULL:2015-10-01 00:49:33   3rd Qu.:3211     NULL:Exchange Place            3rd Qu.:40.73         
+ Max.   :20260211   NULL:2015-10-01 00:41:46   NULL:2015-10-01 00:47:51   Max.   :3426     NULL:Heights Elevator          Max.   :40.75         
+                    NULL:2015-10-01 00:43:44   NULL:2015-10-01 00:46:03                    NULL:Hilltop                                         
+                    NULL:2015-10-01 01:10:10   NULL:2015-10-01 01:31:50                    NULL:North St                                        
+                    NULL:2015-10-01 02:01:36   NULL:2015-10-01 02:12:24                    NULL:Van Vorst Park                                  
+                    NULL:2015-10-01 04:43:33   NULL:2015-10-01 04:47:27                    NULL:McGinley Square                                 
+                    NULL:2015-10-01 04:43:42   NULL:2015-10-01 04:49:34                    NULL:Central Ave                                     
+                    NULL:2015-10-01 05:31:13   NULL:2015-10-01 05:48:06                    NULL:Lincoln Park                                    
+                    NULL:2015-10-01 05:41:17   NULL:2015-10-01 05:51:10                    NULL:Riverview Park                                  
+                    NULL:2015-10-01 05:44:29   NULL:2015-10-01 05:49:38                    NULL:Brunswick St                                    
+                    NULL:2015-10-01 05:52:21   NULL:2015-10-01 06:03:29                    NULL:Oakland Ave                                     
+                    NULL:2015-10-01 06:25:54   NULL:2015-10-01 06:31:07                    NULL:Essex Light Rail                                
+                    NULL:2015-10-01 06:26:37   NULL:2015-10-01 06:36:25                    NULL:Pershing Field                                  
+                    NULL:2015-10-01 06:26:48   NULL:2015-10-01 06:37:04                    NULL:Brunswick St                                    
+                    NULL:2015-10-01 06:28:03   NULL:2015-10-01 06:44:53                    NULL:Riverview Park                                  
+                    NULL:2015-10-01 06:29:54   NULL:2015-10-01 06:48:28                    NULL:Bayside Park                                    
+                    NULL:2015-10-01 06:33:19   NULL:2015-10-01 06:41:32                    NULL:Oakland Ave                                     
+                    NULL:2015-10-01 06:49:26   NULL:2015-10-01 06:54:58                    NULL:Oakland Ave                                     
+                    NULL:2015-10-01 06:58:40   NULL:2015-10-01 12:10:36                    NULL:City Hall                                       
+                    NULL:2015-10-01 06:59:27   NULL:2015-10-01 07:03:01                    NULL:Grove St PATH                                   
+                    NULL:2015-10-01 07:00:23   NULL:2015-10-01 07:13:18                    NULL:Pershing Field                                  
+                    NULL:2015-10-01 07:00:51   NULL:2015-10-01 07:05:55                    NULL:Brunswick St                                    
+                    NULL:2015-10-01 07:03:32   NULL:2015-10-01 07:06:34                    NULL:Essex Light Rail                                
+                    NULL:2015-10-01 07:04:20   NULL:2015-10-01 07:16:45                    NULL:Newport Pkwy                                    
+                    NULL:2015-10-01 07:05:53   NULL:2015-10-01 07:09:41                    NULL:Essex Light Rail                                
+                    NULL:2015-10-01 07:08:50   NULL:2015-10-01 07:10:52                    NULL:Essex Light Rail                                
+                    NULL:2015-10-01 07:10:09   NULL:2015-10-01 07:15:03                    NULL:Warren St                                       
+                    NULL:2015-10-01 07:11:45   NULL:2015-10-01 07:14:57                    NULL:Van Vorst Park                                  
+                    NULL:2015-10-01 07:13:06   NULL:2015-10-01 07:25:56                    NULL:North St                                        
+                    NULL:2015-10-01 07:14:36   NULL:2015-10-01 07:19:05                    NULL:Hamilton Park                                   
+                    NULL:2015-10-01 07:16:56   NULL:2015-10-01 07:30:09                    NULL:Van Vorst Park                                  
+                    NULL:2015-10-01 07:18:13   NULL:2015-10-01 07:26:20                    NULL:Oakland Ave                                     
+                    NULL:2015-10-01 07:22:09   NULL:2015-10-01 07:27:10                    NULL:Van Vorst Park                                  
+                    NULL:2015-10-01 07:22:09   NULL:2015-10-01 07:27:16                    NULL:Van Vorst Park                                  
+                    NULL:2015-10-01 07:22:24   NULL:2015-10-01 07:28:51                    NULL:Hamilton Park                                   
+                    NULL:2015-10-01 07:26:04   NULL:2015-10-01 07:30:51                    NULL:Grove St PATH                                   
+                    NULL:2015-10-01 07:26:13   NULL:2015-10-01 07:31:23                    NULL:Pershing Field                                  
+                    NULL:2015-10-01 07:26:53   NULL:2015-10-01 07:30:43                    NULL:Warren St                                       
+                    NULL:2015-10-01 07:26:58   NULL:2015-10-01 07:30:06                    NULL:Van Vorst Park                                  
+                    NULL:2015-10-01 07:27:23   NULL:2015-10-01 07:32:28                    NULL:Brunswick St                                    
+                    NULL:2015-10-01 07:28:25   NULL:2015-10-01 07:29:59                    NULL:Essex Light Rail                                
+                    NULL:2015-10-01 07:28:40   NULL:2015-10-01 07:35:07                    NULL:Van Vorst Park                                  
+                    NULL:2015-10-01 07:30:05   NULL:2015-10-01 07:32:53                    NULL:Essex Light Rail                                
+                    NULL:2015-10-01 07:31:16   NULL:2015-10-01 07:35:21                    NULL:Hamilton Park                                   
+                    NULL:2015-10-01 07:33:05   NULL:2015-10-01 07:34:33                    NULL:Newark Ave                                      
+                    NULL:2015-10-01 07:33:13   NULL:2015-10-01 07:35:44                    NULL:Essex Light Rail                                
+                    NULL:2015-10-01 07:35:14   NULL:2015-10-01 07:41:21                    NULL:Newark Ave                                      
+                    NULL:2015-10-01 07:38:14   NULL:2015-10-01 07:46:37                    NULL:Grove St PATH                                   
+                    NULL:2015-10-01 07:39:11   NULL:2015-10-01 07:49:31                    NULL:Grove St PATH                                   
+                    NULL:2015-10-01 07:40:25   NULL:2015-10-01 08:24:26                    NULL:JC Medical Center                               
+                    NULL:2015-10-01 07:41:36   NULL:2015-10-01 07:50:08                    NULL:Newport Pkwy                                    
+                    NULL:2015-10-01 07:46:56   NULL:2015-10-01 07:53:46                    NULL:Essex Light Rail                                
+                    NULL:2015-10-01 07:47:15   NULL:2015-10-01 07:58:07                    NULL:Brunswick St                                    
+                    NULL:2015-10-01 07:47:45   NULL:2015-10-01 07:54:36                    NULL:Baldwin at Montgomery                           
+                    NULL:2015-10-01 07:48:00   NULL:2015-10-01 07:52:09                    NULL:Hamilton Park                                   
+                    NULL:2015-10-01 07:48:53   NULL:2015-10-01 07:55:03                    NULL:Hamilton Park                                   
+                    NULL:2015-10-01 07:49:57   NULL:2015-10-01 07:52:16                    NULL:Paulus Hook                                     
+                    NULL:2015-10-01 07:50:10   NULL:2015-10-01 07:59:08                    NULL:Pershing Field                                  
+ Start Station Longitude End Station ID End Station Name                     End Station Latitude End Station Longitude    Bike ID      User Type        
+ Min.   :-74.10          Min.   : 147   NULL:Oakland Ave                     Min.   : 0.00        Min.   :-74.10        Min.   :14552   NULL:Subscriber  
+ 1st Qu.:-74.05          1st Qu.:3186   NULL:Christ Hospital                 1st Qu.:40.72        1st Qu.:-74.05        1st Qu.:24486   NULL:Subscriber  
+ Median :-74.04          Median :3199   NULL:Lincoln Park                    Median :40.72        Median :-74.04        Median :24602   NULL:Subscriber  
+ Mean   :-74.05          Mean   :3203   NULL:Warren St                       Mean   :40.72        Mean   :-74.05        Mean   :24914   NULL:Subscriber  
+ 3rd Qu.:-74.04          3rd Qu.:3211   NULL:Liberty Light Rail              3rd Qu.:40.73        3rd Qu.:-74.04        3rd Qu.:24711   NULL:Customer    
+ Max.   :-74.03          Max.   :3442   NULL:Central Ave                     Max.   :40.80        Max.   :  0.00        Max.   :29296   NULL:Customer    
+                                        NULL:Sip Ave                                                                                    NULL:Subscriber  
+                                        NULL:Central Ave                                                                                NULL:Customer    
+                                        NULL:Garfield Ave Station                                                                       NULL:Subscriber  
+                                        NULL:Sip Ave                                                                                    NULL:Subscriber  
+                                        NULL:North St                                                                                   NULL:Customer    
+                                        NULL:Lincoln Park                                                                               NULL:Subscriber  
+                                        NULL:Newport PATH                                                                               NULL:Subscriber  
+                                        NULL:Grove St PATH                                                                              NULL:Subscriber  
+                                        NULL:City Hall                                                                                  NULL:Subscriber  
+                                        NULL:Grove St PATH                                                                              NULL:Subscriber  
+                                        NULL:Sip Ave                                                                                    NULL:Subscriber  
+                                        NULL:Exchange Place                                                                             NULL:Subscriber  
+                                        NULL:Exchange Place                                                                             NULL:Subscriber  
+                                        NULL:Exchange Place                                                                             NULL:Subscriber  
+                                        NULL:Sip Ave                                                                                    NULL:Subscriber  
+                                        NULL:Sip Ave                                                                                    NULL:Subscriber  
+                                        NULL:Paulus Hook                                                                                NULL:Subscriber  
+                                        NULL:Van Vorst Park                                                                             NULL:Subscriber  
+                                        NULL:Hamilton Park                                                                              NULL:Subscriber  
+                                        NULL:Grove St PATH                                                                              NULL:Subscriber  
+                                        NULL:Exchange Place                                                                             NULL:Subscriber  
+                                        NULL:Newark Ave                                                                                 NULL:Subscriber  
+                                        NULL:Exchange Place                                                                             NULL:Subscriber  
+                                        NULL:Exchange Place                                                                             NULL:Subscriber  
+                                        NULL:Paulus Hook                                                                                NULL:Subscriber  
+                                        NULL:Grove St PATH                                                                              NULL:Subscriber  
+                                        NULL:Newport PATH                                                                               NULL:Subscriber  
+                                        NULL:Grove St PATH                                                                              NULL:Subscriber  
+                                        NULL:Newport Pkwy                                                                               NULL:Subscriber  
+                                        NULL:Sip Ave                                                                                    NULL:Subscriber  
+                                        NULL:Grove St PATH                                                                              NULL:Subscriber  
+                                        NULL:Grove St PATH                                                                              NULL:Subscriber  
+                                        NULL:Newport PATH                                                                               NULL:Subscriber  
+                                        NULL:JC Medical Center                                                                          NULL:Subscriber  
+                                        NULL:5 Corners Library                                                                          NULL:Subscriber  
+                                        NULL:Exchange Place                                                                             NULL:Subscriber  
+                                        NULL:Grove St PATH                                                                              NULL:Subscriber  
+                                        NULL:Grove St PATH                                                                              NULL:Subscriber  
+                                        NULL:Paulus Hook                                                                                NULL:Subscriber  
+                                        NULL:Paulus Hook                                                                                NULL:Subscriber  
+                                        NULL:Exchange Place                                                                             NULL:Subscriber  
+                                        NULL:Grove St PATH                                                                              NULL:Subscriber  
+                                        NULL:Newark Ave                                                                                 NULL:Subscriber  
+                                        NULL:Exchange Place                                                                             NULL:Subscriber  
+                                        NULL:Paulus Hook                                                                                NULL:Subscriber  
+                                        NULL:Newport PATH                                                                               NULL:Subscriber  
+                                        NULL:Liberty Light Rail                                                                         NULL:Customer    
+                                        NULL:Van Vorst Park                                                                             NULL:Subscriber  
+                                        NULL:Grove St PATH                                                                              NULL:Subscriber  
+                                        NULL:Newport PATH                                                                               NULL:Subscriber  
+                                        NULL:Newark Ave                                                                                 NULL:Subscriber  
+                                        NULL:Sip Ave                                                                                    NULL:Customer    
+                                        NULL:Grove St PATH                                                                              NULL:Subscriber  
+                                        NULL:Grove St PATH                                                                              NULL:Subscriber  
+                                        NULL:Exchange Place                                                                             NULL:Subscriber  
+                                        NULL:Sip Ave                                                                                    NULL:Subscriber  
+   Birth Year       Gender      Trip_Duration_in_min
+ Min.   :1900   Min.   :0.000   Min.   :     1.0    
+ 1st Qu.:1975   1st Qu.:1.000   1st Qu.:     4.0    
+ Median :1982   Median :1.000   Median :     6.0    
+ Mean   :1980   Mean   :1.124   Mean   :    15.6    
+ 3rd Qu.:1986   3rd Qu.:1.000   3rd Qu.:    11.0    
+ Max.   :2000   Max.   :2.000   Max.   :337670.0    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+ [ reached getOption(\"max.print\") -- omitted 735440 rows ]
+"
+"0","```r
+colnames(Bikedata)
+```"
+"1"," [1] \"Trip Duration\"           \"Start Time\"              \"Stop Time\"               \"Start Station ID\"        \"Start Station Name\"      \"Start Station Latitude\" 
+ [7] \"Start Station Longitude\" \"End Station ID\"          \"End Station Name\"        \"End Station Latitude\"    \"End Station Longitude\"   \"Bike ID\"                
+[13] \"User Type\"               \"Birth Year\"              \"Gender\"                  \"Trip_Duration_in_min\"   
+"

@@ -1,0 +1,10 @@
+"0","```r
+Bikedata$`User Type`<-as.factor(Bikedata$`User Type`)
+Bikedata$Gender<-as.factor(Bikedata$Gender)
+g <- ggplot(Bikedata, aes(Gender))
+g1<-g + geom_bar(aes(fill=`User Type`))+geom_text(stat = \"count\",aes(x=Gender,label=..count..),vjust=-.30,size=3)+
+facet_grid(year(Bikedata[,`Start Time`]))+ggtitle(\"Yearly count of user type by Gender\")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = \"black\"))
+ggsave(\"grnder.jpg\",plot = g1, units=\"in\", width=5, height=4, dpi=300)
+```"

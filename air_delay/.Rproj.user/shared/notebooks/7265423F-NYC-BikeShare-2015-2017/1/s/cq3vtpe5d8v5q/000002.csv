@@ -1,0 +1,10 @@
+"0","```r
+```r
+ts.stl <- stl(eventdata,\periodic\)  # decompose the TS
+ts.sa <- seasadj(ts.stl)  # de-seasonalize
+plot(eventdata, type=\l\)  # original series
+plot(ts.sa, type=\l\)  # seasonal adjusted
+seasonplot(ts.sa, 30, col=rainbow(30), year.labels=TRUE, main=\Seasonal plot: eventdata\) # seasonal frequency set as 30  data.
+monthplot(eventdata)
+```
+```"

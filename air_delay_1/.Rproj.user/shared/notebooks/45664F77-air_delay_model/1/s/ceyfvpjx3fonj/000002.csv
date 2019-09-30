@@ -1,0 +1,5 @@
+"0","```r
+ROCpred<-prediction(xgbpred,test_encoded$Delay_1)
+ROCperf<-performance(ROCpred,\"tpr\",\"fpr\")
+plot(ROCperf,col=\"blue\",print.cutoffs.at=seq(0.1,by=0.1,text.adj=c(-0.2,1.7),cex=0.7))
+```"

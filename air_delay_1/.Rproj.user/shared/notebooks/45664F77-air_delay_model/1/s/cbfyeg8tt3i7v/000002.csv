@@ -1,0 +1,9 @@
+"0","```r
+trctrl <- trainControl(method = \"repeatedcv\", number = 5, repeats = 3)
+set.seed(3233)
+ 
+svm_Linear <- train(Delay ~., data = train, method = \"svmLinear\",
+                 trControl=trctrl,
+                 preProcess = c(\"center\", \"scale\"),
+                 tuneLength = 10)
+```"

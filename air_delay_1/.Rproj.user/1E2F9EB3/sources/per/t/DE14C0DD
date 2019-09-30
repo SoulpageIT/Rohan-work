@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1556521275610.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3761641906",
+    "id" : "DE14C0DD",
+    "lastKnownWriteTime" : 1556519536,
+    "last_content_update" : 1556519536,
+    "path" : "C:/Users/Admin/Desktop/rohan/daily_task/weather_brazil/data_cleaning.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "chunk_output_type" : "inline"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

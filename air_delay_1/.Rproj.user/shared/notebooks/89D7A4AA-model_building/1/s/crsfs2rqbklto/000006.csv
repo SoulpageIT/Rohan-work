@@ -1,0 +1,5 @@
+"0","ROCpred<-prediction(xgbpred,Total_data_encoded$Delay_1)"
+"0","ROCperf<-performance(ROCpred,""tpr"",""fpr"")"
+"0","plot(ROCperf,col=""blue"",print.cutoffs.at=seq(0.1,by=0.1,text.adj=c(-0.2,1.7),cex=0.7))"
+"2","In seq.default(0.1, by = 0.1, text.adj = c(-0.2, 1.7), cex = 0.7) :
+ extra arguments ‘text.adj’, ‘cex’ will be disregarded"

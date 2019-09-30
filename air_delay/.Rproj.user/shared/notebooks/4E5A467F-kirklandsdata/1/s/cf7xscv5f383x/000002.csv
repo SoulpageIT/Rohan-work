@@ -1,0 +1,4 @@
+"0","```r
+kirklandsdata[,c(\"daily_visitor\",\"trialy_visitor\",\"quintally_visitor\",\"tenally_visitor\",\"previous_session_cart\",\"previous_session_checkout\",\"entry_product\",\"first_page_affil\",\"mal_cb\",\"target\")]<-
+lapply(kirklandsdata[,c(\"daily_visitor\",\"trialy_visitor\",\"quintally_visitor\",\"tenally_visitor\",\"previous_session_cart\",\"previous_session_checkout\",\"entry_product\",\"first_page_affil\",\"mal_cb\",\"target\")], as.factor)
+```"

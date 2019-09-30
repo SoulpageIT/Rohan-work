@@ -1,0 +1,6 @@
+"0","```r
+table(trainData$target)
+trainData$target<-as.factor(trainData$target)
+trainData<- SMOTE(target~., trainData, perc.over = 600,perc.under=100)
+table(trainData$target)
+```"

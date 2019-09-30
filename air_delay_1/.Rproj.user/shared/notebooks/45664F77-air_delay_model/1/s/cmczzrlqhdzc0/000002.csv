@@ -1,0 +1,4 @@
+"0","```r
+#logistic_regression<-glm(Delay ~.,family = \"binomial\",data=train[,-c(\"seasons\",\"months\")])
+#summary(logistic_regression)
+```"

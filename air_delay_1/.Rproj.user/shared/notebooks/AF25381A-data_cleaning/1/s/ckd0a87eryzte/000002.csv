@@ -1,0 +1,8 @@
+"0","```r
+apply(data,2,function(x)sum(is.na(x)))
+```"
+"1","   wsid    wsnm    elvt     lat     lon    inme    city    prov    mdct    date      yr      mo      da      hr    prcp     stp    smax    smin 
+      0       0       0       0       0       0       0       0       0       0       0       0       0       0 4099871       0       0       0 
+   gbrd    temp    dewp    tmax    dmax    tmin    dmin    hmdy    hmax    hmin    wdsp    wdct    gust 
+1979868      13     186      12     124       7     335       0       0       0  441554       0  142595 
+"

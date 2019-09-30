@@ -1,0 +1,14 @@
+"0","```r
+# function to calculate plot feature correlation matrix
+getCorrMatrix <- function(featureList, showPlot = TRUE){
+    # remove Survived from training set and order feature with respect to correlation coefficient to survived
+    passengerCorr <- hr_encoded[, as.character(featureList)]
+    # calculate correlation matrix
+    corrMatrix <- cor(passengerCorr)
+    # plot matrix
+    if (showPlot) {corrplot(corrMatrix, method = \"color\", type = \"upper\")}
+    corrMatrix
+}
+
+corrMatrix <- getCorrMatrix(rev(corrSurvivedOrder$feature))
+```"

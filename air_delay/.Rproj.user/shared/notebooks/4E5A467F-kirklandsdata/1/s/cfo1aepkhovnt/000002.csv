@@ -1,0 +1,4 @@
+"0","```r
+vif(logit)
+#eliminate variables with a VIF higher than 2
+```"

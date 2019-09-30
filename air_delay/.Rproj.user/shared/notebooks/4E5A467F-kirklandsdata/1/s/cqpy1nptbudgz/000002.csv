@@ -1,0 +1,6 @@
+"0","```r
+SVM_pred_RF_test <- predict(SVM_fit_RF_train, newdata = RF_test_scale[,1:14])
+
+#Test set Statistics 
+confusionMatrix(table(SVM_pred_RF_test, RF_test_scale$target))  
+```"

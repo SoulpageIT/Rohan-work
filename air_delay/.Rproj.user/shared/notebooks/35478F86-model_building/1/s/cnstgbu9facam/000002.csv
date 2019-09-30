@@ -1,0 +1,4 @@
+"0","```r
+#hr_encoded <- one_hot(as.data.table(hr),dropUnusedLevels=TRUE)
+#hr_encoded<-hr_encoded[,-\"Attrition_No\"]
+```"

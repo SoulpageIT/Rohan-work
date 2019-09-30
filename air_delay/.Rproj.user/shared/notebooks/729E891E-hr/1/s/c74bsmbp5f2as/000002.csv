@@ -1,0 +1,4 @@
+"0","```r
+x<-ggplot(hr,aes(TotalWorkingYears,MonthlyIncome,color=JobLevel,shape=OverTime))+geom_point()+facet_wrap(~Attrition)+labs(x = \"Total Working Years\",y=\"Monthly_Income\")
+ggplotly(x)
+```"

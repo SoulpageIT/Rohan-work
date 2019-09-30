@@ -1,0 +1,1351 @@
+---
+Title: "SoulpageItSolutionsTeam Model Building"
+output: html_notebook
+Date : 17/ 04/2019
+---
+#Delay Prediction of Planes in Delta AirLines.
+
+#Content
+  
+1) Problem Statement and Understanding.
+2) Reading and binding the test data.
+3) Data Cleaning.
+4) Feature Engineering.
+5) Checking and handling unbalanced data.
+6) Checking for multicollinearity.
+7) Model Building
+    7.1) classification
+      7.1.1) Logistic Regression. 
+      7.1.2) KNN
+      7.1.3) Decision Tree.
+      7.1.4) Random Forest.
+      7.1.5) SVM.
+      7.1.6) XGboost.
+8) Model selection for deployment.
+9)conclusion.
+
+#Problem Statement
+
+Understand the key factors through visualization that cause the delay Predict the possibility of delay in the future.
+
+#Understanding
+
+The given datasets had the flight delay details of 2 Airports in the US namely JFK(NewYork) and DFW(Dallas).Identify the features which cause delays & use ML to predict future delays.
+
+libraries used.
+```{r}
+#used for reading and subsetting the data
+library(data.table)
+#used for converting the format of the date column 
+library(lubridate)
+#used for plotting graphs
+library(ggplot2)
+library(plotly)
+#used for smote function to do under sampling and over sampling
+library(DMwR)
+#The library for cross validation
+library(caret)
+library(mlbench)
+#decision tree model building packages 
+library(rpart)
+#decision tree plotting packages 
+library(RColorBrewer)
+library(rattle)
+#The package for random forest function
+library(MASS)
+library(randomForest)
+#packages for xgboost
+library(xgboost)
+library(Matrix)
+library(readr)
+library(car)
+#For one hot encode function
+library(mltools)
+#library for ROC curve
+library(ROCR)
+library(car)
+#library for summarise function 
+library(dplyr)
+#This Library is used for reading Excel file.
+library(readxl)
+#For calculating the Geo distance.
+library(geosphere)
+```
+
+#Reading and binding the train data
+
+Reading the train data into R session.
+City 1 :- file means its contain data of origin airport Dallas. 
+city 2 :- file means its contain data of origin airport NewYork.
+```{r}
+#Here i am reading all the training data from different files.
+
+#Reading the 2016 data of origin airport Dallas.
+train<-fread("2016_city1.csv",skip = 7,nrows = 5526,stringsAsFactors = TRUE,drop = c("V18","V19","V20","V21","V22","V23","V24","V25","V26","V27","V28","V29","V30"))
+#Adding the origin airport column.
+train$OriginAirPort<-as.factor("Dallas")
+#Reading the 2016 data of origin airport NewYork.
+train1<-fread("2016_city2.csv",stringsAsFactors = TRUE)
+#Adding the origin airport column. 
+train1$OriginAirPort<-as.factor("NewYork")
+#Joining the 2016 data by rows.
+train<-rbind(setDT(train), setDT(train1), fill=TRUE)
+#Reading the 2017 data of origin airport Dallas.
+train1<-fread("2017_city1.csv",stringsAsFactors = TRUE)
+#Adding the origin airport column.
+train1$OriginAirPort<-as.factor("Dallas")
+#joining this data to train data.
+train<-rbind(setDT(train), setDT(train1), fill=TRUE)
+#Reading the 2017 data of origin airport NewYork
+train1<-fread("2017_city2.csv",stringsAsFactors = TRUE)
+train1$OriginAirPort<-as.factor("NewYork")
+#Binding the above read data to train data.
+train<-rbind(setDT(train), setDT(train1), fill=TRUE)
+#Now removing the unwanted duplicate data.table from the r session
+rm(train1)
+
+```
+
+#Reading and binding the test data.
+
+reading the test data in R session.
+```{r}
+#Here i am reading all the testing data from the different files.
+
+#Reading the 2018 data of origin airport NewYork  
+test<-fread("2018_city_2_test.csv",stringsAsFactors = TRUE)
+#Adding the Origin airport column.
+test$OriginAirPort<-as.factor("NewYork")
+#Reading the 2018 data of origin Dallas. 
+test1<-fread("2018_city_one_test.csv",stringsAsFactors = TRUE)
+#Adding the Origin airport column.
+test1$OriginAirPort<-as.factor("Dallas")
+```
+
+Combining the Test Data.
+```{r}
+#Here i am combinig two data.tables by rows and creating new table test.
+test<-rbind(setDT(test), setDT(test1), fill=TRUE)
+#Now removing the unwanted duplicate data.table from the r session
+rm(test1)
+```
+
+#Data Cleaning
+
+Now checking for the NA values for both train and test data sets.
+```{r}
+#Checking the NA 'S at entire data set of train and test
+cat("The Number of NA 'S at Training data set: ", sum(train=="na"))
+cat("\nThe Number of NA 'S at Testing  data set: ", sum(is.na(train=="na")))
+
+#checking for the empty sells in the table
+cat("\nThe Number of blank cell 'S at Training data set: ", sum(train==""))
+cat("\nThe Number of blank cell 'S at Testing  data set: ", sum(test==""))
+
+
+```
+As we see above output their are 10 empty spaces in the training data, so now we are going to see the empty rows for finding the reason that why they are empty
+
+Now seing in which columns empty spaces are present.
+```{r}
+apply(train,2,function(x)sum(x==""))
+```
+As we see above that  Tail Number has 10 empty cells.
+
+Now I am going to see the rows of that particular column to find the reason of empty cells
+```{r}
+#This command is use to see all the empty rows.
+train[`Tail Number`==""]
+```
+As we see in all these rows scheduled departure time was given but Actual departure time 00:00 ,Actual elapsed time is also 0 and all sort of delay columns are also 0 ,so by this we can conclude that the flights has got cancled for some reason or the data has not been captured for this particular flights.So this kind of data is not much used in the prediction so for now we are removing all the rows which are empty.
+
+
+Removing all the rows which are empty.
+```{r}
+setkey(train,`Tail Number`)
+train<-train[!""]
+```
+
+Now again checking wheather all the empty cell has got removed or not in train data
+```{r}
+#Checking the NA 'S at entire data set of train and test
+cat("The Number of blank cells  at Training data set: ", sum(train==""))
+```
+so Now we our training data set free of empty cells.
+
+Generally we should find and treate the outliers but due to less time issues and some Machine Learning Algorithm which i am using to build model are robust to outlier so for now i am not considering it.
+
+#Feature Engineering
+
+#1) Training data set
+
+Reading the Coordinates of the Destination Airports from the file.
+```{r}
+lat_long<-as.data.table(read_excel("Lat_Long.xlsx"))
+#converting string column as factor.
+lat_long$Destination<-as.factor(lat_long$Destination)
+```
+
+
+Now subsetting the train data by Origin airport for calculating geo_distance to its destination airports.
+
+#NewYork
+
+Adding longitude and latitude columns for Newyork AirPort. 
+```{r}
+#subsetting the data of NewYork
+NewYork<-train[OriginAirPort=="NewYork"]
+#Adding the columns
+NewYork$`Start Station Longitude`<- -73.8630
+NewYork$`Start Station Latitude`<- 40.7636
+```
+
+Adding Longitude and Latitude of Destination Airports.
+```{r}
+NewYork <- merge(NewYork,lat_long,by.x ="Destination Airport",by.y = "Destination")
+```
+
+
+Adding the column of Geo_distance between source airport to destination airport.
+```{r}
+NewYork[,distance := round(distHaversine(matrix(c(`Start Station Longitude`,`Start Station Latitude`), ncol = 2),matrix(c(Long,Lat),ncol = 2),r=6378137),2)]
+```
+
+
+#Dallas
+
+Adding longitude and latitude columns for Dallas AirPort. 
+```{r}
+#subsetting the data of NewYork.
+Dallas<-train[OriginAirPort=="Dallas"]
+#Adding the columns Longitude and Latitude.
+Dallas$`Start Station Longitude`<- -96.9830
+Dallas$`Start Station Latitude`<- 32.9614
+```
+
+Adding Longitude and Latitude of Destination Airports.
+```{r}
+Dallas <- merge(Dallas,lat_long,by.x ="Destination Airport",by.y = "Destination")
+```
+
+
+Adding the column of Geo_distance between source airport to destination airport.
+```{r}
+Dallas[,distance := round(distHaversine(matrix(c(`Start Station Longitude`,`Start Station Latitude`), ncol = 2),matrix(c(Long,Lat),ncol = 2),r=6378137),2)]
+```
+
+Now merging the NewYork and Dallas data set by rows.
+```{r}
+train<-rbind(setDT(NewYork), setDT(Dallas), fill=TRUE)
+#Now  removing unwanted data.tables from our analysis.
+rm(NewYork)
+rm(Dallas)
+```
+
+
+
+we are removing these columns because these columns does not effect our prediction.
+1) Flight Number
+2) Destination Airport
+3) Carrier Code
+4) Tail Number
+5) Start Station Longitude
+6) Start Station Latitude
+7) Lat
+8) Long
+```{r}
+train[ ,`:=`(`Flight Number` = NULL, `Destination Airport` = NULL,`Carrier Code`= NULL,`Tail Number`= NULL,`Start Station Longitude`=NULL,`Start Station Latitude`=NULL,Lat=NULL,Long=NULL,OriginAirPort=NULL)]
+```
+
+Now at first i am seing the structure of the training data set to know what type of data present in each column.
+```{r}
+#here i am seing the structure of train data set
+str(train)
+```
+As we see the above there are many columns which contain time and date type data ,the columns are :-
+1)Scheduled departure time
+2)Actual departure time
+3)Wheels-off time
+
+we have one date column 
+1)Date
+
+so now we are converting the date  columns to the date formate.
+```{r}
+#Now converting the date column.
+#we found 2 date format in data
+mdy <- mdy(train$`Date (MM/DD/YYYY)`)
+dmy <- dmy(train$`Date (MM/DD/YYYY)`)
+mdy[is.na(mdy)] <- dmy[is.na(mdy)] # some dates are ambiguous, here we give
+train$`Date (MM/DD/YYYY)`<- mdy # mdy precedence over dmy
+```
+
+Now we are dividing the following columns by hours and minutes
+1)1)Scheduled departure time
+2)Actual departure time
+```{r}
+#Now we are dividing Scheduled departure time column to scheduled_departure_time_hours and scheduled_departure_time_minutes
+train$`Scheduled departure time hours`<-hour(strptime(train$`Scheduled departure time`, format = '%H:%M', 'GMT'))
+train$`Scheduled departure time minutes`<-minute(strptime(train$`Scheduled departure time`,format = '%H:%M', 'GMT'))
+#Now we are dividing Actual departure time departure time column to Actual_departure_time_hours and Actual_departure_time_minutes
+train$`Actual departure time hours`<-hour(strptime(train$`Actual departure time`, format = '%H:%M', 'GMT'))
+train$`Actual departure time minutes`<-minute(strptime(train$`Actual departure time`,format = '%H:%M', 'GMT'))
+
+
+#Now removing the original Scheduled departure time column
+train$`Scheduled departure time`<-NULL
+#Now removing the actual departure time column
+train$`Actual departure time`<-NULL
+#Now removing the wheels of time as its not useful at model building.
+train$`Wheels-off time`<-NULL
+```
+
+
+Now extracting months and weekdays from the Date column in train data set.Removing Date column
+```{r}
+#this command is use to extract months
+train$months<-as.factor(month(train$`Date (MM/DD/YYYY)`))
+#this command is used to extract weekdays
+train$weekDays<-as.factor(weekdays(train$`Date (MM/DD/YYYY)`))
+
+#Removing Date column
+#train$`Date (MM/DD/YYYY)`<-NULL
+```
+
+
+Now extracting seasons from Date in the training data set.we are extracting seasons according to USA.
+1) Summer - June,July,August (6,7,8)
+2) Autumn - Sept,Oct,Nov (9,10,11)
+3) Winter - December,Jan,Feb (12,1,2)
+4) Spring - March,Aprial,May (3,4,5)
+Now creating the new column of seasons.
+```{r}
+indx <- setNames( rep(c('winter', 'spring', 'summer',
+                   'fall'),each=3), c(c(12,1,2),c(3,4,5),c(6,7,8),c(9,10,11)))
+train[,seasons := as.factor(unname(indx[as.character(month(train$`Date (MM/DD/YYYY)`))]))]
+```
+
+Now extracting years from the date.
+```{r}
+train$years<-as.factor(year(train$`Date (MM/DD/YYYY)`))
+```
+
+Now we are extracting data of  wheather there was holidays present at that day or not.
+
+For this we need are subsetting out training data by years.and we are going to subset data year wise and insert column Holiday
+
+#2016
+
+Now we are subsetting data of 2016.
+```{r}
+train_2016<-train[years=="2016"]
+#extracting day 
+train_2016$day<-as.factor(day(train_2016$`Date (MM/DD/YYYY)`))
+```
+
+
+Holidays list of USA at Year 2016.
+
+Holidays
+
+Day            Dates
+
+Fri         Jan 1
+Mon         Jan 18
+Mon         Feb 15
+Fri         Apr 15
+Sun         May 8
+Mon         May 30
+Sun         June 19
+Mon         July 4
+Mon         Sept 5
+Mon         Oct 10
+Fri         Nov 11
+Thur        Nov 24
+Fri         Nov 25
+Mon         Dec 26
+
+Now we are creating the column Holiday for the train_2016 data.
+```{r}
+#Inserting the holiday column. 
+train_2016$Holiday<-as.factor(ifelse((train_2016$months == "1" & train_2016$weekDays=="Friday" & train_2016$day=="1") | (train_2016$months == "1" & train_2016$weekDays=="Monday" & train_2016$day=="18") | (train_2016$months == "2" & train_2016$weekDays=="Monday" & train_2016$day=="15") | (train_2016$months == "4" & train_2016$weekDays=="Friday" & train_2016$day=="15") |(train_2016$months == "5" & train_2016$weekDays=="Sunday" & train_2016$day=="8") |(train_2016$months == "5" & train_2016$weekDays=="Monday" & train_2016$day=="30") |(train_2016$months == "6" & train_2016$weekDays=="Sunday" & train_2016$day=="19") |(train_2016$months == "7" & train_2016$weekDays=="Monday" & train_2016$day=="4") |(train_2016$months == "9" & train_2016$weekDays=="Monday" & train_2016$day=="5") |(train_2016$months == "10" & train_2016$weekDays=="Monday" & train_2016$day=="10") |(train_2016$months == "11" & train_2016$weekDays=="Friday" & train_2016$day=="11") |(train_2016$months == "11" & train_2016$weekDays=="Thursday" & train_2016$day=="24") |(train_2016$months == "11" & train_2016$weekDays=="Friday" & train_2016$day=="25") |(train_2016$months == "12" & train_2016$weekDays=="Monday" & train_2016$day=="26")== TRUE,1,0))
+```
+
+1 - means yes there was  holiday.
+
+0 - means No there was no holiday.
+
+Holidays list of USA at Year 2017.
+
+#2017
+
+Now subsetting the 2017 data from train.
+```{r}
+train_2017<-train[years=="2017"]
+#extracting day 
+train_2017$day<-as.factor(day(train_2017$`Date (MM/DD/YYYY)`))
+```
+
+
+Holidays list of USA at Year 2017.
+
+Holidays
+
+Day            Dates
+
+Monday         Jan 2
+Monday         Jan 16
+Monday         Feb 20
+Monday         April 17
+Sunday         May 14
+Monday         May 29
+Sunday         June 18
+Tuesday        July 4
+Monday         September 04
+Monday         october 09
+Friday         November 10
+Saturday       November 11
+Monday         November 13
+Thursday       November 23
+Friday         November 24
+Monday         December 25
+
+Now we are creating the column Holiday for the train_2016 data.
+```{r}
+#Inserting the holiday column. 
+train_2017$Holiday <- as.factor(ifelse((train_2017$months == "1" & train_2017$weekDays=="Monday" & train_2017$day=="2") | (train_2017$months == "1" & train_2017$weekDays=="Monday" & train_2017$day=="16") | (train_2017$months == "2" & train_2017$weekDays=="Monday" & train_2017$day=="20") | (train_2017$months == "4" & train_2017$weekDays=="Monday" & train_2017$day=="17") |(train_2017$months == "5" & train_2017$weekDays=="Sunday" & train_2017$day=="14") |(train_2017$months == "5" & train_2017$weekDays=="Monday" & train_2017$day=="29") |(train_2017$months == "6" & train_2017$weekDays=="Sunday" & train_2017$day=="18") |(train_2017$months == "7" & train_2017$weekDays=="Tuesday" & train_2017$day=="4") |(train_2017$months == "9" & train_2017$weekDays=="Monday" & train_2017$day=="4") |(train_2017$months == "10" & train_2017$weekDays=="Monday" & train_2017$day=="9") |(train_2017$months == "11" & train_2017$weekDays=="Friday" & train_2017$day=="10") |(train_2017$months == "11" & train_2017$weekDays=="Saturday" & train_2017$day=="11") |(train_2017$months == "11" & train_2017$weekDays=="Monday" & train_2017$day=="13") |(train_2017$months == "11" & train_2017$weekDays=="Thursday" & train_2017$day=="23")|(train_2017$months == "11" & train_2017$weekDays=="Friday" & train_2017$day=="24")|(train_2017$months == "12" & train_2017$weekDays=="Monday" & train_2017$day=="25") == TRUE,1,0))
+```
+
+
+Now joining the Two years data set.
+```{r}
+train<-rbind(setDT(train_2016), setDT(train_2017), fill=TRUE)
+#removing unwanted data set
+rm(train_2016)
+rm(train_2017)
+```
+
+
+Now extracting Morning,Noon,Evening and Night,the following the timing classifications.
+5 Hours  - 11 Hours :- Morning
+12 Hours - 16 Hours :- Noon
+17 Hours - 19 Hours :- Evening
+20 Hours - 4 Hours :- Night.
+
+Now inserting th DayCycle column into train data set.
+```{r}
+train[,DayCycle:=as.factor( ifelse(
+  `Scheduled departure time hours` >= 5 & `Scheduled departure time hours`<=11 , 'Morning',
+    ifelse(`Scheduled departure time hours` >= 12 & `Scheduled departure time hours`<=16,'Noon' ,
+      ifelse(`Scheduled departure time hours` >= 17 & `Scheduled departure time hours`<=19, 'Evening', 
+          "Night"   )
+    )
+  )
+)
+]
+```
+
+
+
+creating the target variable by the formula ((actual_elapsed time - scheduled_elapsed time)+departure time)<=0 no_delay >=1 is delay
+```{r}
+#creating the target variable which is categorical variable.
+train$Delay<-as.factor(ifelse((train$`Actual elapsed time (Minutes)`- train$`Scheduled elapsed time (Minutes)`)+train$`Departure delay (Minutes)` <= 0,0,1))
+```
+1) 1 - Delayed
+2) 0 - Not Delayed
+
+Now removing unwanted features from the train data set.
+```{r}
+train$years<-NULL
+train$day<-NULL
+train$`Date (MM/DD/YYYY)`<-NULL
+```
+
+
+
+#2) Test Data set.
+
+
+Now subsetting the train data by Origin airport for calculating geo_distance to its destination airports.
+
+#NewYork
+
+Adding longitude and latitude columns for Newyork AirPort. 
+```{r}
+#subsetting the data of NewYork
+NewYork<-test[OriginAirPort=="NewYork"]
+#Adding the columns
+NewYork$`Start Station Longitude`<- -73.8630
+NewYork$`Start Station Latitude`<- 40.7636
+```
+
+Adding Longitude and Latitude of Destination Airports.
+```{r}
+NewYork <- merge(NewYork,lat_long,by.x ="Destination Airport",by.y = "Destination")
+```
+
+
+Adding the column of Geo_distance between source airport to destination airport.
+```{r}
+NewYork[,distance := round(distHaversine(matrix(c(`Start Station Longitude`,`Start Station Latitude`), ncol = 2),matrix(c(Long,Lat),ncol = 2),r=6378137),2)]
+```
+
+
+#Dallas
+
+Adding longitude and latitude columns for Dallas AirPort. 
+```{r}
+#subsetting the data of NewYork.
+Dallas<-test[OriginAirPort=="Dallas"]
+#Adding the columns Longitude and Latitude.
+Dallas$`Start Station Longitude`<- -96.9830
+Dallas$`Start Station Latitude`<- 32.9614
+```
+
+Adding Longitude and Latitude of Destination Airports.
+```{r}
+Dallas <- merge(Dallas,lat_long,by.x ="Destination Airport",by.y = "Destination")
+```
+
+
+Adding the column of Geo_distance between source airport to destination airport.
+```{r}
+Dallas[,distance := round(distHaversine(matrix(c(`Start Station Longitude`,`Start Station Latitude`), ncol = 2),matrix(c(Long,Lat),ncol = 2),r=6378137),2)]
+```
+
+Now merging the NewYork and Dallas data set by rows.
+```{r}
+test<-rbind(setDT(NewYork), setDT(Dallas), fill=TRUE)
+#Now  removing unwanted data.tables from our analysis.
+rm(NewYork)
+rm(Dallas)
+```
+
+
+
+we are removing these columns because these columns are not trained to our model and these are not that important for prediction.
+1) Flight Number
+2) Destination Airport
+3) Carrier Code
+4) Tail Number
+5) Start Station Longitude
+6) Start Station Latitude
+7) Lat
+8) Long
+```{r}
+test[ ,`:=`(`Flight Number` = NULL, `Destination Airport` = NULL,`Carrier Code`= NULL,`Tail Number`= NULL,`Start Station Longitude`=NULL,`Start Station Latitude`=NULL,Lat=NULL,Long=NULL,OriginAirPort=NULL)]
+```
+
+
+so now we are converting the date time columns to the particular formate.
+```{r}
+#we found 2 date format in data
+mdy <- mdy(test$`Date (MM/DD/YYYY)`)
+dmy <- dmy(test$`Date (MM/DD/YYYY)`)
+mdy[is.na(mdy)] <- dmy[is.na(mdy)] # some dates are ambiguous, here we give
+test$`Date (MM/DD/YYYY)`<- mdy        # mdy precedence over dmy
+```
+
+```{r}
+#Now we are dividing Scheduled departure time column to scheduled_departure_time_hours and scheduled_departure_time_minutes
+test$`Scheduled departure time hours`<-hour(strptime(test$`Scheduled departure time`, format = '%H:%M', 'GMT'))
+test$`Scheduled departure time minutes`<-minute(strptime(test$`Scheduled departure time`,format = '%H:%M', 'GMT'))
+#Now we are dividing Actual departure time departure time column to Actual_departure_time_hours and Actual_departure_time_minutes
+test$`Actual departure time hours`<-hour(strptime(test$`Actual departure time`, format = '%H:%M', 'GMT'))
+test$`Actual departure time minutes`<-minute(strptime(test$`Actual departure time`,format = '%H:%M', 'GMT'))
+
+
+#Now removing the original Scheduled departure time column
+test$`Scheduled departure time`<-NULL
+#Now removing the actual departure time column
+test$`Actual departure time`<-NULL
+#Now removing the wheels of time as its not useful at model building.
+test$`Wheels-off time`<-NULL
+```
+
+Now extracting months and weekdays from the Date column in test data set.Removing Date column.
+```{r}
+#this command is use to extract months
+test$months<-as.factor(month(test$`Date (MM/DD/YYYY)`))
+#this command is used to extract weekdays
+test$weekDays<-as.factor(weekdays(test$`Date (MM/DD/YYYY)`))
+
+```
+
+
+Now extracting seasons from Date in the training data set.we are extracting seasons according to USA.
+1) Summer - June,July,August (6,7,8)
+2) Autumn - Sept,Oct,Nov (9,10,11)
+3) Winter - December,Jan,Feb (12,1,2)
+4) Spring - March,Aprial,May (3,4,5)
+Now creating the new column of seasons.
+```{r}
+indx <- setNames( rep(c('winter', 'spring', 'summer',
+                   'fall'),each=3), c(c(12,1,2),c(3,4,5),c(6,7,8),c(9,10,11)))
+test[,seasons := as.factor(unname(indx[as.character(month(test$`Date (MM/DD/YYYY)`))]))]
+```
+
+Now we are extracting data of  wheather there was holidays present at that day or not.
+
+For this we need are subsetting out training data by years.and we are going to subset data year wise and insert column Holiday
+
+#2018
+
+```{r}
+test$day<-day(test$`Date (MM/DD/YYYY)`)
+```
+
+Holidays list of USA at Year 2018.
+
+Holidays
+
+Day            Dates
+
+Monday        Jan 1
+Monday        Jan 15
+Monday        Feb 19
+Saturday      March 31
+Monday        May 28
+Wednesday     July 4
+Monday        Sept 3
+Monday        Nov 12
+Thursday      Nov 22
+Friday        Nov 23 
+Tuesday       December 25
+
+Now we are creating the column Holiday for the train_2016 data.
+```{r}
+#Inserting the holiday column. 
+test$Holiday<-as.factor(ifelse((test$months == "1" & test$weekDays=="Monday" & test$day=="1") | (test$months == "1" & test$weekDays=="Monday" & test$day=="15") | (test$months == "2" & test$weekDays=="Monday" & test$day=="19") | (test$months == "3" & test$weekDays=="Saturday" & test$day=="31") |(test$months == "5" & test$weekDays=="Monday" & test$day=="28") |(test$months == "7" & test$weekDays=="Wednesday" & test$day=="4") |(test$months == "9" & test$weekDays=="Monday" & test$day=="3") |(test$months == "11" & test$weekDays=="Monday" & test$day=="12") |(test$months == "11" & test$weekDays=="Thursday" & test$day=="22") |(test$months == "11" & test$weekDays=="Friday" & test$day=="23") |(test$months == "12" & test$weekDays=="Tuesday" & test$day=="25")== TRUE,1,0))
+```
+
+Now extracting Morning,Noon,Evening and Night,the following the timing classifications.
+5 Hours  - 11 Hours :- Morning
+12 Hours - 16 Hours :- Noon
+17 Hours - 19 Hours :- Evening
+20 Hours - 4 Hours :- Night.
+
+Now inserting th DayCycle column into train data set.
+```{r}
+test[,DayCycle:=as.factor( ifelse(
+  `Scheduled departure time hours` >= 5 & `Scheduled departure time hours`<=11 , 'Morning',
+    ifelse(`Scheduled departure time hours` >= 12 & `Scheduled departure time hours`<=16,'Noon' ,
+      ifelse(`Scheduled departure time hours` >= 17 & `Scheduled departure time hours`<=19, 'Evening', 
+          "Night"   )
+    )
+  )
+)
+]
+```
+
+
+creating the target variable which is Delay by Departure delay column like if the values is less than equal to 0 then no delay,else delayed.
+```{r}
+#creating the target variable which is categorical variable.
+test$Delay<-as.factor(ifelse((test$`Actual elapsed time (Minutes)`- test$`Scheduled elapsed time (Minutes)`)+test$`Departure delay (Minutes)` <= 0,0,1))
+```
+
+Removing unwanted columns
+```{r}
+#Removing Date column
+test$`Date (MM/DD/YYYY)`<-NULL
+#Removing day column
+test$day<-NULL
+```
+
+Removing the actual elaps time ,Scheduled elapsed time (Minutes),Departure delay (Minutes) from trainig and testing data as these three columns are highly correlated to target varible.
+```{r}
+#Removing from traing data
+train$`Actual elapsed time (Minutes)`<-NULL
+train$`Departure delay (Minutes)`<-NULL
+train$`Scheduled elapsed time (Minutes)`<-NULL
+
+#Removing from testing data
+test$`Actual elapsed time (Minutes)`<-NULL
+test$`Departure delay (Minutes)`<-NULL
+test$`Scheduled elapsed time (Minutes)`<-NULL
+```
+
+#Checking and handling unbalanced data.
+ 
+
+checking wheather there is any imbalance of data of to classes on the Delay variable in training data set.
+```{r}
+#Donet chart which display the percentage of each class in the column
+ p <- train %>%
+  group_by(Delay) %>%
+  summarize(count = n()) %>%
+  plot_ly(labels = ~Delay, values = ~count) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title = "The Percentage of category at Delay column",  showlegend = F,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+p
+```
+1 - Delayed (orange.)
+0 - not Delayed (blue.)
+
+As we can see category 1 has 72% of the data and other category contain 27% of the data so our target variable is balanced.
+
+
+#Model building
+
+#classification.
+
+# 1)Logistic regression
+
+
+
+Training the Logistic Regression model.
+```{r}
+logistic_regression<-glm(Delay ~.,family = "binomial",data=train)
+```
+Now viewing the summary of the model
+```{r}
+summary(logistic_regression)
+```
+As we see above in season column we have NA 's ,we found that that column has the problem of singularity
+
+so Now we are removing The Seasons column. and check the AIC value.
+```{r}
+logistic_regression<-glm(Delay ~.,family = "binomial",data=train[,-"seasons"])
+```
+checking the summary
+```{r}
+summary(logistic_regression)
+```
+Now checking the vif value,The column which has greater Gvif value will be eliminate first
+```{r}
+#vif(logistic_regression)
+```
+As we see above that `Scheduled departure time hours`  has the greater vif value by at summary its has show as important variable ,so we are not removing it.
+
+so now we are checking next highest vif value and the column is `Actual departure time hours` but at summary its has show as important variable ,so we are not removing it.
+
+so next highest vif value column is DayCycle but at summary we see it also have the high importance so we can not remove it.
+
+so next highest vif value column is `Scheduled departure time minutes` but at summary we see it also have the high importance so we can not remove it.
+
+so next highest vif value column is `Actual departure time minutes` but at summary we see it also have the high importance so we can not remove it.
+
+so next highest vif value column is `Delay Late Aircraft Arrival (Minutes)` we can  see this its not important feature so we are removing the 
+`Delay Late Aircraft Arrival (Minutes)` and check the wheather the AIC value decreases or increases.
+
+so now we are removing `Delay Late Aircraft Arrival (Minutes)` and check the AIC value.
+```{r}
+#logistic_regression<-glm(Delay ~.,family = "binomial",data=train[,-c("seasons","Delay Late Aircraft Arrival (Minutes)")])
+#summary(logistic_regression)
+```
+As we see above that AIC value got increased by removing `Delay Late Aircraft Arrival (Minutes)` so we should not remove this feature.so now
+we are checking new highest vif value in the column :
+That is `Delay Carrier (Minutes)` and summary show 's that its not important
+
+
+we are removing `Delay Carrier (Minutes)` and going to check the AIC value.
+```{r}
+#logistic_regression<-glm(Delay ~.,family = "binomial",data=train[,-c("seasons","Delay Carrier (Minutes)")])
+#summary(logistic_regression)
+```
+As we see above that AIC value got increased by removing `Delay Carrier (Minutes)` so we should not remove this feature.so now
+we are checking new highest vif value in the column :
+That is ``Taxi-Out time (Minutes)`` and summary show 's that its very important.
+
+so we are checking the next highest column weekDays its some what important but we are going to remove and check AIC value.
+ 
+we are removing weekDays and going to check the AIC value.
+
+AS we see that by removing the weekDays and check the AIC value.
+```{r}
+#logistic_regression<-glm(Delay ~.,family = "binomial",data=train[,-c("seasons","weekDays")])
+#summary(logistic_regression)
+#vif(logistic_regression)
+```
+The AIC value got increased so we should not remove the weekdays column.
+
+so now we check by removing  months as some months are significent some are not. 
+
+so by removing the months we are going the check the AIC value.
+```{r}
+#logistic_regression<-glm(Delay ~.,family = "binomial",data=train[,-c("seasons","months")])
+#summary(logistic_regression)
+```
+AIC value got increased so we should not remove this column.
+
+so next highest vif value is Holiday
+
+so now we are removing this column and checking the AIC value wheather it has got increased or decreased.
+```{r}
+#logistic_regression<-glm(Delay ~.,family = "binomial",data=train[,-c("seasons","Holiday")])
+#summary(logistic_regression)
+```
+AS we see that the Aic value got decreased  so we are removing holidays column 
+
+Now checking the vif Value of the variables after removing the holidays column
+```{r}
+#vif(logistic_regression)
+```
+
+
+Now using our logistic regression model for predicting the test data.
+```{r}
+y_pred <-predict(logistic_regression, newdata = test[,-c("Delay","seasons")],type = "response")
+```
+
+Now Drawing the ROC cURVE for finding out the ideal threshold value at which true positive and false positive get balanced.
+```{r}
+ROCpred<-prediction(y_pred,test$Delay)
+ROCperf<-performance(ROCpred,"tpr","fpr")
+plot(ROCperf,col="blue",print.cutoffs.at=seq(0.1,by=0.1,text.adj=c(-0.2,1.7),cex=0.7))
+```
+By ROc curve we can make out that at near 0.9 and 0.8 the true positive and false positive rate are some what balanced.
+
+But first we are going to check at 0.5 
+
+At first i am checking at threshold 0.5 to classifiy our predictions
+```{r}
+y_pred<-as.factor(ifelse(y_pred > 0.5,"1","0"))
+```
+
+Now checking our results by confusion matrix
+```{r}
+confusionMatrix(y_pred,test$Delay, positive = "1")
+```
+
+creating function for visualization of confusion matrix.
+
+```{r}
+#Parameter for the function.
+#parameter 1 :- Number of correct predictions for class 0
+#parameter 2 :- Number of wrong predictions for class 0
+#parameter 3 :- Number of correct predictions for class 1
+#parameter 4 :- Number of wrong predictions for class 1
+graphConfusionMatrix<-function(correct_class_a,wrong_class_a,correct_class_b,wrong_class_b){
+  
+  #Creating the data for the plot.
+  x <- data.frame("About_results" = c("Correct_Prediction","Wrong_Prediction"), "Values" = c(correct_class_a,wrong_class_a))
+  y <- data.frame("About_results" = c("Correct_Prediction","Wrong_Prediction"), "Values" = c(correct_class_b,wrong_class_b))
+  
+  #ploting the graph.
+  p <- plot_ly() %>%
+   add_pie(data = count(x,About_results), labels = ~About_results, values =x$Values ,
+         name = "class 0", domain = list(row = 0, column = 0)) %>%
+ add_pie(data = count(y,About_results), labels = ~About_results, values = y$Values,
+         name = "class 1", domain = list(row = 0, column = 1)) %>%
+   layout(title = "Visualization Of Confusion Matrix",showlegend = T,
+        grid=list(rows=1, columns=2),
+        xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+        yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+  #Displaying the graphs
+  p
+  #removing unwanted dataframes.
+  #rm(x)
+  #rm(y)
+}
+```
+
+visualization the confusion matrix
+```{r}
+graphConfusionMatrix(22118,3544,5062,58)
+```
+Even the accuracy is good but the model got overfitted we can say that by seing the imbalance of values Sensitivity : 0.5882,Specificity : 0.9974 
+so these both are not balanced.
+
+
+#KNN
+
+These are the control parameters 
+```{r}
+trctrl <- trainControl(method = "repeatedcv", number = 10, repeats = 3)
+```
+
+```{r}
+set.seed(3333)
+knn_fit <- train(Delay ~., data = train, method = "knn",
+ trControl=trctrl,
+ preProcess = c("center", "scale"),
+ tuneLength = 10)
+```
+
+```{r}
+knn_fit
+```
+so as we see above  our model is giving highest accuracy at k value 5 ,so our model took k value 5 and build the model.
+
+Now using the KNN model for prediction on test data.
+
+```{r}
+y_pred <-predict(knn_fit,newdata = test[,-"Delay"])
+```
+
+Now we are check the confusion matrix to check how well our model classified the target variable.
+```{r}
+confusionMatrix(test$Delay,y_pred)
+```
+visualization confusion matrix.
+```{r}
+graphConfusionMatrix(21682,494,3139,5467)
+```
+As we see left side  pie chart says that our model is 97% certain of prediction that the flight is not going to be delayed.
+
+AS we see the right side pie chart says that our model is 63.5% certain of prediction  that  the flight is going to be delayed.
+
+so as we Random Forest model is much better than Decision tree model as its has more accuracy on prediction of flight Delay. 
+
+The accuracy of the model is 80%.
+
+so Now lets check Decision tree.
+
+#Decision Tree classifier
+
+Now trainig our model by train data set with  Decison tress algorithm
+
+Trainig the model with out purning of tree.
+```{r}
+decision_tree <- rpart(Delay~., method="class",data=train)
+```
+
+
+Checking the summary of the model,to see all the important factors that are influence our Attrition variable.
+```{r}
+summary(decision_tree)
+```
+Now by summary are going check for which cp value x error was minimum ,in our case we got minimum xerror at cp value 0.01000000
+
+so Now we are  going to purn our decision tree model by control parameter.
+```{r}
+decision_tree <- rpart(Delay~., method="class",data=train,control = rpart.control(cp=0.01000000))
+```
+
+As Now our decision tree is purned so now we are going to check the important features that effect our target variable during prediction.
+```{r}
+summary(decision_tree)
+```
+So these are the important variables arranged in descending order,which means the feature which is at the top has the higher importance.
+
+1) Delay Carrier (Minutes) 
+2) Delay National Aviation System (Minutes)    
+3) Delay Late Aircraft Arrival (Minutes) 
+4) Taxi-Out time (Minutes)
+5) Actual departure time hours 
+                                                                                
+
+Now plotting the decision tree ,to visualize and interpret how decision tree has took decision.
+```{r}
+fancyRpartPlot(decision_tree,uniform=TRUE, main="Classification Tree")
+```
+INFERENCE BY THE ABOVE GRAPH.
+
+By the  above decision tree we can infer that Delay Carrier is greater than 0.5 minutes then there is delay.but when Delay Carrier  is less than  0.5 it is going to check Delay National Aviation System ,if its delay is greater than 0.5 then there is delay.But if the delay is less than 0.5 minutes then we are going to check  Delay Late Aircraft Arrival ,if  Delay Late Aircraft Arrival is less than 0.5 minutes then there is no delay,else there is the delay.
+
+Now we are going use our model for prediction on test data.
+```{r}
+y_pred <-predict(decision_tree,newdata = test[,-"Delay"],type = "class")
+```
+
+Now we are check the confusion matrix to check how well our model classified the target variable.
+```{r}
+confusionMatrix(test$Delay,y_pred)
+```
+As we see above results of our prediction,our decision tree model given 88% accuracy on the test data by balancing sensitivity and specificity matrix.
+
+
+visualization of confusion matrix
+```{r}
+graphConfusionMatrix(22176,0,4939,3667)
+```
+As we see left side  pie chart says that our model is 100% certain of prediction that the flight is not going to be delayed.
+
+AS we see the right side pie chart says that our model is 57.4% certain of prediction  that  the flight is going to be delayed.
+
+
+Now lets check by considering only important feature shown by the model above and build the decision tree.
+
+Traing the decision tree with only important features.
+tree with out purning
+```{r}
+decision_tree <- rpart(Delay~., method="class",data=train[,c("Delay Carrier (Minutes)","Delay National Aviation System (Minutes)","Delay Late Aircraft Arrival (Minutes)", "Taxi-Out time (Minutes)","Actual departure time hours","Delay")])
+```
+
+
+Checking the summary of the model,to see all the important factors that are influence our Attrition variable.and seing minimum xerror of cp value.
+```{r}
+summary(decision_tree)
+```
+so Now we are  going to purn our decision tree model by control parameter.
+```{r}
+decision_tree <- rpart(Delay~., method="class",data=train[,c("Delay Carrier (Minutes)","Delay National Aviation System (Minutes)","Delay Late Aircraft Arrival (Minutes)", "Taxi-Out time (Minutes)","Actual departure time hours","Delay")],control = rpart.control(cp=0.01000000))
+```
+
+Now we are going to check the important variables.
+```{r}
+summary(decision_tree )
+```
+so now with the test data.
+```{r}
+y_pred <-predict(decision_tree,newdata = test[,c("Delay Carrier (Minutes)","Delay National Aviation System (Minutes)","Delay Late Aircraft Arrival (Minutes)", "Taxi-Out time (Minutes)","Actual departure time hours")],type = "class")
+```
+
+Now we are check the confusion matrix to check how well our model classified the target variable.
+```{r}
+confusionMatrix(test$Delay,y_pred)
+```
+As we see above results of our prediction,our decision tree model given 88% accuracy on the test data.
+
+visualization of confusion matrix
+```{r}
+graphConfusionMatrix(22176,0,4939,3667)
+```
+AS we see above by only considering the important features we are getting the same result.so may be the decision tree is getting over fitted.
+
+so for that reason we are moving to random forest.
+
+#Random Forest
+
+Now we are setting seed so that every time we run Random forest we get same results.
+```{r}
+set.seed(123)
+```
+
+Now trainig the Random Forest model
+
+Parameters of Random Forest model.
+mtry = square root of number of independent variable.so in our case the number of independent variable. 
+```{r}
+#calculating the mtry parameter value
+#number of columns -1 we did because in training data set we have target variable also.
+cat("\nThe mtry value should be : ", sqrt((ncol(train)-1)))
+```
+ntree - we have took 200 (we took it random)
+
+Making the column names of train and test data set to standard form as Random Forest do not work on illegal column names. 
+```{r}
+names(train) <- make.names(names(train))
+names(test)<-make.names(names(test))
+```
+
+
+Now we are fitting the train data to the model
+```{r}
+RandomForestModel<-randomForest(Delay ~ .,data = train,mtry=sqrt((ncol(train)-1)),ntree=200)
+```
+
+Now we are going to see what are important variables that are effecting the target variable by our model.
+```{r}
+importance(RandomForestModel)
+```
+we are ploting important variables on graphs for more visualization.
+```{r}
+varImpPlot(RandomForestModel)
+```
+So from the above graph we can infer that , top five are same as the Decision tree important variables.so variables importance is same as Decision Tree.
+so we can say that Delay.Carrier..Minutes is the most important variable.
+
+Now we are just checking the best mtry value for our RandomForest model.
+```{r}
+bestmtry<-tuneRF(train,train$Delay,ntreeTry = 200,stepFactor = 1.2,improve = 0.01,trace = T,plot = T)
+```
+So as we see above the Out Of Box error(miss classification error) is minimum at mtry 4 so we took mtry 4.
+
+so now we are going to use our model on test data.
+```{r}
+y_pred <- predict(RandomForestModel, test[,-"Delay"],type = "class")
+```
+
+Now we are check the confusion matrix to check how well our model classified the target variable.
+```{r}
+confusionMatrix(test$Delay,y_pred)
+```
+As we see above results of our prediction,our decision tree model given 88% accuracy on the test data by balancing sensitivity and specificity matrix.
+
+visualization of confusion matrix
+```{r}
+graphConfusionMatrix(21937,239,5447,3159)
+```
+As we see left side  pie chart says that our model is 99% certain of prediction that the flight is not going to be delayed.
+
+AS we see the right side pie chart says that our model is 63.5% certain of prediction  that  the flight is going to be delayed.
+
+so as we Random Forest model is much better than Decision tree model as its has more accuracy on prediction of flight Delay. 
+
+
+Now we are doing cross validation of our model to check conform wheather our model is getting over fitted or not.
+we are doing 10 fold cross validation ,there is no logic in selecting 10 folds its just random.
+```{r}
+ControlParameters<-trainControl(method = "cv",number = 10,savePredictions = TRUE)
+```
+
+
+```{r}
+parameterGrid<-expand.grid(mtry=c(2,3,4))
+```
+
+
+Now training our model by  caret package.
+```{r}
+modelRandomForest<-train(Delay~.,data=train,method="rf",trControl=ControlParameters,tuneGrid=parameterGrid)
+```
+
+
+```{r}
+modelRandomForest
+```
+so now we can see that the accuracy of the sample is around 85 to 90 so we can conform that our model is not over fitting.
+
+#SVM
+
+Training the SVM by train data
+```{r}
+trctrl <- trainControl(method = "repeatedcv", number = 5, repeats = 3)
+set.seed(3233)
+ 
+svm_Linear <- train(Delay ~., data = train, method = "svmLinear",
+                 trControl=trctrl,
+                 preProcess = c("center", "scale"),
+                 tuneLength = 10)
+```
+
+```{r}
+svm_Linear
+```
+
+so now we are going to use our model on test data.
+```{r}
+y_pred <- predict(svm_Linear , test[,-"Delay"])
+```
+
+Now we are check the confusion matrix to check how well our model classified the target variable.
+```{r}
+confusionMatrix(test$Delay,y_pred)
+```
+
+As we see above results of our prediction,our decision tree model given 88% accuracy on the test data by balancing sensitivity and specificity matrix.
+
+visualization of confusion matrix
+```{r}
+graphConfusionMatrix(22168,8,4992,3614)
+```
+As we see left side  pie chart says that our model is 99% certain of prediction that the flight is not going to be delayed.
+
+AS we see the right side pie chart says that our model is 58% certain of prediction  that  the flight is going to be delayed.
+
+
+
+#XGBoost
+
+As XGBoost does not handle any type of variable other than numeric so now we are encoding all the other type of variable to numeric.
+
+Encoding the train and test data set.
+```{r}
+#Encoding the training data set
+train_encoded<-one_hot(train)
+#Encoding the testing data set
+test_encoded<-one_hot(test)
+```
+
+While doing onehot encoding we have got two columns for the target variable.so we should remove one of the column
+```{r}
+train_encoded$Delay_0<-NULL
+test_encoded$Delay_0<-NULL
+```
+
+
+training the XGBoost model with train data
+```{r}
+dtrain <- xgb.DMatrix(as.matrix(train_encoded[,-"Delay_1"]), label = as.matrix(train_encoded$Delay_1))
+dtestfinal<-xgb.DMatrix(as.matrix(test_encoded[,-"Delay_1"]), label = as.matrix(test_encoded$Delay_1))
+#default parameters
+params <- list(booster = "gbtree", objective = "binary:logistic", eta=0.2, max_depth=4, min_child_weight=2, subsample=1, colsample_bytree=1)
+```
+
+
+```{r}
+#find best nround
+cv<-xgb.cv( params = params, data = dtrain, nrounds = 1000, nfold = 5,gamma=0, showsd = T, stratified = T, print.every.n = 10, early.stop.round = 20, maximize = F)
+cv$best_iteration
+print(cv)
+print(cv, verbose=TRUE)
+```
+
+```{r}
+#first default - model training
+xgb1 <- xgb.train (params = params, data = dtrain, nrounds = 320, watchlist = list(val=dtestfinal,train=dtrain), print.every.n = 10, early.stop.round = 10, maximize = F , eval_metric = "error")
+```
+
+```{r}
+#model prediction
+xgbpred <- predict (xgb1,dtestfinal)
+```
+
+Drawing the Roc Curve for finding the ideal threshold value.
+```{r}
+ROCpred<-prediction(xgbpred,test_encoded$Delay_1)
+ROCperf<-performance(ROCpred,"tpr","fpr")
+plot(ROCperf,col="blue",print.cutoffs.at=seq(0.1,by=0.1,text.adj=c(-0.2,1.7),cex=0.7))
+```
+
+#Threshold at 0.5
+
+```{r}
+xgbpred <- ifelse (xgbpred > 0.5,1,0)
+```
+
+Now viewing the threshold at 0.5
+```{r}
+confusionMatrix(table(as.factor(test_encoded$Delay_1), as.factor(xgbpred)),positive = "1")
+```
+
+At threshold 0.5 we got the accuracy of 89% with good sensitivity and specificity as compared to other two models above.
+```{r}
+graphConfusionMatrix(21765,411,5898,2708)
+```
+As we see left side  pie chart says that our model is 98% certain of prediction that the flight is not going to be delayed.
+
+AS we see the right side pie chart says that our model is 68.5% certain of prediction  that  the flight is going to be delayed.
+
+
+so this model is much better than other 2 above.
+
+
+so we want to improve the accuracy of the model,so as we see above ROC curve at threshold 0.6 the false positive and true positive are balanced so lets try and see at 0.9 threshold value.
+
+#threshold 0.9
+```{r}
+xgbpred <- ifelse (xgbpred > 0.6,1,0)
+```
+
+Now viewing the threshold at 0.5
+```{r}
+confusionMatrix(table(as.factor(test_encoded$Delay_1), as.factor(xgbpred)),positive = "1")
+```
+so as we see the accuracy has gone down by 1 percent.
+```{r}
+graphConfusionMatrix(21765,411, 5898,2708)
+```
+The 0.5 was ideal threshold for our model as at both threshold the accuracy was same but the percentage of correct classification is more at 0.5 for both the classes ,so we are considering 0.5 as the threshold value for our model.
+
+The important features given by XGBoost 
+```{r}
+xgb.importance(model = xgb1 )
+```
+ so these are the important features that effect out target variable.Then most important feature is Delay.carrier..Minutes.
+
+
+# Model selection for deployment.
+
+Preparing data for the graphs.
+```{r}
+model_names <-c("Logistic_regression","KNN","DecisionTree","RandomForest","SVM","XGBoost")
+accuracy <- c(88,80,88,88,88,89)
+
+data_accuracy<-data.frame(model_names,accuracy)
+```
+
+Ploting Graph
+```{r}
+qq<-ggplot(data_accuracy, aes(x=model_names, y=accuracy)) +
+  geom_segment( aes(x=model_names, xend=model_names, y=0, yend=accuracy)) +
+  geom_point( size=15, color="steelblue", fill=alpha("steelblue", 0.3), alpha=0.7, shape=21, stroke=2)+theme(panel.background = element_rect(fill = ' white'))+geom_text(aes(label=accuracy), vjust=0.30, color="black", size=3.4)+coord_flip()+labs(x="Model_Names",y="Accuracy value in terms of percentage.")
+ggsave("accuracy.jpg",plot=qq,unit="in",width=7,height = 7,dpi=300)
+qq
+```
+
+saving the XGBoost Model.
+```{r}
+xgb.save(xgb1, 'xgb.model')
+#bst <- xgb.load('xgb.model')
+#pred <- predict(bst, test$data)
+```
+
+We have implemented 6 models out of which XGBoost has given use best result in terms of accuracy and also had good balance betweeen Sensitivity and  Specificity,so We have choosed XGBoost as our model for prediction of Delay.
+
+
+#Conclusion
+
+The XGBoost is the best model out of 6 models that we have implemented ,where it predict delay with the accuracy of 89%.These are the top three important features due to which flights are getting delayed.
+
+1)Delay.Carrier..Minutes
+
+2)Delay.National.Aviation.System..Minutes.
+
+3)Taxi.Out.time..Minutes.
+
+
+
+Using the entire data as train data.
+```{r}
+Total<-rbind(setDT(train), setDT(test), fill=TRUE)
+```
+
+Training the entire data by XGBoost.
+
+Encoding the train and test data set.
+```{r}
+#Encoding the Total data set
+Total_encoded<-one_hot(Total)
+```
+
+While doing onehot encoding we have got two columns for the target variable.so we should remove one of the column
+```{r}
+Total_encoded$Delay_0<-NULL
+```
+
+
+training the XGBoost model with train data
+```{r}
+dtrain <- xgb.DMatrix(as.matrix(Total_encoded[,-"Delay_1"]), label = as.matrix(Total_encoded$Delay_1))
+#dtestfinal<-xgb.DMatrix(as.matrix(test_encoded[,-"Delay_1"]), label = as.matrix(test_encoded$Delay_1))
+#default parameters
+params <- list(booster = "gbtree", objective = "binary:logistic", eta=0.2, max_depth=4, min_child_weight=2, subsample=1, colsample_bytree=1)
+```
+
+
+```{r}
+#find best nround
+cv<-xgb.cv( params = params, data = dtrain, nrounds = 1000, nfold = 5,gamma=0, showsd = T, stratified = T, print.every.n = 10, early.stop.round = 20, maximize = F)
+cv$best_iteration
+print(cv)
+print(cv, verbose=TRUE)
+```
+As we see above best iteration is at 327.
+
+```{r}
+#first default - model training
+xgb1 <- xgb.train (params = params, data = dtrain, nrounds = 327, watchlist = list(val=dtestfinal,train=dtrain), print.every.n = 10, early.stop.round = 10, maximize = F , eval_metric = "error")
+```
+
+saving the XGBoost Model.
+```{r}
+xgb.save(xgb1, 'xgb_all_data.model')
+#bst <- xgb.load('xgb.model')
+#pred <- predict(bst, test$data)
+```
+
+
+
+
+
+
+
+
+
+
+Using this data as testing data.
+```{r}
+#xgbpred <- predict (xgb1,dtrain,type = "class")
+```
+
+As our model threshold is 0.5, now we are classifing the predictions.
+```{r}
+#xgbpred <- ifelse (xgbpred >= 0.5,1,0)
+```
+
+Now we are going to check on confusion matrix
+```{r}
+#confusionMatrix(as.factor(train_encoded$Delay_1),as.factor(xgbpred),positive = "1")
+```
+```{r}
+#graphConfusionMatrix(43031,215,16413,312)
+```
+
+

@@ -1,0 +1,15 @@
+"0","```r
+```r
+# simple exponential - models level
+fit <- HoltWinters(eventdata, beta=FALSE, gamma=FALSE)
+# double exponential - models level and trend
+fit <- HoltWinters(eventdata, gamma=FALSE)
+# triple exponential - models level, trend, and seasonal components
+fit <- HoltWinters(eventdata)
+
+
+# predict next three future values
+forecast(fit, 12)
+plot(forecast(fit, 3))
+```
+```"

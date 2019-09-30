@@ -1,0 +1,8 @@
+"0","```r
+```r
+out.range<-boxplot.stats(data.set.analyse$coupon_run_prev_ses_product_session)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$coupon_run_prev_ses_product_session)$stats  #this function show 's the value 's of upper bound and lower bound
+cat(\The Values of outliers :- \,out.range,\\n\)
+boxplot(data.set.analyse$coupon_run_prev_ses_product_session)
+mtext(paste(\outlier :- \,paste(out.range,collapse = \
+```"

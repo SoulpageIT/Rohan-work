@@ -1,0 +1,6 @@
+"0","```r
+set.seed(1)
+sample = sample.split(hr$Attrition, SplitRatio = .80)
+train = subset(hr, sample == TRUE)
+test  = subset(hr, sample == FALSE)
+```"

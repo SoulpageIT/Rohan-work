@@ -1,0 +1,11 @@
+"0","```r
+```r
+# trModel <- lm(JohnsonJohnson ~ c(1:length(JohnsonJohnson)))
+# plot(resid(trModel), type=\l\)  # resid(trModel) contains the de-trended series.
+
+trModel <- lm(eventdata ~ c(1:length(eventdata)))
+plot(resid(trModel),type=\l\)
+resid(trModel)# resid(trModel) contains the de-trended series.
+
+```
+```"

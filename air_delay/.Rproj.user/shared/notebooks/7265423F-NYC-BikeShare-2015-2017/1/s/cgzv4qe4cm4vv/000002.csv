@@ -1,0 +1,9 @@
+"0","```r
+```r
+library(DataCombine)
+myDf <- as.data.frame(eventdata)
+myDf <- slide(myDf, \V1\, NewVar = \xLag1\, slideBy = -1)  # create lag1 variable
+myDf <- slide(myDf, \V1\, NewVar = \xLead1\, slideBy = 1)  # create lead1 variable
+head(myDf)
+```
+```"

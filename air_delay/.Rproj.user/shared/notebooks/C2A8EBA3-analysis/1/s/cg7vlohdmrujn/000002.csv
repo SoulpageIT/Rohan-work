@@ -1,0 +1,5 @@
+"0","```r
+ncol(data_users_viewed)
+```"
+"1","Error in ncol(data_users_viewed) : object 'data_users_viewed' not found
+"

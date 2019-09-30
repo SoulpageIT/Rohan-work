@@ -1,0 +1,9 @@
+"0","```r
+startpoint<-function(year,month,gender){
+leaflet(Bikedata[month(`Start Time`)==3 & year(`Start Time`)==2016 & Gender==0,.N,by=list(`Start Station Longitude`,`Start Station Latitude`,`Start Station Name`)]) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+addWebGLHeatmap(lng=~`Start Station Longitude`, lat=~`Start Station Latitude`, group =\"`Start Station Name`\",size = 10000,opacity = 0.9)}
+startpoint(2017,1,2)
+```"
+"1","Error in addWebGLHeatmap(., lng = ~`Start Station Longitude`, lat = ~`Start Station Latitude`,  : 
+  could not find function \"addWebGLHeatmap\"
+"

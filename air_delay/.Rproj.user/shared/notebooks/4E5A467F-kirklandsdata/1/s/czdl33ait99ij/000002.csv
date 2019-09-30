@@ -1,0 +1,15 @@
+"0","```r
+
+RF_train<-trainData[,list(sessions_with_affil_before,sessions_before_with_cart,affil_after_p1_prev_session,page_depth,products_viewed,sessions_before_with_checkout,day_between_previous_session,first_page_affil,daily_sessions,mal_cb,sessions_before,sessions_before_with_product,time_spent,entry_home,target)]
+
+RF_test<-testData[,list(sessions_with_affil_before,sessions_before_with_cart,affil_after_p1_prev_session,page_depth,products_viewed,sessions_before_with_checkout,day_between_previous_session,first_page_affil,daily_sessions,mal_cb,sessions_before,sessions_before_with_product,time_spent,entry_home,target)]
+
+RF_train_scale<-as.data.frame(scale(RF_train[,1:14]))
+RF_train_scale$target<-RF_train$target
+
+RF_test_scale<-as.data.frame(scale(RF_test[,1:14]))
+RF_test_scale$target<-RF_test$target
+
+
+  str(RF_train)
+```"

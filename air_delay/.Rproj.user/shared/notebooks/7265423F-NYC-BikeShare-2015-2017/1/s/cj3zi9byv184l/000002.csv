@@ -1,0 +1,15 @@
+"0","```r
+```r
+# Seasonal decomposition
+attr(eventdata, 'frequency') <- 30  # set frequency attribute
+decomposedRes<-decompose(as.ts(eventdata),type = \multiplicative\) 
+plot (decomposedRes) # see plot below
+stlRes <- stl(eventdata, s.window = \periodic\)
+
+
+# decomposedRes <- decompose(eventdata[,1], type=\multiplicative\) # use type = \additive\ for additive components
+# plot (decomposedRes) # see plot below
+# stlRes <- stl(eventdata, s.window = \periodic\)
+
+```
+```"

@@ -1,0 +1,4 @@
+"0","```r
+confusionMatrix(table(class_final,testData$target))
+
+```"

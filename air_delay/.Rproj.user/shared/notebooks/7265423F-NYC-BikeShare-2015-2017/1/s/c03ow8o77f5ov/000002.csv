@@ -1,0 +1,5 @@
+"0","```r
+ 
+#number of trips
+Bikedata[, .N, by = list(month(`Start Time`),weekdays(`Start Time`),`Bike ID`,`Start Station Name`,`Start Station Latitude`,`Start Station Longitude`,`End Station Latitude`,`End Station Longitude`)]
+```"

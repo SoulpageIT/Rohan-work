@@ -1,0 +1,2 @@
+"0","test<-Total_data[years==""2019""]"
+"0","test$day<-day(test$`Date (MM/DD/YYYY)`)"

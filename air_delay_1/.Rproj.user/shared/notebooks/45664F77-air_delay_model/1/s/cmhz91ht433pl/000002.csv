@@ -1,0 +1,7 @@
+"0","#Now converting the date column."
+"0","#we found 2 date format in data"
+"0","mdy <- mdy(train$`Date (MM/DD/YYYY)`)"
+"0","dmy <- dmy(train$`Date (MM/DD/YYYY)`)"
+"2"," 36590 failed to parse."
+"0","mdy[is.na(mdy)] <- dmy[is.na(mdy)] # some dates are ambiguous, here we give"
+"0","train$`Date (MM/DD/YYYY)`<- mdy # mdy precedence over dmy"

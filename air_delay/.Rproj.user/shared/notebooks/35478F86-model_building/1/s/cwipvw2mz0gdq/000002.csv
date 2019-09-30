@@ -1,0 +1,21 @@
+"0","```r
+hr_encoded<-as.data.frame(hr_encoded)
+# remove features which are not used for correlation analysis
+training <- select(hr_encoded, -c(Attrition))
+
+# calculate correlation coefficient of each feature with survival
+feature <- names(training)
+
+corrSurvived <- data.frame(feature = feature, coef = rep(NA, length(feature)))
+for (iFeature in 1:length(feature)){
+    corrSurvived$coef[iFeature] <- cor(training[, iFeature],hr_encoded$Attrition)
+}
+# sort by correlation coefficient
+corrSurvivedOrder <- corrSurvived[order(corrSurvived$coef, decreasing = FALSE), ]
+
+ggplot(corrSurvivedOrder, aes(x = factor(feature, levels = feature), y = coef,fill=coef)) + 
+    geom_bar(stat = \"identity\") + 
+    coord_flip() + 
+    xlab(\"Feature\") + 
+    ylab(\"Correlation Coefficient\")
+```"

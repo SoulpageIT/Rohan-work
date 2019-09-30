@@ -1,0 +1,24 @@
+"0","```r
+vif(logistic_regression)
+```"
+"1","                              Age                         DailyRate                  DistanceFromHome                        HourlyRate                       MonthlyRate                NumCompaniesWorked 
+                         2.061557                          1.131260                          1.172450                          1.150755                          1.113555                          1.511385 
+                PercentSalaryHike                 TotalWorkingYears             TrainingTimesLastYear                    YearsAtCompany                YearsInCurrentRole           YearsSinceLastPromotion 
+                         2.661215                          5.222169                          1.095861                          7.369536                          3.289820                          2.669840 
+             YearsWithCurrManager BusinessTravel.xTravel_Frequently     BusinessTravel.xTravel_Rarely                 Department.xSales                      Education.x2                      Education.x3 
+                         2.946000                          4.691940                          4.548406                         33.372568                          2.401518                          2.901990 
+                     Education.x4                      Education.x5     EducationField.xLife.Sciences         EducationField.xMarketing           EducationField.xMedical             EducationField.xOther 
+                         2.699623                          1.407070                         22.608037                         12.761965                         19.502460                          5.647750 
+ EducationField.xTechnical.Degree        EnvironmentSatisfaction.x2        EnvironmentSatisfaction.x3        EnvironmentSatisfaction.x4                            Gender                 JobInvolvement.x2 
+                        10.387367                          1.641296                          1.810096                          1.865477                          1.103183                          3.567054 
+                JobInvolvement.x3                 JobInvolvement.x4                       JobLevel.x2                       JobLevel.x3                       JobLevel.x4          JobRole.xHuman.Resources 
+                         3.965259                          2.055165                          3.869203                          3.446207                          1.633499                          2.899512 
+   JobRole.xLaboratory.Technician                  JobRole.xManager   JobRole.xManufacturing.Director        JobRole.xResearch.Director       JobRole.xResearch.Scientist          JobRole.xSales.Executive 
+                         6.710231                          2.380852                          1.684903                          1.463638                          6.320992                         30.668886 
+    JobRole.xSales.Representative                JobSatisfaction.x2                JobSatisfaction.x3                JobSatisfaction.x4            MaritalStatus.xMarried             MaritalStatus.xSingle 
+                        16.136554                          1.512910                          1.700010                          1.660765                          2.621140                          5.250173 
+                         OverTime                 PerformanceRating       RelationshipSatisfaction.x2       RelationshipSatisfaction.x3       RelationshipSatisfaction.x4               StockOptionLevel.x1 
+                         1.321417                          2.597298                          1.575293                          1.694370                          1.731228                          2.736961 
+              StockOptionLevel.x2               StockOptionLevel.x3                WorkLifeBalance.x2                WorkLifeBalance.x3                WorkLifeBalance.x4 
+                         1.665542                          1.638932                          3.726107                          4.307313                          2.449852 
+"

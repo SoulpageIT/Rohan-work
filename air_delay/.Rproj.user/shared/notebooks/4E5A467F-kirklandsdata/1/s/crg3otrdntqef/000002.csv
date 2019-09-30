@@ -1,0 +1,4 @@
+"0","```r
+bestmtry<-tuneRF(trainData[,-\"target\"],as.factor(trainData$target),stepFactor = 1.2,improve = 0.01,trace = TRUE,plot = TRUE)
+
+```"

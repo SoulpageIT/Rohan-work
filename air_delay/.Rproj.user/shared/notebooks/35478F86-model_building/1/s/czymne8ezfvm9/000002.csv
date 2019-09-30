@@ -1,0 +1,23 @@
+"0","```r
+# function to get data frame with pairwise correlation of features
+getPairCorrelation <- function(corrMatrix){
+    featureName <- colnames(corrMatrix)
+    nFeature <- length(featureName)
+    
+    # set lower triangle of matrix to NA (these values are all redundant)
+    corrMatrix[lower.tri(corrMatrix, diag = TRUE)] <- NA
+    
+    # convert matrix to data frame
+    featurePair <- data.frame(feature1 = rep(featureName, nFeature), feature2 = rep(featureName, each = nFeature), coef = as.vector(corrMatrix))
+    # remove NAs
+    featurePair <- featurePair[!is.na(featurePair$coef), ]
+    # calculate absolute value of correlation coefficient
+    featurePair$coefAbs <- abs(featurePair$coef)
+    # order by coefficient
+    featurePair <- featurePair[order(featurePair$coefAbs, decreasing = TRUE), ]
+    
+    featurePair
+}    
+
+featureCorr <- getPairCorrelation(corrMatrix) 
+```"

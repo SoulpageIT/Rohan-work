@@ -1,0 +1,18 @@
+"0","```r
+summary(census)
+```"
+"1","     USPS               GEOID                 POP10            HU10           ALAND             
+ Length:74002       Min.   : 1001020100   Min.   :    0   Min.   :    0   Min.   :           0  
+ Class :character   1st Qu.:13039010401   1st Qu.: 2870   1st Qu.: 1245   1st Qu.:     1753931  
+ Mode  :character   Median :28047001400   Median : 3993   Median : 1706   Median :     4823863  
+                    Mean   :28391241080   Mean   : 4222   Mean   : 1802   Mean   :   123732604  
+                    3rd Qu.:42003414101   3rd Qu.: 5318   3rd Qu.: 2259   3rd Qu.:    33198235  
+                    Max.   :72153750602   Max.   :37452   Max.   :21535   Max.   :221251628361  
+     AWATER              ALAND_SQMI        AWATER_SQMI          INTPTLAT       INTPTLONG      
+ Min.   :          0   Min.   :    0.00   Min.   :   0.000   Min.   :17.90   Min.   :-175.86  
+ 1st Qu.:          0   1st Qu.:    0.68   1st Qu.:   0.000   1st Qu.:33.91   1st Qu.: -97.75  
+ Median :      28101   Median :    1.86   Median :   0.011   Median :38.71   Median : -86.62  
+ Mean   :    9335529   Mean   :   47.77   Mean   :   3.604   Mean   :37.47   Mean   : -91.27  
+ 3rd Qu.:     548740   3rd Qu.:   12.82   3rd Qu.:   0.212   3rd Qu.:41.35   3rd Qu.: -79.76  
+ Max.   :24010457489   Max.   :85425.74   Max.   :9270.490   Max.   :71.29   Max.   : 178.34  
+"

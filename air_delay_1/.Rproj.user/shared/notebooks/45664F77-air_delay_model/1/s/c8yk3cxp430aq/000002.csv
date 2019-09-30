@@ -1,0 +1,5 @@
+"0","```r
+#calculating the mtry parameter value
+#number of columns -1 we did because in training data set we have target variable also.
+cat(\"\nThe mtry value should be : \", sqrt((ncol(train)-1)))
+```"

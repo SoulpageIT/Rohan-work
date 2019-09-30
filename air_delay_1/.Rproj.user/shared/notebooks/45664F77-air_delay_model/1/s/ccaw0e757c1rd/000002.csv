@@ -1,0 +1,4 @@
+"0","#Encoding the training data set"
+"0","train_encoded<-one_hot(train)"
+"0","#Encoding the testing data set"
+"0","test_encoded<-one_hot(test)"

@@ -1,0 +1,4 @@
+"0","```r
+max(kirklandsdata$sessions_before)
+max(kirklandsdata$products_viewed)
+```"

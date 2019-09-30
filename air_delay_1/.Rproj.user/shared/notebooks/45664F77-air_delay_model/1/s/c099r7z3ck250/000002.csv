@@ -1,0 +1,3 @@
+"0","indx <- setNames( rep(c('winter', 'spring', 'summer',"
+"0","                   'fall'),each=3), c(c(12,1,2),c(3,4,5),c(6,7,8),c(9,10,11)))"
+"0","test[,seasons := as.factor(unname(indx[as.character(month(test$`Date (MM/DD/YYYY)`))]))]"

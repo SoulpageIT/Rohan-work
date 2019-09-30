@@ -1,0 +1,5 @@
+"0","```r
+d <- ggplot(Bikedata, aes(Trip_Duration_in_min,dist))+geom_point()
+d + geom_hex(stat = \"binhex\",bins=10)+#stat = \"binhex\",bins=10
+facet_grid(year(Bikedata[,`Start Time`]))
+```"

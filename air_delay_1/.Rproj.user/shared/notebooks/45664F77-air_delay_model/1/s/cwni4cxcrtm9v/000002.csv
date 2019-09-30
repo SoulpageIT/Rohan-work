@@ -1,0 +1,1 @@
+"0","Dallas[,distance := round(distHaversine(matrix(c(`Start Station Longitude`,`Start Station Latitude`), ncol = 2),matrix(c(Long,Lat),ncol = 2),r=6378137),2)]"

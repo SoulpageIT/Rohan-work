@@ -1,0 +1,2 @@
+"0","Total_data<-rbind(setDT(Total_data1), setDT(test), fill=TRUE)"
+"0","rm(Total_data1)"

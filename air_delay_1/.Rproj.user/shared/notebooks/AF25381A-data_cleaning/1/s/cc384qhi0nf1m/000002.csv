@@ -1,0 +1,23 @@
+"0","```r
+library(rapportools)
+
+```"
+"1","Loading required package: reshape
+
+Attaching package: ã¤¼ã¸±reshapeã¤¼ã¸²
+
+The following object is masked from ã¤¼ã¸±package:data.tableã¤¼ã¸²:
+
+    melt
+
+
+Attaching package: ã¤¼ã¸±rapportoolsã¤¼ã¸²
+
+The following objects are masked from ã¤¼ã¸±package:statsã¤¼ã¸²:
+
+    IQR, median, sd, var
+
+The following objects are masked from ã¤¼ã¸±package:baseã¤¼ã¸²:
+
+    max, mean, min, range, sum
+"

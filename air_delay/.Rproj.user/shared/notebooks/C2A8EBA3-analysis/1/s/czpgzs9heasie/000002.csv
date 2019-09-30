@@ -1,0 +1,31 @@
+"0","```r
+clean <- function(e){
+  rm(dat)
+  return(e)
+}
+# # inspect
+# head(dat)
+# 
+# dat %>% 
+#   e_charts(speed) %>%
+#   clean() %>%
+#   e_scatter(dist)
+# 
+# 
+# # removed
+# # dat does not exist anymore
+# #dat
+# #Probably you could more easily filter the dataset to only keep the columns you want to plot, #thereby reducing the amount of data that is stored in your live memory as well as the copy.
+# 
+# #library(dplyr)
+# 
+# # select columns to plot 
+# # make sure to OVERRIDE the dataset otherwise there's no point in this operation
+# mtcars <- mtcars %>%
+#   select(wt, qsec)
+# 
+# mtcars %>% 
+#   e_charts(qsec) %>%
+#   e_scatter(wt)
+# \"\"\"
+```"

@@ -1,0 +1,5 @@
+"0","```r
+pred_forest<-predict(fit,testData,type=\"class\")
+mean(testData$target==pred_forest)
+confusionMatrix(table(testData$target,pred_forest))
+```"

@@ -1,0 +1,5 @@
+"0","Total_2018<-Total_data"
+"0","Total_2018$years<-NULL"
+"0","Total_2018$day<-NULL"
+"0","Total_2018$`Date (MM/DD/YYYY)`<-NULL"
+"0","rm(test)"

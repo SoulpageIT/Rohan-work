@@ -1,0 +1,44 @@
+"0","```r
+# features to be eliminated
+#nFeature <- length(corrSurvivedOrder$feature)
+#featureEliminate <- character(nFeature)
+
+# data frame with all features 
+#featureRest <- featureCorr
+#featureRest$feature1 <- as.character(featureRest$feature1)
+#featureRest$feature2 <- as.character(featureRest$feature2)
+
+# calculate absolute value of correlation coefficient with attrition
+#corrSurvived$coefAbs <- abs(corrSurvived$coef)
+
+#for (iFeature in 1:(nFeature - 1)){
+    # get correlation coefficient to attrition
+    #coefAbs1 <- corrSurvived$coefAbs[corrSurvived$feature == featureRest$feature1[1]]
+    #coefAbs2 <- corrSurvived$coefAbs[corrSurvived$feature == featureRest$feature2[1]]
+    
+    # choose which feature has lower absolute correlation coefficient to attrition
+    #if (coefAbs1 <= coefAbs2) {
+        # eliminate feature 1
+        #featureRemove <- featureRest$feature1[1]
+       # featureKeep <- featureRest$feature2[1]
+    #} else {
+        # eliminate feature 2
+        #featureRemove <- featureRest$feature2[1]
+        #featureKeep <- featureRest$feature1[1]
+   # }
+    
+    # add selected feature to elimination list
+    #featureEliminate[iFeature] <- featureRemove
+    
+    # remove feature from featureRest
+    #featureRest <- featureRest[featureRest$feature1 != featureRemove & featureRest$feature2 != featureRemove, ]
+#}
+
+# add last remaining feature to elimination list
+#featureEliminate[nFeature] <- featureKeep
+
+# reverse elimination list
+#featureGE <- rev(featureEliminate)
+
+#featureGE
+```"

@@ -1,0 +1,4 @@
+"0","```r
+Bikedata[,c(\"Start Time\",\"Stop Time\")]<-lapply(Bikedata[,c(\"Start Time\",\"Stop Time\")],as.POSIXct)
+#str(Bikedata)
+```"

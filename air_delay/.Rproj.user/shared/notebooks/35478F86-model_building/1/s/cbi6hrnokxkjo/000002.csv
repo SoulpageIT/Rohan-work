@@ -1,0 +1,5 @@
+"0","```r
+y_pred<-ifelse(y_pred > 0.33,\"Yes\",\"No\")
+#$y_pred<-as.factor(y_pred)
+y_pred<-as.data.frame(y_pred)
+```"

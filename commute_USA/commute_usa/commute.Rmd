@@ -1,0 +1,124 @@
+---
+title: "The commute data of USA"
+output: html_notebook
+---
+
+libraries
+```{r}
+library(data.table)
+library(ggplot2)
+library(plotly)
+```
+
+now reading the data into R 
+```{r}
+#census<-fread("",integer64="character")
+commute<-fread("commute_data.csv") #integer64="character"
+census<-fread("census_tracts_2010.csv")
+```
+
+Now viewing the 2 data sets.
+```{r}
+View(commute)
+View(census)
+```
+
+```{r}
+str(commute)
+```
+```{r}
+str(census)
+```
+summary of the data set.
+```{r}
+summary(commute)
+```
+```{r}
+summary(census)
+```
+combinig the 2 tables.
+checking
+```{r}
+census[,.N,by=GEOID][,sum(N)]
+```
+Creating the final data.
+
+now we are joining the two tables.
+now we are re-naming the column from senser table
+```{r}
+colnames(census)[colnames(census) == 'GEOID'] <- 'OFIPS'
+```
+
+doing inner join based on OFIPS column in commute data.
+```{r}
+d1<-merge(commute,census, by = "OFIPS")
+```
+
+again renaming the column to 
+```{r}
+colnames(census)[colnames(census) == 'OFIPS'] <- 'DFIPS'
+```
+
+now creating d2
+```{r}
+d2<-merge(commute,census, by = "DFIPS")
+```
+
+The two data frames are not identical.
+```{r}
+identical(d1, d2)
+```
+Now creating the final Data.
+
+
+
+
+```{r}
+d1<-d1[order(d1$OFIPS)]
+```
+
+```{r}
+d2<-d2[order(d2$OFIPS)]
+```
+
+```{r}
+colnames(d2)
+```
+changing the column order.
+```{r}
+col_order<-c(   "OFIPS" ,  "DFIPS"   , "OSTFIPS"    , "OCTFIPS"  ,   "OTRFIPS"  ,   "DSTFIPS" ,    "DCTFIPS", "DTRFIPS"  ,   "FLOW"   ,     "MOE"    ,     "LENKM"    ,   "ESTDIVMOE" ,  "USPS"     ,   "POP10"  ,    
+ "HU10"     ,   "ALAND"     ,  "AWATER"    ,  "ALAND_SQMI" , "AWATER_SQMI" ,"INTPTLAT"   , "INTPTLONG" )
+d2<-as.data.frame(d2)
+d2 <- d2[,col_order]
+d2<-as.data.table(d2)
+```
+
+intersection.
+```{r}
+#d3<-fintersect(setDT(d1), setDT(d2),all = FALSE)
+```
+
+union.
+```{r}
+final<- funion(d1,d2)
+```
+
+
+
+
+
+
+
+
+
+Now on this data we are going to do our final analysis.
+```{r}
+str(final)
+```
+```{r}
+sum(is.na(final))
+```
+```{r}
+
+```
+

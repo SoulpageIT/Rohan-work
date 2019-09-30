@@ -1,0 +1,8 @@
+"0","```r
+set.seed(100)
+data<-kirklandsdata[,-c(\"visitor\",\"session\",\"browser\")]
+trainDataIndex <- createDataPartition(data$target, p=0.7, list = F)  # 70% training data
+trainData <-data[trainDataIndex, ]
+testData <- data[-trainDataIndex, ]
+
+```"

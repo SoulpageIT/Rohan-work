@@ -1,0 +1,4 @@
+"0","```r
+bikes <- Bikedata
+rm(Bikedata)
+```"

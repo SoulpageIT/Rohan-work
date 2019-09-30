@@ -1,0 +1,6 @@
+"0","```r
+salary_monthly_dep<-function(age,typeTravel){
+x<-ggplot(hr[Age==age& BusinessTravel==typeTravel,.N,by=list(JobRole,JobSatisfaction,MonthlyIncome, Department)],aes(x=JobRole,y=MonthlyIncome,fill=JobRole))+geom_bar(stat=\"identity\",width = 0.3) +facet_wrap(~Department,ncol = 1,scales = \"free\")
+ggplotly(x)
+}
+```"
