@@ -1,0 +1,4 @@
+"0","library(maps)"
+"0","mapStates = map(""state"", fill = TRUE, plot = FALSE)"
+"0","leaflet(data = mapStates) %>% addTiles() %>%"
+"0","  addPolygons(fillColor = topo.colors(10, alpha = NULL), stroke = FALSE)"

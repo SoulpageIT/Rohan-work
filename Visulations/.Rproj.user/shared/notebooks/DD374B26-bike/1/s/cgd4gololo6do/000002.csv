@@ -1,0 +1,5 @@
+"0","```r
+model_holtwinters<-HoltWinters(timeseries)
+plot(forecast(model_holtwinters))
+plot(forecast(model_holtwinters))
+```"

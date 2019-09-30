@@ -1,0 +1,19 @@
+"0","```r
+p1<-topics_beta %>%
+filter(grepl(\"[aâ€z]+\", term)) %>% # extract alphabets a-z
+group_by(topic) %>%
+top_n(10, beta) %>%
+ungroup() %>%
+arrange(topic, -beta) %>%
+mutate(term = reorder(term, beta)) %>%
+ggplot(aes(term, beta, color = factor(topic), fill = factor(topic))) +
+geom_col(show.legend = FALSE, alpha = 0.8) +
+scale_color_manual(values = palette_light()) +
+scale_fill_manual(values = palette_light()) +
+facet_wrap(~ topic, ncol = 5) +
+coord_flip() +
+theme_tq() +
+labs(x = \"\",
+y = \"beta (~ occurrence in topics 1â€5)\",
+title = \"The top 10 most characteristic words describe topic categories.\")
+```"

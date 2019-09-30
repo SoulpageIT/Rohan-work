@@ -1,0 +1,5 @@
+"0","```r
+source(\"https://goo.gl/q1JFih\")
+net=network(gr, directed = FALSE)
+ggnet2(net,size = 6, color = \"blue\", edge.size = 1, edge.color = \"grey\")+coord_equal()
+```"

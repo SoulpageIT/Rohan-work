@@ -1,0 +1,144 @@
+---
+title: "Santander Product Recommendation EDA"
+output: html_notebook
+---
+
+## About Santander
+
+Banco Santander, S.A., doing business as Santander Group, is a Spanish multinational commercial bank and financial services company based in Madrid and Santander in Spain. Additionally, Santander maintains a presence in all global financial centres as the 16th-largest banking institution in the world.
+
+## About the challenge
+
+Ready to make a downpayment on your first house? Or looking to leverage the equity in the home you have? To support needs for a range of financial decisions, Santander Bank offers a lending hand to their customers through personalized product recommendations.
+
+Under their current system, a small number of Santander’s customers receive many recommendations while many others rarely see any resulting in an uneven customer experience. In their second competition, Santander is challenging Kagglers to predict which products their existing customers will use in the next month based on their past behavior and that of similar customers.
+
+With a more effective recommendation system in place, Santander can better meet the individual needs of all customers and ensure their satisfaction no matter where they are in life.
+
+In the  competition, you are provided with 1.5 years of customers behavior data from Santander bank to predict what new products customers will purchase. The data starts at 2015-01-28 and has monthly records of products a customer has, such as "credit card", "savings account", etc. You will predict what additional products a customer will get in the last month, 2016-06-28, in addition to what they already have at 2016-05-28. These products are the columns named: ind_(xyz)_ult1, which are the columns #25 - #48 in the training data. You will predict what a customer will buy in addition to what they already had at 2016-05-28. 
+
+
+```{r}
+#Libraries for :- 
+#Reading the data
+library(data.table)
+#For visualizations
+library(ggplot2)
+library(plotly)
+#For Maps
+library(leaflet)
+#For converting country code to country name
+library(countrycode)
+#This library is used for extracting coordinated from country names.
+library(geonames)
+```
+
+
+```{r}
+#Reading the data 
+train<-fread("train_ver2.csv")
+test<-fread("test_ver2.csv")
+```
+
+
+```{r}
+head(train)
+```
+
+
+```{r}
+nrow(train)
+ncol(train)
+```
+
+```{r}
+colnames(train)
+```
+
+
+```{r}
+print(paste0("The number of unique customers present in the data :- ", length(unique(train$ncodpers))))
+```
+
+```{r}
+print(paste0("Number of countries in which customers present :- ",length(unique(train$pais_residencia))))
+```
+
+```{r}
+unique(train$pais_residencia)
+```
+
+```{r}
+train[train==""]<-NA
+```
+
+The percentage of NA 's Values in each column.
+```{r}
+sapply(train, function(y) (length(which(is.na(y)))/nrow(train)*100))
+```
+As we see the column 
+
+1)conyuemp :- Last date as primary customer (if he isn't at the end of the month)
+2)conyuemp :- Spouse index. 1 if the customer is spouse of an employee
+
+For these two columns 99% of the data is missing so,I am omitting these two columns 
+```{r}
+train$ult_fec_cli_1t<-NULL
+train$conyuemp<-NULL
+```
+
+percentage of data is missing in the entire data set after removing the two columns.
+```{r}
+sum(is.na(train[!complete.cases(train),]))/nrow(train)*100
+```
+so only 29% of data set is missing ,so for EDA we are going to remove the missing data
+
+```{r}
+no_miss_train<-train[complete.cases(train),]
+```
+
+Adding countries names in the data set.
+```{r}
+#creating a column which have county names
+no_miss_train$country_names<-countrycode(no_miss_train$pais_residencia, "iso2c", "country.name")
+```
+
+Now we are extracting Lat and Long for all the countries present in the data set.
+```{r}
+#This function convert country names to coordinates
+# conveninence function to look up and format results  
+#GNsearchAF <- function(x,y) {  
+#  res <- GNsearch(name=x,country=y)  
+#  return(res[1, ])  
+#}
+#(no_miss_train$country_names,no_miss_train$,GNsearchAF)  
+```
+
+1) In which country the users are high.?
+2) which country have more active users?
+3) 
+
+
+```{r}
+unique(train$canal_entrada)
+```
+
+```{r}
+unique(train$indfall)
+```
+
+```{r}
+unique(train$cod_prov)
+```
+
+```{r}
+unique(no_miss_train)
+```
+```{r}
+unique(no_miss_train$pais_residencia)
+```
+
+```{r}
+no_miss_train
+```
+

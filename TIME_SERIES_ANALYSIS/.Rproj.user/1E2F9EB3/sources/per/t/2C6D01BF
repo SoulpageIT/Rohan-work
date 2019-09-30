@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1557746147065.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "2C6D01BF",
+    "lastKnownWriteTime" : 31244173393002613,
+    "last_content_update" : 1557746147065,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "BE5EC04D",
+        "caption" : "air_reserve",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=air_reserve&cache_key=BE5EC04D",
+        "displayedObservations" : 92378,
+        "environment" : "",
+        "object" : "air_reserve",
+        "preview" : 0,
+        "totalObservations" : 92378,
+        "variables" : 4
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

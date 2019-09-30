@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1559882702163.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3340809198",
+    "id" : "DDA88157",
+    "lastKnownWriteTime" : 1558078692,
+    "last_content_update" : 1558078692,
+    "path" : "E:/rohan_office_new/rohan/edureka_ass/R/visulation_ass/visulation_r_ass.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "118,144",
+        "scrollLine" : "110"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

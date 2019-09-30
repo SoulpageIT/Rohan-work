@@ -1,0 +1,6 @@
+"0","```r
+ggplotly(ggplot(data, aes(x=Income,fill=as.factor(HasCar))) +
+  geom_histogram()+labs(title = \"univariate histogram on Income\",fill=\"HasCar\")+theme(plot.title = element_text(hjust = 0.5,face = \"bold\",color = \"black\")))
+```"
+"1","`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+"

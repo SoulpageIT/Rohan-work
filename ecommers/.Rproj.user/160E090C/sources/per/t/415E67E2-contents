@@ -1,0 +1,209 @@
+---
+title: classification using Decision Tree ,Random Forest,Support Vector Machine on heart disease data set.
+output: html_notebook
+---
+The libraries 
+```{r}
+library(DataExplorer)
+library(caTools)
+library(tree)
+library(rpart)
+library(rpart.plot)
+library(randomForest)
+library(rattle)
+library(caret)
+library(e1071)
+library(data.table)
+```
+Creating the mod function as there is no built in  function of mod in r 
+```{r}
+mod<-function(mod.data){
+  return(names(table(mod.data))[table(mod.data)==max(table(mod.data))])
+}
+```
+
+importing the data from the web_site and converting non acceptable values to na .
+```{r}
+heart.data<-fread("https://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/processed.cleveland.data",header=FALSE,sep=",",na.strings = c('?','-','*','$','^','NA'))
+names(heart.data) <- c( "age", "sex", "cp", "trestbps", "chol","fbs", "restecg",
+                   "thalach","exang", "oldpeak","slope", "ca", "thal", "num")
+View(heart.data)
+```
+
+Viewing the data and its structure to get an brief idea about ,in which form the data is present in the table.seing the summary to check outliers and Na values .
+```{r}
+head(heart.data)
+print(str(heart.data))
+print("summary")
+summary(heart.data)
+```
+Found that in column (ca -4 and thal-2)we have na by summary function,and i am handling na values because SVM Algo is sensitive towards outliers and NA this Algo give 's bad results if we have na's and outliers in the data set.Now i am handling the NA value by replacing the mod value of that particular column
+```{r}
+heart.data$ca[is.na(heart.data$ca)]<-mod(heart.data$ca)
+heart.data$thal[is.na(heart.data$thal)]<-mod(heart.data$thal)
+summary(heart.data)
+```
+As i have now removed NA values ,now i should check and remove outliers ,by seing the summary of each column i am going to decide the outliers.At trestbps feature we as we see median is 130 but max is 200,so below i have checked the inter quantile values
+```{r}
+quantile(heart.data$trestbps, probs = c(0.50, 0.70,0.80,0.90))
+```
+Now i have found some new inbuilt functions for findin
+As above we can see 90 percent of the data is less than 152 but max is 200 so i am further going to check where the sudden jump is going on
+```{r}
+quantile(heart.data$trestbps,probs = c(0.91,0.92,0.93,0.94,0.95,0.96,0.97,0.98,0.99))
+```
+Now i am going to cap in the value which is greater than 170 to 170
+```{r}
+heart.data$trestbps[heart.data$trestbps > 170.00] <- 170.00
+```
+
+The its looking like chol has some outlier values as up to third quartile the value is 275.0 but max value is 564.0 so now i am gonna check in qunatile 
+```{r}
+quantile(heart.data$chol, probs = c(0.50, 0.70,0.80,0.90))
+quantile(heart.data$chol,probs = c(0.91,0.92,0.93,0.94,0.95,0.96,0.97,0.98,0.99))
+```
+As we can see that 98 percentage of the data is less than 353.96 and max is 564.0 ,so now i am capping in the value which are greater than 353.96 to 353.96
+```{r}
+heart.data$chol[heart.data$chol > 353.96] <- 353.96
+```
+The fbs feature is looking like it has Bias as up to third quartile the value is 0 ,but max is 1 so now i am going to check the other quantile ranges.
+```{r}
+quantile(heart.data$fbs,probs = c(0.85,0.86,0.87,0.88,0.89,0.90))
+```
+so now as we can see above that 15 percent of data has 1 's so its not that biased,and no need to treat.
+Now i am checking other columns,and  thalach looks like it has an outliers ,so now i am using some inbuild function for outlier boxplot states to check the outlier
+```{r}
+out.range<-boxplot.stats(heart.data$thalach)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(heart.data$thalach)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(heart.data$thalach)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+#now i am capping in the value to 88.0 for this feature
+heart.data$thalach[heart.data$thalach < 88.0]<-88.0
+```
+Now checking the outlier for oldpeak  feature ,if present then i am going to treat them
+```{r}
+out.range<-boxplot.stats(heart.data$oldpeak)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(heart.data$oldpeak)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(heart.data$oldpeak)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+#now i am capping in the value to 4 for this feature
+heart.data$oldpeak[heart.data$oldpeak > 4]<-4
+```
+Now converting the some of the features to factores as those features found to be categorical variables.The categories are given in the document,by seing the doc file of the data set i have done it.
+```{r}
+heart.data$num[heart.data$num > 1]<-1
+heart.data$num<-factor(heart.data$num,labels = c('no','yes'))
+heart.data$sex<-factor(heart.data$sex,labels = c('female','male'))
+heart.data$thal<-factor(heart.data$thal,labels=c('normal', 'fixed_defect',' reversable_defect'))
+heart.data$ca<-as.factor(heart.data$ca)
+heart.data$slope<-factor(heart.data$slope,labels = c('upsloping','flat','downsloping'))
+heart.data$exang<-factor(heart.data$exang,labels=c('no','yes'))
+heart.data$restecg<-factor(heart.data$restecg,labels=c('normal','ST_elevation','hypertrophy'))
+heart.data$fbs<-factor(heart.data$fbs,labels = c('false','true'))
+heart.data$cp<-factor(heart.data$cp,labels=c( 'typical_angina', 'atypical_angina', 'non-anginal_pain', 'asymptomatic'))
+```
+
+```{r}
+View(heart.data)
+```
+now we are good to go to build the models.
+
+```{r}
+set.seed(1)
+sample = sample.split(heart.data$num, SplitRatio = .70)
+train = subset(heart.data, sample == TRUE)
+test  = subset(heart.data, sample == FALSE)
+View(train)
+View(test)
+```
+Now i am going to build decision tree and i am using decision tree classifier as its a classification problem.
+i am building decision tree with out any control parameter to check minimum x_error and decide cp value
+```{r}
+tree.disease<- rpart(num ~., method="class", data=train)
+printcp(tree.disease)
+#summary()
+```
+now we are predicting our test data by our model
+```{r}
+predicted_y<-predict(tree.disease, test, type = "class")
+```
+
+now we are comparing the prediction vs actual value by confusion matrix
+```{r}
+cat("The accuracy of the model is :- ",mean(predicted_y==test$num))
+confusionMatrix(table(test$num,predicted_y))
+```
+Now doing purning of the tree to get avoid over fitting of the tree
+now i am doing purning by setting the control parameters by keep cp value = 0.02 by seing the previous decision tree model ,we considered cp value of minimum x_error value.
+```{r}
+tree.disease1 <- rpart(num ~., method="class", data=train,control=rpart.control(cp=0.02))
+printcp(tree.disease)
+```
+Now predicting the value by purned model
+```{r}
+predicted_y1<-predict(tree.disease1, test, type = "class")
+```
+Now checking the accuracy of the model by plotting the confusion matrix to check the accuracy.
+```{r}
+cat("The accuracy of the model is :- ",mean(predicted_y1==test$num))
+confusionMatrix(table(test$num,predicted_y1))
+accuracy_tree<-mean(predicted_y1==test$num)
+```
+Plotting the decision tree for visualization
+```{r}
+fancyRpartPlot(tree.disease1)
+```
+Now Building Random Forest model. seing the confusion matrix for comparing prediction values vs actual values.
+```{r}
+disease.rf<-randomForest(num ~ ., data=train)
+plot(disease.rf)
+print(disease.rf)
+```
+now predicting the values by random forest.
+```{r}
+predicted_y_forest<-predict(disease.rf, test, type = "class")
+```
+seing the confusion matrix for comparing prediction values vs actual values.
+and viewing the accuracy to compare between the the models
+```{r}
+cat("The accuracy of the model is :- ",mean(predicted_y_forest==test$num),"\n")
+confusionMatrix(table(test$num,predicted_y_forest))
+accuracy_forest<-mean(predicted_y_forest==test$num)
+```
+Building SVM model.As we can see that we are doing binary classification so kernel method i am using is ploynomial
+ploting the scatter plot to see the wea
+```{r}
+
+```
+
+```{r}
+svm.model<-svm(num ~ .,data=train,kernel="linear",cost=2)
+print(svm.model)
+summary(svm.model)
+```
+now predicting the target value by svm model,i used type class beacuse its a classification problem and kernel is polynomial because the target variable is binary ,so we can 't predict by linear line,so i have used polynomial.
+```{r}
+predicted_y_svm<-predict(svm.model, test, type = "class")
+```
+now plotting the confusion matrix to compare prediction value to the actual value.
+```{r}
+confusionMatrix(table(test$num,predicted_y_svm))
+accuracy_svm<-mean(predicted_y_svm==test$num)
+```
+comparing three models by their accuracy .
+```{r}
+#creating the names 
+Algo_names<-c("decision_tree","Random Forest","Support Vector Machine")
+Model_accuracy<-c(accuracy_tree,accuracy_forest,accuracy_svm)
+# Plot the bar chart 
+barplot(Model_accuracy,names.arg=Algo_names,xlab="Algo_names",ylab="Model_accuracy",col="blue",
+main="The Graph of Accuracy",border="black")
+
+```
+
+
+

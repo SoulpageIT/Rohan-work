@@ -1,0 +1,10 @@
+"0","```r
+ggplot(data_accuracy,aes(x=model_names,y = accuracy))+geom_bar(bin = 50,width = 0.3,fill=\"steelblue\",col=\"black\",stat=\"identity\")+labs(title = \"comparison between the accuracy of the models\")+theme(plot.title = element_text(hjust = 0.5,face = \"bold\",color = \"blue\"))+theme(panel.background = element_rect(fill = 'gray'))+ geom_text(aes(label=accuracy), vjust=-0.3, color=\"black\", size=3.5)
+```"
+"1","Ignoring unknown parameters: bin
+"
+"0","```r
+ggsave(\"accuracy.png\")
+```"
+"1","Saving 7.29 x 4.5 in image
+"

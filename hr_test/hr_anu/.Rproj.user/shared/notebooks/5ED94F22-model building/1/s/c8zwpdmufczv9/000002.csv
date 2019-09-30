@@ -1,0 +1,3 @@
+"0","train<-fread(""train_LZdllcl.csv"",stringsAsFactors = TRUE,na.strings = """")"
+"0","test<-fread(""test_2umaH9m.csv"",stringsAsFactors = TRUE,na.strings= """")"
+"0","head(train)"

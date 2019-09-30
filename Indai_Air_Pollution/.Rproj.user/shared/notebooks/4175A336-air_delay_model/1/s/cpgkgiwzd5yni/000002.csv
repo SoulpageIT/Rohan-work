@@ -1,0 +1,12 @@
+"0","```r
+#Here i am reading all the testing data from the different files.
+
+#Reading the 2018 data of origin airport NewYork  
+test<-fread(\"2018_city_2_test.csv\",stringsAsFactors = TRUE)
+#Adding the Origin airport column.
+test$OriginAirPort<-as.factor(\"NewYork\")
+#Reading the 2018 data of origin Dallas. 
+test1<-fread(\"2018_city_one_test.csv\",stringsAsFactors = TRUE)
+#Adding the Origin airport column.
+test1$OriginAirPort<-as.factor(\"Dallas\")
+```"

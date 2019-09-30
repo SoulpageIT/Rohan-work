@@ -1,0 +1,10 @@
+"0","```r
+GlassdoorPages %>%
+    unnest_tokens(word, text)%>%
+  inner_join(get_sentiments(\"nrc\")) %>%
+  count(word, sentiment, sort = TRUE)%>%
+filter(sentiment %in% c(\"negative\",\"positive\",\"joy\",\"sadness\"))%>%
+reshape2::acast(word ~ sentiment, value.var = \"n\", fill = 0)%>% 
+comparison.cloud(colors = viridis_pal(option = \"D\")(4),
+                  max.words = 200)
+```"

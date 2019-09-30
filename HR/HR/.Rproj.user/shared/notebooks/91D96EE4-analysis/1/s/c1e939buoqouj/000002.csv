@@ -1,0 +1,4 @@
+"0","```r
+data.set.analyse$sessions_before_with_product[data.set.analyse$sessions_before_with_product > 5]<-5
+
+```"

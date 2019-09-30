@@ -1,0 +1,8 @@
+"0","n=507"
+"0","#The reviews has 507 pages,thus n=507"
+"0","urls <- paste0(""https://www.glassdoor.co.in/Reviews/Northwestern-Mutual-Reviews-E2919_P"",seq(2, n), "".htm?filter.defaultEmploymentStatuses=false&filter.defaultLocation=false"")"
+"0","urls<-c(""https://www.glassdoor.co.in/Reviews/Northwestern-Mutual-Reviews-E2919.htm?filter.defaultEmploymentStatuses=false&filter.defaultLocation=false"",urls)"
+"0","html <- urls %>%"
+"0","    map_chr(~ read_html(.) %>% html_node("".hreview"")%>%html_text())"
+"2","
+"

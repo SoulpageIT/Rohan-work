@@ -1,0 +1,41 @@
+"0","```r
+#Number of observations
+cat(\"\nThe Number observations are :- \", nrow(data),\"\n\")
+```"
+"1","
+The Number observations are :-  505 
+"
+"0","```r
+#Numberof continuous variable
+cat(\"\nThe   continuous variable and factors  are :- \",str(data))
+```"
+"1","Classes â€˜data.tableâ€™ and 'data.frame':	505 obs. of  11 variables:
+ $ Record            : Factor w/ 505 levels \"Record1\",\"Record10\",..: 1 484 495 2 13 24 35 57 68 90 ...
+ $ Gender            : Factor w/ 2 levels \"Female\",\"Male\": 1 2 2 2 2 2 2 2 2 2 ...
+ $ No_kids           : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Education         : Factor w/ 2 levels \"Graduate\",\"Not Graduate\": 1 1 1 2 1 1 1 1 1 1 ...
+ $ HasCar            : Factor w/ 3 levels \"No\",\"Not Answered\",..: 1 1 3 1 1 1 1 3 1 1 ...
+ $ Income            : int  710 6516 7040 4730 9167 10459 2888 10960 8692 4044 ...
+ $ PropertyValue     : int  90400 168800 160000 155200 149600 149600 149600 144000 144000 137600 ...
+ $ Loan_Period       : int  456 336 336 336 336 336 336 336 336 336 ...
+ $ Credit_Record     : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ Housing_type      : Factor w/ 3 levels \"Affordable\",\"Mid Range\",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ Property_Purchased: Factor w/ 2 levels \"N\",\"Y\": 2 2 2 2 2 2 2 2 2 2 ...
+ - attr(*, \".internal.selfref\")=<externalptr> 
+
+The   continuous variable and factors  are :- 
+"
+"0","```r
+#checking for NA 's
+cat(\"\nThe Number of NA 'S at   data set: \", sum(is.na(data)))
+```"
+"1","
+The Number of NA 'S at   data set:  0
+"
+"0","```r
+#checking for the empty sells in the table
+cat(\"\nThe Number of blank cell 'S at  data set: \", sum(data==\"\"))
+```"
+"1","
+The Number of blank cell 'S at  data set:  0
+"

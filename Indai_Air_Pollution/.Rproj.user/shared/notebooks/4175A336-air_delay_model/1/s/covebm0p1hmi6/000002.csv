@@ -1,0 +1,11 @@
+"0","```r
+train[,DayCycle:=as.factor( ifelse(
+  `Scheduled departure time hours` >= 5 & `Scheduled departure time hours`<=11 , 'Morning',
+    ifelse(`Scheduled departure time hours` >= 12 & `Scheduled departure time hours`<=16,'Noon' ,
+      ifelse(`Scheduled departure time hours` >= 17 & `Scheduled departure time hours`<=19, 'Evening', 
+          \"Night\"   )
+    )
+  )
+)
+]
+```"

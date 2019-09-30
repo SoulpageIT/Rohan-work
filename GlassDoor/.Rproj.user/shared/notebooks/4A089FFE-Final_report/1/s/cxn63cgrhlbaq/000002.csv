@@ -1,0 +1,4 @@
+"0","sentiment <- tidy %>%"
+"0","    inner_join(get_sentiments(""nrc""))"
+"2","Joining, by = ""word""
+"

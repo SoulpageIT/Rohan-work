@@ -1,0 +1,10 @@
+"0","```r
+tidy_FCA <- GlassdoorPages %>%
+    unnest_tokens(word, text) %>%
+    add_count(date) %>%
+    dplyr::rename(date_total = n)
+#remove stop words
+data(\"stop_words\")
+tidy_FCA <- tidy_FCA %>%
+  anti_join(stop_words)
+```"

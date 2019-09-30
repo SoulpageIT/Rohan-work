@@ -1,0 +1,4 @@
+"0","```r
+names(train) <- make.names(names(train))
+names(test)<-make.names(names(test))
+```"

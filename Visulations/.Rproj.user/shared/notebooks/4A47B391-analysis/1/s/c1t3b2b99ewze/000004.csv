@@ -1,0 +1,5 @@
+"0","```r
+```r
+#data.set.analyse1<-data.set.analyse[-c(which(data.set.analyse$sessions_before >= 292))]
+```
+```"

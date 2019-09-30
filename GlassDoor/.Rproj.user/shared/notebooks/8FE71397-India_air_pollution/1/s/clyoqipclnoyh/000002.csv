@@ -1,0 +1,11 @@
+"0","```r
+apply(data,2,function(x)sum(is.na(x)))
+
+```"
+"1","                   stn_code               sampling_date                       state                    location                      agency 
+                     144077                           3                           0                           3                      149481 
+                       type                         so2                         no2                        rspm                         spm 
+                       5393                       34646                       16233                       40222                      237387 
+location_monitoring_station                       pm2_5                        date 
+                      27491                      426428                           7 
+"

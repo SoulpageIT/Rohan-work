@@ -1,0 +1,5 @@
+"0","```r
+mod<-function(mod.data){
+  return(names(table(mod.data))[table(mod.data)==max(table(mod.data))])
+}
+```"

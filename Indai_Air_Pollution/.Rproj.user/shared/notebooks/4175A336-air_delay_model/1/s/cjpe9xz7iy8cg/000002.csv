@@ -1,0 +1,4 @@
+"0","```r
+#Encoding the Total data set
+Total_encoded<-one_hot(Total)
+```"

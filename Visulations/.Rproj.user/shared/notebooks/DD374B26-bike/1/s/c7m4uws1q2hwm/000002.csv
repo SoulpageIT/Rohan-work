@@ -1,0 +1,5 @@
+"0","```r
+setkey(bikes)
+bikes[,`:=`(`Start Time`= as.POSIXct(`Start Time`,format = \"%Y-%m-%d %H:%M:%OS\"),`Stop Time`=as.POSIXct(`Stop Time`,format= \"%Y-%m-%d %H:%M:%OS\"))]
+str(bikes)
+```"

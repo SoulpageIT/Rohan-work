@@ -1,0 +1,15 @@
+"0","```r
+ldat=tidy_FCA %>%
+  inner_join(get_sentiments(\"afinn\")) %>%
+  group_by(date) %>%
+  summarize(average_sentiment = mean(score), words = n())
+highchart() %>% 
+    hc_title(text = \"Sentiment analysis of NMFinancial  Employee Glassdoor Reviews\")%>%
+  hc_add_series_times_values(ldat$date, ldat$average_sentiment, 
+                             name = \"Year\",color=\"#440154FF\")%>%
+   hc_yAxis(title = list(text = \"Average AFINN sentiment score\"),labels = list(format = \"{value}\"), max = 4,min=-4,plotLines = list(
+             list(label = list(text = \"\"),
+                  color = \"#35B779FF\",
+                  width = 2,
+                  value = 0)))
+```"

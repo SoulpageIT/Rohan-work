@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1548763737684.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1429737067",
+    "id" : "E972C841",
+    "lastKnownWriteTime" : 1548668169,
+    "last_content_update" : 1548668169,
+    "path" : "C:/Users/Dell/Desktop/rohan/solar/solar.Rmd",
+    "project_path" : "solar.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "2,21",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

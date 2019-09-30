@@ -1,0 +1,8 @@
+"0","```r
+#Now converting the date column.
+#we found 2 date format in data
+mdy <- mdy(train$`Date (MM/DD/YYYY)`)
+dmy <- dmy(train$`Date (MM/DD/YYYY)`)
+mdy[is.na(mdy)] <- dmy[is.na(mdy)] # some dates are ambiguous, here we give
+train$`Date (MM/DD/YYYY)`<- mdy # mdy precedence over dmy
+```"

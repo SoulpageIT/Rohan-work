@@ -1,0 +1,397 @@
+---
+title: "Sentimental Analysis of Times of India 2019 code"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+Libraries used.
+```{r,echo=FALSE}
+library(data.table)
+#install.packages("igraph")
+library(igraph)
+#install.packages("ggraph")
+library(ggraph)
+#install.packages("plotly")
+library(plotly)
+#install.packages("grid")
+library(grid)
+#install.packages("gridExtra")
+library(gridExtra)
+#install.packages("tidyquant")
+#install.packages("lubridate")
+#library(lubridate)
+#install.packages("stringi")
+library(tidyquant)
+#install.packages("tm")
+library(tm)
+#install.packages("ggplot2")
+library(ggplot2)
+#install.packages("pacman")
+#install.packages("lubridate")
+pacman::p_load(tidyverse,tidytext,viridis,rvest,tm,wordcloud,SnowballC,tidyquant,ggridges,scales,highcharter,topicmodels)
+```
+
+```{r,echo=FALSE}
+# Get the files names
+files = list.files(pattern="*.csv")
+# First apply read.csv, then rbind
+data = do.call(rbind, lapply(files, function(x) fread(x, stringsAsFactors = FALSE)))
+```
+
+```{r,echo=FALSE}
+clean_data<-na.omit(data)
+```
+
+```{r,echo=FALSE}
+sum(is.na(clean_data))
+```
+
+Renaming the column.
+```{r,echo=FALSE}
+names(clean_data)[names(clean_data) == 'V1'] <- 'No'
+names(clean_data)[names(clean_data) == 'V2'] <- 'text'
+names(clean_data)[names(clean_data) == 'V3'] <- 'date'
+```
+
+converting the fromate of date column
+Extracting the months
+```{r,echo=FALSE}
+clean_data$month<-as.factor(month(as.POSIXct(clean_data$date)))
+clean_data$weekDays<-as.factor(wday(clean_data$date, label=TRUE))
+```
+
+
+```{r,echo=FALSE}
+tidy <- clean_data %>%
+    unnest_tokens(word, text) %>%
+    add_count(date) %>%
+    dplyr::rename(date_total = n)
+#remove stop words
+data("stop_words")
+tidy <- tidy %>%
+  anti_join(stop_words)
+```
+
+
+```{r,echo=FALSE}
+stop_user=c("linklink","whatsappshar","auburn","twittershar","edit","delet","via","edit","delet","via","starstarstarstarstarwork","pdt","hill","ago",
+            "facebookshar")
+stop_user2=tibble(word=stop_user)
+
+```
+
+##Binary sentiment Analysis
+
+###**Percentage of Sentiments in Employees Reviews**
+```{r,echo=FALSE}
+sentiment <- tidy %>%
+    inner_join(get_sentiments("bing"))
+
+t<-list(
+  family="sans serif",
+  size=14,
+  color='black'
+)
+
+
+p <- sentiment %>%
+  group_by(sentiment) %>%
+  summarize(count = n()) %>%
+  plot_ly(labels = ~sentiment, values = ~count) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title ,  showlegend = T,font=t,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
+```
+
+```{r,echo=FALSE}
+p
+```
+
+Positive Negative sentiments trend by Months
+```{r,echo=FALSE}
+sentiment<-as.data.table(sentiment)
+p<-ggplot(sentiment[,.N,by=c("sentiment","month")], aes(x=month, y=N, group=sentiment)) +
+  geom_line(aes(color=sentiment))+
+  geom_point(aes(color=sentiment))
+p
+```
+
+
+Positive Negative sentiments trend by weekDays
+```{r,echo=FALSE}
+sentiment<-as.data.table(sentiment)
+p<-ggplot(sentiment[,.N,by=c("sentiment","weekDays")], aes(x=weekDays, y=N, group=sentiment)) +
+  geom_line(aes(color=sentiment))+
+  geom_point(aes(color=sentiment))
+p
+```
+
+```{r,echo=FALSE}
+
+p<-clean_data %>%
+    unnest_tokens(word, text)%>%
+  inner_join(get_sentiments("bing"))
+```
+
+```{r,echo=FALSE}
+p%>%
+  count(word, sentiment, sort = TRUE) %>%
+ reshape2::acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = viridis_pal(option = "D")(2),
+                   max.words = 100)
+```
+```{r,echo=FALSE}
+q<-sentiment %>%
+    count(sentiment, word) %>%
+    group_by(sentiment) %>%
+    top_n(10) %>%
+    ungroup %>%
+    mutate(word = reorder(word, n)) %>%
+   mutate(sentiment = as.factor(sentiment))  
+```
+
+```{r,echo=FALSE}
+q%>%
+    ggplot(aes(word, n, fill = sentiment)) +
+    geom_col(alpha = 0.8, show.legend = FALSE) +
+    coord_flip() +
+    scale_y_continuous(expand = c(0,0)) +
+    facet_wrap(~sentiment,scales="free") +
+   labs(y = "Total number of occurrences", x = "")+
+#scale_fill_manual(values=viridis_pal(option = "D")(8))+
+  theme(plot.title = element_text(hjust = -10,face = "bold",color = "black",size = 14))+
+ scale_fill_viridis(end = 0.75, discrete=TRUE, direction = -1) +
+        scale_x_discrete(expand=c(0.02,0))  +
+  # strip horizontal  axis labels
+        theme(axis.title.x=element_blank()) +
+        theme(axis.ticks.x=element_blank()) +
+        theme(axis.text.x=element_blank())+
+  theme_minimal(base_size = 13)
+
+```
+###Multiple sentiments Analysis
+
+we have 6 different type sentiments:-
+
+1)Fear.
+2)Joy.
+3)Negative.
+4)Positive.
+5)Sadness 
+6)Trust
+```{r,echo=FALSE}
+sentiment <- tidy %>%
+    inner_join(get_sentiments("nrc"))
+```
+
+###**Percentage of Sentiments in Employees Reviews**
+
+```{r,echo=FALSE}
+p <- sentiment %>%
+  group_by(sentiment) %>%
+  summarize(count = n()) %>%
+  plot_ly(labels = ~sentiment, values = ~count) %>%
+  add_pie(hole = 0.6) %>%
+  layout(showlegend = T,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+p
+```
+```{r,echo=FALSE}
+sentiment <- tidy %>%
+    inner_join(get_sentiments("nrc"))
+```
+By Month
+```{r,echo=FALSE}
+sentiment<-as.data.table(sentiment)
+p<-ggplot(sentiment[,.N,by=c("sentiment","month")], aes(x=month, y=N, group=sentiment)) +
+  geom_line(aes(color=sentiment))+
+  geom_point(aes(color=sentiment))
+p
+```
+
+```{r,echo=FALSE}
+sentiment<-as.data.table(sentiment)
+p<-ggplot(sentiment[,.N,by=c("sentiment","weekDays")], aes(x=weekDays, y=N, group=sentiment)) +
+  geom_line(aes(color=sentiment))+
+  geom_point(aes(color=sentiment))
+p
+```
+
+```{r,echo=FALSE}
+p<-clean_data %>%
+    unnest_tokens(word, text)%>%
+  inner_join(get_sentiments("nrc")) %>%
+  count(word, sentiment, sort = TRUE)
+```
+```{r,echo=FALSE}
+p%>%
+filter(sentiment %in% c("negative","positive","joy","sadness"))%>%
+reshape2::acast(word ~ sentiment, value.var = "n", fill = 0)%>% 
+comparison.cloud(colors = viridis_pal(option = "D")(4),
+                  max.words = 200)
+```
+```{r,echo=FALSE}
+p<-sentiment %>%
+    count(sentiment, word) %>%
+    filter(sentiment %in% c("positive", "negative", 
+                            "joy", "trust","fear","sadness")) %>%
+    group_by(sentiment) %>%
+    top_n(10) %>%
+    ungroup %>%
+    mutate(word = reorder(word, n)) %>%
+   mutate(sentiment = as.factor(sentiment)) 
+  
+```
+
+```{r,echo=FALSE}
+p %>%
+    ggplot(aes(word, n, fill = sentiment)) +
+    geom_bar(alpha = 0.8, show.legend = FALSE,stat = "identity") +
+    coord_flip() +
+    scale_y_continuous(expand = c(0,0)) +
+    facet_wrap(~sentiment, scales = "free") +
+   labs(y = "Total number of occurrences", x = "Words")+theme_bw()+
+scale_fill_manual(values=viridis_pal(option = "D")(6))
+```
+
+Topic Modeling
+```{r,echo=FALSE}
+data(stop_words)
+tidy_descr<-clean_data %>%
+unnest_tokens(word, text) %>% 
+mutate(word=removeNumbers(word))%>% 
+mutate(word_stem = wordStem(word)) %>%
+anti_join(stop_words, by = "word") %>%
+filter(!word_stem %in% stop_words$word) %>%
+filter(!word_stem %in% stop_user) 
+```
+
+
+This are the count of Most common words
+```{r,echo=FALSE}
+tidy_descr %>%
+count(word_stem) %>%
+mutate(word_stem = removeNumbers(word_stem)) %>%
+with(wordcloud(word_stem, n, max.words = 100, colors = palette_light()))
+```
+
+```{r,echo=FALSE}
+dtm_words_count<-tidy_descr %>%
+mutate(word_stem = removeNumbers(word_stem)) %>%
+count(date, word_stem, sort = TRUE) %>%
+ungroup() %>%
+filter(word_stem != "") %>%
+# Casting a data frame to a DocumentTermMatrix, TermDocumentMatrix, or dfm  
+cast_dtm(date, word_stem, n)
+# set a seed so that the output of the model is predictable
+dtm_lda<-LDA(dtm_words_count, k = 5, control = list(seed = 1234))
+topics_beta<-tidy(dtm_lda, matrix = "beta")
+```
+
+```{r,echo=FALSE}
+p1<-topics_beta %>%
+filter(grepl("[a‐z]+", term)) %>% # extract alphabets a-z
+group_by(topic) %>%
+top_n(10, beta) %>%
+ungroup() %>%
+arrange(topic, -beta) %>%
+mutate(term = reorder(term, beta)) %>%
+ggplot(aes(term, beta, color = factor(topic), fill = factor(topic))) +
+geom_col(show.legend = FALSE, alpha = 0.8) +
+scale_color_manual(values = palette_light()) +
+scale_fill_manual(values = palette_light()) +
+facet_wrap(~ topic, ncol = 5) +
+coord_flip() +
+theme_tq() +
+labs(x = "",
+y = "beta (~ occurrence in topics 1‐5)",
+title = "The top 10 most characteristic words describe topic categories.")
+```
+
+```{r,echo=FALSE}
+user_topic<-tidy(dtm_lda, matrix = "gamma") %>%
+arrange(desc(gamma)) %>%
+group_by(document) %>%
+top_n(1, gamma)
+```
+
+```{r,echo=FALSE}
+p2<-user_topic %>%
+group_by(topic) %>%
+top_n(10, gamma) %>%
+ggplot(aes(x = reorder(document, -gamma), y = gamma, color = factor(topic))) +
+facet_wrap(~ topic, scales = "free", ncol = 5) +
+geom_point(show.legend = FALSE, size = 4, alpha = 0.8) +
+scale_color_manual(values = palette_light()) +
+scale_fill_manual(values = palette_light()) +
+theme_tq() +
+coord_flip() +
+labs(x = "",
+y = "gamma\n(~ affiliation with topics 1‐5)")
+```
+
+```{r,echo=FALSE}
+p1
+```
+
+```{r,echo=FALSE}
+p2
+```
+
+```{r,echo=FALSE}
+date_dtm<-clean_data %>%
+mutate(year=year(date))%>%  
+unnest_tokens(word, text) %>%
+anti_join(stop_words)%>%
+anti_join(stop_user2)  %>%
+filter(!word %in% stop_user2) %>%
+mutate(word=removeNumbers(word))%>% 
+mutate(word = wordStem(word))%>%
+filter(word != "") %>%
+count(year, word, sort = TRUE) %>%
+ungroup()%>%
+cast_dtm(year, word, n)
+```
+```{r,echo=FALSE}
+date_lda <- LDA(date_dtm, k = 5, control = list(seed = 1234))
+```
+
+```{r,echo=FALSE}
+date_lda_td <- tidy(date_lda)
+date_lda_td%>%head()
+```
+
+```{r,echo=FALSE}
+top_terms <- date_lda_td %>%
+  group_by(topic) %>%
+  top_n(10, beta) %>%
+  ungroup() %>%
+  filter(grepl("[a‐z]+", term)) %>% # extract alphabets a-z
+  arrange(topic, -beta)
+top_terms%>%head()
+```
+
+```{r,echo=FALSE}
+top_terms %>%mutate(topic=as.factor(topic))%>%
+  mutate(term = reorder(term, beta)) %>%
+  ggplot(aes(term, beta, fill = topic)) +
+  geom_bar(stat = "identity",show.legend = FALSE, alpha = 0.8) +
+  facet_wrap(~ topic, scales = "free") +
+  theme(axis.text.x = element_text(size = 15, angle = 90, hjust = 1))+
+  coord_flip()+
+  scale_fill_viridis(end = 0.75, discrete=TRUE, direction = -1,option = "D")+
+  labs(x = "",
+y = "beta (occurrence in topics 1-5)",
+title = "The top 10 most characteristic words describe topic categories.")
+```
+
+```{r,echo=FALSE}
+date_lda_gamma <- tidy(date_lda, matrix = "gamma")%>%mutate(topic=factor(topic))
+date_lda_gamma
+```
+

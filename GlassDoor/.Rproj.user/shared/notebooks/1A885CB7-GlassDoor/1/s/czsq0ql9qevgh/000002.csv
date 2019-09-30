@@ -1,0 +1,7 @@
+"0","```r
+ggplot(date_lda_gamma, aes(gamma, fill = topic)) +
+  geom_histogram(bins = 30,binwidth=0.25) +
+  facet_wrap(~ document, nrow = 2)+
+  scale_fill_viridis(end = 0.75, discrete=TRUE, direction = -1)+theme_tq()
+
+```"

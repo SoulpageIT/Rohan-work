@@ -1,0 +1,11 @@
+"0","```r
+
+#setkey(bikes,
+#`Start Station Name`)
+#bikes<-bikes[!\"Indiana\"]
+
+#setkey(bikes,
+#`End Station Name`)
+#bikes<-bikes[!\"Indiana\"]
+
+```"

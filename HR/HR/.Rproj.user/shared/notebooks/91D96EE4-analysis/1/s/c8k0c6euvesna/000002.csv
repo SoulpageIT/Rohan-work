@@ -1,0 +1,2 @@
+"0","data.set.analyse<-data.set[,c(-1,-2,-3)]"
+"0","View(data.set.analyse)"

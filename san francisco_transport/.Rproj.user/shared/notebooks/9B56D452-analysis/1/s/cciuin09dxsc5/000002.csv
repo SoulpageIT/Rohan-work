@@ -1,0 +1,21 @@
+"0","```r
+bp<- ggplot(daa, aes(x=\"\", y=sum_total_number_sessions, fill=pages))+
+geom_bar(width = 1, stat = \"identity\")
+pie <- bp + coord_polar(\"y\", start=0)
+blank_theme <- theme_minimal()+
+  theme(
+  axis.title.x = element_blank(),
+  axis.title.y = element_blank(),
+  panel.border = element_blank(),
+  panel.grid=element_blank(),
+  axis.ticks = element_blank(),
+  plot.title=element_text(size=14, face=\"bold\")
+  )
+pie + scale_fill_grey() +  blank_theme +
+  theme(axis.text.x=element_blank()) +
+  geom_text(label = percent(max_total_number_sessions/100) ,size=5))
+```"
+"1","Error: unexpected ')' in:
+\"  theme(axis.text.x=element_blank()) +
+  geom_text(label = percent(max_total_number_sessions/100) ,size=5))\"
+"

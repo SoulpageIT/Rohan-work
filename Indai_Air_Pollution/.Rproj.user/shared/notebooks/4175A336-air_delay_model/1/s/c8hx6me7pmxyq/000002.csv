@@ -1,0 +1,16 @@
+"0","```r
+#Now we are dividing Scheduled departure time column to scheduled_departure_time_hours and scheduled_departure_time_minutes
+test$`Scheduled departure time hours`<-hour(strptime(test$`Scheduled departure time`, format = '%H:%M', 'GMT'))
+test$`Scheduled departure time minutes`<-minute(strptime(test$`Scheduled departure time`,format = '%H:%M', 'GMT'))
+#Now we are dividing Actual departure time departure time column to Actual_departure_time_hours and Actual_departure_time_minutes
+test$`Actual departure time hours`<-hour(strptime(test$`Actual departure time`, format = '%H:%M', 'GMT'))
+test$`Actual departure time minutes`<-minute(strptime(test$`Actual departure time`,format = '%H:%M', 'GMT'))
+
+
+#Now removing the original Scheduled departure time column
+test$`Scheduled departure time`<-NULL
+#Now removing the actual departure time column
+test$`Actual departure time`<-NULL
+#Now removing the wheels of time as its not useful at model building.
+test$`Wheels-off time`<-NULL
+```"

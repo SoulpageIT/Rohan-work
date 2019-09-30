@@ -1,0 +1,20 @@
+"0","```r
+#first default - model training
+xgb1 <- xgb.train (params = params, data = dtrain, nrounds = 50, watchlist = list(val=dtestfinal,train=dtrain), print.every.n = 10, early.stop.round = 10, maximize = F , eval_metric = \"mlogloss\")
+```"
+"1","'print.every.n' is deprecated.
+Use 'print_every_n' instead.
+See help(\"Deprecated\") and help(\"xgboost-deprecated\").'early.stop.round' is deprecated.
+Use 'early_stopping_rounds' instead.
+See help(\"Deprecated\") and help(\"xgboost-deprecated\").
+"
+"1","[1]	val-mlogloss:1.855254	train-mlogloss:1.854063 
+Multiple eval metrics are present. Will use train_mlogloss for early stopping.
+Will train until train_mlogloss hasn't improved in 10 rounds.
+
+[11]	val-mlogloss:0.931260	train-mlogloss:0.926395 
+[21]	val-mlogloss:0.676190	train-mlogloss:0.670568 
+[31]	val-mlogloss:0.547322	train-mlogloss:0.541441 
+[41]	val-mlogloss:0.469425	train-mlogloss:0.463405 
+[50]	val-mlogloss:0.417579	train-mlogloss:0.411473 
+"

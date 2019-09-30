@@ -1,0 +1,247 @@
+---
+title: "The HR analytics"
+output: html_notebook
+---
+
+libraries
+```{r}
+#graph plotting packages.
+library(data.table)
+library(ggplot2)
+library(plotly)
+library(gganimate)
+#sample.split function packages
+library(caTools)
+#decision tree model building packages 
+library(rpart)
+#decision tree plotting packages 
+library(RColorBrewer)
+library(rattle)
+#The package for random forest function
+library(randomForest)
+#for confusion matrix
+library(caret)
+library(xgboost)
+```
+
+Reading the data into R and dropping Over18,EmployeeCount,EmployeeNumber,StandardHours because in these columns the data is either unique or the data is same for all the row in the table.
+```{r}
+hr<-fread("WA_Fn-UseC_-HR-Employee-Attrition.csv",na.strings = "NA",stringsAsFactors = TRUE,drop = c("Over18","EmployeeCount","EmployeeNumber","StandardHours"))
+```
+
+Now seing the structure of the data to get some idea of type of data present in the data set.
+```{r}
+str(hr)
+```
+Now viewing  the summary of all numeric column of the data set.
+```{r}
+summary(hr)
+```
+```{r}
+colnames(hr)
+```
+Now we are grouping the ages bases based on age groups.
+20-belowe
+20-30
+30-40
+40-50
+50-60
+so now we are dividing our analysis on different age group.
+```{r}
+hr[,Age :=as.factor( ifelse(
+  Age <= 20 , '15-20',
+    ifelse(Age >20  & Age <= 30,'20-30' ,
+      ifelse(Age > 30  & Age <= 40, '30-40', 
+          ifelse(Age >40 & Age <=50,'40-50','50-60')   )
+    )
+  )
+)
+]
+```
+
+
+```{r}
+colnames(hr)
+```
+
+
+In our data we have some features "Education", "EnvironmentSatisfaction","JobInvolvement","JobLevel","JobSatisfaction","PerformanceRating","RelationshipSatisfaction","StockOptionLevel"," WorkLifeBalance" which are numeric but the sense they make is factors,so now converting those variable to factors.
+```{r}
+fact_columns<-c("Education", "EnvironmentSatisfaction","JobInvolvement","JobLevel","JobSatisfaction","PerformanceRating","RelationshipSatisfaction","StockOptionLevel","WorkLifeBalance")
+hr<-as.data.frame(hr)
+hr[fact_columns]<-lapply(hr[fact_columns], as.factor)
+hr<-as.data.table(hr)
+```
+
+Analysis on age group.
+
+Now we are comparing which age groups are travelling the most.
+```{r}
+ggplot(hr[,.N,by=list(Age,BusinessTravel,Gender)],aes(x=Age,y=N,fill=Gender))+geom_bar(stat = "identity",width = 0.6,position = "dodge")+facet_grid(~BusinessTravel)+geom_text(aes(label=N), vjust=-0.3)+labs(x ="The Age Groups", y = "Number of Employee")
+```
+
+
+```{r}
+salary_monthly_dep<-function(age,typeTravel){
+x<-ggplot(hr[Age==age& BusinessTravel==typeTravel,.N,by=list(JobRole,JobSatisfaction,MonthlyIncome, Department)],aes(x=JobRole,y=MonthlyIncome,fill=JobRole))+geom_bar(stat="identity",width = 0.3) +facet_wrap(~Department,ncol = 1,scales = "free")
+ggplotly(x)
+}
+```
+
+```{r}
+salary_monthly_dep("30-40","Travel_Rarely")
+```
+
+```{r}
+#for movement
+#transition_states(EnvironmentSatisfaction, .01, .001)+ease_aes('cubic-in-out')
+#for plotting multiplot on one page 
+#multiplot(p1, p2, p3, p4, cols=2)
+```
+
+boxplot of salaries for checking the outliers.
+```{r}
+g<-ggplot(hr,aes(x=hr$Age,y=hr$MonthlyIncome,fill=hr$Age))+geom_boxplot()
+ggplotly(g)
+```
+Now we are  doing  Model building to knowe  the features which are having the impact on employee att 
+
+
+Now we are removing the columns which have same values ,and id columns also. 
+```{r}
+#hr[ ,`:=`(Over18 = NULL, EmployeeCount = NULL,EmployeeNumber=NULL,StandardHours=NULL)]
+```
+
+Now model building our target variable is attrition
+As the target variable is binary class so now i am checking any imbalance of class there in the data or not
+```{r}
+ggplot(hr,aes(x=Attrition,fill=Attrition))+geom_bar(width = 0.2)+geom_text(stat="count", aes(label=..count..), vjust=-0.3)+labs(title = "The class imbalance check on complete data set",x ="classes", y = "Their frequency")
+```
+```{r}
+prop.table(table(hr$Attrition))
+```
+
+As the yes class is 16% in entire data set ,so we are not doing smote.
+
+Now we are dividing the data set into train and test.70 to 30
+```{r}
+set.seed(1)
+sample = sample.split(hr$Attrition, SplitRatio = .80)
+train = subset(hr, sample == TRUE)
+test  = subset(hr, sample == FALSE)
+```
+
+```{r}
+sum(is.na(train))
+```
+
+Now we are checking the class imbalance in the train data. 
+```{r}
+ggplot(train,aes(x=Attrition,fill=Attrition))+geom_bar(width = 0.2)+geom_text(stat="count", aes(label=..count..), vjust=-0.3)+labs(title = "The class imbalance check on Train data set",x ="classes", y = "Their frequency")
+```
+checking the percentage
+```{r}
+prop.table(table(train$Attrition))
+```
+
+Now we are trainig the model.
+Decision tree.
+```{r}
+decision_tree <- rpart(Attrition~., method="class",data=train,control = rpart.control(cp= 0.01000000))
+```
+
+```{r}
+summary(decision_tree)
+```
+now we are plotting the tree.
+```{r}
+fancyRpartPlot(decision_tree)
+```
+Now we are using the model for the predictions.
+```{r}
+y_pred <- predict(decision_tree, test[,-"Attrition"],type = "class")
+```
+
+```{r}
+y_pred
+```
+now seing the confusion matrix.
+```{r}
+confusionMatrix(test$Attrition,y_pred)
+```
+
+
+
+Now checking the important variable for Random forest model.
+```{r}
+rf<-randomForest(Attrition ~ ., data=train)
+```
+
+predicting the value by random forest model.
+```{r}
+y_pred <- predict(rf, test[,-"Attrition"],type = "class")
+```
+confusion matrix
+```{r}
+confusionMatrix(test$Attrition,y_pred)
+```
+
+```{r}
+summary(rf)
+plot(rf)
+```
+To find the important features for predictions.
+```{r}
+importance(rf)
+```
+```{r}
+varImpPlot(rf)
+```
+xgboost
+preparing data for xgboost.
+```{r}
+#dtrain <- xgb.DMatrix(data = train[,-"target"], label =train[,"target"] )
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+#xgb <- xgboost(data = sparseMatrix(train[,-"target"]),label = as.matrix(train[,"target"]),eta = 0.2,max_depth = 30,nround=5,subsample = 0.5,colsample_bytree = 0.5,seed = 4,
+#objective = "binary:logistic",
+#nthread = 3
+#)
+```
+
+Now finding the insights regarding employee turn over.
+so we found few feature which are very important for employee turnover.
+MonthlyIncome ,TotalWorkingYears,OverTime ,JobLevel 
+JobRole ,Age, EnvironmentSatisfaction ,YearsAtCompany 
+
+
+Now ploting the scatter plot for to see the relationship between the monthly income ,Total working years and the attrition rate.
+```{r}
+x<-ggplot(hr,aes(TotalWorkingYears,MonthlyIncome,color=JobLevel,shape=OverTime))+geom_point()+facet_wrap(~Attrition)+labs(x = "Total Working Years",y="Monthly_Income")
+ggplotly(x)
+```
+
+```{r}
+y<-ggplot(hr[TotalWorkingYears > 0 & TotalWorkingYears < 10,.N,by=list(Attrition,OverTime)],aes(x=OverTime,y=N,fill=Attrition))+geom_bar(stat = "identity",width = 0.4,position = "dodge")+geom_text(aes(label=N), vjust=-0.3)+labs(x ="overtime", y = "Number of Employee")
+ggplotly(y)
+```
+The conclusion ,the most of the employees who have worked  0-5 years , their salary is less than 5000$,and are doing overtime and the job level 1 have higher probabilty of leaving the company.
+
+
+JobRole ,Age, EnvironmentSatisfaction ,YearsAtCompany 
+```{r}
+x<-ggplot(hr,aes(YearsAtCompany,MonthlyIncome,color=Age,shape=EnvironmentSatisfaction))+geom_point()+facet_wrap(~Attrition)+labs(x = "Years At the Company",y="Monthly_Income")
+ggplotly(x)
+```
+By this we can infer that the employee who 's age group falls in range 20-40 and their  monthly income is less than 5000$ and the number of years at the company is less 5 years are leaving the company.
+```{r}
+
+```
+

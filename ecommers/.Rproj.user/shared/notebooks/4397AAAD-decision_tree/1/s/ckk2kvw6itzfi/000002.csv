@@ -1,0 +1,5 @@
+"0","```r
+actual_y <- test$medv
+plot(actual_y,type = \"l\",lty=1.8,col=\"green\")
+lines(predicted_y,type = \"l\",col=\"blue\")
+```"

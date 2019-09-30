@@ -1,0 +1,1 @@
+"0","pacman::p_load(tidyverse,tidytext,viridis,rvest,tm,wordcloud,SnowballC,tidyquant,ggridges,scales,highcharter,topicmodels)"

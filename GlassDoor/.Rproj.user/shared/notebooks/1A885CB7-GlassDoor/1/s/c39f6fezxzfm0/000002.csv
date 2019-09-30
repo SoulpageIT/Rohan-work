@@ -1,0 +1,13 @@
+"0","```r
+top_terms %>%mutate(topic=as.factor(topic))%>%
+  mutate(term = reorder(term, beta)) %>%
+  ggplot(aes(term, beta, fill = topic)) +
+  geom_bar(stat = \"identity\",show.legend = FALSE, alpha = 0.8) +
+  facet_wrap(~ topic, scales = \"free\") +
+  theme(axis.text.x = element_text(size = 15, angle = 90, hjust = 1))+
+  coord_flip()+
+  scale_fill_viridis(end = 0.75, discrete=TRUE, direction = -1,option = \"D\")+
+  labs(x = \"\",
+y = \"beta (occurrence in topics 1-5)\",
+title = \"The top 10 most characteristic words describe topic categories.\")
+```"

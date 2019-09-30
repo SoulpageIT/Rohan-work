@@ -1,0 +1,309 @@
+---
+title: "Sentimental Analysis of Times of India 2019 HeadLines"
+output: html_notebook
+---
+
+**About The company**
+
+The Times of India is an Indian English-language daily newspaper owned by The Times Group It is the third-largest newspaper in India by circulation and largest selling English-language daily in the world according to Audit Bureau of Circulations.
+
+**Why Sentimental Analysis on New Papers ?**
+
+News analysis can be used to plot the firm’s behavior over time and thus yield important strategic insights about firms. Sentiment analysis is also useful in social media monitoring to automatically characterize the overall feeling or mood of consumers as reflected in social media toward a specific brand or company and determine whether they are viewed positively or negatively. News analysis and news sentiment calculations are now routinely used by both buy-side and sell-side in market surveillance and compliance. The main tasks identified for news opinion mining consists of extracting sentences from online published news articles that mention company news and identifying positive and negative sentiment that exists in that article and further summarizing the article polarity. A large number of companies use news analysis to help them make better business decisions so in our project we are doing sentiment analysis on news article related to the company.
+
+
+
+```{r,echo=FALSE}
+library(data.table)
+#install.packages("igraph")
+library(igraph)
+#install.packages("ggraph")
+library(ggraph)
+#install.packages("plotly")
+library(plotly)
+#install.packages("grid")
+library(grid)
+#install.packages("gridExtra")
+library(gridExtra)
+#install.packages("tidyquant")
+#install.packages("lubridate")
+#library(lubridate)
+#install.packages("stringi")
+library(tidyquant)
+#install.packages("tm")
+library(tm)
+#install.packages("ggplot2")
+library(ggplot2)
+#install.packages("pacman")
+#install.packages("lubridate")
+pacman::p_load(tidyverse,tidytext,viridis,rvest,tm,wordcloud,SnowballC,tidyquant,ggridges,scales,highcharter,topicmodels)
+```
+
+```{r,echo=FALSE}
+# Get the files names
+files = list.files(pattern="*.csv")
+# First apply read.csv, then rbind
+data = do.call(rbind, lapply(files, function(x) fread(x, stringsAsFactors = FALSE)))
+clean_data<-na.omit(data)
+names(clean_data)[names(clean_data) == 'V1'] <- 'No'
+names(clean_data)[names(clean_data) == 'V2'] <- 'text'
+names(clean_data)[names(clean_data) == 'V3'] <- 'date'
+clean_data$month<-as.factor(month(as.POSIXct(clean_data$date)))
+clean_data$weekDays<-as.factor(wday(clean_data$date, label=TRUE))
+```
+
+```{r,echo=FALSE}
+tidy <- clean_data %>%
+    unnest_tokens(word, text) %>%
+    add_count(date) %>%
+    dplyr::rename(date_total = n)
+#remove stop words
+data("stop_words")
+tidy <- tidy %>%
+  anti_join(stop_words)
+```
+
+```{r,echo=FALSE}
+stop_user=c("linklink","whatsappshar","auburn","twittershar","edit","delet","via","edit","delet","via","starstarstarstarstarwork","pdt","hill","ago",
+            "facebookshar")
+stop_user2=tibble(word=stop_user)
+
+```
+
+**Positive and Negative Sentimental Analysis of Times of India 2019**
+
+```{r,echo=FALSE}
+sentiment <- tidy %>%
+    inner_join(get_sentiments("bing"))
+
+t<-list(
+  family="sans serif",
+  size=14,
+  color='black'
+)
+
+
+p <- sentiment %>%
+  group_by(sentiment) %>%
+  summarize(count = n()) %>%
+  plot_ly(labels = ~sentiment, values = ~count) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title ,  showlegend = T,font=t,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
+```
+
+
+```{r,echo=FALSE}
+p
+```
+As we see above the 69.2% of the news headlines of 2019  have negative sentiments and 30.8% have positive sentiments.
+
+Now we are going to see the variety of negative and positive sentiments in headlines  by months of the year 2019.
+
+```{r,echo=FALSE}
+sentiment<-as.data.table(sentiment)
+p<-ggplotly(ggplot(sentiment[,.N,by=c("sentiment","month")], aes(x=month, y=N, group=sentiment)) +
+  geom_line(aes(color=sentiment))+
+  geom_point(aes(color=sentiment))+labs(x = "Months",y="Number of Words",
+         title = "Monthly Analysis of Sentiments in Head Lines")+theme(plot.title = element_text(hjust = -10,face = "bold",color = "black",size = 10)))
+p
+```
+
+As we see above there is the huge difference between the number of words in positive and negative sentiments, as we can see the pattern above both the lines of positive and negative sentiments are varying at similar way. On the month of April we have a high negative and positive sentiments on news headlines,this is because there were lots of events that may occur at that particular month, and on may we can see that there is the sudden drop of positive and negative sentiments, the reason may be the news headlines were very less at this particular month as both negative and positive sentiments have dropped.
+
+Now we are going to see the Weekly Trend in the positive and negative sentiments in head lines of the year 2019.
+
+```{r,echo=FALSE}
+sentiment<-as.data.table(sentiment)
+p<-ggplotly(ggplot(sentiment[,.N,by=c("sentiment","weekDays")], aes(x=weekDays, y=N, group=sentiment)) +
+  geom_line(aes(color=sentiment))+
+  geom_point(aes(color=sentiment))+labs(x = "WeekDays",y="Number of Words",
+         title = "Weekly Analysis of Sentiments in Head Lines")+theme(plot.title = element_text(hjust = -10,face = "bold",color = "black",size = 10)))
+p
+```
+As we see above there is a huge difference between the number of words in positive and negative sentiments, as we see the trend in both the lines of sentiments are kind of similar ,but as on Tuesday positive sentiments in news headlines were constant as previous days ,but negative sentiments have slight increase on Tuesdays, as there may be lots of negative headlines were printed on Tuesdays.All other days the pattern is pretty much the same for both the sentiments.
+```{r,echo=FALSE}
+
+p<-clean_data %>%
+    unnest_tokens(word, text)%>%
+  inner_join(get_sentiments("bing"))
+```
+
+
+**Word Cloud of positive and negative sentiments**
+```{r,echo=FALSE}
+p%>%
+  count(word, sentiment, sort = TRUE) %>%
+ reshape2::acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = viridis_pal(option = "D")(2),
+                   max.words = 100)
+```
+
+As we see above that the word cloud classifies words in headlines ,as  positive and negative sentiments, larger the word greater the number of times the particular word occurs in the particular sentiment.
+
+
+```{r,echo=FALSE}
+q<-sentiment %>%
+    count(sentiment, word) %>%
+    group_by(sentiment) %>%
+    top_n(10) %>%
+    ungroup %>%
+    mutate(word = reorder(word, n)) %>%
+   mutate(sentiment = as.factor(sentiment))  
+```
+
+```{r,echo=FALSE}
+p<-q%>%
+    ggplot(aes(word, n, fill = sentiment)) +
+    geom_col(alpha = 0.8, show.legend = FALSE) +
+    coord_flip() +
+    scale_y_continuous(expand = c(0,0)) +
+    facet_wrap(~sentiment,scales="free") +
+   labs(y = "Total number of occurrences", x = "",title = "Frequency of Words occured in sentiments")+
+#scale_fill_manual(values=viridis_pal(option = "D")(8))+
+  theme(plot.title = element_text(hjust = -10,face = "bold",color = "black",size = 10))+
+ scale_fill_viridis(end = 0.75, discrete=TRUE, direction = -1) +
+        scale_x_discrete(expand=c(0.02,0))  +
+  # strip horizontal  axis labels
+        theme(axis.title.x=element_blank()) +
+        theme(axis.ticks.x=element_blank()) +
+        theme(axis.text.x=element_blank())+
+  theme_minimal(base_size = 13)
+ggplotly(p)
+```
+As we see the word "death" and "Killed" occurred more frequently in the headlines of Times of India in 2019 as negative sentiment, so we may assume that most of the negative headlines are of Murders, we can say that because the top three most frequent words are related to these topics.
+
+The word "top", "worth" and gold occurred more frequently in the headlines of Times of India in 2019 as a positive sentiment.so we may assume that most of the positive headlines are of the top, worth and gold, we can say that because the top three most frequent words are related to these topics.
+
+
+
+
+**Multi sentiments Analysis**
+
+we have 6 different type sentiments:-
+
+1)Fear.
+2)Joy.
+3)Negative.
+4)Positive.
+5)Sadness 
+6)Trust
+```{r,echo=FALSE}
+sentiment <- tidy %>%
+    inner_join(get_sentiments("nrc"))
+```
+
+**Percentage of Sentiments in HeadLines**
+
+```{r,echo=FALSE}
+p <- sentiment %>%
+  group_by(sentiment) %>%
+  summarize(count = n()) %>%
+  plot_ly(labels = ~sentiment, values = ~count) %>%
+  add_pie(hole = 0.6) %>%
+  layout(showlegend = T,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+p
+```
+As we see the above donet chart, in multi sentimental analysis the negative sentiments were higher as compared to other sentiments.
+
+Now we are going to see the variation of all sentiments in headlines by months of the year 2019.
+
+```{r,echo=FALSE}
+sentiment <- tidy %>%
+    inner_join(get_sentiments("nrc"))
+```
+
+```{r,echo=FALSE}
+sentiment<-as.data.table(sentiment)
+p<-ggplotly(ggplot(sentiment[,.N,by=c("sentiment","month")], aes(x=month, y=N, group=sentiment)) +
+  geom_line(aes(color=sentiment))+
+  geom_point(aes(color=sentiment))+labs(x = "Months",y="Number of Words",
+         title = "Monthly Analysis of Sentiments in Head Lines")+theme(plot.title = element_text(hjust = -10,face = "bold",color = "black",size = 10)))
+p
+```
+As we see in the above graph, at April all the lines are peaking up, that may be because the number of Head Lines were high at that month again in may the all the sentiments are peaking down, the reason may be the number of headlines was low in this particular month.
+
+Now we are going to see the Weekly Trend of all sentiments in headlines of the year 2019.
+
+```{r,echo=FALSE}
+sentiment<-as.data.table(sentiment)
+p<-ggplotly(ggplot(sentiment[,.N,by=c("sentiment","weekDays")], aes(x=weekDays, y=N, group=sentiment)) +
+  geom_line(aes(color=sentiment))+
+  geom_point(aes(color=sentiment))+labs(x = "WeekDays",y="Number of Words",
+         title = "Weekly Analysis of Sentiments in Head Lines")+theme(plot.title = element_text(hjust = -10,face = "bold",color = "black",size = 10)))
+p
+```
+As we see in the above on Thursdays the line is getting dipped in all the sentiments there may be fewer Headlines on Thursday as compared to other days of the week.
+
+```{r,echo=FALSE}
+p<-clean_data %>%
+    unnest_tokens(word, text)%>%
+  inner_join(get_sentiments("nrc")) %>%
+  count(word, sentiment, sort = TRUE)
+```
+
+**Word Cloud of all the sentiments**
+```{r,echo=FALSE}
+p%>%
+filter(sentiment %in% c("negative","positive","joy","sadness"))%>%
+reshape2::acast(word ~ sentiment, value.var = "n", fill = 0)%>% 
+comparison.cloud(colors = viridis_pal(option = "D")(4),
+                  max.words = 200)
+```
+As we see above that the word cloud classifies words in headlines, as the type of sentiments, larger the word greater the number of times the particular word occurred in the particular sentiment.
+```{r,echo=FALSE}
+p<-sentiment %>%
+    count(sentiment, word) %>%
+    filter(sentiment %in% c("positive", "negative", 
+                            "joy", "trust","fear","sadness")) %>%
+    group_by(sentiment) %>%
+    top_n(10) %>%
+    ungroup %>%
+    mutate(word = reorder(word, n)) %>%
+   mutate(sentiment = as.factor(sentiment)) 
+  
+```
+
+```{r,echo=FALSE}
+d<-p %>%
+    ggplot(aes(word, n, fill = sentiment)) +
+    geom_bar(alpha = 0.8, show.legend = FALSE,stat = "identity") +
+    coord_flip() +
+    scale_y_continuous(expand = c(0,0)) +
+    facet_wrap(~sentiment, scales = "free") +
+   labs(y = "Total number of occurrences", x = "Words",title = "Frequency of Words occured in sentiments")+theme_bw()+
+scale_fill_manual(values=viridis_pal(option = "D")(6))
+ggplotly(d)
+```
+By the above graph, we can easily interpret the type of headlines that were mostly posted by Times of India in the following sentiments.By seeing the top 5 words of the sentiments we can make out what type of headlines occurred frequently in the particular type of sentiment.
+
+
+Topic Modeling
+```{r,echo=FALSE}
+data(stop_words)
+tidy_descr<-clean_data %>%
+unnest_tokens(word, text) %>% 
+mutate(word=removeNumbers(word))%>% 
+mutate(word_stem = wordStem(word)) %>%
+anti_join(stop_words, by = "word") %>%
+filter(!word_stem %in% stop_words$word) %>%
+filter(!word_stem %in% stop_user) 
+```
+
+
+**The Word cloud of most frequently occurred words on the head lines of Times of India at 2019**
+```{r,echo=FALSE}
+tidy_descr %>%
+count(word_stem) %>%
+mutate(word_stem = removeNumbers(word_stem)) %>%
+with(wordcloud(word_stem, n, max.words = 100, colors = palette_light()))
+```
+
+**Conclusion**
+
+By this we conclude that most of the headlines of Times of India 2019 till May, were regarding the votes, poll, Congress,BJP as we see in the above word cloud, so we can infer that most of the headlines were about politics, upcoming elections and news about political parties.
+ 

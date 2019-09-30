@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1550633451608.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "C5AAC456",
+    "lastKnownWriteTime" : 1550557930,
+    "last_content_update" : 1550633454074,
+    "path" : "C:/Users/Dell/Desktop/rohan/live_project/live/analysis.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "47,627",
+        "scrollLine" : "40"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

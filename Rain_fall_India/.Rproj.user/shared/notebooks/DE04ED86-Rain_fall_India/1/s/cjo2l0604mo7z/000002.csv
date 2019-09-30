@@ -1,0 +1,1 @@
+"0","y <- ts(data_clean[,c(""YEAR"",""ANNUAL"")], start=min(data_clean$YEAR), frequency=12)"

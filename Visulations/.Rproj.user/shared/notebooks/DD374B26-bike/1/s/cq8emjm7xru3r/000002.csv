@@ -1,0 +1,9 @@
+"0","```r
+network=graph_from_data_frame(d=gr, directed=F)
+x = cut_number(as.integer(network %v% \"end_station_names\"))
+ggnet2(network, color = x, color.legend = \"period\", palette = col,
+       edge.alpha = 1/4, edge.size = \"weight\",
+       size = \"outdegree\", max_size = 4, size.cut = 3,
+       legend.size = 12, legend.position = \"bottom\") +
+  coord_equal()
+```"

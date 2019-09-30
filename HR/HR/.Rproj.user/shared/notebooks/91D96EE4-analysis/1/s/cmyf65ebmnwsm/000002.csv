@@ -1,0 +1,10 @@
+"0","```r
+z<-ggplot(daa,aes(x=names,y = max_total_number_sessions ))+geom_bar(bin = 50,width = 0.2,fill=\"black\",col=\"black\",stat=\"identity\")+labs(title = \"The max of total number of sessions affiliate run on particular page \")+theme(plot.title = element_text(hjust = 0.5,face = \"bold\",color = \"blue\"))+theme(panel.background = element_rect(fill = 'gray'))
+```"
+"1","Ignoring unknown parameters: bin
+"
+"0","```r
+z
+```"
+"1","Error in FUN(X[[i]], ...) : object 'max_total_number_sessions' not found
+"

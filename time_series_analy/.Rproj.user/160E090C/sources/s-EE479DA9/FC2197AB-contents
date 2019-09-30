@@ -1,0 +1,131 @@
+---
+title: "transportation"
+output: html_notebook
+---
+importing the library
+```{r}
+library(data.table)
+library(readxl)
+library(tidyr)
+library(stringr)
+```
+
+importing the data
+```{r}
+data.set<-fread("sample_data.csv",na.strings = "")
+View(data.set)
+```
+Viewing the structure of the data,and summary of the data.
+```{r}
+str(data.set)
+summary(data.set)
+nrow(data.set)
+```
+checking for NA 'S by column 's in the data set.
+```{r}
+na_count <-sapply(data.set, function(y) sum(length(which(is.na(y)))))
+na_count <- data.frame(na_count)
+View(na_count)
+```
+
+
+
+now as we see in the column VehiclePosition there is some more data in one particular column,now we need to extract the data from that column.
+
+now dividing the column in to multiple columns
+```{r}
+data.set1<- data.set[,-(18),drop=FALSE]
+VehiclePosition<-data.set$VehiclePosition
+View(data.set1)
+View(VehiclePosition)
+VechiclePosition1<-as.data.frame(transpose(as.data.frame(strsplit(VehiclePosition,","))))
+class(VechiclePosition1)
+```
+```{r}
+x<-as.data.frame( lapply(VechiclePosition1,function(x) str_split(x,':""')))
+#y<-sapply(VechiclePosition1,function(b)str_)
+#y<-sapply(x, function(v)str_split(v," "" "))
+#VechiclePosition1<-separate(VechiclePosition1,V1,c(),sep=":",remove =TRUE,convert = TRUE)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+extracting the columns from the vechicle position
+```{r}
+VechiclePosition1<-separate(VechiclePosition1,V1,c("desi1","desi"),sep=":",remove =TRUE,convert = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V2,c("dir1","dir"),sep=":",remove = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V3,c("oper1","oper"),sep=":",remove =TRUE,convert = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V4,c("long1","long"),sep=":",remove = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V5,c("veh1","veh"),sep=":",remove =TRUE,convert = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V6,c("tst1","tst"),sep=":",remove = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V7,c("tsi1","tsi"),sep=":",remove =TRUE,convert = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V8,c("hdg1","hdg"),sep=":",remove = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V9,c("lat1","lat"),sep=":",remove =TRUE,convert = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V10,c("long1","long"),sep=":",remove = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V11,c("acc1","acc"),sep=":",remove =TRUE,convert = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V12,c("dl1","dl"),sep=":",remove = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V13,c("odo1","odo"),sep=":",remove =TRUE,convert = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V14,c("drst1","drst"),sep=":",remove = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V15,c("oday1","oday"),sep=":",remove =TRUE,convert = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V16,c("jrn1","jrn"),sep=":",remove = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V17,c("line1","line"),sep=":",remove =TRUE,convert = TRUE)
+VechiclePosition1<-separate(VechiclePosition1,V18,c("start1","start"),sep=":",remove =TRUE,convert = TRUE)
+View(VechiclePosition1)
+
+```
+now removing the duplicate columns fro the table.
+```{r}
+#summary(VechiclePosition1)
+VechiclePosition1<-VechiclePosition1[,-c(1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33)]
+colnames(VechiclePosition1)
+View(VechiclePosition1)
+```
+now lets see the structure of the table that we have extracted.
+```{r}
+str(VechiclePosition1)
+```
+now changing the data type of some features.
+```{r}
+VechiclePosition1[,c("hdg","lat","acc","dl","long","odo","drst", "jrn" ,"line")] <- lapply(VechiclePosition1[,c("hdg","lat","acc","dl","long","odo","drst", "jrn" ,"line")], as.numeric)
+```
+now agaoin checking the structure of the data frame
+```{r}
+str(VechiclePosition1)
+```
+now i am joining the two tables by column.(data.set1,VechiclePosition1)
+```{r}
+
+```
+

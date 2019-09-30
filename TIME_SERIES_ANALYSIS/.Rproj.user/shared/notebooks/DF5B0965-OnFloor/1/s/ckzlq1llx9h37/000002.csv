@@ -1,0 +1,20 @@
+"0","```r
+summary(train_data)
+```"
+"1","   series_id    measurement_number orientation_X      orientation_Y      orientation_Z      orientation_W       angular_velocity_X  
+ Min.   :   0   Min.   :  0.00     Min.   :-0.98910   Min.   :-0.98965   Min.   :-0.16283   Min.   :-0.156620   Min.   :-2.3710000  
+ 1st Qu.: 952   1st Qu.: 31.75     1st Qu.:-0.70512   1st Qu.:-0.68898   1st Qu.:-0.08947   1st Qu.:-0.106060   1st Qu.:-0.0407520  
+ Median :1904   Median : 63.50     Median :-0.10596   Median : 0.23786   Median : 0.03195   Median :-0.018704   Median : 0.0000842  
+ Mean   :1904   Mean   : 63.50     Mean   :-0.01805   Mean   : 0.07506   Mean   : 0.01246   Mean   :-0.003804   Mean   : 0.0001775  
+ 3rd Qu.:2857   3rd Qu.: 95.25     3rd Qu.: 0.65180   3rd Qu.: 0.80955   3rd Qu.: 0.12287   3rd Qu.: 0.097215   3rd Qu.: 0.0405272  
+ Max.   :3809   Max.   :127.00     Max.   : 0.98910   Max.   : 0.98898   Max.   : 0.15571   Max.   : 0.154770   Max.   : 2.2822000  
+                                                                                                                                    
+ angular_velocity_Y  angular_velocity_Z  linear_acceleration_X linear_acceleration_Y linear_acceleration_Z                   surface     
+ Min.   :-0.927860   Min.   :-1.268800   Min.   :-36.0670      Min.   :-121.490      Min.   :-75.386       concrete              :99712  
+ 1st Qu.:-0.033191   1st Qu.:-0.090743   1st Qu.: -0.5308      1st Qu.:   1.958      1st Qu.:-10.193       soft_pvc              :93696  
+ Median : 0.005412   Median :-0.005335   Median :  0.1250      Median :   2.880      Median : -9.365       wood                  :77696  
+ Mean   : 0.008338   Mean   :-0.019184   Mean   :  0.1293      Mean   :   2.886      Mean   : -9.365       tiled                 :65792  
+ 3rd Qu.: 0.048068   3rd Qu.: 0.064604   3rd Qu.:  0.7923      3rd Qu.:   3.799      3rd Qu.: -8.523       fine_concrete         :46464  
+ Max.   : 1.079100   Max.   : 1.387300   Max.   : 36.7970      Max.   :  73.008      Max.   : 65.839       hard_tiles_large_space:39424  
+                                                                                                           (Other)               :64896  
+"

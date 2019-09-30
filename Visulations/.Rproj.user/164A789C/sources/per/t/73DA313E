@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1559900174977.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2133832126",
+    "id" : "73DA313E",
+    "lastKnownWriteTime" : 1554448090,
+    "last_content_update" : 1559900178036,
+    "path" : "E:/rohan_office_new/rohan/daily_task/ecommers/Ecommers/analysis.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "211,2",
+        "scrollLine" : "205"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

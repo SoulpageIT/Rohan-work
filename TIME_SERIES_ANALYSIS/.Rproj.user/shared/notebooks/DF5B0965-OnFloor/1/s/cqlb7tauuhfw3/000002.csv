@@ -1,0 +1,12 @@
+"0","```r
+#Donet chart which display the percentage of each class in the column
+ p <- train_data %>%
+  group_by(surface) %>%
+  summarize(count = n()) %>%
+  plot_ly(labels = ~surface, values = ~count) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title = \"The Percentage of category at Surface column\",  showlegend = F,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+p
+```"

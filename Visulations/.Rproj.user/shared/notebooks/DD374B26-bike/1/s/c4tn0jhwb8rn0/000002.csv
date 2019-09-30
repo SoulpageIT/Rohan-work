@@ -1,0 +1,4 @@
+"0","```r
+net=network(gr, directed = TRUE)
+ggnet2(net,size = 6, color = \"black\", edge.size = 1, edge.color = \"grey\")+coord_equal()
+```"

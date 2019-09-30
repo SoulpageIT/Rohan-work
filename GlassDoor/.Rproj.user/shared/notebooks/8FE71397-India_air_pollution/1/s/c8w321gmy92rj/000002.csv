@@ -1,0 +1,4 @@
+"0","```r
+#cleaned_data <- data_analysis[complete.cases(data_analysis[type==\"Industrial Area\"]), ]
+#Missed_data<-data_analysis[!complete.cases(data_analysis[type==\"Industrial Area\"]),]
+```"

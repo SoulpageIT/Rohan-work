@@ -1,0 +1,2 @@
+"0","data_clean = data[complete.cases(data),]"
+"0","data_na = data[!complete.cases(data),]"

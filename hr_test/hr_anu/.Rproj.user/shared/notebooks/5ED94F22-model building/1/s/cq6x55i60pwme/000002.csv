@@ -1,0 +1,4 @@
+"0","rf_default <- train(as.factor(trainData$is_promoted)~., data=trainData, method=""rf"", metric=metric, tuneGrid=tunegrid, trControl=control)
+"
+"2","Error in `[.data.frame`(x, i, j, drop) : undefined columns selected
+"

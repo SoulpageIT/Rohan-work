@@ -1,0 +1,8 @@
+"0","```r
+# prepare a data frame for base lines
+base_data=gr1 %>% 
+  group_by(`Start Station Name`) %>% 
+  summarize(start=min(id), end=max(id) - empty_bar) %>% 
+  rowwise() %>% 
+  mutate(title=mean(c(start, end)))
+```"

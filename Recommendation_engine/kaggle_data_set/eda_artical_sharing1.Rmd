@@ -1,0 +1,55 @@
+---
+title: "Artical_sharing_EDA"
+output: html_notebook
+---
+
+Deskdrop is an internal communications platform developed by CI&T, focused in companies using Google G Suite. Among other features, this platform allows companies employees to share relevant articles with their peers, and collaborate around them.
+
+libraries used in the data set.
+```{r}
+library(ggplot2)
+library(plotly)
+library(data.table)
+```
+
+Reading the data into r
+```{r}
+users_interactions<-fread("users_intractions_format.csv")
+shared_articles <- fread("shared_articles_format.csv")
+```
+
+converting the timestamp colum to date time column in r
+```{r}
+#strptime("2016-03-29 00:49:39",f)
+users_interactions$timestamp<-as.POSIXct(strptime(users_interactions$timestamp, "%Y-%m-%d %H:%M:%S"))
+shared_articles$timestamp<-as.POSIXct(strptime(shared_articles$timestamp,"%Y-%m-%d %H:%M:%S"))
+```
+
+```{r}
+users_interactions[rev(order(timestamp)),]
+```
+
+```{r}
+shared_articles[order(timestamp),]
+```
+
+EDA on user intraction
+
+```{r}
+length(unique(users_interactions$userRegion))
+```
+There 72 cities log data of user interactions.
+
+
+```{r}
+unique(users_interactions$userCountry)
+```
+Total we have 23 countries.
+
+```{r}
+
+```
+
+
+
+

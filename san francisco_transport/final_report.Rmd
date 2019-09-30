@@ -1,0 +1,588 @@
+---
+title: "BART Ridership Analysis"
+output: html_notebook
+---
+
+# About domain:
+
+BART, short for "Bay Area Rapid Transit", is the transit system severing the San Francisco Bay Area in California. BART operates six routes, 46 stations, and 112 miles of track. It serves an average weekday ridership of 423,000 people, making it the fifth-busiest rapid transit system in the United States.
+
+# Problem 
+
+The BART organization wants to know some insights from the data of 2016 till May of 2017, some insights like:-
+
+1) Which BART station is the busiest?
+2) When is the best time to go to SF if you want to find a seat?
+3) Which day of the week is the busiest?
+4) How many people take the BART late at night?  etc......
+
+# Solution provided/Opportunity
+
+By using Analytics we can get insights from the data and by these insights, the organization can better allocate their resources.we are also forecasting weekly average of ridership.
+
+
+# Technologies Used :
+
+we have used Data science to forecast average weekly Ridership.
+
+
+# About the data set
+
+Note: - There are 2 data sets used in this analysis.
+
+#### Data set 1 :- 
+
+This dataset contains daily information on BART ridership between stations for a period covering all of 2016 to till May 2017. this data includes movements between specific stations (there are just over 2000 station-to-station combinations).
+
+#### Data set 2 :-
+
+This dataset contains information on ridership weekly average from July 1997 to May  2018
+
+#### Source of data set
+
+  1) Data set 1 :-  https://www.kaggle.com/saulfuh/bart-ridership/data.
+
+  2) Data set 2 :- https://data.bart.gov/dataset/customer-ridership/resource/6e653520-58cf-45c5-b40c-d37c8957ec77.
+
+#Process/steps followed
+
+  step 1:- Plotted over insights of BART stations
+
+  step 2 :- Plotted route wise insights.
+
+  step 3 :- Forecasting weekly Ridership till Dec 2019.
+
+#### Models used
+
+ ARIMA.
+
+# Over all Inferences
+
+Note:- The Origin station and destination station are given by their respective codes in the plotted graphs.
+```{r,echo=FALSE}
+library(data.table)
+library(ggplot2)
+library(plotly)
+library(zoo)
+library(lubridate)
+library(dplyr)
+library(quantmod)
+library(reshape2)
+library(plyr)
+library(scales)
+library(RColorBrewer)
+#library(RColorBrewer)
+library(devtools)
+library(scales)
+library(tseries)
+library(forecast)
+#for intractive plots of time series.
+library(dygraphs)
+library(xts)
+library(zoo)
+library(dplyr)
+library(tidyr)
+```
+
+```{r,echo=FALSE}
+season_plot<-function(start,end){
+data[Origin==start & Destination==end & year==2016,list(Throughput=sum(Throughput)),by=c("season")] %>%
+      group_by(season)  %>%
+      plot_ly(labels = ~as.factor(season), values = ~Throughput) %>%
+      add_pie(hole = 0.6) %>%
+      layout(title = "Percentage passengers on different seasons of year 2016",  showlegend = T,
+             xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+}
+```
+
+```{r,echo=FALSE}
+time_interval_function<-function(start,end){
+data[Origin==start & Destination==end,list(Throughput=sum(Throughput)),by=c("time_intervals_d")][order(Throughput,time_intervals_d,decreasing=TRUE)]  %>%group_by(time_intervals_d)  %>%
+      plot_ly(labels = ~as.factor(time_intervals_d), values = ~Throughput) %>%
+      add_pie(hole = 0.6) %>%
+      layout(title = "Percentage of passengers at different time intervals",  showlegend = T,
+             xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+}
+```
+
+
+
+```{r,echo=FALSE}
+fte_theme <- function() {
+  
+  # Generate the colors for the chart procedurally with RColorBrewer
+  palette <- brewer.pal("Greys", n=9)
+  color.background = palette[2]
+  color.grid.major = palette[3]
+  color.axis.text = palette[6]
+  color.axis.title = palette[7]
+  color.title = palette[9]
+  
+  # Begin construction of chart
+  theme_bw(base_size=15) +
+    
+    # Set the entire chart region to a light gray color
+    theme(panel.background=element_rect(fill=color.background, color=color.background)) +
+    theme(plot.background=element_rect(fill=color.background, color=color.background)) +
+    theme(panel.border=element_rect(color=color.background)) +
+    
+    # Format the grid
+    theme(panel.grid.major=element_line(color=color.grid.major, size=.05)) +
+    theme(panel.grid.minor=element_blank()) +
+    theme(axis.ticks=element_blank()) +
+    
+    # Format the legend, but hide by default
+    theme(legend.background = element_rect(fill=color.background, size=.5, linetype="dotted")) +
+    theme(legend.text = element_text(size=8,color="black")) +
+    theme(legend.position = "top") +
+    theme(legend.title=element_blank()) +
+   
+    
+    # Set title and axis labels, and format these and tick marks
+    theme(plot.title=element_text(color=color.title, size=20, vjust=4.25, face = "bold")) +
+    theme(axis.text.x=element_text(size=14,color="black")) +
+    theme(axis.text.y=element_text(size=12,color="black")) +
+    theme(axis.title.x=element_text(size=14,color="black", face = "bold")) +
+    theme(axis.title.y=element_text(size=14,color="black", vjust=1.25)) +
+    
+    # Plot margins
+    theme(plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm"))
+}
+```
+
+```{r, echo=FALSE}
+season_graph<-function(route){
+ggplot(data[routes==route,list(Throughput=sum(Throughput)),by=c("season")], aes(as.factor(season),Throughput)) + geom_tile(aes(fill = Throughput),colour = "red") + scale_fill_gradient(low = "yellow", high = "red")+labs(title = paste("The Trend of Throughput on routes by seasons",root))+xlab("Seasons")+ylab("Throughput")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "Black"))
+}
+```
+
+```{r, echo=FALSE}
+clender_map<-function(origin,destination){
+ggplot(data[Origin==origin & Destination==destination,list(Throughput=sum(Throughput)),by=c("monthweek","weekDays","monthf","year")], aes(monthweek,factor(weekDays,levels = c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday" )), fill = Throughput)) + 
+  geom_tile(colour = "white") + facet_grid(year~factor(monthf,levels = c("Jan", "Feb" ,"Mar" ,"Apr" ,"May" ,"Jun" ,"Jul" ,"Aug" ,"Sep" ,"Oct" ,"Nov" ,"Dec"))) + scale_fill_gradient(low="yellow", high="red") +
+  ggtitle(paste("The Busiest time from",origin,"to",destination))+labs(fill="No of passengers")+xlab("\n\nWeek of Month")+ ylab("")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))
+}
+```
+
+```{r, echo=FALSE}
+monthweeks <- function(x) {
+    UseMethod("monthweeks")
+}
+monthweeks.Date <- function(x) {
+    ceiling(as.numeric(format(x, "%d")) / 7)
+}
+monthweeks.POSIXlt <- function(x) {
+    ceiling(as.numeric(format(x, "%d")) / 7)
+}
+monthweeks.character <- function(x) {
+    ceiling(as.numeric(format(as.Date(x), "%d")) / 7)
+}
+```
+
+```{r echo=FALSE}
+trendGraph<-function(route){
+ggplotly(ggplot(data[routes==route,list(Throughput=sum(Throughput)),by=c("month","year")],aes(x=month,y=Throughput,group=1))+ geom_line(linetype = "dashed",color="red")+labs(title = paste("The Trend of Passengers on route",route))+xlab("Month")+ylab("No Passengers")+geom_point()+facet_grid(. ~ year)+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))+theme(axis.title.x = element_text(vjust=-0.1)))
+}
+```
+
+```{r, echo=FALSE}
+data1 <- fread("date-hour-soo-dest-2016.csv",stringsAsFactors = TRUE)
+data2 <- fread("date-hour-soo-dest-2017.csv",stringsAsFactors = TRUE)
+data3 <- fread("station_info.csv",stringsAsFactors = TRUE)
+```
+
+```{r, echo=FALSE}
+data<-rbind(data1,data2)
+rm(data1)
+rm(data2)
+```
+
+```{r ,echo=FALSE}
+data$DateTime  <- as.POSIXct(data$DateTime, format="%Y-%m-%d %H:%M:%S")
+```
+
+```{r echo=FALSE}
+data$year=year(data$DateTime)
+data$month=as.factor(month(data$DateTime))
+data$weekDays=weekdays(data$DateTime)
+data$hours = hour(data$DateTime)
+```
+
+```{r ,echo=FALSE}
+indx <- setNames( rep(c('winter', 'spring', 'summer',
+                   'fall'),each=3), c(12,1:11))
+#data1=data
+data$season<-unname(indx[as.character(data$month)])
+```
+
+```{r ,echo=FALSE}
+# create breaks
+breaks <- hour(hms("00:00", "6:00", "12:00", "18:00", "23:59"))
+# labels for the breaks
+labels <- c("12AM-6AM", "6AM-12Noon", "12Noon-6pm", "6pm-12Am")
+data$time_intervals <- as.factor(cut(x=hour(data$DateTime), breaks = breaks, labels = labels, include.lowest=TRUE))
+```
+
+```{r,echo=FALSE}
+#data$Destination<-as.factor(data$Destination)
+#data$Origin<-as.factor(data$Destination)
+```
+
+```{r ,echo=FALSE}
+data1=data[,list(Throughput=sum(Throughput)), by='Destination'][order(Throughput,Destination,decreasing=TRUE)]
+```
+
+
+
+
+```{r ,echo=FALSE}
+x <-ggplot(data1[1:5,],aes(x=Destination,y=Throughput))+
+  geom_segment( aes(x=Destination, xend=Destination, y=0, yend=Throughput)) +ylim(0,22000000)+scale_y_continuous(labels = comma)+
+  geom_point( size=5, color="steelblue", fill=alpha("steelblue", 0.3), alpha=0.7, shape=21, stroke=2)+theme(panel.background = element_rect(fill = ' white'))+geom_text(aes(label=Throughput), vjust=-2, color="black", size=3.4)+coord_flip()+labs(title = "The Top 5 populated BART Stations",x="Station code",y="Population")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "Black"))
+```
+
+```{r ,echo=FALSE}
+ggsave("top_5_stations.jpg",plot=x,unit="in",width=7,height = 7,dpi=300)
+x
+```
+***Legend***
+
+EMBR :- Embarcadero (EMBR).
+
+Mont :- Montgomery St. (MONT).
+
+Powl :- Powell St. (POWL).
+
+Civc :- Civic Center/UN Plaza (CIVC).
+
+DBRK :- Downtown Berkeley (DBRK).
+
+***Inference*** :-  As we see Embarcadero (EMBR) is the BART station was the busiest station in 2016 till may 2017, followed by Montgomery St. (MONT), Powell St. (POWL), Civic Center/UN Plaza (CIVC) and Downtown Berkeley (DBRK).
+```{r ,echo=FALSE}
+x<-ggplot(data1[41:45,],aes(x=as.factor(Destination),y=Throughput))+
+  geom_segment( aes(x=as.factor(Destination), xend=as.factor(Destination), y=0, yend=Throughput)) +ylim(0,2200000)+
+  geom_point( size=5, color="steelblue", fill=alpha("steelblue", 0.3), alpha=0.7, shape=21, stroke=2)+theme(panel.background = element_rect(fill = ' white'))+geom_text(aes(label=Throughput), vjust=-1, color="black", size=3.4)+coord_flip()+labs(title = "The Least 5 populated BART Stations",x="Station code",y="Population")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "Black"))
+```
+
+```{r ,echo=FALSE}
+ggsave("Least_5_stations.jpg",plot=x,unit="in",width=7,height = 7,dpi=300)
+x
+```
+***Legend***
+
+SHAY - South Hayward (SHAY).
+
+ORIN - Orinda (ORIN).
+
+OAKL - Oakland Airport (OAKL).
+
+NCON - North Concord/Martinez (NCON).
+
+CAST - Castro Valley (CAST).
+
+
+***Inference*** :-  The least  stations are Oakland Airport (OAKL).
+```{r ,echo=FALSE}
+rm(data1)
+```
+
+
+```{r ,echo=FALSE}
+data$routes<-as.factor(with(data, paste0(Origin,"-",Destination)))
+```
+
+```{r ,echo=FALSE}
+x<-ggplot(data[!(Origin==Destination),list(Throughput=sum(Throughput)),by=c("routes")][order(Throughput,routes,decreasing=TRUE)][1:5,],aes(x=routes,y=Throughput))+geom_bar(fill="steelblue",bin = 50,width = 0.2 ,stat="identity",na.rm = TRUE)+scale_y_continuous(labels = comma)  +geom_text(aes(label=Throughput), vjust=-1, color="black", size=3.4)+labs(title = "The top 5 busy routes of BART",x="Routes",y="Populations")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black"))+coord_flip()
+```
+
+```{r,echo=FALSE}
+ggsave("top_5_routes.jpg",plot=x,unit="in",width=7,height = 7,dpi=300)
+x
+```
+***Legend***
+
+POWL - BALB :- Powell St. (POWL) to Balboa Park (BALB).
+
+POWL - 24th :- Powell St. (POWL) to 24th St. Mission (24TH).
+
+DUBL - EMBR :- Dublin/Pleasanton (DUBL) to Embarcadero (EMBR).
+
+BALB - POWL :- Balboa Park (BALB) to Powell St. (POWL)
+
+***Inference*** :- Powell St. (POWL) to Balboa Park (BALB) is the busiest route, 1105884 passengers have traveled in the year 2016 till May 2017.
+```{r ,echo=FALSE}
+x<-ggplot(data[!(Origin==Destination),list(Throughput=sum(Throughput)),by=c("routes")][order(Throughput,routes,decreasing=TRUE)][2065:2070,],aes(x=routes,y=Throughput))+geom_bar(fill="steelblue",bin = 50,width = 0.2 ,stat="identity",na.rm = TRUE)+geom_text(aes(label=Throughput), vjust=-1.4, color="black", size=3.4)+labs(title = "Least popular Routes",x="Routes",y="Populations")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black"))+coord_flip()
+
+```
+
+```{r ,echo=FALSE}
+ggsave("least_5_routes.jpg",plot=x,unit="in",width=7,height = 7,dpi=300)
+x
+```
+***Legend***
+
+WSPR-SSAN :- Warm Springs/South Fremont (WARM) to South San Francisco (SSAN).
+
+WSPR-SBRN :- Warm Springs/South Fremont (WARM) to  San Bruno (SBRN).
+
+WSPR-MLBR :- Warm Springs/South Fremont (WARM) to Millbrae (MLBR).
+
+SSAN - WSPR :- South San Francisco (SSAN) to Warm Springs/South Fremont (WARM).
+
+SBRN - WSPR :- San Bruno (SBRN) to Warm Springs/South Fremont (WARM).
+
+MLBR - WSPR :- Millbrae (MLBR) to Warm Springs/South Fremont (WARM).
+
+
+
+***Inference***  :- These are the least 6 popular routes. Only 40 to 50 passengers have travelled in these routes in the time period of 2016 to  May of 2017.
+
+
+
+```{r ,echo=FALSE}
+x<-data[,list(Throughput=sum(Throughput)),by=c("time_intervals")][order(Throughput,time_intervals,decreasing=TRUE)]  %>%
+  group_by(time_intervals)  %>%
+  plot_ly(labels = ~time_intervals, values = ~Throughput) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title = "Percentage of passengers on TimeIntervals of the day",  showlegend = T,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
+```
+
+
+```{r}
+x
+#orca(x, file = "percentage_time.png")
+#htmlwidgets::saveWidget(x, file = "percentage_time.html")
+```
+
+
+***Inference*** :- In the year 2016 till May 2017 41.3% of passengers have traveled at the time range of 12Noon-6pm and 37.2% of passengers have traveled at 6 am to 12 Noon.
+```{r ,echo=FALSE}
+data$monthf<-factor(data$month,levels=as.character(1:12),labels=c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"),ordered=TRUE)
+```
+
+```{r ,echo=FALSE}
+data$yearmonth <- as.yearmon(data$DateTime)
+data$yearmonthf <- factor(data$yearmonth)
+data$week <- as.numeric(format(data$DateTime,"%W"))
+data$monthweek<-monthweeks.POSIXlt(data$DateTime)
+data<-as.data.table(data)
+```
+
+Note:- These are the following assumptions for the below graph
+
+1) Spring:- March, April, May.
+
+2) Summer:- June, July, August.
+
+3) Autum:- September, October, November.
+
+4) Winter:- December, January, February.
+
+
+```{r ,echo=FALSE}
+x<-data[year==2016,list(Throughput=sum(Throughput)),by=c("season")] %>%
+  group_by(season)  %>%
+  plot_ly(labels = ~as.factor(season), values = ~Throughput) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title = "Percentage of passengers on different seasons on 2016",  showlegend = T,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+x
+#htmlwidgets::saveWidget(x, file = "percentage_seasons.html")
+```
+***Inference*** :- In 2016 there is very less variation in number of passengers on different seasons.
+
+```{r ,echo=FALSE}
+x<-ggplot(data[,list(Throughput=sum(Throughput)),by=c("monthweek","weekDays","monthf","year")], aes(monthweek,factor(weekDays,levels = c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday" )), fill = Throughput)) + 
+  geom_tile(colour = "white") + facet_grid(year~factor(monthf,levels = c("Jan", "Feb" ,"Mar" ,"Apr" ,"May" ,"Jun" ,"Jul" ,"Aug" ,"Sep" ,"Oct" ,"Nov" ,"Dec")))+ scale_fill_gradient(low="yellow", high="red")+scale_fill_continuous(labels = comma) +
+  ggtitle(paste("The Busiest time"))+labs(fill="No of passengers")+xlab("\n\nWeek of Month")+ ylab("")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))
+```
+```{r ,echo=FALSE}
+#ggsave("heat_map1.jpg",plot=x,unit="in",width=7,height = 7,dpi=300)
+x
+```
+The above chart shows the Number of passengers traveled by months, weekdays, week, month and year.Light blue represents the passengers are high, dark blue represents the passengers are low.
+
+***Inference*** :- In 2016 till may of 2017 generally, the people have used BART more in weekdays as compared to weekends.so if you want to find a seat for yourself, the best time is to travel at weekends.
+
+
+# Insights by routes.
+
+```{r,echo=FALSE}
+# create breaks
+breaks <- hour(hms("00:00","3:00", "6:00","9:00","12:00","15:00","18:00","21:00","23:59"))
+# labels for the breaks
+labels <- c("12Am-3Am","3Am-6Am", "6Am-9Am","9Am-12Noon","12Noon-3Pm","3Pm-6Pm","6Pm-9Pm","9Pm-12Am")
+data$time_intervals_d <- as.factor(cut(x=hour(data$DateTime), breaks = breaks, labels = labels, include.lowest=TRUE))
+```
+
+Here we have done analysis by route, so here analysis have done on  Powell St. (POWL) to Balboa Park (BALB) as it is busiest route as compare to other routes.
+
+#### Powell St. (POWL) to Balboa Park (BALB) 
+```{r ,echo=FALSE}
+x<-time_interval_function("POWL","BALB")
+#htmlwidgets::saveWidget(x, file = "percentage_tim.html")
+x
+```
+***Inference*** :- In this route, 38% of passengers have traveled at the time interval of 3pm-6pm and 19% of people have traveled at time interval 6Pm to 9pm.
+```{r ,echo=FALSE}
+data$DateTime<-data[order(data$DateTime),]$DateTime
+data<-as.data.table(data)
+```
+
+```{r ,echo=FALSE}
+x<-trendGraph("POWL-BALB")
+htmlwidgets::saveWidget(x, file = "trend.html")
+x
+```
+***Inference*** :-In between the year the trend for this route is decreasing, At the end of the years the trend for this route increasing.
+```{r ,echo=FALSE}
+x<-clender_map("POWL","BALB")
+#ggsave("heat_map2.jpg",plot=x,unit="in",width=7,height = 7,dpi=300)
+x
+```
+***Inference*** :- In this route, the people are traveling more on weekdays as compared to weekends.so if you want to find a seat for yourself, the best time is to travel weekends of August and september.
+
+
+# Forecasting of weekly Ridership
+
+Note:- we have used Data set 2 for the forecasting.
+```{r ,echo=FALSE}
+data<-fread("customer-ridership.csv")
+```
+
+```{r ,echo=FALSE}
+data$FiscalYearMonth <- paste(data$FiscalYear,data$FiscalMonth, sep="")
+data$FiscalYearMonth<-as.yearmon(as.character(data$FiscalYearMonth),"%Y%m")
+```
+
+```{r ,echo=FALSE}
+data_time_series<-xts(x = data$`RIDERSHIP WEEKAVG` ,order.by = data$FiscalYearMonth)
+```
+
+```{r ,echo=FALSE}
+dygraph(data_time_series,main = "The Trend of average weekly Ridership") %>%
+      dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = FALSE, colors="#D8AE5A") %>%
+      dyRangeSelector() %>%
+      dyCrosshair(direction = "vertical") %>%
+      dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.2, hideOnMouseOut = FALSE)  %>%
+      dyRoller(rollPeriod = 1)%>%dyAxis("y", label = "Ridership")%>%dyAxis("x",label = "Years")
+```
+***Inference*** :- As we see the trend of weekly average ridership went on increasing from 1997 to June of 2018.
+
+
+```{r ,echo=FALSE}
+#converting the data into log form to make variation constant.
+data_time_series<-log(data_time_series)
+    
+#getting data into proper format.
+data_time_series<- ts(data_time_series, frequency = 12, start = c(1997,1))
+    
+#fitting the model
+model<-auto.arima(data_time_series)
+    
+#forcasting the value
+forcast_values<-forecast(model,h=17)
+    
+#Extracting the forecasted values
+forcast_values_extracted<-as.numeric(forcast_values$mean)
+
+#here we are converting the log values into normal form.
+Forecasted_Values<-exp(forcast_values_extracted)
+    
+#converting the values to dataFrame
+Forecasted_Values<-as.data.frame(Forecasted_Values)
+
+```
+
+By using ARIMA Model we have forecasted weekly average of Ridership from August 2018 to December 2019.
+
+These are the forecasted values of weekly average of Ridership.
+
+```{r ,echo=FALSE}
+round(Forecasted_Values)
+```
+
+**Forecasted_Values of average weekly ridership.**
+
+August 2018 :-  414608
+
+september 2018 :- 404722
+
+october 2018 :- 404229
+
+November 2018 :- 407280
+
+December 2018 :- 407841
+
+January 2019 :- 404122
+
+February 2019 :- 403776
+
+March 2019 :- 409430
+
+Aprial 2019 :- 410061
+
+May 2019 :- 407389
+
+June 2019 :- 386703
+
+July 2019 :-  387868
+
+August 2019 :- 400749
+
+september 2019 :- 396350
+
+october 2019 :- 394525	
+
+November 2019 :- 397764	
+
+December 2019 :- 398429	
+```{r ,echo=FALSE}
+    
+#getting data into proper format.
+data_time_series<- ts(data_time_series, frequency = 12, start = c(1997,1))
+    
+#fitting the model
+model<-auto.arima(data_time_series)
+    
+#forcasting the value
+forcast_values<-forecast(model,h=17)
+    
+#preparing the data for graphs
+actuals <- forcast_values$x
+lower <- forcast_values$lower[,2]
+upper <- forcast_values$upper[,2]
+point_forecast <- forcast_values$mean
+    
+f<-cbind(actuals, lower, upper, point_forecast)
+    
+```
+#### Note :- The prediction value are plotted on graph in log forms.
+```{r,echo=FALSE}
+dygraph(f, main = "The forecast of weekly average ridership") %>% 
+dyRangeSelector() %>% 
+dyRangeSelector(height = 40,
+dateWindow = c("2015-04-01", "2021-4-01")) %>%
+dySeries(name = "actuals", label = "actual") %>%
+dySeries(c("lower","point_forecast","upper"), label = "Predicted") %>%
+dyLegend(show = "always", hideOnMouseOut = FALSE) %>%
+dyHighlight(highlightCircleSize = 5,
+highlightSeriesOpts = list(strokeWidth = 2)) %>%
+dyOptions(axisLineColor = "navy", gridLineColor = "grey")%>%dyAxis("y", label = "Ridership(Values are in log form)")%>%dyAxis("x",label = "Years")
+```
+
+We have used ARIMA and Holt winter for forecasting, on which ARIMA gave better results for our data with the error deviation of 4%.
+ 
+# Conclusion
+
+We have properly analyzed the data and extracted the insights by which BART organization can better plan their resources ,we have also successfully build forecasting mode and forecasted average weekly ridership from August 2018 to till july 2020.  
+
+

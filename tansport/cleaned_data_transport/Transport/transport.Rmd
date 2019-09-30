@@ -1,0 +1,169 @@
+    ---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(data.table)
+library(stringr)
+library(dplyr)
+library(leaflet)
+# library(readxl)
+```
+Importing the data
+```{r}
+# sample_data <- read_excel("sample_data.xlsx")
+tran <- fread("sample_data.csv",na.strings=c("NA", "null",""))
+vehicles_info <- as.data.frame(tran$VehiclePosition)
+```
+
+Trying to read the vehicle position data in detail
+```{r}
+vehicles_info <- as.data.frame(str_split_fixed(vehicles_info$`tran$VehiclePosition`, ",", 18))
+
+```
+
+Treating the last column and making anew dataframe
+```{r}
+x <- lapply(split(unlist(
+  lapply(vehicles_info,tstrsplit,'":'),recursive=FALSE),c("Left","Right")),
+  as.data.frame)
+data_1 <- x$Left
+
+
+temp <- as.data.frame(gsub('desi:"' ,"",data_1$V1))
+
+data_2 <- cbind(temp,data_1[,-1])
+data_3 <- data.frame(lapply(data_2, function(x) {
+                  gsub('"', "", x)
+              }))
+
+col_name <- x$Right[1,]
+
+col_name <- lapply(col_name, function(x) {
+                  gsub('"', "", x)})
+
+ 
+```
+
+Giving col names to th new formed data frame
+```{r}
+
+col_name <- c("desi", col_name)
+colnames(data_3) <- col_name
+
+```
+
+Understanding the original dataset 
+
+```{r}
+tran_1 <- tran[, -which(names(tran) %in% "VehiclePosition")]#removing the last coln
+
+str(tran_1)
+colSums(is.na(tran_1))
+```
+
+```{r}
+
+apply(tran_1, 2, function(x) length(unique(x)))
+
+```
+Finding the unique value
+```{r}
+apply(tran_temp, 2, function(x) unique(x))
+```
+
+Exploring the payload data
+```{r}
+
+apply(data_3, 2, function(x) length(unique(x)))
+colSums(is.na(data_3))
+
+```
+
+Comparing original dataset and payload dataset for various variables
+```{r}
+sum(ifelse(tran_1$operator_id==data_3$oper,0,1)) #operator ID
+sum(ifelse(tran_1$vehicle_number==data_3$veh,0,1)) #Vehicle number
+sum(ifelse(tran_1$direction_id==data_3$dir,0,1)) #direction ID
+sum(ifelse(tran_1$start_time==data_3$start,0,1)) #start time
+sum(ifelse(tran_1$temporal_type==data_3$dir,0,1)) #direction
+
+```
+Considering the GTFS route_id for mapping the route 
+```{r}
+imp_original <- tran[,which(names(tran) %in% c("transport_mode","vehicle_number",
+                                               "route_id","direction_id","next_stop",
+                                               "geohash_level","geohash"))]
+
+imp_payload <- data_3[,which(names(data_3) %in% c)]
+
+data_map <- cbind()
+       
+```
+
+```{r}
+str(data_3)
+```
+subsetting the important features
+```{r}
+data_main1<-data_3[,c("tst","lat","long","start")]
+data_main2<-tran[,c("temporal_type","transport_mode","operator_id" , "vehicle_number" ,"route_id" ,"start_time", "next_stop")]
+```
+
+now plotting the leaflet map.
+```{r}
+View(data_main1)
+View(data_main2)
+```
+
+combining the 2 tables.
+```{r}
+data_main<-cbind(data_main1,data_main2)
+```
+
+checking the na values in the table
+```{r}
+sum(is.na(data_main))
+```
+checking the structure and summary of the data
+```{r}
+str(data_main)
+summary(data_main)
+```
+
+null value treatment
+```{r}
+
+which(data_main$lat  == "NA")
+#na_data<-data_main[which(data_main$lat=="null" | data_main$long=="null"),]
+#na_data<-data_main[which(data_main == "NA" | data_main == "null" | data_main ==""),]
+```
+type casting the variables
+```{r}
+data_main[,c("lat","long")]<-lapply(data_main[,c("lat","long")],as.character)
+data_main[,c("lat","long")]<-lapply(data_main[,c("lat","long")],as.numeric)
+```
+
+```{r}
+str(data_main)
+summary(data_main)
+```
+
+
+
+
+
+
+
+
+
+shiny part
+```{r}
+ui<-
+
+```
+
+
+
+

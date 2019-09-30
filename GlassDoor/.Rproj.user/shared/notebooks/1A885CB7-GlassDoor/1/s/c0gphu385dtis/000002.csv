@@ -1,0 +1,30 @@
+"0","```r
+#Data-Preprocessing: removing '\n'
+FCA_html<-gsub(\"\n\",\"\",FCA_html)
+#remove all round brackets
+FCA_html<-FCA_html%>%str_replace_all(\"\\(|\\)\", \"\")
+#remove all \\
+FCA_html<-FCA_html%>%str_replace_all(\"\\\\\", \"\")
+#remove all non words and non numbers
+#FCA_html<-FCA_html%>%str_replace_all(\"[^A-Za-z0-9]\", \"\")
+#remove all â€¢ 
+FCA_html<-FCA_html%>%str_replace_all(\"\\â€¢  \", \"\")
+#remove all & 
+FCA_html<-FCA_html%>%str_replace_all(\"\\ & \", \"\")
+#remove all  non printable words
+FCA_html<-FCA_html%>%str_replace_all(\"[^[:print:]]\", \"\")
+#remove all \
+FCA_html<-FCA_html%>%str_replace_all(pattern = \"\\"\", replacement = \"\")
+#FCAindeed2<-FCAindeed2%>%stringi::stri_unescape_unicode()
+# remove digits
+#FCA_html%>%str_replace_all(pattern = \"[[:digit:]]+\", replacement = \"\")
+#tm::removeNumbers(FCA_html)
+#### pattern for dates
+pattern =\"\\(?\\d{4}\\)?[.-]? *\\d{2}[.-]? *[.-]?\\d{2}\"
+date=FCA_html%>%str_extract_all(pattern)
+#FCA_html[[1]]%>%str_subset(pattern = \"([0-9]{1,2})[- .]([a-zA-Z]+)[- .]([0-9]{4})\")
+#FCA_html[[1]]
+#unlist(Date)
+Date=as.Date(unlist(date))
+#FCA_html_2=data_frame(Date=as.Date(unlist(date)),FCA_html)
+```"

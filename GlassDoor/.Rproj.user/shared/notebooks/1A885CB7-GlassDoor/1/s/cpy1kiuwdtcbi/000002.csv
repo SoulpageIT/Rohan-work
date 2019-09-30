@@ -1,0 +1,28 @@
+"0","```r
+FCA_sentiment %>%
+    count(sentiment, word) %>%
+    group_by(sentiment) %>%
+    top_n(15) %>%
+    ungroup %>%
+    mutate(word = reorder(word, n)) %>%
+   mutate(sentiment = as.factor(sentiment))  %>%
+    ggplot(aes(word, n, fill = sentiment)) +
+    geom_col(alpha = 0.8, show.legend = FALSE) +
+    coord_flip() +
+    scale_y_continuous(expand = c(0,0)) +
+    facet_wrap(~sentiment,scales=\"free\") +
+   labs(y = \"Total number of occurrences\", x = \"\",
+         title = \"Sentiment analysis of NMFinancial  Employee Glassdoor Reviews\",
+         subtitle = \"Using the bing lexicon\")+
+#scale_fill_manual(values=viridis_pal(option = \"D\")(8))+
+ scale_fill_viridis(end = 0.75, discrete=TRUE, direction = -1) +
+        scale_x_discrete(expand=c(0.02,0)) +
+        theme(strip.text=element_text(hjust=0)) +
+  # change text into italics
+        theme(strip.text = element_text(face = \"italic\")) +
+  # strip horizontal  axis labels
+        theme(axis.title.x=element_blank()) +
+        theme(axis.ticks.x=element_blank()) +
+        theme(axis.text.x=element_blank())+
+  theme_minimal(base_size = 13)
+```"

@@ -1,0 +1,4 @@
+"0","```r
+#c<-bikes[,`:=`(months = month(`Start Time`),years=year(`Start Time`),weekdays=weekdays(`Start Time`))]
+#c
+```"

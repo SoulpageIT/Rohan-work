@@ -1,0 +1,7 @@
+"0","```r
+set.seed(3333)
+knn_fit <- train(Delay ~., data = train, method = \"knn\",
+ trControl=trctrl,
+ preProcess = c(\"center\", \"scale\"),
+ tuneLength = 10)
+```"

@@ -1,0 +1,99 @@
+﻿
+22nd Jan,2019
+Task
+
+
+
+Task 2 :- KNN Classifier function parameters (python)
+
+
+package :- sklearn.neighbors.KNeighborsClassifier
+
+
+
+Syntax :- class sklearn.neighbors.KNeighborsbs=None, **kwargs)
+Classifier(n_neighbors=5, weights=’uniform’, algorithm=’auto’, leaf_size=30, p=2, metric=’minkowski’, metric_params=None, n_jo
+parameters:
+
+
+1) n_neighbors(default=5) :- number of neighbors
+
+
+2)weights (default = 'uniform'):-Its saying weather we should give uniform weight to all the neighbors or not
+
+
+3)algorithm (default auto) :- The algo used to compute nearest neighbor.
+
+   
+ 3.1)Ball Tree
+    
+ 3.2)KD Tree
+
+ 3.3)Brute
+ 
+4)leaf_size :- int,optional (default =30)
+
+5)p:integer optional (default=2)
+ 
+ 
+6)metric :- string or callable ,default 'minkowski' The distance matrix is used for the tree
+ 
+ 
+7)metric_params,dict:additional keywords argument for the metrix function
+ 
+ 
+8)n_jobs :- int(optional)(default = None) the number of parallel jobs to run for neighbors
+
+
+ 
+ 
+ 
+
+
+
+
+
+
+Task 1 :- Proof of the bayes theorem
+ 
+The conditional probability of the event A, given that the event B has already occurred is
+
+
+P(A | B) = P(A∩B)P(B) ...................(1)
+
+
+Suppose the event B can occur in combination with n mutually exclusive events A1, A2,......Ar,....An 
+
+then
+
+B = (A1 ∩ B) U (A2 ∩ B) U ......U (Ar ∩ B)...... U (An ∩ B)
+
+
+Since the events (A1 ∩ B), (A2 ∩ B)......are mutually exclusive events applying the addition rule for probabilities
+
+
+P(B) = P(A1 ∩ B) + P(A2 ∩ B) +..... .........+ P(An ∩ B)...............(2)
+
+
+p(An/B)=p(An and B)/(p(A1 and B)+....+p(An and B))   (hence proved)
+
+
+
+
+
+
+
+
+
+
+
+Task 3 :- Normal distribution
+
+
+Formula :- Y = { 1/[ σ * sqrt(2π) ] } * e-(x - μ)2/2σ2
+
+
+Normal distribution variables who 's values are zero and standard deviation is one
+
+
+

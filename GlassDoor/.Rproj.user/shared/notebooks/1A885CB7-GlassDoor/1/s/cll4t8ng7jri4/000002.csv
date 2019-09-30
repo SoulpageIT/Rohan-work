@@ -1,0 +1,14 @@
+"0","```r
+tidy_FCA %>%
+  inner_join(get_sentiments(\"afinn\")) %>%
+  group_by(date) %>%
+  summarize(average_sentiment = mean(score), words = n()) %>%
+  #filter(words >= 10) %>%
+  ggplot(aes(date, average_sentiment)) +
+  geom_line() +
+  geom_hline(color = \"red\", lty = 2, yintercept = 0) +
+labs(y = \"Average AFINN sentiment score\", x = \"Year\",
+         title = \"Sentiment analysis of NMFinancial  Employee Glassdoor Reviews\",
+         subtitle = \"Using the affin lexicon\")+
+  geom_smooth(method = \"loess\")
+```"

@@ -1,0 +1,275 @@
+---
+title: "EDA for San Francisco Transport"
+output: html_notebook
+---
+
+#Context
+
+BART, short for "Bay Area Rapid Transit", is the transit system severing the San Francisco Bay Area in California. BART operates six routes, 46 stations, and and 112 miles of track. It serves an average weekday ridership of 423,000 people, making it the fifth-busiest rapid transit system in the United States.
+
+This dataset contains daily information on BART ridership for a period covering all of 2016 and part of 2017. Unlike some other rapid transit system datasets, this data includes movements between specific stations (there are just over 2000 station-to-station combinations).
+
+#Content
+
+This dataset is split in three files. station_info.csv includes generic information on individual stations. date-hour-soo-dest-2017.csv contains daily inter-station ridership for (part of) 2017. date-hour-soo-dest-2016.csv contains daily inter-station ridership for all of 2016.
+
+#Questions that are to be answered
+
+Which BART station is the busiest?
+Top 5 popular routes?
+What is the least popular BART route?
+When is the best time to go to SF if you want to find a seat?
+Which day of the week is the busiest?
+How many people take the BART late at night?
+Does the BART ever stop in a station without anyone going off or on?
+
+Note :- Number of passengers (Throughput) that went between two stations (Origin and Destination) in a given time (DateTime) in 2017.
+
+libraries used for the EDA.
+```{r}
+library(data.table)
+library(ggplot2)
+library(plotly)
+library(zoo)
+library(lubridate)
+library(dplyr)
+library(quantmod)
+library(reshape2)
+library(plyr)
+library(scales)
+library(RColorBrewer)
+#library(devtools)
+```
+
+Reading all the data into  R.
+```{r}
+data1 <- fread("date-hour-soo-dest-2016.csv",stringsAsFactors = TRUE)
+data2 <- fread("date-hour-soo-dest-2017.csv",stringsAsFactors = TRUE)
+data3 <- fread("station_info.csv",stringsAsFactors = TRUE)
+```
+As the data1 and data2 represent the same structure of the data,so now we are merging those 2 data
+```{r}
+data<-rbind(data1,data2)
+```
+
+Removing the above 2 data frames in R
+```{r}
+rm(data1)
+rm(data2)
+```
+
+converting the date time column correct format in R.
+```{r}
+data$DateTime  <- as.POSIXct(data$DateTime, format="%Y-%m-%d %H:%M:%S")
+```
+
+
+
+
+Now we are extracting months,year,weekdays,hours
+```{r}
+data$year=year(data$DateTime)
+data$month=month(data$DateTime)
+data$weekDays=weekdays(data$DateTime)
+data$hours = hour(data$DateTime)
+```
+
+Now we are extracting seasons.
+
+Spring :- March,April,May
+Summer :- June,July,August
+Autum :- September,October,November
+Winter :- December,January,February
+```{r}
+indx <- setNames( rep(c('winter', 'spring', 'summer',
+                   'fall'),each=3), c(12,1:11))
+#data1=data
+data$season<-unname(indx[as.character(data$month)])
+```
+
+Extracting hours from date time column.
+This is 24 hours clock
+
+12 am - 6 am :- Night.
+6 am - 12 noon :- Morning.
+12 noon - 6pm :- AfterNoon.2
+6pm - 11pm ;- Evening.
+```{r}
+# create breaks
+breaks <- hour(hms("00:00", "6:00", "12:00", "18:00", "23:59"))
+# labels for the breaks
+labels <- c("Night", "Morning", "Afternoon", "Evening")
+
+data$dayCycle <- cut(x=hour(data$DateTime), breaks = breaks, labels = labels, include.lowest=TRUE)
+#unique(hour(data$DateTime))
+unique(data$dayCycle)
+```
+
+
+checking how many unique source stations
+```{r}
+cat("The number of origin stations is :-  ", length(unique(data$Origin)))
+cat("\n The number of Destination stations is :-  ", length(unique(data$Destination)))
+```
+so there are 46 the number of origin and destindation places are 46.
+
+checking those entries who 's source and destination is same.
+```{r}
+length(data[data$Origin==data$Destination,][Origin=="12TH",.N,c('Origin','Destination','hours','Throughput')])
+```
+
+```{r}
+unique(data[data$Origin==data$Destination,][,c("Origin","Destination")])
+```
+
+
+The source and destination are same ,that 's  because the people were staying in the same station for that particular hour.so this data tells about these people. 
+
+
+#Which BART station is the busiest?
+
+```{r}
+data1=data[,list(Throughput=sum(Throughput)), by='Destination'][order(Throughput,Destination,decreasing=TRUE)]
+```
+
+
+Plotting the top 5 busiest stations.
+```{r}
+ggplotly( ggplot(data1[1:5,],aes(x=as.factor(Destination),y=Throughput))+
+  geom_segment( aes(x=as.factor(Destination), xend=as.factor(Destination), y=0, yend=Throughput)) +ylim(0,22000000)+
+  geom_point( size=5, color="steelblue", fill=alpha("steelblue", 0.3), alpha=0.7, shape=21, stroke=2)+theme(panel.background = element_rect(fill = ' white'))+geom_text(aes(label=Throughput), vjust=-2, color="black", size=3.4)+coord_flip()+labs(title = "The Top 5 busiest BART Stations",x="Station code",y="Population")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "Black")))
+```
+As we see Embarcadero (EMBR) is the BART station was the most busest station in 2016 and 2017 ,followed by Montgomery St. (MONT),
+Powell St. (POWL),Civic Center/UN Plaza (CIVC) and Downtown Berkeley (DBRK)
+
+Least popular BART station.
+```{r}
+ggplotly(ggplot(data1[41:45,],aes(x=as.factor(Destination),y=Throughput))+
+  geom_segment( aes(x=as.factor(Destination), xend=as.factor(Destination), y=0, yend=Throughput)) +ylim(0,2200000)+
+  geom_point( size=5, color="steelblue", fill=alpha("steelblue", 0.3), alpha=0.7, shape=21, stroke=2)+theme(panel.background = element_rect(fill = ' white'))+geom_text(aes(label=Throughput), vjust=-1, color="black", size=3.4)+coord_flip()+labs(title = "The Least 5 busiest BART Stations",x="Station code",y="Population")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "Black")))
+```
+The least busiest stations are Oakland Airport (OAKL).
+
+
+
+Showing these stats of population in terms of percentage.
+```{r}
+data1 %>%
+  group_by(Destination)  %>%
+  plot_ly(labels = ~as.factor(Destination), values = ~Throughput) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title = "The Population in BART Stations",  showlegend = F,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
+```
+removing the subset data.
+```{r}
+rm(data1)
+```
+
+#What is the least popular BART route?
+
+```{r}
+data$roots<- with(data, paste0(Origin,"-",Destination))
+data
+```
+
+
+```{r}
+data[!(Origin==Destination),list(Throughput=sum(Throughput)),by=c("roots")][order(Throughput,roots,decreasing=TRUE)]
+```
+
+```{r}
+ggplotly( ggplot(data[!(Origin==Destination),list(Throughput=sum(Throughput)),by=c("roots")][order(Throughput,roots,decreasing=TRUE)][1:5,],aes(x=as.factor(roots),y=Throughput))+geom_bar(fill="steelblue",bin = 50,width = 0.2 ,stat="identity",na.rm = TRUE)+geom_text(aes(label=Throughput), vjust=-1, color="black", size=3.4)+labs(title = "The top 5 busy roots of BART",x="Roots",y="Populations")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black"))+coord_flip())
+```
+```{r}
+ggplotly(ggplot(data[!(Origin==Destination),list(Throughput=sum(Throughput)),by=c("roots")][order(Throughput,roots,decreasing=TRUE)][2065:2070,],aes(x=as.factor(roots),y=Throughput))+geom_bar(fill="steelblue",bin = 50,width = 0.2 ,stat="identity",na.rm = TRUE)+geom_text(aes(label=Throughput), vjust=-1.4, color="black", size=3.4)+labs(title = "Least popular Roots",x="Roots",y="Populations")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black"))+coord_flip())
+```
+
+#How many people take the BART late at night?
+
+Given  Below are the following assumptions for day cycle of the day 
+
+12 am - 6 am :- Night.
+6 am - 12 noon :- Morning.
+12 noon - 6pm :- AfterNoon.2
+6pm - 11pm ;- Evening.
+
+
+```{r}
+ggplotly(ggplot(data[,list(Throughput=sum(Throughput)),by=c("dayCycle")][order(Throughput,dayCycle,decreasing=TRUE)],aes(x=as.factor(dayCycle),y=Throughput))+geom_bar(fill="steelblue",bin = 50,width = 0.2 ,stat="identity",na.rm = TRUE)+geom_text(aes(label=Throughput), vjust=-1.4, color="black", size=3.4)+labs(title = "Number of passengers travelling at particular point of day",x="DayCycle",y="Populations")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black"))+coord_flip())
+```
+
+
+
+```{r}
+data[,list(Throughput=sum(Throughput)),by=c("dayCycle")][order(Throughput,dayCycle,decreasing=TRUE)]  %>%
+  group_by(dayCycle)  %>%
+  plot_ly(labels = ~as.factor(dayCycle), values = ~Throughput) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title = "Percentage of passengers on different day cycle of the day",  showlegend = F,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+```
+calander chart.
+```{r}
+#getSymbols("CMG", src="yahoo")
+```
+
+```{r}
+#data2$year<-as.numeric(data2$date)$year+1900)
+# the month too 
+#data2$month<-as.numeric(as.POSIXlt(data2$date)$mon+1)
+# but turn months into ordered facors to control the appearance/ordering in the presentation
+#dat$monthf<-factor(dat$month,levels=as.character(1:12),labels=c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"),ordered=TRUE)
+# the day of week is again easily found
+#dat$weekday = as.POSIXlt(dat$date)$wday
+# again turn into factors to control appearance/abbreviation and ordering
+# I use the reverse function rev here to order the week top down in the graph
+# you can cut it out to reverse week order
+#dat$weekdayf<-factor(dat$weekday,levels=rev(1:7),labels=rev(c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")),ordered=TRUE)
+# the monthweek part is a bit trickier 
+# first a factor which cuts the data into month chunks
+#dat$yearmonth<-as.yearmon(dat$date)
+#dat$yearmonthf<-factor(dat$yearmonth)
+# then find the "week of year" for each day
+#dat$week <- as.numeric(format(dat$date,"%W"))
+# and now for each monthblock we normalize the week to start at 1 
+#dat<-ddply(dat,.(yearmonthf),transform,monthweek=1+week-min(week))
+
+#CHECK DATASET
+#head(dat)
+```
+
+```{r}
+data$monthf<-factor(data$month,levels=as.character(1:12),labels=c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"),ordered=TRUE)
+```
+
+```{r}
+unique(data$week)
+```
+
+
+```{r}
+data$yearmonth <- as.yearmon(data$DateTime)
+data$yearmonthf <- factor(data$yearmonth)
+```
+
+
+```{r}
+data$week <- as.numeric(format(data$DateTime,"%W"))
+```
+
+```{r}
+data
+```
+
+```{r}
+data<-ddply(data,.(yearmonthf),transform,monthweek=1+week-min(week))
+```
+
+

@@ -1,0 +1,1 @@
+"0","ggplot(data,aes(x=as.factor(Year),y=`Peak_Demand(MW)`,fill=`Peak_Met(MW)`))+geom_bar(stat=""identity"", position = position_dodge(width = 0.5), fill=""steelblue"")+geom_text(aes(label=`Peak_Demand(MW)`), vjust=-2)+labs(title = ""Year VS  Peak_Demand(MW)"",x=""Year"", y = ""Peak_Demand(MW)"")+theme(plot.title = element_text(hjust = 0.5,face = ""bold"",color = ""black""))"

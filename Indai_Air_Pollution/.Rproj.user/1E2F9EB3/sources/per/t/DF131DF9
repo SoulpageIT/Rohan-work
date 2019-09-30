@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1557314518448.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "376338830",
+    "id" : "DF131DF9",
+    "lastKnownWriteTime" : 1556172482,
+    "last_content_update" : 1556172482,
+    "path" : "C:/Users/Admin/Desktop/rohan/daily_task/air_delay/air_delay_model.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "324,90",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

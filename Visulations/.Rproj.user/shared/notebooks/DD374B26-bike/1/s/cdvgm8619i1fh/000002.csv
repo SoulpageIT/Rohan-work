@@ -1,0 +1,4 @@
+"0","```r
+bikes[year(`Start Time`)==2015,.N,by=list(`Start Station Name`,`End Station Name`)][order(-N)][1:100]
+
+```"

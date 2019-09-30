@@ -1,0 +1,119 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+libraries used
+```{r}
+library(data.table)
+library(ggplot2)
+library(plotly)
+library(readxl)
+library(zoo)
+library(OneR)
+```
+
+Reading the data into R
+```{r}
+data<-read_excel("data.xlsx")
+```
+
+```{r}
+str(data)
+```
+
+converting the date column to year-month formate
+
+
+First chart.
+
+Plotting Year VS  Peak_Demand(MW)
+```{r}
+X<-ggplot(data,aes(x=as.factor(Year),y=`Peak_Demand(MW)`))+geom_bar(stat="identity", fill="steelblue")+geom_text(aes(label=`Peak_Demand(MW)`), vjust=-2)+labs(title = "Year VS  Peak_Demand(MW)",x="Year", y = "Peak_Demand(MW)")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))
+ggsave("Yd.jpg",plot=X,unit="in",width=7,height = 7,dpi=300)
+X
+```
+
+Plotting Year VS  Peak_Met(MW)
+```{r}
+y<-ggplot(data,aes(x=as.factor(Year),y=`Peak_Met(MW)`))+geom_bar(stat="identity", fill="steelblue")+geom_text(aes(label=`Peak_Met(MW)`), vjust=-2)+labs(title = "Year VS  Peak_Met(MW)",x="Year", y = "Peak_Met(MW)")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))
+ggsave("Ym.jpg",plot=y,unit="in",width=7,height = 7,dpi=300)
+y
+```
+
+
+```{r}
+x
+```
+Plotting Year VS  
+```{r}
+z<-ggplot(data,aes(x=as.factor(Year),y=`PeakSurplus(+) / Deficts(-)(%)`))+geom_bar(stat="identity", fill="steelblue")+geom_text(aes(label=`PeakSurplus(+) / Deficts(-)(%)`), vjust=-0.5)+ylim(-15,0)+labs(title = "Year VS  suprplus/Deficts(%)",x="Year", y = "suprplus/Deficit(%)")+ scale_y_reverse()+theme(plot.title = element_text(hjust =0.5 ,face = "bold",color = "black"))
+z
+ggsave("Yss.jpg",plot=z,unit="in",width=7,height = 7,dpi=300)
+```
+Now we are doing binning
+```{r}
+X<-ggplot(data,aes(x=as.factor(Year),y=`Peak_Demand(MW)`))+geom_bar(stat="identity", fill="steelblue")+geom_text(aes(label=`Peak_Demand(MW)`), vjust=-2)+labs(title = "Year VS  Peak_Demand(MW)",x="Year", y = "Peak_Demand(MW)")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))
+#ggsave("Yd.jpg",plot=X,unit="in",width=7,height = 7,dpi=300)
+
+
+```
+```{r}
+
+
+```
+
+```{r}
+ggplot(data,aes(x=as.factor(Year),y=`Peak_Demand(MW)`,fill=`Peak_Met(MW)`))+geom_bar(stat="identity", position = position_dodge(width = 0.5), fill="steelblue")+geom_text(aes(label=`Peak_Demand(MW)`), vjust=-2)+labs(title = "Year VS  Peak_Demand(MW)",x="Year", y = "Peak_Demand(MW)")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))
+#ggsave("Yd.jpg",plot=X,unit="in",width=7,height = 7,dpi=300)
+#X
+```
+```{r}
+ggplot(data,aes(x=as.factor(Year),y=`Peak_Demand(MW)`,fill=data$`Peak_Met(MW)`))+ geom_bar(stat = "identity",position = position_dodge(width = 0.5),width = 0.3)+geom_line()
+```
+
+```{r}
+library(ggplot2) 
+df = melt(data.frame(A=c(2, 10), B=c(3, 20),experiment=c("X", "X & Y")),variable_name="metric")  
+ggplot(df, aes(experiment, value, fill=variable)) + geom_bar(stat="identity",position="dodge")
+```
+
+```{r}
+#data=as.data.frame.table(data)
+df1 = melt(data.frame(A=data$`Peak_Demand(MW)`, B=data$`Peak_Met(MW)`,experiment=data$Year),variable_name="metric")
+#ggplot(df, aes(experiment, value, fill=metric)) + geom_bar(position="dodge")
+```
+
+
+```{r}
+import plotly.plotly as py
+import plotly.graph_objs as go
+
+trace1 = go.Bar(
+    x=as.factor(data$Year),
+    y=data$`Peak_Met(MW)`,
+    name='SF Zoo'
+)
+trace2 = go.Bar(
+    x=as.factor(data$Year),
+    y=data$`Peak_Demand(MW)`,
+    name='LA Zoo'
+)
+
+data = [trace1, trace2]
+layout = go.Layout(
+    barmode='group'
+)
+
+fig = go.Figure(data=data, layout=layout)
+```
+
+
+```{r}
+table(data$Year)
+```
+
+```{r}
+
+```
+

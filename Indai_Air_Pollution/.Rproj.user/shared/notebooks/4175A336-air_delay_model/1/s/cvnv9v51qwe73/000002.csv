@@ -1,0 +1,7 @@
+"0","```r
+#we found 2 date format in data
+mdy <- mdy(test$`Date (MM/DD/YYYY)`)
+dmy <- dmy(test$`Date (MM/DD/YYYY)`)
+mdy[is.na(mdy)] <- dmy[is.na(mdy)] # some dates are ambiguous, here we give
+test$`Date (MM/DD/YYYY)`<- mdy        # mdy precedence over dmy
+```"

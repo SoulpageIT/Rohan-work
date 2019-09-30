@@ -1,0 +1,6 @@
+"0","ggseasonplot(y, year.labels=TRUE, year.labels.left=TRUE) +"
+"0","  ylab(""$ million"") +"
+"0","  ggtitle(""Seasonal plot: antidiabetic drug sales"")"
+"2","Error in data.frame(y = as.numeric(x), year = trunc(round(time(x), 8)),  : 
+  arguments imply differing number of rows: 8324, 4162
+"

@@ -1,0 +1,11 @@
+"0","m = leaflet() %>% addTiles()"
+"0","df = data.frame("
+"0","  lat = rnorm(100),"
+"0","  lng = rnorm(100),"
+"0","  size = runif(100, 5, 20),"
+"0","  color = sample(colors(), 100)"
+"0",")"
+"0","m = leaflet(df) %>% addTiles()"
+"0","m %>% addCircleMarkers(radius = ~size, color = ~color, fill = FALSE)"
+"2","Assuming ""lng"" and ""lat"" are longitude and latitude, respectively
+"

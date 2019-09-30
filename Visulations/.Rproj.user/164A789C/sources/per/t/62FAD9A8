@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1559894776089.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2171660420",
+    "id" : "62FAD9A8",
+    "lastKnownWriteTime" : 1559894771,
+    "last_content_update" : 1559894771,
+    "path" : "C:/Users/admin/Downloads/Plot.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "chunk_output_type" : "inline"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

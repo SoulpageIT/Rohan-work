@@ -1,0 +1,4 @@
+"0","```r
+#here i am seing the structure of train data set
+str(train)
+```"

@@ -1,0 +1,116 @@
+---
+title: "Time Series Analysis on Rain Fall in India"
+output: html_notebook
+---
+
+
+Sub_Division_IMD_2017
+
+Libraries used for analysis.
+```{r}
+library(data.table)
+library(ggplot2)
+library(plotly)
+#install.packages("fpp")
+library(fpp)
+library(forecast)
+```
+
+Importing the data into R.
+```{r}
+data<-fread("Sub_Division_IMD_2017.csv",stringsAsFactors = T)
+```
+
+Viewing the summary of the data set.
+```{r}
+summary(data)
+```
+As we see in the above summary of the data they are many NA 'S in almost all the column in the data set.
+
+so now we are going do data cleaning.
+
+#DATA CLEANING
+
+seperating The rows wich have NA 's in different columns
+```{r}
+data_clean = data[complete.cases(data),]
+data_na = data[!complete.cases(data),]
+```
+
+Now we need check why there are NA 's in the data set.
+```{r}
+data_na
+```
+
+
+Now we are going to do time series analysis on rain fall
+```{r}
+colnames(data)
+```
+Now we are creating the time series data of Annual rainfall.
+
+Data	frequency
+
+Annual	1
+Quarterly	4
+Monthly	12
+Weekly	52
+```{r}
+y <- ts(data_clean[,c("YEAR","ANNUAL")], start=min(data_clean$YEAR), frequency=12)
+```
+
+
+```{r}
+autoplot(y) +
+  ggtitle("Annual Rain Fall by Year") +
+  ylab("Annual Rain Fall") +
+  xlab("Year")
+```
+
+Data	frequency
+Annual	1
+Quarterly	4
+Monthly	12
+Weekly	52
+```{r}
+
+```
+
+
+```{r}
+plot(diff(y))
+```
+
+decomposedRes <- decompose(rain_fall, type="mult")
+
+
+```{r}
+plot(y)
+```
+
+```{r}
+ggseasonplot(y, year.labels=TRUE, year.labels.left=TRUE) +
+  ylab("$ million") +
+  ggtitle("Seasonal plot: antidiabetic drug sales")
+```
+
+
+
+
+```{r}
+df_ts <- xts(x = data_clean, order.by = data_clean$YEAR)
+```
+
+```{r}
+library(forecast)
+#arima_fit = auto.arima(adenoTS[,2])
+model_Arima<-auto.arima(y)
+plot(forecast(model_Arima))
+```
+
+```{r}
+model_holtwinters<-HoltWinters(y)
+plot(forecast(model_holtwinters))
+#plot(forecast(model_holtwinters))
+```
+

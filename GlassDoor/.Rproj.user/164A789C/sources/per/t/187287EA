@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1559624301352.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1818392294",
+    "id" : "187287EA",
+    "lastKnownWriteTime" : 1559624458,
+    "last_content_update" : 1559625375048,
+    "path" : "E:/rohan_office_new/rohan/daily_task/GlassDoor/Final_report.Rmd",
+    "project_path" : "Final_report.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "134,48",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

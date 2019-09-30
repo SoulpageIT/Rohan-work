@@ -1,0 +1,87 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(data.table)
+library(ggplot2)
+library(plotly)
+library(dplyr)
+```
+
+```{r}
+data<-fread("final_data.csv")
+```
+
+Donut chart
+```{r}
+str(data)
+```
+
+```{r}
+# Add label position
+data <- data %>%
+  arrange(desc(as.factor(drst))) %>%
+  mutate(lab.ypos = cumsum(spd) - 0.5*spd)
+data
+data<-as.data.table(data)
+```
+
+```{r}
+mycols <- c("#0073C2FF", "#EFC000FF", "#868686FF", "#CD534CFF")
+```
+
+
+```{r}
+ggplot(data, aes(x =as.factor(drst) , y = spd, fill = as.factor(drst))) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta = "y", start = 0)+
+  geom_text(aes(y = lab.ypos, label = spd), color = "white")+
+  scale_fill_manual(values = mycols) +
+  theme_void()+
+  xlim(0.5, 2.5)+facet_grid()
+```
+
+```{r}
+data[,.N,c("spd","drst","next_stop")]
+```
+
+```{r}
+```
+
+
+```{r}
+p <-data[next_stop == 2314217] %>% 
+  plot_ly(labels = ~as.factor(drst), values = ~spd) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title ,  showlegend = T,font=t,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+p
+```
+
+
+```{r}
+p <- data %>% 
+  group_by(as.factor(drst)) %>%
+  plot_ly(labels = ~as.factor(drst), values = ~spd,color = ~as.factor(next_stop)) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title ,  showlegend = T,font=t,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))%>%
+  subplot(nrows = 5, shareX = TRUE)
+
+p
+```
+
+```{r}
+ data[next_stop == 2314217,]
+```
+
+gaugs chart.
+```{r}
+
+```
+

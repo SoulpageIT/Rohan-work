@@ -1,0 +1,6 @@
+"0","```r
+GlassdoorPages <- data_frame(date=as.Date(unlist(date)),page = seq(1, n),
+                      text = c(FCA_html))%>%arrange(desc(date))
+#nrow(GlassdoorPages)
+#write.csv(GlassdoorPages,\"GlassdoorPages.csv\",row.names = F)
+```"

@@ -1,0 +1,19 @@
+"0","```r
+auto<-function(path){
+  
+  setwd(path)
+  file_names<-list.files(path, pattern=NULL, all.files=FALSE,full.names=FALSE)
+  #print(file_names)
+  #data_ahm<-fread(file_names[1])
+  doc<-read_docx(file_names[length(file_names)],track_changes = \"accept\")
+  doc_table<-docx_extract_all_tbls(doc)
+  doc_table[[1]]
+  #doc_table1 <- assign_colnames(doc_table[[1]], 2)
+  assign_colnames(doc_table[[1]], 2)
+  mcga(assign_colnames(doc_table[[1]], 2))
+  #View(doc_table1)
+  #View(data_ahm)
+  #apply(data_ahm, 2, function(x) any(is.na(x)| is.infinite(x)))
+}
+auto('C:\\Users\\Dell\\Desktop\\rohan\\python\\Location wise\\ahma')
+```"

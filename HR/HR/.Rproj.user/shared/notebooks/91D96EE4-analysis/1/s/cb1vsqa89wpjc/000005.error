@@ -1,0 +1,1 @@
+{"frames":[{"character_number":0,"end_character_number":0,"end_line_number":0,"file":"","func":"ncol(data_users_viewed)","line_number":0}],"message":"Error in ncol(data_users_viewed) : object 'data_users_viewed' not found\n"}

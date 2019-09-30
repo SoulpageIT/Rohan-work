@@ -1,0 +1,7 @@
+"0","```r
+```r
+ggplot(data.set.analyse,aes(x=coupon_run_prev_ses_cart_session))+geom_histogram(bin = 20,fill=\red\,col=\black\,stat = \count\,width = 0.5)+labs(title = \total number of affilate run on cart page till previous session \)+theme(plot.title = element_text(hjust = 0.5,face = \bold\,color = \blue\))+theme(panel.background = element_rect(fill = 'gray'))
+```
+```"
+"1","Ignoring unknown parameters: binwidth, bins, pad, bin
+"

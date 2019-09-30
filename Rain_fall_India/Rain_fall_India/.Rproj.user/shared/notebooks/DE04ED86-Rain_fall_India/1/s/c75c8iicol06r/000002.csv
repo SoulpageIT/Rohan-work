@@ -1,0 +1,6 @@
+"0","model_holtwinters<-HoltWinters(y)"
+"0","plot(forecast(model_holtwinters))"
+"2","number of rows of result is not a multiple of vector length (arg 1)"
+"2","Error in attr(x, ""tsp"") <- value : 
+  invalid time series parameters specified
+"

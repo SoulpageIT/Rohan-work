@@ -1,0 +1,10 @@
+"0","```r
+tidy_descr_ngrams=GlassdoorPages %>%
+unnest_tokens(word, text, token = \"ngrams\", n = 2)%>%
+separate(word, c(\"word1\", \"word2\"), sep = \" \")%>%
+mutate(word1=removeNumbers(word1))%>% 
+mutate(word1 = wordStem(word1))%>%
+mutate(word2=removeNumbers(word2))%>% 
+mutate(word2 = wordStem(word2))
+tidy_descr_ngrams
+```"

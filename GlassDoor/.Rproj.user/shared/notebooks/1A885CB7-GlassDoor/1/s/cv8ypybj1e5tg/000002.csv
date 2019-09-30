@@ -1,0 +1,9 @@
+"0","```r
+ GlassdoorPages %>%
+    unnest_tokens(word, text)%>%
+  inner_join(get_sentiments(\"bing\")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+ reshape2::acast(word ~ sentiment, value.var = \"n\", fill = 0) %>%
+  comparison.cloud(colors = viridis_pal(option = \"D\")(2),
+                   max.words = 100)
+```"

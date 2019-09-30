@@ -1,0 +1,6 @@
+"0","```r
+first_page <- read_html(url)
+    (latest_page_number <- get_last_page(first_page))
+```"
+"1","[1] 5
+"

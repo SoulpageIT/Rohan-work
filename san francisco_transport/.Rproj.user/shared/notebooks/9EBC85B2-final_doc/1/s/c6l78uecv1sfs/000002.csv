@@ -1,0 +1,124 @@
+"1","
+Attaching package: 㤼㸱igraph㤼㸲
+
+The following objects are masked from 㤼㸱package:dplyr㤼㸲:
+
+    as_data_frame, groups, union
+
+The following object is masked from 㤼㸱package:plotly㤼㸲:
+
+    groups
+
+The following object is masked from 㤼㸱package:tibble㤼㸲:
+
+    as_data_frame
+
+The following objects are masked from 㤼㸱package:stats㤼㸲:
+
+    decompose, spectrum
+
+The following object is masked from 㤼㸱package:base㤼㸲:
+
+    union
+
+
+Attaching package: 㤼㸱gridExtra㤼㸲
+
+The following object is masked from 㤼㸱package:dplyr㤼㸲:
+
+    combine
+
+Loading required package: lubridate
+
+Attaching package: 㤼㸱lubridate㤼㸲
+
+The following object is masked from 㤼㸱package:igraph㤼㸲:
+
+    %--%
+
+The following objects are masked from 㤼㸱package:data.table㤼㸲:
+
+    hour, isoweek, mday, minute, month, quarter, second, wday, week, yday, year
+
+The following object is masked from 㤼㸱package:base㤼㸲:
+
+    date
+
+Loading required package: PerformanceAnalytics
+Loading required package: xts
+Registered S3 method overwritten by 'xts':
+  method     from
+  as.zoo.xts zoo 
+
+Attaching package: 㤼㸱xts㤼㸲
+
+The following objects are masked from 㤼㸱package:dplyr㤼㸲:
+
+    first, last
+
+The following objects are masked from 㤼㸱package:data.table㤼㸲:
+
+    first, last
+
+
+Package PerformanceAnalytics (1.5.2) loaded.
+Copyright (c) 2004-2018 Peter Carl and Brian G. Peterson, GPL-2 | GPL-3
+https://github.com/braverock/PerformanceAnalytics
+
+
+Attaching package: 㤼㸱PerformanceAnalytics㤼㸲
+
+The following object is masked from 㤼㸱package:graphics㤼㸲:
+
+    legend
+
+Loading required package: quantmod
+Loading required package: TTR
+Registered S3 method overwritten by 'quantmod':
+  method            from
+  as.zoo.data.frame zoo 
+Version 0.4-0 included new data defaults. See ?getSymbols.
+Learn from a quantmod author: https://www.datacamp.com/courses/importing-and-managing-financial-data-in-r
+Loading required package: tidyverse
+[37m-- [1mAttaching packages[22m --------------------------------------- tidyverse 1.2.1 --[39m
+[37m[32mv[37m [34mtidyr  [37m 0.8.3     [32mv[37m [34mpurrr  [37m 0.3.2
+[32mv[37m [34mreadr  [37m 1.3.1     [32mv[37m [34mstringr[37m 1.4.0
+[32mv[37m [34mtidyr  [37m 0.8.3     [32mv[37m [34mforcats[37m 0.4.0[39m
+[37m-- [1mConflicts[22m ------------------------------------------ tidyverse_conflicts() --
+[31mx[37m [34mlubridate[37m::[32m%--%()[37m        masks [34migraph[37m::%--%()
+[31mx[37m [34mlubridate[37m::[32mas.difftime()[37m masks [34mbase[37m::as.difftime()
+[31mx[37m [34migraph[37m::[32mas_data_frame()[37m  masks [34mdplyr[37m::as_data_frame(), [34mtibble[37m::as_data_frame()
+[31mx[37m [34mdplyr[37m::[32mbetween()[37m         masks [34mdata.table[37m::between()
+[31mx[37m [34mgridExtra[37m::[32mcombine()[37m     masks [34mdplyr[37m::combine()
+[31mx[37m [34mpurrr[37m::[32mcompose()[37m         masks [34migraph[37m::compose()
+[31mx[37m [34mtidyr[37m::[32mcrossing()[37m        masks [34migraph[37m::crossing()
+[31mx[37m [34mlubridate[37m::[32mdate()[37m        masks [34mbase[37m::date()
+[31mx[37m [34mdplyr[37m::[32mfilter()[37m          masks [34mplotly[37m::filter(), [34mstats[37m::filter()
+[31mx[37m [34mxts[37m::[32mfirst()[37m             masks [34mdplyr[37m::first(), [34mdata.table[37m::first()
+[31mx[37m [34migraph[37m::[32mgroups()[37m         masks [34mdplyr[37m::groups(), [34mplotly[37m::groups()
+[31mx[37m [34mlubridate[37m::[32mhour()[37m        masks [34mdata.table[37m::hour()
+[31mx[37m [34mlubridate[37m::[32mintersect()[37m   masks [34mbase[37m::intersect()
+[31mx[37m [34mlubridate[37m::[32misoweek()[37m     masks [34mdata.table[37m::isoweek()
+[31mx[37m [34mdplyr[37m::[32mlag()[37m             masks [34mstats[37m::lag()
+[31mx[37m [34mxts[37m::[32mlast()[37m              masks [34mdplyr[37m::last(), [34mdata.table[37m::last()
+[31mx[37m [34mlubridate[37m::[32mmday()[37m        masks [34mdata.table[37m::mday()
+[31mx[37m [34mlubridate[37m::[32mminute()[37m      masks [34mdata.table[37m::minute()
+[31mx[37m [34mlubridate[37m::[32mmonth()[37m       masks [34mdata.table[37m::month()
+[31mx[37m [34mlubridate[37m::[32mquarter()[37m     masks [34mdata.table[37m::quarter()
+[31mx[37m [34mlubridate[37m::[32msecond()[37m      masks [34mdata.table[37m::second()
+[31mx[37m [34mlubridate[37m::[32msetdiff()[37m     masks [34mbase[37m::setdiff()
+[31mx[37m [34mpurrr[37m::[32msimplify()[37m        masks [34migraph[37m::simplify()
+[31mx[37m [34mpurrr[37m::[32mtranspose()[37m       masks [34mdata.table[37m::transpose()
+[31mx[37m [34mlubridate[37m::[32munion()[37m       masks [34migraph[37m::union(), [34mbase[37m::union()
+[31mx[37m [34mlubridate[37m::[32mwday()[37m        masks [34mdata.table[37m::wday()
+[31mx[37m [34mlubridate[37m::[32mweek()[37m        masks [34mdata.table[37m::week()
+[31mx[37m [34mlubridate[37m::[32myday()[37m        masks [34mdata.table[37m::yday()
+[31mx[37m [34mlubridate[37m::[32myear()[37m        masks [34mdata.table[37m::year()[39m
+Loading required package: NLP
+
+Attaching package: 㤼㸱NLP㤼㸲
+
+The following object is masked from 㤼㸱package:ggplot2㤼㸲:
+
+    annotate
+"

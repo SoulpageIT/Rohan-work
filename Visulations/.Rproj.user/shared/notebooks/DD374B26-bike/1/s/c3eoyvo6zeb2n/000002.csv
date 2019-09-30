@@ -1,0 +1,7 @@
+"0","```r
+bikes_parallel<-read.big.matrix(
+    \"nyc.csv\", 
+    type =\"integer\", header = TRUE, backingfile = \"nyc.bin\", 
+    descriptorfile =\"nyc.desc\", extraCols =NULL) 
+
+```"

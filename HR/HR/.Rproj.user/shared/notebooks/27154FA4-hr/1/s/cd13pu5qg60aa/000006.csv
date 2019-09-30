@@ -1,0 +1,2 @@
+"0","# plot histogram of correlation factors"
+"0","ggplot(featureCorr, aes(coef)) + geom_histogram(binwidth = 0.1) + xlab(""Correlation Coefficient"")"

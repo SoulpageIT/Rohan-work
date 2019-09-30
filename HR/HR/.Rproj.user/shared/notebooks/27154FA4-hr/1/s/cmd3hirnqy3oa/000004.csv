@@ -1,0 +1,2 @@
+"0","x<-ggplot(hr[MonthlyIncome<=5000 & TotalWorkingYears <= 5 & Attrition==""Yes"",.N,by=list(JobLevel,OverTime,MonthlyIncome,TotalWorkingYears)],aes(TotalWorkingYears,MonthlyIncome,color=JobLevel))+geom_point()+facet_wrap(~OverTime)+labs(x = ""Total Working Years"",y=""Monthly_Income"")+labs(title = ""Over Time"",fill=""Age Group"")"
+"0","ggplotly(x)"

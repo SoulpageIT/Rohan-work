@@ -1,0 +1,7 @@
+"0","```r
+setkey(bikes,\"Start Station Name\")
+gr1<-bikes[\"Oakland Ave\",list(unique(`End Station Name`)), by = list(`Start Station Name`, dist)]
+gr1$dist<-(gr1$dist/1000)
+#joining the tables by row
+gr<-merge(gr, gr1, all = TRUE)
+```"

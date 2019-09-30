@@ -1,0 +1,4 @@
+"0","```r
+sparse = removeSparseTerms(frequencies, 0.995)
+sparse
+```"

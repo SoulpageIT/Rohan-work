@@ -1,0 +1,6 @@
+"0","```r
+train<-rbind(setDT(NewYork), setDT(Dallas), fill=TRUE)
+#Now  removing unwanted data.tables from our analysis.
+rm(NewYork)
+rm(Dallas)
+```"

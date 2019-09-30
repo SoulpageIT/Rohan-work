@@ -1,0 +1,5 @@
+"0","#calculationg total score for each sentiment"
+"0","Sentimentscores<-data.frame(colSums(mysentiment[,]))"
+"0","names(Sentimentscores)<-""Score"""
+"0","Sentimentscores<-cbind(""sentiment""=rownames(Sentimentscores),Sentimentscores)"
+"0","rownames(Sentimentscores)<-NULL"

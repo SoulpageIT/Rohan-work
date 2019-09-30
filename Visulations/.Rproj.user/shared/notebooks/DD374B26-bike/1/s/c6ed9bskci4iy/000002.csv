@@ -1,0 +1,5 @@
+"0","```r
+attr(timeseries,'frequency')<-30*60 #set frequency attributes.
+start(timeseries)
+end(timeseries)
+```"

@@ -1,0 +1,5 @@
+"0","```r
+```r
+data_users_viewed %>% ggplot(aes(x= mal_cb),fill = target)+geom_bar(width = 0.2)
+```
+```"

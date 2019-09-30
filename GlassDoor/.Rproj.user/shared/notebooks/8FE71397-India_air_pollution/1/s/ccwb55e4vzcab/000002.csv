@@ -1,0 +1,5 @@
+"0","```r
+revalue(data$type, c(\"Sensitive\"=\"Sensitive Area\",\"Sensitive Areas\"=\"Sensitive Area\",\"Industrial\"=\"Industrial Area\",\"Industrial Areas\"=\"Industrial Area\",\"Residential\"=\"Residential and others\",\"Residential, Rural and other Areas\"=\"Residential and others\")) -> data$type
+```"
+"1","The following `from` values were not present in `x`: Sensitive, Sensitive Areas, Industrial, Industrial Areas, Residential
+"

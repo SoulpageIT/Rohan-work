@@ -1,0 +1,5 @@
+"0","```r
+#data_analysis$date<-as.Date(data_analysis$date,'%Y-%m-%d')
+#data_analysis$month<-month(data_analysis$date)
+#data_analysis$year<-year(data_analysis$date)
+```"

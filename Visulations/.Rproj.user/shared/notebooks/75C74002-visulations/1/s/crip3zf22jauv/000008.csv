@@ -1,0 +1,9 @@
+"0","q <- data  %>%"
+"0","  summarize(count = ) %>%"
+"0","  plot_ly(labels = ~sentiment, values = ~count) %>%"
+"0","  add_pie(hole = 0.6) %>%"
+"0","  layout(title ,  showlegend = T,font=t,"
+"0","         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),"
+"0","         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))"
+"2","Error: object '' not found
+"

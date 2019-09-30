@@ -1,0 +1,5 @@
+"0","```r
+pages <-c(\"checkout page\",\"cart page\",\"product page\")
+sum_total_number_sessions <- c(sum(as.numeric(  data_users_viewed$coupon_run_prev_ses_checkout_session)),sum( as.numeric(  data_users_viewed$coupon_run_prev_ses_cart_session)),sum(as.numeric(data_users_viewed$coupon_run_prev_ses_product_session)))
+daa<-data.frame(pages,sum_total_number_sessions)
+```"

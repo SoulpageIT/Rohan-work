@@ -1,0 +1,32 @@
+---
+title: "Data preProcessing code."
+output: html_notebook
+---
+
+
+Libraries required
+```{r}
+library(data.table)
+```
+
+reading the data into file
+```{r}
+data<-as.data.table(t(fread("may_20.csv",sep=",")))
+data$date<-"20-05-2019"
+```
+
+```{r}
+colnames(data)
+```
+
+
+```{r}
+colnames(data)[colnames(data)=="V1"] <- "text"
+```
+
+
+Saving the data
+```{r}
+write.csv(data, file = "may_20_2019.csv")
+```
+

@@ -1,0 +1,4 @@
+"0","```r
+timeseries<-xts(forcast1$N,order.by = forcast1$ts, frequency = 30*60)
+timeseris1<-ts(forcast1$N,frequency = 30*60)
+```"

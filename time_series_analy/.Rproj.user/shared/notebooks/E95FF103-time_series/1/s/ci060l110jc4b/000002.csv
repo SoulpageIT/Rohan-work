@@ -1,0 +1,8 @@
+"0","```r
+d = read.table(\"result.txt\", 
+               sep=\",\", 
+               fill=FALSE, 
+               strip.white=TRUE)
+```"
+"1","cannot open file 'result.txt': No such file or directoryError in file(file, \"rt\") : cannot open the connection
+"

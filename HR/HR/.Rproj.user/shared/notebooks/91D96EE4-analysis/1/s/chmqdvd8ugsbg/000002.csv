@@ -1,0 +1,3 @@
+"0","data_users_viewed<-data.set.analyse %>% filter(sessions_before > 0)"
+"0","#View(data_users_viewed)"
+"0","#View(important_user_not_viewed)"

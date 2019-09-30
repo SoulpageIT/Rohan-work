@@ -1,0 +1,2 @@
+"0","#getting emotions using in-built function"
+"0","mysentiment<-get_nrc_sentiment((df_lower))"

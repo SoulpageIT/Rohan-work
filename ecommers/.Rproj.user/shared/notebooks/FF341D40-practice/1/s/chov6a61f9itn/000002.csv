@@ -1,0 +1,12 @@
+"0","```r
+library(data.table)
+name=c(\"rohan\",\"kittu\",\"hello\")
+age=c(1,2,3)
+data<-data.table(Name=name,Age=age)
+class(data)
+```"
+"1","[1] \"data.table\" \"data.frame\"
+"
+"0","```r
+head(data)
+```"

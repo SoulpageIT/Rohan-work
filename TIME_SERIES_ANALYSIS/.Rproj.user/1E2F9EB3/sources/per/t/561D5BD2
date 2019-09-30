@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1557734599276.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1314957995",
+    "id" : "561D5BD2",
+    "lastKnownWriteTime" : 1557809772,
+    "last_content_update" : 1557812455258,
+    "path" : "C:/Users/Admin/Desktop/rohan/daily_task/TIME_SERIES_ANALYSIS/Recruit_restaurant_visitor_forecasting.Rmd",
+    "project_path" : "Recruit_restaurant_visitor_forecasting.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "79,14",
+        "scrollLine" : "72",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

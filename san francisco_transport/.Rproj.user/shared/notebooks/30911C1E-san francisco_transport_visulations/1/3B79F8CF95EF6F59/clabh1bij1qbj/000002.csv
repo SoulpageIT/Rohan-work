@@ -1,0 +1,5 @@
+"0","length(data[data$Origin==data$Destination,][Origin==""12TH"",.N,c('Origin','Destination','hours','Throughput')])"
+"1","[1]"
+"1"," 5"
+"1","
+"

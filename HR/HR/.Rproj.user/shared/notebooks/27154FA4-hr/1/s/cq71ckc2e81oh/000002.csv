@@ -1,0 +1,3 @@
+"0","nn <- hr[,list(Age,YearsAtCompany,EnvironmentSatisfaction,MaritalStatus)]"
+"0","d3tree(list(root = df2tree(rootname = 'Overall',struct = as.data.frame(nn)),"
+"0","   layout = 'collapse'))"

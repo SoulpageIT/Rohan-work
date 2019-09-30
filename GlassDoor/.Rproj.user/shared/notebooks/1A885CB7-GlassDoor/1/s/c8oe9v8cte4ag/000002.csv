@@ -1,0 +1,15 @@
+"0","```r
+p2<-user_topic %>%
+group_by(topic) %>%
+top_n(10, gamma) %>%
+ggplot(aes(x = reorder(document, -gamma), y = gamma, color = factor(topic))) +
+facet_wrap(~ topic, scales = \"free\", ncol = 5) +
+geom_point(show.legend = FALSE, size = 4, alpha = 0.8) +
+scale_color_manual(values = palette_light()) +
+scale_fill_manual(values = palette_light()) +
+theme_tq() +
+coord_flip() +
+labs(x = \"\",
+y = \"gamma\n(~ affiliation with topics 1â€5)\")
+
+```"

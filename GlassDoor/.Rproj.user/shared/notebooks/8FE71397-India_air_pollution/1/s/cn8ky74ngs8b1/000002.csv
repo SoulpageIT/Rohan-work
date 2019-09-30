@@ -1,0 +1,68 @@
+"0","```r
+#For Reading and subsetting the data in analysis.
+library(data.table)
+```"
+"1","data.table 1.12.2 using 6 threads (see ?getDTthreads).  Latest news: r-datatable.com
+
+Attaching package: ã¤¼ã¸±data.tableã¤¼ã¸²
+
+The following object is masked _by_ ã¤¼ã¸±.GlobalEnvã¤¼ã¸²:
+
+    .N
+"
+"0","```r
+#For Visulation.
+library(ggplot2)
+library(plotly)
+```"
+"1","
+Attaching package: ã¤¼ã¸±plotlyã¤¼ã¸²
+
+The following object is masked from ã¤¼ã¸±package:ggplot2ã¤¼ã¸²:
+
+    last_plot
+
+The following object is masked from ã¤¼ã¸±package:statsã¤¼ã¸²:
+
+    filter
+
+The following object is masked from ã¤¼ã¸±package:graphicsã¤¼ã¸²:
+
+    layout
+"
+"0","```r
+#From this library we have used \"revalue function\" for replacing particular factor with other values in a column.
+library(plyr)
+```"
+"1","
+Attaching package: ã¤¼ã¸±plyrã¤¼ã¸²
+
+The following objects are masked from ã¤¼ã¸±package:plotlyã¤¼ã¸²:
+
+    arrange, mutate, rename, summarise
+"
+"0","```r
+#For regular expression in strings
+#install.packages(\"stringr\")
+library(stringr)
+#For making date column uniform we used
+#install.packages(\"liburidate\")
+#install.packages(\"devtools\")
+#install.packages(\"lubridate\")
+library(lubridate)
+```"
+"1","
+Attaching package: ã¤¼ã¸±lubridateã¤¼ã¸²
+
+The following object is masked from ã¤¼ã¸±package:plyrã¤¼ã¸²:
+
+    here
+
+The following objects are masked from ã¤¼ã¸±package:data.tableã¤¼ã¸²:
+
+    hour, isoweek, mday, minute, month, quarter, second, wday, week, yday, year
+
+The following object is masked from ã¤¼ã¸±package:baseã¤¼ã¸²:
+
+    date
+"

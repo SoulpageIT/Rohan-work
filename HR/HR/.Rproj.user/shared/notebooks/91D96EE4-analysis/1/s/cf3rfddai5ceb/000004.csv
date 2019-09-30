@@ -1,0 +1,4 @@
+"0","q<-ggplot(data.set.analyse,aes(x=sessions_before))+geom_bar(bin=100,col=""black"",fill=""steelblue"")  +labs(title = ""Number of users per Session"",x=""Number of Sessions"", y = ""Number of users"")+theme(plot.title = element_text(hjust = 0.5,face = ""bold"",color = ""black""))+theme(panel.background = element_rect(fill = ' white'))+xlim(0,50)+ annotate(""text"", x=4, y=207000, label=""206560"") "
+"2","Ignoring unknown parameters: bin"
+"0","ggsave(""number_users_per_session.jpg"",plot=q,unit=""in"",width=7,height = 7,dpi=300)"
+"0","q"

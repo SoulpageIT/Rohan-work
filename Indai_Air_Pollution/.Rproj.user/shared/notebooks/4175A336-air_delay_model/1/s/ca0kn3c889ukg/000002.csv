@@ -1,0 +1,6 @@
+"0","```r
+#Removing Date column
+test$`Date (MM/DD/YYYY)`<-NULL
+#Removing day column
+test$day<-NULL
+```"

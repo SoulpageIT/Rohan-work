@@ -1,0 +1,8 @@
+"0","```r
+#Checking the NA 'S at entire data set.
+cat(\"\nThe Number of NA 'S in data set :- \", sum(is.na(data)))
+
+```"
+"1","
+The Number of NA 'S in data set :-  1081371
+"

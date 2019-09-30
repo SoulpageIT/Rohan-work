@@ -1,0 +1,16 @@
+"0","```r
+#FCA_html2<-FCA_html%>%str_replace_all(\"[[:xdigit:]]\", \"\")
+corpus = Corpus(VectorSource(FCA_html))
+corpus = tm_map(corpus, tolower)
+corpus<- tm_map(corpus, stripWhitespace)
+corpus = tm_map(corpus, removeNumbers)
+corpus = tm_map(corpus, removeWords, stopwords(\"english\"))
+corpus = tm_map(corpus, removeWords,stop_user )
+tdm <- TermDocumentMatrix(corpus,
+                          control = list(removePunctuation = TRUE, 
+                                      stopwords =  TRUE, 
+                                      removeNumbers = TRUE, tolower = TRUE,
+                                      PlainTextDocument=TRUE,
+                                      stripWhitespace=TRUE, stemming = TRUE))
+inspect(tdm)
+```"

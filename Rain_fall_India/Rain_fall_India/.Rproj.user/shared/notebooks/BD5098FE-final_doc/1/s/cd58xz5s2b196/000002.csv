@@ -1,0 +1,4 @@
+"0","stop_user=c(""linklink"",""whatsappshar"",""auburn"",""twittershar"",""edit"",""delet"",""via"",""edit"",""delet"",""via"",""starstarstarstarstarwork"",""pdt"",""hill"",""ago"","
+"0","            ""facebookshar"")"
+"0","stop_user2=tibble(word=stop_user)"
+"0",""

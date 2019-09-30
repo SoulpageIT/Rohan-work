@@ -1,0 +1,93 @@
+"0","#library for graphs"
+"0","library(ggplot2)"
+"0","library(plotly)"
+"2","
+Attaching package: ‘plotly’
+
+"
+"2","The following object is masked from ‘package:ggplot2’:
+
+    last_plot
+
+"
+"2","The following object is masked from ‘package:stats’:
+
+    filter
+
+"
+"2","The following object is masked from ‘package:graphics’:
+
+    layout
+
+"
+"0","#library for importing the data set."
+"0","library(data.table)"
+"2","data.table 1.12.0  Latest news: r-datatable.com
+"
+"0","#sample.split function packages"
+"0","library(caTools)"
+"0","#The library for cross validation"
+"0","library(caret)"
+"2","Loading required package: lattice
+"
+"2","Error in names(frame) <- `*vtmp*` : names() applied to a non-vector
+"
+"0","library(mlbench)"
+"0","#decision tree model building packages "
+"0","library(rpart)"
+"0","#decision tree plotting packages "
+"0","library(RColorBrewer)"
+"0","library(rattle)"
+"2","Rattle: A free graphical interface for data science with R.
+Version 5.2.0 Copyright (c) 2006-2018 Togaware Pty Ltd.
+Type 'rattle()' to shake, rattle, and roll your data.
+"
+"0","#The package for random forest function"
+"0","library(randomForest)"
+"2","randomForest 4.6-14
+"
+"2","Type rfNews() to see new features/changes/bug fixes.
+"
+"2","
+Attaching package: ‘randomForest’
+
+"
+"2","The following object is masked from ‘package:rattle’:
+
+    importance
+
+"
+"2","The following object is masked from ‘package:ggplot2’:
+
+    margin
+
+"
+"0","#packages for xgboost"
+"0","library(xgboost)"
+"2","
+Attaching package: ‘xgboost’
+
+"
+"2","The following object is masked from ‘package:rattle’:
+
+    xgboost
+
+"
+"2","The following object is masked from ‘package:plotly’:
+
+    slice
+
+"
+"0","library(Matrix)"
+"0","#for encoding"
+"0","library(mltools)"
+"0","library(corrplot)"
+"2","corrplot 0.84 loaded
+"
+"0","#for correlation"
+"0","library(kableExtra)"
+"0","#library for ROC curve"
+"0","library(ROCR)"
+"0","library(car)"
+"2","Loading required package: carData
+"

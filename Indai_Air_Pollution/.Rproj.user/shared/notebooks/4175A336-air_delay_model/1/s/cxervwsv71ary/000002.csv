@@ -1,0 +1,6 @@
+"0","```r
+#Here i am combinig two data.tables by rows and creating new table test.
+test<-rbind(setDT(test), setDT(test1), fill=TRUE)
+#Now removing the unwanted duplicate data.table from the r session
+rm(test1)
+```"

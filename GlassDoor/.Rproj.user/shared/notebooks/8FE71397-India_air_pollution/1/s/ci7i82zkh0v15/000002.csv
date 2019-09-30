@@ -1,0 +1,57 @@
+"0","```r
+unique(data$location)
+
+```"
+"1","  [1] Hyderabad           Vishakhapatnam      Visakhapatnam       Tirupati            Vijayawada          Patancheru         
+  [7] Ramagundam          Kurnool             Guntur              Nalgonda            Nellore             Warangal           
+ [13] Chittoor            Khammam             Kakinada            Ananthapur          Eluru               Kadapa             
+ [19] Karimnagar          Nizamabad           Ongole              Rajahmundry         Sangareddy          Srikakulam         
+ [25] Vizianagaram        Itanagar            Naharlagun          Guwahati            Bongaigaon          Dibrugarh          
+ [31] Golaghat            Hailakandi          Sibsagar            Tezpur              Silchar             Daranga            
+ [37] Lakhimpur           Nagaon              Nalbari             Sivasagar           Silcher             Tinsukia           
+ [43] Margherita          Sindri              Jharia              Dhanbad             Jamshedpur          Patna              
+ [49] Chandigarh          Korba               Bhilai Nagar        Raipur              Bhilai              Bilaspur           
+ [55] Daman               Silvassa            Khadoli             Daman Diu & Nagar   Delhi               Ponda              
+ [61] Vasco               Panjim              Panaji              Mormugao            Amona               Assanora           
+ [67] Bicholim            Codli               Curchorem           Honda               Usgao               Kundaim            
+ [73] Mapusa              Margao              Sanguem             Tilamol             Cuncolim            Baroda             
+ [79] Surat               Ahmedabad           Vapi                Ankleshwar          Rajkot              Bharuch            
+ [85] Jamnagar            Vadodara            Anklesvar           ANKLESHWAR          VAPI                Bhuj               
+ [91] MORBI               SANAND              Sarigam             Faridabad           Yamuna Nagar        Dharuhera          
+ [97] Hisar               Yamunanagar         Shimla              Paonta Sahib        Parwanoo            Damtal             
+[103] Baddi               Nahan               Nalagarh            Kala Amb            Manali              Sunder Nagar       
+[109] Una                 Dharamshala         Jammu               Ranchi              West Singhbhum      Saraikela Kharsawan
+[115] Mysore              Bangalore           Belgaum             Gulbarga            Hassan              Hubli-Dharwad      
+[121] Mangalore           Davangere           Dharwad             Hubli               Bidar               Domlur             
+[127] Chitradurga         Ranebennur          Kolar               Mandya              Raichur             Shimoga            
+[133] Tumkur              Bijapur             Cochin              Kotttayam           Kottayam            Kozhikode          
+[139] Trivendrum          Palakkad            Kochi               Trivandrum          Alappuzha           Kollam             
+[145] Malappuram          Thiruvananthapuram  Pathanamthitta      Thissur             Wayanad             Nagda              
+[151] Satna               Indore              Bhopal              Jabalpur            Gwalior             Ujjain             
+[157] Dewas               Khajuraho           Sagar               Singrauli           Chhindwara          Amlai              
+[163] Pithampur           Pune                Bombay              Nagpur              Chandarpur          Aurangabad         
+[169] Chandrapur          Nashik              Dombivli            Solapur             Thane               Mumbai             
+[175] Aurangabad (MS)     Greater Mumbai      Kolhapur            Amravati            Lote                Navi Mumbai        
+[181] Tarapur             Mahad               Badlapur            Jalgaon             Latur               Roha               
+[187] Sangli              Ulhasnagar          Akola               Jalna               Nanded              Imphal             
+[193] Shillong            Byrnihat            Dawki               Tura                Khliehriat          Nongstoin          
+[199] Umsning             Aizawl              Champhai            Kolasib             Lunglei             Dimapur            
+[205] Kohima              Angul               Talcher             Rourkela            Nalco               Rayagada           
+[211] Bhubaneswar         Bhubaneshwar        Cuttack             Sambalpur           Berhampur           Balasore           
+[217] Kalinga Nagar       Paradeep            Keonjhar            Konark              Puri                Pondichery         
+[223] Pondicherry         Karaikal            Ludhiana            Jalandhar           Patiala             Gobindgarh         
+[229] Naya Nangal         Amritsar            Bathinda            Dera Bassi          Khanna              Dera Baba          
+[235] Sangrur             Faridkot            Hoshiarpur          Kota                Jaipur              Alwar              
+[241] Jodhpur             Chittorgarh         Udaipur             Gangtok             Madras              Turicorin          
+[247] Tuticorin           Coimbatore          Madurai             Salem               Chennai             Thoothukudi        
+[253] Trichy              Mettur              Cuddalore           Kothur              Agra                Anpara             
+[259] Dehradoon           Lucknow             Kanpur              Gajroula            Varanasi            Noida, Ghaziabad   
+[265] Ghaziabad           Noida               Renusagar           Gajraula            Firozabad           Jhansi             
+[271] Khurja              Allahabad           Meerut              Bareilly            Gorakhpur           Mathura            
+[277] Moradabad           Rai Bareilly        Saharanpur          Unnao               Dehradun            Haldwani           
+[283] Haridwar            Kashipur            Rishikesh           Rudrapur            Haldia              Howrah             
+[289] Calcutta            Durgapur            Asansol             Kolkata             Durgapur (WB)       Baruipur           
+[295] Barrackpore         Raniganj            Sankrail            South Suburban      DANKUNI             HALDIA             
+[301] Kalyani             MALDAH              SILIGURI            ULUBERIA            <NA>               
+304 Levels: ANKLESHWAR Agra Ahmedabad Aizawl Akola Alappuzha Allahabad Alwar Amlai Amona Amravati Amritsar Ananthapur Angul ... Yamunanagar
+"

@@ -1,0 +1,1 @@
+"0","decision_tree <- rpart(Attrition~., method=""class"",data=train,control = rpart.control(cp= 0.01000000))"

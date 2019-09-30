@@ -1,0 +1,7 @@
+"0","air_reserve<-fread(""air_reserve.csv"")"
+"0","air_store_info<-fread(""air_store_info.csv"")"
+"0","air_visit_data<-fread(""air_visit_data.csv"")"
+"0","data_info<-fread(""date_info.csv"") "
+"0","hpg_reserve<-fread(""hpg_reserve.csv"")"
+"0","hpg_store_info<-fread(""hpg_store_info.csv"")"
+"0","store_id_relation<-fread(""store_id_relation.csv"")"

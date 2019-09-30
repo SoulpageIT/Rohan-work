@@ -1,0 +1,8 @@
+"0","g<-ggplot(data_users_viewed,aes(x=sessions_with_affil_before))+geom_freqpoly(bin=50)+labs(title = ""Total count of previous session having affiliate "")+theme(plot.title = element_text(hjust = 0.5,face = ""bold"",color = ""blue""))+theme(panel.background = element_rect(fill = ' gray'))"
+"2","Ignoring unknown parameters: bin"
+"0","plotly(g)"
+"2","Storing 'username' as the environment variable 'plotly_username'
+"
+"2","Error in Sys.setenv(plotly_username = username) : 
+  wrong length for argument
+"

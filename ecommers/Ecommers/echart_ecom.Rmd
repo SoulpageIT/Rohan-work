@@ -1,0 +1,80 @@
+---
+title: "graph"
+output: html_notebook
+---
+library
+```{r}
+library(data.table)
+library(mice)    #this packages is used for imputing missing values in the data set
+library(mltools)  #this function is used for encoding function.
+library(data.table)
+library(VIM)
+library(echarts4r)
+library(readr)
+library(jsonlite)
+library(echarts4r)
+library(tidyverse)
+```
+
+```{r}
+kirklandsdata<-fread("kirklandsdata.csv",na.strings = "NA")
+kirklandsdata$target<-ifelse (kirklandsdata$coupon_run_on_cart|kirklandsdata$coupon_run_on_checkout|kirklandsdata$coupon_run_on_product==1,1,0)
+kirklandsdata<-kirklandsdata[,-c("coupon_run_on_cart","coupon_run_on_checkout","coupon_run_on_product")]
+table(kirklandsdata$target)
+```
+```{r}
+str(kirklandsdata)
+```
+
+```{r}
+summary(kirklandsdata)
+```
+
+```{r}
+anyNA(kirklandsdata)
+```
+There are no NA  values.
+
+now we are going to use boxplot for outlier check.
+```{r}
+kirklandsdata %>%
+  e_charts() %>%
+  e_boxplot(sessions_before, outliers = TRUE) %>%
+  e_boxplot(sessions_with_affil_before, outliers = TRUE)  %>%
+  e_boxplot(affil_after_p1_prev_session, outliers = TRUE)  %>%
+  e_boxplot(sessions_before_with_checkout, outliers = TRUE) %>%
+  e_boxplot(sessions_before_with_cart, outliers = TRUE) %>%
+  e_boxplot(sessions_before_with_product, outliers = TRUE) %>%
+  e_boxplot(daily_sessions, outliers = TRUE) %>%
+  e_boxplot(trialy_sessions, outliers = TRUE) %>%
+  e_boxplot(quintally_sessions, outliers = TRUE) %>%
+  e_boxplot(tenally_sessions, outliers = TRUE)  %>%
+  e_boxplot(coupon_run_prev_ses_checkout_session, outliers = TRUE) %>%
+  e_boxplot(coupon_run_prev_ses_cart_session, outliers = TRUE)   %>%
+  e_boxplot(coupon_run_prev_ses_product_session, outliers = TRUE) %>%
+  e_boxplot(day_between_previous_session, outliers = TRUE) %>%
+  e_boxplot(page_depth , outliers = TRUE) %>%
+  e_boxplot(products_viewed , outliers = TRUE)
+
+
+```
+```{r}
+kirklandsdata %>%
+  e_charts() %>%
+  e_boxplot(sessions_before, outliers = TRUE) %>%
+  e_boxplot(sessions_with_affil_before, outliers = TRUE)  
+```
+
+```{r}
+kirklandsdata  %>% 
+  e_charts(target) %>% 
+  e_bar(target, name = "frequency")
+```
+
+```{r}
+
+
+```
+
+
+now we are going to use boxplot for outlier check.

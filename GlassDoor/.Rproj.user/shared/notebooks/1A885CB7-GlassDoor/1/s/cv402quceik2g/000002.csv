@@ -1,0 +1,4 @@
+"0","```r
+date_lda_gamma <- tidy(date_lda, matrix = \"gamma\")%>%mutate(topic=factor(topic))
+date_lda_gamma
+```"

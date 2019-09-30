@@ -1,0 +1,6 @@
+"0","```r
+lis=list(1,2,45,5)
+class(lis)
+print(lis)
+length(lis)
+```"

@@ -1,0 +1,7 @@
+"0","```r
+#this command is use to extract months
+test$months<-as.factor(month(test$`Date (MM/DD/YYYY)`))
+#this command is used to extract weekdays
+test$weekDays<-as.factor(weekdays(test$`Date (MM/DD/YYYY)`))
+
+```"

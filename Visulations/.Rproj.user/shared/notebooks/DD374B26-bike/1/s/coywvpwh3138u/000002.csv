@@ -1,0 +1,10 @@
+"0","```r
+# Set a number of 'empty bar' to add at the end of each group
+empty_bar=3
+to_add = data.frame( matrix(NA, empty_bar*nlevels(data1$group), ncol(data1)) )
+colnames(to_add) = colnames(data1)
+to_add$group=rep(levels(data1$group), each=empty_bar)
+data1=rbind(data1, to_add)
+data1=data1 %>% arrange(group)
+data1$id=seq(1, nrow(data1))
+```"

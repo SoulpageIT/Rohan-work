@@ -1,0 +1,16 @@
+"0","```r
+unique(data$state)
+
+```"
+"1"," [1] Andhra Pradesh              Arunachal Pradesh           Assam                       Bihar                      
+ [5] Chandigarh                  Chhattisgarh                Dadra & Nagar Haveli        Daman & Diu                
+ [9] Delhi                       Goa                         Gujarat                     Haryana                    
+[13] Himachal Pradesh            Jammu & Kashmir             Jharkhand                   Karnataka                  
+[17] Kerala                      Madhya Pradesh              Maharashtra                 Manipur                    
+[21] Meghalaya                   Mizoram                     Nagaland                    Odisha                     
+[25] Puducherry                  Punjab                      Rajasthan                   Sikkim                     
+[29] Tamil Nadu                  Telangana                   Uttar Pradesh               Uttarakhand                
+[33] Uttaranchal                 West Bengal                 andaman-and-nicobar-islands Lakshadweep                
+[37] Tripura                    
+37 Levels: Andhra Pradesh Arunachal Pradesh Assam Bihar Chandigarh Chhattisgarh Dadra & Nagar Haveli Daman & Diu Delhi Goa Gujarat ... andaman-and-nicobar-islands
+"

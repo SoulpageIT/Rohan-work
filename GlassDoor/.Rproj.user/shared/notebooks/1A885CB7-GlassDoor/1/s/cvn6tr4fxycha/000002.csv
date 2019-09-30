@@ -1,0 +1,8 @@
+"0","```r
+stop_user=c(\"linklink\",\"whatsappshar\",\"auburn\",\"twittershar\",\"edit\",\"delet\",\"via\",\"edit\",\"delet\",\"via\",\"starstarstarstarstarwork\",\"pdt\",\"hill\",\"ago\",
+            \"facebookshar\")
+stop_user2=data_frame(word=stop_user)
+tidy_FCA <- tidy_FCA %>%
+  anti_join(stop_user2)
+tidy_FCA%>%head()
+```"

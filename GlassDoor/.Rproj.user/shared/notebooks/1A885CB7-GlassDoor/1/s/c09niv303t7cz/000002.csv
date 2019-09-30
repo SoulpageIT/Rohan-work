@@ -1,0 +1,5 @@
+"0","```r
+date_lda_td <- tidy(date_lda)
+date_lda_td%>%head()
+
+```"

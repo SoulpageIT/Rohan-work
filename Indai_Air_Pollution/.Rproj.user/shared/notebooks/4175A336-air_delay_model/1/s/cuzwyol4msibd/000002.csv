@@ -1,0 +1,5 @@
+"0","```r
+train$years<-NULL
+train$day<-NULL
+train$`Date (MM/DD/YYYY)`<-NULL
+```"

@@ -1,0 +1,22 @@
+"0","```r
+library(data.table)
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(corrplot)
+library(kableExtra)
+library(mltools)
+library(caTools)
+library(xgboost)
+library(Ckmeans.1d.dp) 
+library(Matrix)
+library(readr)
+library(car)
+library(caret)
+library(lattice)
+#The package for random forest function
+library(MASS)
+library(randomForest)
+#correlation plot
+library(corrplot)
+```"

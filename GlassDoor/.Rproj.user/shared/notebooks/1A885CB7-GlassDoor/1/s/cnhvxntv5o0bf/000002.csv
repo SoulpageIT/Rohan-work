@@ -1,0 +1,12 @@
+"0","```r
+dtm_words_count<-tidy_descr %>%
+mutate(word_stem = removeNumbers(word_stem)) %>%
+count(date, word_stem, sort = TRUE) %>%
+ungroup() %>%
+filter(word_stem != \"\") %>%
+# Casting a data frame to a DocumentTermMatrix, TermDocumentMatrix, or dfm  
+cast_dtm(date, word_stem, n)
+# set a seed so that the output of the model is predictable
+dtm_lda<-LDA(dtm_words_count, k = 5, control = list(seed = 1234))
+topics_beta<-tidy(dtm_lda, matrix = \"beta\")
+```"

@@ -1,0 +1,2 @@
+"0","#generate wordcloud"
+"0","wordcloud(corpus,min.freq = 10,colors=brewer.pal(8, ""Dark2""),random.color = TRUE,max.words = 500)"

@@ -1,0 +1,1 @@
+"0","mtext(paste(""outlier :- "",paste(out.range,collapse = "","")),cex=0.7)#this function pasting the value of the outlier"

@@ -1,0 +1,7 @@
+"0","data[,list(Throughput=sum(Throughput)),by=c(""dayCycle"")][order(Throughput,dayCycle,decreasing=TRUE)]  %>%"
+"0","  group_by(dayCycle)  %>%"
+"0","  plot_ly(labels = ~as.factor(dayCycle), values = ~Throughput) %>%"
+"0","  add_pie(hole = 0.6) %>%"
+"0","  layout(title = ""Percentage of passengers on different day cycle of the day"",  showlegend = F,"
+"0","         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),"
+"0","         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))"

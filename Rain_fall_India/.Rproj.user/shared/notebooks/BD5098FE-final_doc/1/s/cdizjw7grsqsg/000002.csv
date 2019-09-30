@@ -1,0 +1,5 @@
+"0","p%>%"
+"0","filter(sentiment %in% c(""negative"",""positive"",""joy"",""sadness""))%>%"
+"0","reshape2::acast(word ~ sentiment, value.var = ""n"", fill = 0)%>% "
+"0","comparison.cloud(colors = viridis_pal(option = ""D"")(4),"
+"0","                  max.words = 200)"

@@ -1,0 +1,11 @@
+"0","```r
+heat_map_months_weekdays<-function(year){
+  if(year %in% bikes[,year(`Start Time`)]){
+   ggplot(bikes[year(`Start Time`)==year,.N,by = list(weekdays(`Start Time`), month(`Start Time`))][,population:=sum(N),by=list(month,weekdays)], aes(weekdays,month)) + geom_tile(aes(fill = population),
+     colour = \"white\") + scale_fill_gradient(low = \"white\",
+    high = \"steelblue\")
+  }else{
+    print(\"***Oops sorry the year you have entered is not Valid for this data set.***\")
+  }
+}
+```"

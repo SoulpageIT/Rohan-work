@@ -1,0 +1,678 @@
+---
+title: "India Air Quality Data"
+output:
+  html_document:
+    df_print: paged
+---
+#Problem Statement :-
+
+Since industrialization, there has been an increasing concern about environmental pollution. As mentioned in the WHO report 7 million premature deaths annually linked to air pollution , air pollution is the world's largest single environmental risk. Moreover as reported in the NY Times article, India’s Air Pollution Rivals China’s as World’s Deadliest it has been found that India's air pollution is deadlier than even China's.
+
+#Solution :-
+
+Using this dataset, one can explore India's air pollution levels at a more granular scale.
+```{r}
+#For Reading and subsetting the data in analysis.
+library(data.table)
+#For Visulation.
+library(ggplot2)
+library(plotly)
+#From this library we have used "revalue function" for replacing particular factor with other values in a column.
+library(plyr)
+#For regular expression in strings
+#install.packages("stringr")
+library(stringr)
+#For making date column uniform we used
+#install.packages("liburidate")
+#install.packages("devtools")
+#install.packages("lubridate")
+library(lubridate)
+```
+
+We have Indian Air Pollution Data of 13 features and 435742 Observations
+Data Dictionary
+
+1) stn_code
+2) sampling_date
+3) state :- State
+4) location :- City
+5) agency
+6) type :- Area category
+7) so2 :- Sulphur dioxde
+8) no2 :- Nitrogen dioxide
+9) rspm :- Respirable Suspended Particulate Matter
+10) spm :- Suspended Particulate Matter
+11) location_monitoring_stationlocation :- location of monitoring area
+12)pm2_5 :- PSI 2.5
+13)date :- Date of recording
+```{r}
+data<-fread("data.csv",stringsAsFactors = T)
+```
+
+Viewing the structure of the data ,to knowe what type of data presernt in the data set.
+```{r}
+str(data)
+```
+```{r}
+na.omit(data$sampling_date)
+```
+
+
+Viewing the summary of the data set.
+```{r}
+summary(data)
+```
+
+#Data Cleaning.
+
+
+Checking for number of NA 's and Empty spaces in the data.
+```{r}
+#Checking the NA 'S at entire data set.
+cat("\nThe Number of NA 'S in data set :- ", sum(is.na(data)))
+```
+There are total 1081371 NA 's in our data set.
+
+Checking the NA 'S BY columns.
+```{r}
+apply(data,2,function(x)sum(is.na(x)))
+```
+Checking for the null values
+```{r}
+#Checking the number of null value in the data set.
+cat("\nThe Number of Null VALUES 'S in data set :- ", sum(is.null(data)))
+```
+There are No Null values in the data set.
+
+#Checking the validity of all columns.
+
+1) stn_code
+```{r}
+unique(data$stn_code)
+```
+Yaa there is some invalied data in this column ,but we are not handling this because this column is not useful in our analysis.
+so for now we are not treating it.
+
+2) sampling_date
+```{r}
+unique(data$sampling_date)
+```
+As we see above we have found many different formate of date in this column,for now we are going to  handling it because the data of recording and this column showes the same date.
+
+3)state 
+```{r}
+unique(data$state)
+```
+The data is valied in this column.
+
+4) data
+```{r}
+unique(data$location)
+```
+we have found some duplicates and some spellings mistakes in the column.
+
+correct                            wrong
+
+Visakhapatnam                     Vishakhapatnam
+Panaji                            Panjim
+Ankleshwar                        (ANKLESHWAR,Anklesvar)
+Silchar                           Silcher
+Yamuna Nagar                      Yamunanagar
+Kotttayam                         Kottayam
+Trivandrum                        Trivendrum
+Mumbai                            Bombay
+Bhubaneswar                       Bhubaneshwar
+Pondicherry                       Pondichery
+Chennai                           Madras
+Tuticorin                         Turicorin
+Kolkata                           Calcutta
+Durgapur                          Durgapur (WB)
+Gajraula                          Gajroula
+vapi                              VAPI
+
+
+Note :- Remove  Noida, Ghaziabad
+
+Now we are going to treat these variable.
+
+Now we are going to remove these rows who 's city name is Noida, Ghaziabad as we have already have a seperate column of Noida and Ghaziabad.
+```{r}
+data <- data[!(location=="Noida, Ghaziabad")]
+```
+
+Now we are going to replace wrong name with correct city names in city column.
+```{r}
+revalue(data$location, c("Vishakhapatnam" = "Visakhapatnam","Panjim"="Panaji","ANKLESHWAR"="Ankleshwar","Anklesvar"="Ankleshwar","Silcher"="Silchar","Yamunanagar"="Yamuna Nagar","Kottayam"="Kotttayam","Trivendrum"="Trivandrum","Bombay"="Mumbai","Bhubaneshwar"="Bhubaneswar","Pondichery"="Pondicherry","Madras"="Chennai","Turicorin"="Tuticorin","Calcutta"="Kolkata","Durgapur (WB)"="Durgapur","Gajroula"="Gajraula","VAPI"="vapi")) -> data$location
+```
+
+
+4)Agency
+```{r}
+unique(data$agency)
+```
+In this column also they are many wrong and duplicate rows are present ,as we are not using this in our analysis so right now we are not finding and treating this column.
+
+5)Type
+```{r}
+unique(data$type)
+```
+correct                                Wrong
+
+Sensitive Area                         ("Sensitive","Sensitive Areas")
+Industrial Area                        ("Industrial","Industrial Areas")
+Residential and others                 ("Residential")
+
+Now we are replacing the wrong spelling by correct spelling in the Type column.
+```{r}
+revalue(data$type, c("Sensitive"="Sensitive Area","Sensitive Areas"="Sensitive Area","Industrial"="Industrial Area","Industrial Areas"="Industrial Area","Residential"="Residential and others","Residential, Rural and other Areas"="Residential and others")) -> data$type
+```
+
+6)so2
+```{r}
+unique(data$so2)
+```
+These values are prefectly fine.
+
+7)no2
+```{r}
+unique(data$no2)
+```
+These values are prefectly good.
+
+8)rspm
+```{r}
+unique(data$rspm)
+```
+These values are prefectly good.
+
+9) spm
+```{r}
+unique(data$spm)
+```
+
+9) location_monitoring_station
+```{r}
+unique(data$location_monitoring_station)
+```
+No duplicate.
+
+```{r}
+colnames(data)
+```
+Summer Season (starts in the months of April and ends in June.)
+Rainy Season (from the month of June or July till the mid of September)
+Winter Season (the season falls between the months of October to January)
+Spring Season ( occurs between February and March).
+
+Now we are adding the season in the data.
+```{r}
+indx <- setNames( rep(c('winter', 'spring', 'summer',
+                   'Rainy'),each=3), c(c(11,12,1),c(2,3,4),c(5,6,7),c(8,9,10)))
+data[,seasons := as.factor(unname(indx[ as.character(month(date))]))]
+```
+
+Adding months,years to data
+```{r}
+data$date<-as.Date(data$date,'%Y-%m-%d')
+data$month<-month(data$date)
+data$year<-year(data$date)
+```
+
+
+Now we are subsetting the data for the analysis.
+```{r}
+data_analysis<-data[,c("location","so2","no2","rspm","spm","pm2_5","date","type","seasons","year","month")]
+```
+
+Now we are subsetting data by type=Industrial Area 
+```{r}
+data_analysis<-data_analysis[type=="Industrial Area" & location=="Hyderabad"]
+```
+
+```{r}
+#cleaned_data <- data_analysis[complete.cases(data_analysis[type=="Industrial Area"]), ]
+#Missed_data<-data_analysis[!complete.cases(data_analysis[type=="Industrial Area"]),]
+```
+
+checking NA 'S IN THE SUBSET DATA
+```{r}
+apply(data_analysis,2,function(x)sum(is.na(x)))
+```
+
+```{r}
+#data_analysis$date<-as.Date(data_analysis$date,'%Y-%m-%d')
+#data_analysis$month<-month(data_analysis$date)
+#data_analysis$year<-year(data_analysis$date)
+```
+
+Treating the sampling date column.
+
+In this column we have three different formats
+1)February-M021990
+2)DD-MM-YY
+3)D/MM/YYYY
+
+so now we divide our data set into 2 subsets  different format and treate them and join them.
+```{r}
+#mdy<-mdy(data$sampling_date)
+#dmy<-dmy(data$sampling_date)
+#mdy[is.na(mdy)]<-dmy[is.na(mdy)]
+#data$sampling_date<-mdy
+```
+
+Now we are dividing the data into different subsets according format, total we have four different format
+1)February-M021990
+2)DD-MM-YY
+3)D/MM/YYYY
+4)M021990
+5)June-1995
+```{r}
+#2)DD-MM-YY
+index<-grepl("[0-9]{2}-[0-9]{2}-[0-9]{2}", data$sampling_date)
+format2<-data[index,]
+
+sum(is.na(format2$sampling_date))
+
+#3)DD/MM/YYYY
+index<-grepl("[0-9]{2}/[0-9]{2}/[0-9]{4}",data$sampling_date)
+format3<-data[index,]
+sum(is.na(format3$sampling_date))
+
+#4)M021990
+index<-grepl("M[0-9]{6}",data$sampling_date)
+format4<-data[index,]
+sum(is.na(format4$sampling_date))
+#3)3)D/MM/YYYY
+#index<-grepl("[0-9]{2}-[0-9]{2}-[0-9]{2}", data$sampling_date)
+#format3<-data[index,]
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Method 2 
+
+```{r}
+data$ID <- seq.int(nrow(data))
+```
+
+```{r}
+mdy<-mdy(data$sampling_date)
+dmy<-dmy(data$sampling_date)
+mdy[is.na(mdy)]<-dmy[is.na(mdy)]
+data$sampling_date_dup<-mdy
+```
+
+```{r}
+sum(is.na(data$sampling_date_dup))
+```
+```{r}
+Na_data<-data[is.na(data$sampling_date_dup),]
+```
+
+
+```{r}
+Na_data[,c("sampling_date","sampling_date_dup")]
+```
+
+as we see we have 2 type of data which as been NA 's.
+1) M101989
+2) 31/9/2014
+```{r}
+unique(Na_data[,c("sampling_date","sampling_date_dup")])
+```
+
+Now we are subsetting the data into two parts.
+```{r}
+index<-grepl("/",Na_data$sampling_date)
+subset1<-Na_data[!index,]
+```
+
+Now treating the NA 's value.
+```{r}
+subset1$sampling_date_dup <- gsub('M','',subset1$sampling_date)
+```
+
+
+```{r}
+misseddate$year<- substr(misseddate$data.sampling_date,nchar(as.character(misseddate$data.sampling_date))-3,nchar(as.character(misseddate$data.sampling_date)))
+misseddate$month<- substr(misseddate$data.sampling_date,2,3)
+```
+
+
+```{r}
+subset2<-Na_data[index,]
+```
+
+
+```{r}
+subset2[,c("sampling_date","ID")]
+```
+
+Now we are splitting these sampling column by "/"
+```{r}
+buffer_data<-as.data.table(str_split_fixed(subset2$sampling_date, "/", 3))
+buffer_data$dash="-"
+buffer_data$id=subset2$ID
+buffer_data$Month_Year <-do.call(paste0, buffer_data[,c("V3","dash","V2")])
+buffer_data$dash<-NULL
+```
+
+Now uniforming the format of the data.
+```{r}
+subset1$year<- substr(subset1$sampling_date_dup,nchar(as.character(subset1$sampling_date_dup))-3,nchar(as.character(subset1$sampling_date_dup)))
+subset1$month<- substr(subset1$sampling_date_dup,2,3)
+subset1$dash<-"-"
+subset1$Month_Year<-do.call(paste0,subset1[,c("year","dash","month")])
+subset1$month<-NULL
+```
+
+Now we are going to impute the NA value with the treated values in the Na_data.
+```{r}
+Na_datanm <- c("ID", "")
+df2[nm] <- lapply(nm, function(x) df1[[x]][match(Na_data$ID, subset1$ID)])
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+first making two format uniform.
+```{r}
+format<-rbind(format2,format3)
+mdy<-mdy(format$sampling_date)
+dmy<-dmy(format$sampling_date)
+mdy[is.na(mdy)]<-dmy[is.na(mdy)]
+format$sampling_date<-mdy
+sum(is.na(format4$sampling_date))
+```
+
+```{r}
+sum(is.na(format$sampling_date))
+```
+
+```{r}
+form<-rbind(format4,format)
+mdy<-mdy(form$sampling_date)
+dmy<-dmy(form$sampling_date)
+mdy[is.na(mdy)]<-dmy[is.na(mdy)]
+form$sampling_date<-mdy
+sum(is.na(form$sampling_date))
+```
+
+```{r}
+sum(is.na(form$sampling_date))
+```
+
+
+
+Now we are trearting the last format.
+```{r}
+format4$sampling_date<-as.character(format4$sampling_date)
+format4$sampling_date<-sapply(strsplit(format4$sampling_date, split='- M', fixed=TRUE), function(x) (x[2]))
+```
+
+```{r}
+format4$sampling_date<-as.factor(format4$sampling_date)
+```
+
+
+```{r}
+sum(is.na(format4$sampling_date))  
+```
+
+
+```{r}
+data$sampling_date<-as.Date(data$sampling_date)
+data$sampling_date<-format(data$sampling_date, format="%Y-%m")
+```
+
+```{r}
+data[,c("sampling_date","date")]
+sum(is.na(data$sampling_date))
+```
+
+```{r}
+data[is.na(data$sampling_date),]
+```
+
+```{r}
+data[is.na(data$sampling_date),]
+```
+
+
+#Data Visulation.
+
+```{r}
+data$average_so2<-mean(data$so2)
+data$average_no2<-mean(data$no2)
+colnames(data)
+```
+
+```{r}
+data<-data[,list("avgNO2"=mean(no2),"avgSO2"=mean(so2)),by=c("state","location","agency","type","so2","no2" ,"date" ,"seasons","month", "year")]
+```
+
+
+
+creating column for average No2 and So2 
+```{r}
+#data_analysis$average_so2<-mean(data_analysis$so2)
+#data_analysis$average_no2<-mean(data_analysis$no2)
+```
+
+
+By Months
+
+now plotting the graphs,for NO2
+```{r}
+
+ggplotly(ggplot(data_analysis[,list("avgNO2"=mean(no2)),by=c("year","month")],aes(x=as.factor(month),y=avgNO2,fill=as.factor(year)),group=1)+
+ geom_point()+ geom_line(linetype = "dashed",color="black")+facet_wrap(~as.factor(year))+labs(title = "Average No2 level in HYD by years",x="Months", y = "Average No2 value",fill="years")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+
+Now we are plotting the graphs for so2 in hyd
+```{r}
+ggplotly(ggplot(data_analysis[,list("avgsO2"=mean(so2)),by=c("year","month")],aes(x=as.factor(month),y=avgsO2,fill=as.factor(year),group=1))+
+  geom_line(linetype = "dashed",color="black")+geom_point()+facet_wrap(~as.factor(year))+labs(title = "Average So2 level in HYD by years",x="Months", y = "Average So2 value",fill="years")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+
+By Seasons
+
+Now plotting by seasons,for No2
+```{r}
+ggplotly(ggplot(data_analysis[,list("avgNO2"=mean(no2)),by=c("year","seasons")],aes(x=as.factor(seasons),y=avgNO2,fill=as.factor(year),group=1)) +geom_line(linetype = "dashed",color="black")+geom_point()+facet_wrap(~as.factor(year))+labs(title = "Average No2 level in HYD by years",x="seasons", y = "Average No2 value",fill="years")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))+coord_flip())
+
+```
+
+Now we are plotting the graphs for so2 in hyd
+```{r}
+ggplotly(ggplot(data_analysis[,list("avgsO2"=mean(so2)),by=c("year","seasons","month")],aes(x=as.factor(seasons),y=avgsO2,fill=as.factor(month),group=1))+
+  geom_line(linetype = "dashed",color="black")+geom_point()+facet_wrap(~as.factor(year))+labs(title = "Average So2 level in HYD by years",x="Months", y = "Average So2 value",fill="years")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))+coord_flip())
+```
+```{r}
+na.omit(data$state)
+sum(is.na(data$state))
+```
+
+```{r}
+
+```
+
+
+Average sulphur dioxide level in each states 
+```{r}
+ggplotly(ggplot(data[,list("avgsO2"=mean(so2),"avgnO2"=mean(no2)),by=c("year","month","state")],aes(x=as.factor(month),y=avgsO2,fill=as.factor(month),group=1))+geom_line(aes(x=as.factor(month),y=avgnO2))+geom_bar(stat = "identity")+facet_wrap(~as.factor(state))+labs(title = "Average So2 level in stats by months",x="Months", y = "Average So2 value",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+so as we see states like Bihar , Goa ,Gujarat,Haryana,West Bengal,and pudu cherry has high sulphur dioxide contant on air.
+
+
+Now lets check the average nitrogen dioxide level  
+```{r}
+scale_y_continuous(sec.axis = sec_axis(~./max(mean(data$no2))))
+ggplotly(ggplot(data[,list("avgNO2"=mean(no2)),by=c("year","month","state")],aes(x=as.factor(month),y=avgNO2,fill=as.factor(month),group=1))+geom_bar(stat = "identity")+facet_wrap(~as.factor(state))+labs(title = "Average No2 level in states by months",x="Months", y = "Average So2 value",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+
+so By seeing the sulphur dioxide and nitrogen dioxide level in all states ,we have choosen top 5 states where these levels are high.
+
+1)West Bengal.
+2)Bihar.
+3)Delhi.
+4)Rajasthan.
+5)Guijarat.
+
+Now we are going to pick top 2 city from each and every state where the sulphur dioxide and nitrogen dioxide levels are high.
+
+#West Bengal
+
+The NO2 level at each and ever city in West Bengal
+```{r}
+ggplotly(ggplot(data[state=="West Bengal",list("avgNO2"=mean(no2)),by=c("year","month","location")],aes(x=as.factor(month),y=avgNO2,fill=as.factor(month),group=1))+geom_bar(stat = "identity")+facet_wrap(~as.factor(location))+labs(title = "Average No2 level in location by months",x="Months", y = "Average No2 value",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))+coord_flip())
+```
+
+
+The SO2 level at each and ever city in West Bengal
+```{r}
+ggplotly(ggplot(data[state=="West Bengal",list("avgNO2"=mean(so2)),by=c("year","month","location")],aes(x=as.factor(month),y=avgNO2,fill=as.factor(month),group=1))+geom_bar(stat = "identity")+facet_wrap(~as.factor(location))+labs(title = "Average so2 level in location by months",x="Months", y = "Average So2 values",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))+coord_flip())
+```
+
+so as we see above That :-
+1) Kolkata.
+2) Howrah.
+
+Now we are going to see So2 and No2 levels in by month and year in these 2 cities
+#Kolkata
+```{r}
+ggplotly(ggplot(data[location=="Kolkata",list("avgNO2"=mean(no2),"avgSO2"=mean(so2)),by=c("month","year")],aes(x=as.factor(month),y=avgSO2,fill=as.factor(month)))+geom_bar(stat = "identity")
+          +geom_line(aes(y=avgNO2))+geom_point(aes(y=avgNO2))+facet_wrap(~as.factor(year))+labs(title = "Average gas trend in Kolkata  by month and year",x="Months", y = "Average gas values",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+Note :- Bar shows So2,and dote shows No2
+
+2)Howrah.
+```{r}
+ggplotly(ggplot(data[location=="Howrah",list("avgNO2"=mean(no2),"avgSO2"=mean(so2)),by=c("month","year")],aes(x=as.factor(month),y=avgSO2,fill=as.factor(month)))+geom_bar(stat = "identity")
+          +geom_line(aes(y=avgNO2))+geom_point(aes(y=avgNO2))+facet_wrap(~as.factor(year))+labs(title = "Average gas trend in Howrah  by month and year",x="Months", y = "Average gas values",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+Note :- Bar shows So2,and dote shows No2.
+
+#Bihar
+
+NO2
+```{r}
+ggplotly(ggplot(data[state=="Bihar",list("avgNO2"=mean(no2)),by=c("year","month","location")],aes(x=as.factor(month),y=avgNO2,fill=as.factor(month),group=1))+geom_bar(stat = "identity")+facet_wrap(~as.factor(location))+labs(title = "Average No2 level in location by months",x="Months", y = "Average No2 value",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+
+```{r}
+ggplotly(ggplot(data[state=="Bihar",list("avgNO2"=mean(so2)),by=c("year","month","location")],aes(x=as.factor(month),y=avgNO2,fill=as.factor(month),group=1))+geom_bar(stat = "identity")+facet_wrap(~as.factor(location))+labs(title = "Average So2 level in location by months",x="Months", y = "Average so2 value",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+AS we above these three cities in Biharhave high so2 and no2 values :-
+
+1)Dhanbad
+2)Jharia
+3)Sindri
+
+1)Dhanbad
+```{r}
+ggplotly(ggplot(data[location=="Dhanbad",list("avgNO2"=mean(no2),"avgSO2"=mean(so2)),by=c("month","year")],aes(x=as.factor(month),y=avgSO2,fill=as.factor(month)))+geom_bar(stat = "identity")
+          +geom_line(aes(y=avgNO2))+geom_point(aes(y=avgNO2))+facet_wrap(~as.factor(year))+labs(title = "Average gas trend in Dhanbad  by month and year",x="Months", y = "Average gas values",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+
+2)Jharia
+```{r}
+ggplotly(ggplot(data[location=="Jharia",list("avgNO2"=mean(no2),"avgSO2"=mean(so2)),by=c("month","year")],aes(x=as.factor(month),y=avgSO2,fill=as.factor(month)))+geom_bar(stat = "identity")
+          +geom_line(aes(y=avgNO2))+geom_point(aes(y=avgNO2))+facet_wrap(~as.factor(year))+labs(title = "Average gas trend in Jharia  by month and year",x="Months", y = "Average gas values",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+
+3)Sindri
+```{r}
+ggplotly(ggplot(data[location=="Sindri",list("avgNO2"=mean(no2),"avgSO2"=mean(so2)),by=c("month","year")],aes(x=as.factor(month),y=avgSO2,fill=as.factor(month)))+geom_bar(stat = "identity")
+          +geom_line(aes(y=avgNO2))+geom_point(aes(y=avgNO2))+facet_wrap(~as.factor(year))+labs(title = "Average gas trend in Sindri  by month and year",x="Months", y = "Average gas values",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+
+Delhi.
+```{r}
+ggplotly(ggplot(data[state=="Delhi",list("avgNO2"=mean(no2),"avgSO2"=mean(so2)),by=c("month","year")],aes(x=as.factor(month),y=avgSO2,fill=as.factor(month)))+geom_bar(stat = "identity")
+          +geom_line(aes(y=avgNO2))+geom_point(aes(y=avgNO2))+facet_wrap(~as.factor(year))+labs(title = "Average gas trend in Delhi  by month and year",x="Months", y = "Average gas values",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+
+```
+
+4)Rajasthan.
+NO2
+```{r}
+ggplotly(ggplot(data[state=="Rajasthan",list("avgNO2"=mean(no2)),by=c("year","month","location")],aes(x=as.factor(month),y=avgNO2,fill=as.factor(month),group=1))+geom_bar(stat = "identity")+facet_wrap(~as.factor(location))+labs(title = "Average No2 level in location by months",x="Months", y = "Average No2 value",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+
+So2
+```{r}
+ggplotly(ggplot(data[state=="Rajasthan",list("avgNO2"=mean(so2)),by=c("year","month","location")],aes(x=as.factor(month),y=avgNO2,fill=as.factor(month),group=1))+geom_bar(stat = "identity")+facet_wrap(~as.factor(location))+labs(title = "Average so2 level in location by months",x="Months", y = "Average So2 values",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+The  cities in Rajasthan which has high content of No2 and So2 level
+1)Kota.
+2)Alwar.
+3)Jaipur.
+
+1)Kota.
+```{r}
+ggplotly(ggplot(data[location=="Kota",list("avgNO2"=mean(no2),"avgSO2"=mean(so2)),by=c("month","year")],aes(x=as.factor(month),y=avgSO2,fill=as.factor(month)))+geom_bar(stat = "identity")
+          +geom_line(aes(y=avgNO2))+geom_point(aes(y=avgNO2))+facet_wrap(~as.factor(year))+labs(title = "Average gas trend in Kota  by month and year",x="Months", y = "Average gas values",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+
+```
+
+2)Alwar
+```{r}
+ggplotly(ggplot(data[location=="Alwar",list("avgNO2"=mean(no2),"avgSO2"=mean(so2)),by=c("month","year")],aes(x=as.factor(month),y=avgSO2,fill=as.factor(month)))+geom_bar(stat = "identity")
+          +geom_line(aes(y=avgNO2))+geom_point(aes(y=avgNO2))+facet_wrap(~as.factor(year))+labs(title = "Average gas trend in Alwar  by month and year",x="Months", y = "Average gas values",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+
+```
+
+3)Jaipur.
+```{r}
+ggplotly(ggplot(data[location=="Jaipur",list("avgNO2"=mean(no2),"avgSO2"=mean(so2)),by=c("month","year")],aes(x=as.factor(month),y=avgSO2,fill=as.factor(month)))+geom_bar(stat = "identity")
+          +geom_line(aes(y=avgNO2))+geom_point(aes(y=avgNO2))+facet_wrap(~as.factor(year))+labs(title = "Average gas trend in Jaipur  by month and year",x="Months", y = "Average gas values",fill="months")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+
+
+
+The top 9 cities which are highly polluted are :-
+
+1)Kolkata
+2)Howrah.
+3)Dhanbad
+4)Jharia
+5)Sindri
+6)Delhi
+7)Kota.
+8)Alwar.
+9)Jaipur.
+
+
+Question can be asked :-
+
+1)what are the top 10 places where the Suspended Particulate Matter concentration is more?
+2)Due to which type of areas the Suspended Particulate Matter is getting concentrated?
+3)Which are the top 10 places or location where we need to take pollution measures?
+

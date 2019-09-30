@@ -1,0 +1,7 @@
+"0","ggplot(data.set.analyse[,.N,by=target], aes(x=target,y=N)) +"
+"0","  geom_segment( aes(x=target, xend=target, y=0, yend=N)) +"
+"0","  geom_point( size=5, color=""steelblue"", fill=alpha(""steelblue"", 0.3), alpha=0.7, shape=21, stroke=2)+theme(panel.background = element_rect(fill = ' white'))+geom_text(aes(label=N), vjust=0.30, color=""black"", size=3.4)+"
+"2","Error: Incomplete expression: ggplot(data.set.analyse[,.N,by=target], aes(x=target,y=N)) +
+  geom_segment( aes(x=target, xend=target, y=0, yend=N)) +
+  geom_point( size=5, color=""steelblue"", fill=alpha(""steelblue"", 0.3), alpha=0.7, shape=21, stroke=2)+theme(panel.background = element_rect(fill = ' white'))+geom_text(aes(label=N), vjust=0.30, color=""black"", size=3.4)+
+"

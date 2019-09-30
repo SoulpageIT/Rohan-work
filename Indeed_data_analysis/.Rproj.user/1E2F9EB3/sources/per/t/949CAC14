@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1557981574865.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "310919082",
+    "id" : "949CAC14",
+    "lastKnownWriteTime" : 1558011068,
+    "last_content_update" : 1558011068728,
+    "path" : "C:/Users/Admin/Desktop/rohan/daily_task/GlassDoor/GlassDoor.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "41,0",
+        "scrollLine" : "11"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

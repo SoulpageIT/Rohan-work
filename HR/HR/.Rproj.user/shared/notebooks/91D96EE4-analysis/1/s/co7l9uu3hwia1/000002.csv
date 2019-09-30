@@ -1,0 +1,3 @@
+"0","model_names <-c(""Logistic_regression"",""Logistic_regression(scaled data)"",""DecisionTree"",""RandomForest"",""SVM (scaled data)"",""XGBoost"")"
+"0","accuracy <- c(89,50,93,97,51,96)"
+"0","data_accuracy<-data.frame(model_names,accuracy)"

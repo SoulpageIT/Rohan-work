@@ -1,0 +1,8 @@
+"0","```r
+#Checking the number of null value in the data set.
+cat(\"\nThe Number of Null VALUES 'S in data set :- \", sum(is.null(data)))
+
+```"
+"1","
+The Number of Null VALUES 'S in data set :-  0
+"

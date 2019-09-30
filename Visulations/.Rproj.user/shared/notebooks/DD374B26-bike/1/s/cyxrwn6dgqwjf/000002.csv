@@ -1,0 +1,11 @@
+"0","```r
+# Turn it into igraph object
+network=graph_from_data_frame(d=bike_network, directed=F) 
+ 
+# Count the number of degree for each node:
+deg=degree(network, mode=\"all\")
+ 
+# Plot
+plot(network, vertex.size=deg*6, vertex.color=rgb(0.1,0.7,0.8,0.5) )
+
+```"

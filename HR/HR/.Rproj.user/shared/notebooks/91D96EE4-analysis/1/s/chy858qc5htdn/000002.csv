@@ -1,0 +1,1 @@
+"0","data.set<-fread(""kirklandsdata.csv"",na.strings = c('?','-','*','$','^','NA'))"

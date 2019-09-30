@@ -1,0 +1,72 @@
+---
+title: "python script"
+output: html_notebook
+---
+
+```{python}
+import pandas as pd
+from datetime import datetime
+import re,glob,os
+import matplotlib as mlt
+```
+
+```{python}
+df = pd.read_csv("users_interactions.csv")
+```
+
+
+```{python}
+df.head(2)
+```
+
+
+```{python}
+df.shape
+```
+
+```{python}
+shared_articles = pd.read_csv("shared_articles.csv")
+shared_articles.head(2)
+```
+
+```{python}
+shared_articles.shape
+```
+
+```{python}
+#Joining the two dataframe.
+total_data=pd.merge(users_interactions,shared_articles, on='contentId')
+```
+
+```{python}
+(total_data[total_data.isna().any(axis=1)==True].shape[0]/total_data.shape[0])*100
+```
+
+
+```{python}
+total_data.shape
+```
+
+```{python}
+total_data.isna().sum()
+```
+
+
+```{python}
+(57426/total_data.shape[0])*100
+```
+
+```{python}
+total_data[total_data.isna().any(axis=1)==False].head(4)
+total_data
+```
+
+```{python}
+#class(py$total_data)
+```
+
+```{r}
+#r.total_data
+py_run_file("print("hello")")
+```
+

@@ -1,0 +1,5 @@
+"0","```r
+setkey(bikes,\"Start Station Name\")
+gr<-bikes[\"Exchange Place\",list(unique(`End Station Name`)), by = list(`Start Station Name`, dist)]
+gr
+```"

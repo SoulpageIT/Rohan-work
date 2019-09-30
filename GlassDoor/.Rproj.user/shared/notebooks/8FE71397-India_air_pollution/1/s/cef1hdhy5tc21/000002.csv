@@ -1,0 +1,10 @@
+"0","```r
+unique(data$type)
+
+```"
+"1"," [1] Residential, Rural and other Areas Industrial Area                    <NA>                              
+ [4] Sensitive Area                     Industrial Areas                   Residential and others            
+ [7] Sensitive Areas                    Industrial                         Residential                       
+[10] RIRUO                              Sensitive                         
+10 Levels: Industrial Industrial Area Industrial Areas RIRUO Residential Residential and others ... Sensitive Areas
+"

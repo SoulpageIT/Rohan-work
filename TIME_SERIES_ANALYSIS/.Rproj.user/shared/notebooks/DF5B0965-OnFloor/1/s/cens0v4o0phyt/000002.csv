@@ -1,0 +1,9 @@
+"0","```r
+table(train_data$surface)
+```"
+"1","
+                carpet               concrete          fine_concrete             hard_tiles hard_tiles_large_space               soft_pvc 
+                 24192                  99712                  46464                   2688                  39424                  93696 
+            soft_tiles                  tiled                   wood 
+                 38016                  65792                  77696 
+"

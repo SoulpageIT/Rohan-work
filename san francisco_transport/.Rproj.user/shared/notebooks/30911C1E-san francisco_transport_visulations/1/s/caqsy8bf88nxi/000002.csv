@@ -1,0 +1,136 @@
+"0","library(data.table)"
+"2","data.table 1.12.2 using 2 threads (see ?getDTthreads).  Latest news: r-datatable.com
+"
+"0","library(ggplot2)"
+"0","library(plotly)"
+"2","
+Attaching package: ‘plotly’
+
+"
+"2","The following object is masked from ‘package:ggplot2’:
+
+    last_plot
+
+"
+"2","The following object is masked from ‘package:stats’:
+
+    filter
+
+"
+"2","The following object is masked from ‘package:graphics’:
+
+    layout
+
+"
+"0","library(zoo)"
+"2","
+Attaching package: ‘zoo’
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+"
+"0","library(lubridate)"
+"2","
+Attaching package: ‘lubridate’
+
+"
+"2","The following objects are masked from ‘package:data.table’:
+
+    hour, isoweek, mday, minute, month, quarter, second, wday, week, yday, year
+
+"
+"2","The following object is masked from ‘package:base’:
+
+    date
+
+"
+"0","library(dplyr)"
+"2","
+Attaching package: ‘dplyr’
+
+"
+"2","The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+"
+"2","The following objects are masked from ‘package:data.table’:
+
+    between, first, last
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+"
+"0","library(quantmod)"
+"2","Loading required package: xts
+"
+"2","
+Attaching package: ‘xts’
+
+"
+"2","The following objects are masked from ‘package:dplyr’:
+
+    first, last
+
+"
+"2","The following objects are masked from ‘package:data.table’:
+
+    first, last
+
+"
+"2","Loading required package: TTR
+"
+"2","Version 0.4-0 included new data defaults. See ?getSymbols.
+"
+"0","library(reshape2)"
+"2","
+Attaching package: ‘reshape2’
+
+"
+"2","The following objects are masked from ‘package:data.table’:
+
+    dcast, melt
+
+"
+"0","library(plyr)"
+"2","------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+"
+"2","You have loaded plyr after dplyr - this is likely to cause problems.
+If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+library(plyr); library(dplyr)
+"
+"2","------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+"
+"2","
+Attaching package: ‘plyr’
+
+"
+"2","The following objects are masked from ‘package:dplyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise, summarize
+
+"
+"2","The following object is masked from ‘package:lubridate’:
+
+    here
+
+"
+"2","The following objects are masked from ‘package:plotly’:
+
+    arrange, mutate, rename, summarise
+
+"
+"0","library(scales)"
+"0","library(RColorBrewer)"
+"0","#library(devtools)"

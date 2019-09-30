@@ -1,0 +1,5 @@
+"0","```r
+train_2017<-train[years==\"2017\"]
+#extracting day 
+train_2017$day<-as.factor(day(train_2017$`Date (MM/DD/YYYY)`))
+```"

@@ -1,0 +1,6 @@
+"0","sentiment<-as.data.table(sentiment)"
+"0","p<-ggplotly(ggplot(sentiment[,.N,by=c(""sentiment"",""weekDays"")], aes(x=weekDays, y=N, group=sentiment)) +"
+"0","  geom_line(aes(color=sentiment))+"
+"0","  geom_point(aes(color=sentiment))+labs(x = ""WeekDays"",y=""Number of Words"","
+"0","         title = ""Weekly Analysis of Sentiments in Head Lines"")+theme(plot.title = element_text(hjust = -10,face = ""bold"",color = ""black"",size = 10)))"
+"0","p"

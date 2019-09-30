@@ -1,0 +1,10 @@
+"0","data1 %>%"
+"0","  group_by(Destination)  %>%"
+"0","  plot_ly(labels = ~as.factor(Destination), values = ~Throughput) %>%"
+"0","  add_pie(hole = 0.6) %>%"
+"0","  layout(title = ""Donut charts using Plotly"",  showlegend = F,"
+"0","         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),"
+"0","         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))"
+"2","Error in data1 %>% group_by(Destination) %>% plot_ly(labels = ~as.factor(Destination),  : 
+  could not find function ""%>%""
+"

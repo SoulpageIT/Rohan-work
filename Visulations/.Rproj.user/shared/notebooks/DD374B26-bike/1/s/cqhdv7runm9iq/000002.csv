@@ -1,0 +1,8 @@
+"0","```r
+# Create dataset
+data1=data.frame(
+  individual=paste( \"Mister \", seq(1,60), sep=\"\"),
+  group=c( rep('A', 10), rep('B', 30), rep('C', 14), rep('D', 6)) ,
+  value=sample( seq(10,100), 60, replace=T)
+)
+```"

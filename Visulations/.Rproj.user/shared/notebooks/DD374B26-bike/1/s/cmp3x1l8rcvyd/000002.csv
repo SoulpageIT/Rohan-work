@@ -1,0 +1,6 @@
+"0","```r
+#bikesTimeSeries[,ds:=as.Date(bikesTimeSeries$`Start Time`,format=\"%Y-%m-%d\")]
+#bikesTimeSeries[,y:=Gender]
+#bikesTimeSeries[,`:=` (Gender=NULL,`Start Time`=NULL)]
+#bikesTimeSeries
+```"

@@ -1,0 +1,5 @@
+"0","qq<-ggplot(data_accuracy, aes(x=model_names, y=accuracy)) +"
+"0","  geom_segment( aes(x=model_names, xend=model_names, y=0, yend=accuracy)) +"
+"0","  geom_point( size=5, color=""steelblue"", fill=alpha(""steelblue"", 0.3), alpha=0.7, shape=21, stroke=2)+theme(panel.background = element_rect(fill = ' white'))+geom_text(aes(label=accuracy), vjust=0.30, color=""black"", size=3.4)+coord_flip()+labs(title = ""Comparison of accuracy between different models."",x=""Model_Names"",y=""Accuracy value in terms of percentage."")"
+"0","ggsave(""accuracy.jpg"",plot=qq,unit=""in"",width=7,height = 7,dpi=300)"
+"0","qq"

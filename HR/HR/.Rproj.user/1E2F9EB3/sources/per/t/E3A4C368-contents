@@ -1,0 +1,578 @@
+---
+title: "Model Building of HR data set."
+output: html_notebook
+---
+
+libraries for model building 
+```{r}
+#library for graphs
+library(ggplot2)
+library(plotly)
+#library for importing the data set.
+library(data.table)
+#sample.split function packages
+library(caTools)
+#The library for cross validation
+library(caret)
+library(mlbench)
+#decision tree model building packages 
+library(rpart)
+#decision tree plotting packages 
+library(RColorBrewer)
+library(rattle)
+#The package for random forest function
+library(randomForest)
+#packages for xgboost
+library(xgboost)
+library(Matrix)
+#for encoding
+library(mltools)
+library(corrplot)
+#for correlation
+library(kableExtra)
+#library for ROC curve
+library(ROCR)
+library(car)
+```
+
+```{r}
+hr<-fread("WA_Fn-UseC_-HR-Employee-Attrition.csv",na.strings = "NA",stringsAsFactors = TRUE,drop = c("Over18","EmployeeCount","EmployeeNumber","StandardHours"))
+```
+
+```{r}
+#hr$monthbydaily<-hr$MonthlyRate/hr$DailyRate
+#hr$dailybyhourly<-hr$DailyRate/hr$HourlyRate
+```
+
+In our data we have some features "Education", "EnvironmentSatisfaction","JobInvolvement","JobLevel","JobSatisfaction","PerformanceRating","RelationshipSatisfaction","StockOptionLevel"," WorkLifeBalance" which are numeric but the sense they make is factors,so now converting those variable to factors.
+```{r}
+fact_columns<-c("Education", "EnvironmentSatisfaction","JobInvolvement","JobLevel","JobSatisfaction","PerformanceRating","RelationshipSatisfaction","StockOptionLevel","WorkLifeBalance")
+hr<-as.data.frame(hr)
+hr[fact_columns]<-lapply(hr[fact_columns], as.factor)
+hr<-as.data.table(hr)
+```
+
+Now model building ,our target variable is attrition
+As the target variable is binary class so now i am checking any imbalance of class there in the data or not.
+```{r}
+ggplotly(ggplot(hr,aes(x=Attrition,fill=Attrition))+geom_bar(width = 0.2)+geom_text(stat="count", aes(label=..count..), vjust=-0.3)+labs(title = "The class imbalance check on complete data set",x ="classes", y = "Their frequency"))
+```
+checking how much percentage does each class present in the data set.
+```{r}
+prop.table(table(hr$Attrition))
+```
+
+As the yes class is 16% in entire data set ,so we are not doing smote.
+
+Now we are dividing the data set into train and test where train data contain 70% of the data and test contain 30% of the data.
+```{r}
+set.seed(1)
+sample = sample.split(hr$Attrition, SplitRatio = .80)
+train = subset(hr, sample == TRUE)
+test  = subset(hr, sample == FALSE)
+```
+
+Now we are checking the class imbalance in the train data. 
+```{r}
+ggplotly(ggplot(train,aes(x=Attrition,fill=Attrition))+geom_bar(width = 0.2)+geom_text(stat="count", aes(label=..count..), vjust=-0.3)+labs(title = "The class imbalance check on Train data set",x ="classes", y = "Their frequency"))
+```
+checking the percentage.
+```{r}
+prop.table(table(train$Attrition))
+```
+
+
+Now creating the dummy variables.
+```{r}
+str(hr)
+```
+
+```{r}
+factor_columns <- c("Attrition", "BusinessTravel","Department","Education","EducationField","EnvironmentSatisfaction","Gender","JobInvolvement","JobLevel","JobRole","JobSatisfaction","MaritalStatus","OverTime","PerformanceRating","RelationshipSatisfaction","StockOptionLevel","WorkLifeBalance")
+```
+numeric
+```{r}
+numberic_columns<-c("Age","DailyRate","DistanceFromHome","HourlyRate","MonthlyIncome","MonthlyRate","NumCompaniesWorked","PercentSalaryHike","TotalWorkingYears","TrainingTimesLastYear","YearsAtCompany","YearsInCurrentRole","YearsSinceLastPromotion","YearsWithCurrManager")
+
+```
+
+
+```{r}
+# creating a dataframe of categorical features
+hr<-as.data.frame(hr)
+num_data<-hr[,numberic_columns]
+fact_data<- hr[,factor_columns]
+hr<-as.data.table(hr)
+```
+
+
+
+```{r}
+# creating dummy variables for factor attributes
+dummies<- data.frame(sapply(fact_data, 
+                            function(x) data.frame(model.matrix(~x-1,data =fact_data))[,-1]))
+```
+
+
+```{r}
+# converting target variable attrition from No/Yes character to factorwith levels 0/1 
+dummies$Attrition<- as.numeric(dummies$Attrition)
+```
+
+```{r}
+# Final dataset
+hr_final<- cbind(num_data,dummies) 
+```
+
+
+```{r}
+set.seed(1)
+sample = sample.split(hr_final$Attrition, SplitRatio = .80)
+train = subset(hr_final, sample == TRUE)
+test  = subset(hr_final, sample == FALSE)
+```
+
+
+Now we are trainig the model.
+Logistic Regression model 
+```{r}
+colnames(train)
+```
+Note :- By seing the VIF value ,the value which is greater ,we select that feature and see the importance of that feature in summary ,if its not important we remove the feature and check the AIC value ,if the AIC value decreases ,then that feature is not important.If the AIC value increases the we replace that feature in the model building.
+
+Training the model by train data
+```{r}
+logistic_regression<-glm(Attrition~ Age+DailyRate +DistanceFromHome +HourlyRate+MonthlyIncome+MonthlyRate+NumCompaniesWorked+PercentSalaryHike                +TotalWorkingYears+TrainingTimesLastYear+YearsAtCompany+YearsInCurrentRole+YearsSinceLastPromotion+YearsWithCurrManager+                      BusinessTravel.xTravel_Frequently+BusinessTravel.xTravel_Rarely+Department.xResearch...Development+Department.xSales+Education.x2+                      Education.x3+Education.x4+Education.x5+EducationField.xLife.Sciences+EducationField.xMarketing+EducationField.xMedical+EducationField.xOther              +EducationField.xTechnical.Degree+EnvironmentSatisfaction.x2+EnvironmentSatisfaction.x3+EnvironmentSatisfaction.x4+Gender+                            
+JobInvolvement.x2+JobInvolvement.x3+JobInvolvement.x4+JobLevel.x2+JobLevel.x3+JobLevel.x4+JobLevel.x5+JobRole.xHuman.Resources+          JobRole.xLaboratory.Technician+JobRole.xManager+JobRole.xManufacturing.Director+JobRole.xResearch.Director+        
+JobRole.xResearch.Scientist+JobRole.xSales.Executive+JobRole.xSales.Representative+JobSatisfaction.x2+                
+ JobSatisfaction.x3+JobSatisfaction.x4+MaritalStatus.xMarried+MaritalStatus.xSingle+OverTime+PerformanceRating+RelationshipSatisfaction.x2+     RelationshipSatisfaction.x3+RelationshipSatisfaction.x4+StockOptionLevel.x1+StockOptionLevel.x2+StockOptionLevel.x3+WorkLifeBalance.x2+ WorkLifeBalance.x3+WorkLifeBalance.x4,family = "binomial",data=train)
+```
+
+```{r}
+summary(logistic_regression)
+```
+
+
+checking the summary of the model.
+```{r}
+vif(logistic_regression)
+```
+
+removing the job level 5 and training the logistic regression model again.
+training the model.
+```{r}
+logistic_regression<-glm(Attrition~ Age+DailyRate +DistanceFromHome +HourlyRate+MonthlyIncome+MonthlyRate+NumCompaniesWorked+PercentSalaryHike                +TotalWorkingYears+TrainingTimesLastYear+YearsAtCompany+YearsInCurrentRole+YearsSinceLastPromotion+YearsWithCurrManager+                    BusinessTravel.xTravel_Frequently+BusinessTravel.xTravel_Rarely+Department.xResearch...Development+Department.xSales+Education.x2+                      Education.x3+Education.x4+Education.x5+EducationField.xLife.Sciences+EducationField.xMarketing+EducationField.xMedical+EducationField.xOther              +EducationField.xTechnical.Degree+EnvironmentSatisfaction.x2+EnvironmentSatisfaction.x3+EnvironmentSatisfaction.x4+Gender+                            
+JobInvolvement.x2+JobInvolvement.x3+JobInvolvement.x4+JobLevel.x2+JobLevel.x3+JobLevel.x4+JobRole.xHuman.Resources+          JobRole.xLaboratory.Technician+JobRole.xManager+JobRole.xManufacturing.Director+JobRole.xResearch.Director+        
+JobRole.xResearch.Scientist+JobRole.xSales.Executive+JobRole.xSales.Representative+JobSatisfaction.x2+                
+ JobSatisfaction.x3+JobSatisfaction.x4+MaritalStatus.xMarried+MaritalStatus.xSingle+OverTime+PerformanceRating+RelationshipSatisfaction.x2+     RelationshipSatisfaction.x3+RelationshipSatisfaction.x4+StockOptionLevel.x1+StockOptionLevel.x2+StockOptionLevel.x3+WorkLifeBalance.x2+ WorkLifeBalance.x3+WorkLifeBalance.x4,family = "binomial",data=train)
+```
+now checking the summary of the model.
+```{r}
+summary(logistic_regression)
+```
+checking the vif value.
+As we can see that AIC value got decreased.
+```{r}
+vif(logistic_regression)
+```
+
+removing monthly income.
+```{r}
+logistic_regression<-glm(Attrition~ Age+DailyRate +DistanceFromHome +HourlyRate+MonthlyRate+NumCompaniesWorked+PercentSalaryHike                +TotalWorkingYears+TrainingTimesLastYear+YearsAtCompany+YearsInCurrentRole+YearsSinceLastPromotion+YearsWithCurrManager+                      BusinessTravel.xTravel_Frequently+BusinessTravel.xTravel_Rarely+Department.xResearch...Development+Department.xSales+Education.x2+                      Education.x3+Education.x4+Education.x5+EducationField.xLife.Sciences+EducationField.xMarketing+EducationField.xMedical+EducationField.xOther              +EducationField.xTechnical.Degree+EnvironmentSatisfaction.x2+EnvironmentSatisfaction.x3+EnvironmentSatisfaction.x4+Gender+                            
+JobInvolvement.x2+JobInvolvement.x3+JobInvolvement.x4+JobLevel.x2+JobLevel.x3+JobLevel.x4+JobRole.xHuman.Resources+          JobRole.xLaboratory.Technician+JobRole.xManager+JobRole.xManufacturing.Director+JobRole.xResearch.Director+        
+JobRole.xResearch.Scientist+JobRole.xSales.Executive+JobRole.xSales.Representative+JobSatisfaction.x2+                
+ JobSatisfaction.x3+JobSatisfaction.x4+MaritalStatus.xMarried+MaritalStatus.xSingle+OverTime+PerformanceRating+RelationshipSatisfaction.x2+     RelationshipSatisfaction.x3+RelationshipSatisfaction.x4+StockOptionLevel.x1+StockOptionLevel.x2+StockOptionLevel.x3+WorkLifeBalance.x2+ WorkLifeBalance.x3+WorkLifeBalance.x4,family = "binomial",data=train)
+```
+checking the summary of the model
+```{r}
+summary(logistic_regression)
+```
+As we can see that AIC value decreased further.
+
+vif
+```{r}
+vif(logistic_regression)
+```
+
+
+Removing the  Department.xResearch...Development from the model building
+```{r}
+logistic_regression<-glm(Attrition~ Age+DailyRate +DistanceFromHome +HourlyRate+MonthlyRate+NumCompaniesWorked+PercentSalaryHike                +TotalWorkingYears+TrainingTimesLastYear+YearsAtCompany+YearsInCurrentRole+YearsSinceLastPromotion+YearsWithCurrManager+                      BusinessTravel.xTravel_Frequently+BusinessTravel.xTravel_Rarely+Department.xSales+Education.x2+                      Education.x3+Education.x4+Education.x5+EducationField.xLife.Sciences+EducationField.xMarketing+EducationField.xMedical+EducationField.xOther              +EducationField.xTechnical.Degree+EnvironmentSatisfaction.x2+EnvironmentSatisfaction.x3+EnvironmentSatisfaction.x4+Gender+                            
+JobInvolvement.x2+JobInvolvement.x3+JobInvolvement.x4+JobLevel.x2+JobLevel.x3+JobLevel.x4+JobRole.xHuman.Resources+          JobRole.xLaboratory.Technician+JobRole.xManager+JobRole.xManufacturing.Director+JobRole.xResearch.Director+        
+JobRole.xResearch.Scientist+JobRole.xSales.Executive+JobRole.xSales.Representative+JobSatisfaction.x2+                
+ JobSatisfaction.x3+JobSatisfaction.x4+MaritalStatus.xMarried+MaritalStatus.xSingle+OverTime+PerformanceRating+RelationshipSatisfaction.x2+     RelationshipSatisfaction.x3+RelationshipSatisfaction.x4+StockOptionLevel.x1+StockOptionLevel.x2+StockOptionLevel.x3+WorkLifeBalance.x2+ WorkLifeBalance.x3+WorkLifeBalance.x4,family = "binomial",data=train)
+```
+Now seing the summary of the model
+```{r}
+summary(logistic_regression)
+```
+The AIC value got decreased.
+
+now checking the vif value
+```{r}
+vif(logistic_regression)
+```
+
+Now we are removing  Department.xSales  and checking the AIC value
+```{r}
+logistic_regression<-glm(Attrition~ Age+DailyRate +DistanceFromHome +HourlyRate+MonthlyRate+NumCompaniesWorked+PercentSalaryHike                +TotalWorkingYears+TrainingTimesLastYear+YearsAtCompany+YearsInCurrentRole+YearsSinceLastPromotion+YearsWithCurrManager+                      BusinessTravel.xTravel_Frequently+BusinessTravel.xTravel_Rarely+Education.x2+                      Education.x3+Education.x4+Education.x5+EducationField.xLife.Sciences+EducationField.xMarketing+EducationField.xMedical+EducationField.xOther              +EducationField.xTechnical.Degree+EnvironmentSatisfaction.x2+EnvironmentSatisfaction.x3+EnvironmentSatisfaction.x4+Gender+                            
+JobInvolvement.x2+JobInvolvement.x3+JobInvolvement.x4+JobLevel.x2+JobLevel.x3+JobLevel.x4+JobRole.xHuman.Resources+          JobRole.xLaboratory.Technician+JobRole.xManager+JobRole.xManufacturing.Director+JobRole.xResearch.Director+        
+JobRole.xResearch.Scientist+JobRole.xSales.Executive+JobRole.xSales.Representative+JobSatisfaction.x2+                
+ JobSatisfaction.x3+JobSatisfaction.x4+MaritalStatus.xMarried+MaritalStatus.xSingle+OverTime+PerformanceRating+RelationshipSatisfaction.x2+     RelationshipSatisfaction.x3+RelationshipSatisfaction.x4+StockOptionLevel.x1+StockOptionLevel.x2+StockOptionLevel.x3+WorkLifeBalance.x2+ WorkLifeBalance.x3+WorkLifeBalance.x4,family = "binomial",data=train)
+```
+Now checking the summary of the model
+```{r}
+summary(logistic_regression)
+```
+
+
+so now the AIC value got decreaased 
+
+so now we are going to check the vif value.
+```{r}
+vif(logistic_regression)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Now making predictions by the model.
+```{r}
+y_pred <- predict(logistic_regression, newdata = test,type = "response")
+```
+
+setting the ideal threshold value for our model.
+
+Now ploting the confusion matrix at threshold 0.5 
+```{r}
+table(Actualvalue = test$Attrition, Predictedvalue = y_pred > 0.5)
+```
+The accuracy of logistic regression model at 0.5 threshold we got  is 0.88%
+
+
+Now checking the ideal threshold of the logistic regression model.
+```{r}
+ROCpred<-prediction(y_pred,test$Attrition)
+ROCperf<-performance(ROCpred,"tpr","fpr")
+plot(ROCperf,col="blue",print.cutoffs.at=seq(0.1,by=0.1,text.adj=c(-0.2,1.7),cex=0.7))
+```
+so as we see above at threshold 0.3 the true positive and false positive are balanced 
+
+so now we are going to check at threshold 0.3 what 's the accuracy of the model.
+```{r}
+table(Actualvalue = test$Attrition, Predictedvalue = y_pred > 0.3)
+```
+The accuracy of the logistic regression model at threshold 0.3 is :- 0.88%
+
+```{r}
+table(Actualvalue = test$Attrition, Predictedvalue = y_pred > 0.3)
+```
+The accuracy of the logistic regression model at threshold 0.3 is :- 0.89%
+
+```{r}
+y_pred<-ifelse(y_pred > 0.33,"Yes","No")
+#$y_pred<-as.factor(y_pred)
+y_pred<-as.data.frame(y_pred)
+```
+
+```{r}
+confusionMatrix(y_pred$y_pred,test$Attrition, positive = "Yes")
+```
+
+
+
+
+
+
+
+Building Decision tree to check the important features which effect the Attrition of the employee.
+
+```{r}
+decision_tree <- rpart(Attrition~., method="class",data=train,control = rpart.control(cp=  0.01842105))
+```
+now purning the decision tree
+```{r}
+#ptree<- prune(decision_tree , cp = 0.01842105)
+```
+
+Checking the summary of the model,to see all the important factors that are influence our Attrition variable.
+```{r}
+summary(decision_tree)
+```
+Now we are plotting the Decision Tree.
+```{r}
+fancyRpartPlot(decision_tree,uniform=TRUE, main="Pruned Classification Tree")
+```
+Now we are using the model for the predictions.
+```{r}
+y_pred <- predict(decision_tree, test[,-"Attrition"],type = "class")
+```
+
+Now checking the confusion matrix for accuracy of the prediction done by the model.
+```{r}
+confusionMatrix(test$Attrition,y_pred)
+```
+
+
+
+Now checking the important variable for Random forest model.
+```{r}
+rf<-randomForest(Attrition ~ ., data=train,ntree=50)
+```
+
+predicting the value by random forest model.
+```{r}
+y_pred <- predict(rf, test[,-"Attrition"],type = "class")
+```
+confusion matrix
+```{r}
+confusionMatrix(test$Attrition,y_pred)
+```
+
+```{r}
+summary(rf)
+plot(rf)
+```
+To Find the important features for predictions.
+```{r}
+imp<-importance(rf)
+imp[order(imp[,1], decreasing = TRUE),]
+```
+
+```{r}
+varImpPlot(rf)
+plot(rf)
+```
+
+encoding the factor values to numeric.
+```{r}
+convert_to_character <- c("Attrition", "BusinessTravel","Department","Education","EducationField","EnvironmentSatisfaction","Gender","JobInvolvement","JobLevel","JobRole","JobSatisfaction","MaritalStatus","OverTime","PerformanceRating","RelationshipSatisfaction","StockOptionLevel","WorkLifeBalance")
+hr_encoded=hr
+hr_encoded[, convert_to_character] <- hr[, lapply(.SD, as.numeric), .SDcols = convert_to_character]
+
+```
+
+
+Handling the high correlation betweeen independent variable
+```{r}
+#hr_encoded <- one_hot(as.data.table(hr),dropUnusedLevels=TRUE)
+#hr_encoded<-hr_encoded[,-"Attrition_No"]
+```
+
+
+This graph shows the correlation with decreasing order.
+```{r}
+hr_encoded<-as.data.frame(hr_encoded)
+# remove features which are not used for correlation analysis
+training <- select(hr_encoded, -c(Attrition))
+
+# calculate correlation coefficient of each feature with survival
+feature <- names(training)
+
+corrSurvived <- data.frame(feature = feature, coef = rep(NA, length(feature)))
+for (iFeature in 1:length(feature)){
+    corrSurvived$coef[iFeature] <- cor(training[, iFeature],hr_encoded$Attrition)
+}
+# sort by correlation coefficient
+corrSurvivedOrder <- corrSurvived[order(corrSurvived$coef, decreasing = FALSE), ]
+
+ggplot(corrSurvivedOrder, aes(x = factor(feature, levels = feature), y = coef,fill=coef)) + 
+    geom_bar(stat = "identity") + 
+    coord_flip() + 
+    xlab("Feature") + 
+    ylab("Correlation Coefficient")
+```
+
+
+correlation plot
+```{r}
+# function to calculate plot feature correlation matrix
+getCorrMatrix <- function(featureList, showPlot = TRUE){
+    # remove Survived from training set and order feature with respect to correlation coefficient to survived
+    passengerCorr <- hr_encoded[, as.character(featureList)]
+    # calculate correlation matrix
+    corrMatrix <- cor(passengerCorr)
+    # plot matrix
+    if (showPlot) {corrplot(corrMatrix, method = "color", type = "upper")}
+    corrMatrix
+}
+
+corrMatrix <- getCorrMatrix(rev(corrSurvivedOrder$feature))
+```
+
+
+```{r}
+# function to get data frame with pairwise correlation of features
+getPairCorrelation <- function(corrMatrix){
+    featureName <- colnames(corrMatrix)
+    nFeature <- length(featureName)
+    
+    # set lower triangle of matrix to NA (these values are all redundant)
+    corrMatrix[lower.tri(corrMatrix, diag = TRUE)] <- NA
+    
+    # convert matrix to data frame
+    featurePair <- data.frame(feature1 = rep(featureName, nFeature), feature2 = rep(featureName, each = nFeature), coef = as.vector(corrMatrix))
+    # remove NAs
+    featurePair <- featurePair[!is.na(featurePair$coef), ]
+    # calculate absolute value of correlation coefficient
+    featurePair$coefAbs <- abs(featurePair$coef)
+    # order by coefficient
+    featurePair <- featurePair[order(featurePair$coefAbs, decreasing = TRUE), ]
+    
+    featurePair
+}    
+
+featureCorr <- getPairCorrelation(corrMatrix) 
+```
+
+
+Lets have a look at the ten feature pairs with the highes correlations:
+```{r}
+kable(featureCorr[1:10, ]) %>% kable_styling(full_width = FALSE)
+```
+
+4 Feature Reduction
+
+1)Greedy Elimination
+```{r}
+# features to be eliminated
+#nFeature <- length(corrSurvivedOrder$feature)
+#featureEliminate <- character(nFeature)
+
+# data frame with all features 
+#featureRest <- featureCorr
+#featureRest$feature1 <- as.character(featureRest$feature1)
+#featureRest$feature2 <- as.character(featureRest$feature2)
+
+# calculate absolute value of correlation coefficient with attrition
+#corrSurvived$coefAbs <- abs(corrSurvived$coef)
+
+#for (iFeature in 1:(nFeature - 1)){
+    # get correlation coefficient to attrition
+    #coefAbs1 <- corrSurvived$coefAbs[corrSurvived$feature == featureRest$feature1[1]]
+    #coefAbs2 <- corrSurvived$coefAbs[corrSurvived$feature == featureRest$feature2[1]]
+    
+    # choose which feature has lower absolute correlation coefficient to attrition
+    #if (coefAbs1 <= coefAbs2) {
+        # eliminate feature 1
+        #featureRemove <- featureRest$feature1[1]
+       # featureKeep <- featureRest$feature2[1]
+    #} else {
+        # eliminate feature 2
+        #featureRemove <- featureRest$feature2[1]
+        #featureKeep <- featureRest$feature1[1]
+   # }
+    
+    # add selected feature to elimination list
+    #featureEliminate[iFeature] <- featureRemove
+    
+    # remove feature from featureRest
+    #featureRest <- featureRest[featureRest$feature1 != featureRemove & featureRest$feature2 != featureRemove, ]
+#}
+
+# add last remaining feature to elimination list
+#featureEliminate[nFeature] <- featureKeep
+
+# reverse elimination list
+#featureGE <- rev(featureEliminate)
+
+#featureGE
+```
+
+
+PCA for feature reduction
+```{r}
+trainingMatrix <- as.matrix(hr_encoded)
+# execute PCA on training data
+pcaTraining <- prcomp(trainingMatrix, scale. = FALSE)
+pcaTraining
+summary(pcaTraining)
+# plot cummulated R2 with respect to number of components
+#plotData <- data.frame(component = 1:nFeature, R2 = pcaTraining$importance[3, ])
+```
+
+now reverting the components to find the important variables.
+```{r}
+t(t(pcaTraining$x %*% t(pcaTraining$rotation)) + pcaTraining$center)
+```
+
+
+
+
+
+
+Now building the xgboost model for checking the important features which effect employee Attrition. 
+```{r}
+xgboost_model <- xgboost(data = as.matrix(hr1),, max_depth = 5,
+               eta = 1, nthread = 2, nrounds = 10,objective = "binary:logistic")
+```
+
+```{r}
+colnames(sparse_matrix)
+```
+
+summary of xgboost model
+```{r}
+importanceRaw <- xgb.importance(feature_names = colnames(hr1), model = xgboost_model, data = hr1, label = hr1$Attrition_Yes)
+```
+
+```{r}
+hr1<- one_hot(as.data.table(hr))
+```
+
+
+
+
+
+
+
+
+
+
+cross validation of xgboost in r
+```{r}
+ControlParamteres <- trainControl(method = "cv",
+                                  number = 5,
+                                  savePredictions = TRUE,
+                                  classProbs = TRUE
+)
+```
+
+
+```{r}
+ parametersGrid <-  expand.grid(eta = 0.1, 
+                            colsample_bytree=c(0.5,0.7),
+                            max_depth=c(3,6),
+                            nrounds=100,
+                            gamma=1,
+                            min_child_weight=2
+                            )
+```
+
+```{r}
+parametersGrid
+```
+```{r}
+modelxgboost <- train(Class~., 
+                  data = trainDF,
+                  method = "xgbTree",
+                  trControl = ControlParamteres,
+                  tuneGrid=parametersGrid)
+```
+

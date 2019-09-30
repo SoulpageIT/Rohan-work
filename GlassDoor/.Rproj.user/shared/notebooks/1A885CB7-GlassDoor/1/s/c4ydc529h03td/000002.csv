@@ -1,0 +1,24 @@
+"0","```r
+tidy_descr_ngrams=GlassdoorPages %>%
+unnest_tokens(word, text, token = \"ngrams\", n = 2) %>%
+separate(word, c(\"word1\", \"word2\"), sep = \" \") %>%
+filter(!word1 %in% stop_words$word) %>%
+filter(!word2 %in% stop_words$word)%>%
+filter(!word1 %in% stop_user) %>%
+filter(!word2 %in% stop_user)%>%
+ mutate(word1 = removeNumbers(word1))%>%
+mutate(word2 = removeNumbers(word2))
+bigram_counts=tidy_descr_ngrams %>%
+count(word1, word2, sort = TRUE)
+bigram_graph =bigram_counts %>%
+filter(n > 10) %>%
+graph_from_data_frame()
+set.seed(1)
+a=grid::arrow(type = \"closed\", length = unit(.15, \"inches\"))
+ggraph(bigram_graph, layout = \"fr\") +
+geom_edge_link(aes(edge_alpha = n), show.legend = FALSE,
+arrow = a, end_cap = circle(.07, 'inches')) +
+geom_node_point(color = palette_light()[1], size = 5, alpha = 0.8) +
+geom_node_text(aes(label = name), vjust = 1, hjust = 0.5) +
+theme_void()
+```"

@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1556012204411.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2133832126",
+    "id" : "F21ECDFA",
+    "lastKnownWriteTime" : 1554448089,
+    "last_content_update" : 1556019633853,
+    "path" : "C:/Users/Admin/Desktop/rohan/daily_task/ecommers/Ecommers/analysis.Rmd",
+    "project_path" : "analysis.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "211,2",
+        "scrollLine" : "205"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

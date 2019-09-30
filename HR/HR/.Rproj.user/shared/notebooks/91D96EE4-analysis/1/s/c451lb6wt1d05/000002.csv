@@ -1,0 +1,7 @@
+"0","```r
+```r
+ggplot(data.set.analyse,aes(affil_after_p1_prev_session))+geom_histogram(bin = 50,fill=\orange\,col=\black\)+labs(title = \total count of affiliate found after page 1 till perevious session\)+theme(plot.title = element_text(hjust = 0.5,face = \bold\,color = \blue\))+theme(panel.background = element_rect(fill = 'gray'))
+```
+```"
+"1","Ignoring unknown parameters: bin
+"

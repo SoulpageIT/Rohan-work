@@ -1,0 +1,20 @@
+"0","```r
+tidy_FCA %>%
+  inner_join(get_sentiments(\"afinn\")) %>%
+  group_by(date) %>%
+  summarize(average_sentiment = mean(score), words = n()) %>%
+ # filter(words >= 5) %>%
+  ggplot(aes(date, average_sentiment)) +
+  
+   geom_line( )+
+    theme_minimal()+
+    geom_ridgeline_gradient(aes(y=0,height=average_sentiment,fill=average_sentiment),min_height=-3.5)+
+    scale_fill_viridis(option=\"C\",limit=c(-3.5,4))+
+  
+  #geom_line() +
+  geom_hline(color = \"red\", lty = 2, yintercept = 0) +
+labs(y = \"Average AFINN sentiment score\", x = \"Page\",
+         title = \"Sentiment analysis of NMFinancial  Employee Glassdoor Reviews\",
+         subtitle = \"Using the affin lexicon\")
+
+```"

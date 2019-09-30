@@ -1,0 +1,5 @@
+"0","```r
+```r
+data.set.analyse$trialy_sessions[data.set.analyse$trialy_sessions > 2]<-2
+```
+```"

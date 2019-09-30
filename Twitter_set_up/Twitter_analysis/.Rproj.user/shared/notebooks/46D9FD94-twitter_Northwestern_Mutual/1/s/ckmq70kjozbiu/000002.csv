@@ -1,0 +1,3 @@
+"0","#convert to data frame using the twListtoDF function"
+"0","df <- twListToDF(tweets)#extract the data frame save it locally"
+"0","saveRDS(df, file= ""tweets.rds"")"

@@ -1,0 +1,619 @@
+---
+title: "The HR analytics EDA"
+output: html_notebook
+---
+
+libraries
+```{r}
+#graph plotting packages.
+library(data.table)
+library(ggplot2)
+library(plotly)
+library(gganimate)
+library(d3Tree)
+library(dplyr)
+library(mltools)
+library(corrplot)
+library(kableExtra)
+```
+
+Reading the data into R and dropping Over18,EmployeeCount,EmployeeNumber,StandardHours because in these columns the data is either unique or the data is same for all the row in the table.
+```{r}
+hr<-fread("WA_Fn-UseC_-HR-Employee-Attrition.csv",na.strings = "NA",stringsAsFactors = TRUE,drop = c("Over18","EmployeeCount","EmployeeNumber","StandardHours"))
+```
+
+Now seing the structure of the data to get some idea of type of data present in the data set.
+```{r}
+str(hr)
+```
+Now viewing  the summary of all numeric column of the data set.
+```{r}
+summary(hr)
+```
+
+```{r}
+colnames(hr)
+```
+Now we are grouping the ages bases based on age groups.
+20-belowe
+20-30
+30-40
+40-50
+50-60
+so now we are dividing our analysis on different age group.
+```{r}
+hr[,Age:=as.factor( ifelse(
+  Age <= 20 , '15-20',
+    ifelse(Age >20  & Age <= 30,'20-30' ,
+      ifelse(Age > 30  & Age <= 40, '30-40', 
+          ifelse(Age >40 & Age <=50,'40-50','50-60')   )
+    )
+  )
+)
+]
+```
+
+
+```{r}
+colnames(hr)
+```
+
+
+In our data we have some features "Education", "EnvironmentSatisfaction","JobInvolvement","JobLevel","JobSatisfaction","PerformanceRating","RelationshipSatisfaction","StockOptionLevel"," WorkLifeBalance" which are numeric but the sense they make is factors,so now converting those variable to factors.
+```{r}
+fact_columns<-c("Education", "EnvironmentSatisfaction","JobInvolvement","JobLevel","JobSatisfaction","PerformanceRating","RelationshipSatisfaction","StockOptionLevel","WorkLifeBalance")
+hr<-as.data.frame(hr)
+hr[fact_columns]<-lapply(hr[fact_columns], as.factor)
+hr<-as.data.table(hr)
+```
+
+Analysis on age group.
+
+Now we are comparing which age groups are travelling the most.
+```{r}
+ggplot(hr[,.N,by=list(Age,BusinessTravel,Gender)],aes(x=Age,y=N,fill=Gender))+geom_bar(stat = "identity",width = 0.6,position = "dodge")+facet_grid(~BusinessTravel)+geom_text(aes(label=N), vjust=-0.3)+labs(x ="The Age Groups", y = "Number of Employee")
+```
+
+
+```{r}
+salary_monthly_dep<-function(age,typeTravel){
+x<-ggplot(hr[Age==age& BusinessTravel==typeTravel,.N,by=list(JobRole,JobSatisfaction,MonthlyIncome, Department)],aes(x=JobRole,y=MonthlyIncome,fill=JobRole))+geom_bar(stat="identity",width = 0.3) +facet_wrap(~Department,ncol = 1,scales = "free")
+ggplotly(x)
+}
+```
+
+```{r}
+salary_monthly_dep("30-40","Travel_Rarely")
+```
+
+```{r}
+#for movement
+#transition_states(EnvironmentSatisfaction, .01, .001)+ease_aes('cubic-in-out')
+#for plotting multiplot on one page 
+#multiplot(p1, p2, p3, p4, cols=2)
+```
+Now finding the insights regarding employee turn over.
+so we found few feature which are very important for employee turnover.
+MonthlyIncome ,TotalWorkingYears,OverTime ,JobLevel 
+JobRole ,Age, EnvironmentSatisfaction ,YearsAtCompany
+
+
+
+
+
+
+
+
+what percentage of employees leaving the company.
+```{r}
+# Create test data.
+dat = data.frame(count=c(10, 60, 30), category=c("A", "B", "C"))
+ 
+# Add addition columns, needed for drawing with geom_rect.
+dat$fraction = dat$count / sum(dat$count)
+dat = dat[order(dat$fraction), ]
+dat$ymax = cumsum(dat$fraction)
+dat$ymin = c(0, head(dat$ymax, n=-1))
+ 
+# Make the plot
+p1 = ggplot(dat, aes(fill=category, ymax=ymax, ymin=ymin, xmax=4, xmin=3)) +
+     geom_rect() +
+     coord_polar(theta="y") +
+     xlim(c(0, 4)) +
+     theme(panel.grid=element_blank()) +
+     theme(axis.text=element_blank()) +
+     theme(axis.ticks=element_blank()) +
+     annotate("text", x = 0, y = 0, label = "My Ring plot !") +
+     labs(title="")
+
+```
+Now ploting the scatter plot for to see the relationship between the monthly income ,Total working years and the attrition rate.
+```{r}
+x<-ggplot(hr,aes(TotalWorkingYears,MonthlyIncome,color=JobLevel,shape=OverTime))+geom_point()+facet_wrap(~Attrition)+labs(x = "Total Working Years",y="Monthly_Income")
+ggplotly(x)
+```
+As we see in the above graph that the employees who 's monthly income is less than 10000$ ,total working years in range 0-20 ,job level 1-3 are having the maximum attrition.
+
+so now i am dividing my analysis into 2 parts as in  monthly_income less than 5000 and 5000-10000 different as different job level people are :-
+1)analysis on employee who 's monthly income is less than 5000$
+2)analysis on employee who 's monthly income is in between 5000$ - 10000$
+
+
+
+Now doing analysis on the employees who 's salary is less than 5000$
+Now we further dividing our analysis in to two parts total working years 
+1) Less than 5
+2) Between 5 to 10 yeras
+
+Now I am going to view  job level of employee and wheather the employee is working over time ,of those employee 's who 's monthly income is less than 5000$ and total woking years is in the range 0-5 years.
+```{r}
+x<-ggplot(hr[MonthlyIncome<=5000 & TotalWorkingYears <= 5 & Attrition=="Yes",.N,by=list(JobLevel,OverTime,MonthlyIncome,TotalWorkingYears)],aes(TotalWorkingYears,MonthlyIncome,color=JobLevel))+geom_point()+facet_wrap(~OverTime)+labs(x = "Total Working Years",y="Monthly_Income")+labs(title = "Over Time",fill="Age Group")
+ggplotly(x)
+```
+```{r}
+
+```
+
+so by seing the above graph we can infer that job level 1 and 2 employee 's who 's salary is less than  5000$ and the total working years is less than 5 have high probability of  leaving the company,their is no much difference of employee turnover in these employees
+
+But if we see in more detail 1 year experience and job level 1 employee are leaving the most.
+
+Now we are checking their Environment satisfaction rating ,job,roles,Age group.
+```{r}
+x<-ggplot(hr[MonthlyIncome <= 5000 & TotalWorkingYears <= 1 & JobLevel == 1  &Attrition=="Yes",.N,by=list(JobRole,EnvironmentSatisfaction,Age)],aes(x=JobRole,y=N,fill=Age))+geom_bar(stat="identity",width = 0.3) +facet_wrap(~EnvironmentSatisfaction ,ncol = 1,scales = "free")+coord_flip()+labs(title = "EnvironmentSatisfaction Rating (1-4)",y="The Number of Employees moving out of the company. ",fill="Age Group")
+ggplotly(x)
+```
+By the above graph we can infer by job role that 
+
+#1) research scientist 
+
+There are total 12 employees where 
+
+1) 3 have rated EnvironmentSatisfaction  Low ,3/12 = 25%
+2) 1 have rated EnvironmentSatisfaction  High ,1/12 = 0.08%
+3) 8 have rated EnvironmentSatisfaction  very High = 66%
+
+At the age group of 30-40 the employee was not satisfied.At the age group of 15-20 the employee are very much satisfied with the Environment but still leaving the company.
+
+
+so now we are going to find out why at age group of 15-20 ,who 's environment satisfaction is high and very high are still leaving the company.
+
+The maximum monthly income of one year experience research Scientist by the historical data of the company  is : 2994
+The minimum monthly income of one year experience research scientist by the historical data of the company  is : 1009
+
+The maximum monthly income of  research Scientist by the historical data of the company  is :9724
+The minimum monthly income of  research scientist by the historical data of the company  is :1009
+```{r}
+
+```
+
+
+```{r}
+x<-ggplot(hr[MonthlyIncome<=5000 & TotalWorkingYears == 1 &Attrition=="Yes"& (EnvironmentSatisfaction==3 | EnvironmentSatisfaction==4)&JobRole=="Research Scientist",.N,by=list(OverTime,MonthlyIncome,YearsAtCompany,WorkLifeBalance)],aes(YearsAtCompany,MonthlyIncome,fill= WorkLifeBalance ))+geom_point()+facet_wrap(~OverTime)+labs(x = "",y="Monthly_Income")+labs(title = "Over Time",x="years at the company",fill="Work Life Balance")
+ggplotly(x)
+```
+The most of the employee who came to this post in this company are freshers and they got 1 year of experience in the current company.
+The research scientist who are doing over time and getting the similar monthly income as the employee who are not doing over time are leaving the company.
+their work life balance is good.
+
+
+```{r}
+x<-ggplot(hr[MonthlyIncome<=5000 & TotalWorkingYears == 1 &Attrition=="Yes"& (EnvironmentSatisfaction==3 | EnvironmentSatisfaction==4)&JobRole=="Research Scientist"&OverTime=="Yes",.N,by=list(BusinessTravel,StockOptionLevel ,DistanceFromHome ,YearsWithCurrManager,  JobInvolvement ,PercentSalaryHike,RelationshipSatisfaction, EducationField)],aes(PercentSalaryHike,RelationshipSatisfaction ,fill=  JobInvolvement  ))+geom_point()+facet_wrap(~EducationField)+labs(x = "PercentSalaryHike",y="RelationshipSatisfaction ")+labs(title = "EducationField",fill="JobInvolvement")
+ggplotly(x)
+
+```
+The employees who are frequently travelling the bussiness trips are generally moving out of the company and their job involment is also medium.Their relationshipsatisfaction rating also is very low 
+
+The minimum percentage hikes given to research scientist is : 11%
+The maximum percentage hikes given to research scientist is : 25%
+
+so the percentage hikes are also given good to these employees.
+
+```{r}
+hr[,{
+   Total = .N 
+  .SD[,list(Per=(.N/Total)*100,by=Attrition)]
+}]
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+x<-ggplot(hr[MonthlyIncome <= 5000 & TotalWorkingYears <= 5 & (JobLevel == 2 |  JobLevel == 1)  &Attrition=="Yes",.N,by=list(JobRole,Department,Attrition,EnvironmentSatisfaction,Age)],aes(x=JobRole,y=N,fill=Age))+geom_bar(stat="identity",width = 0.3) +facet_wrap(~EnvironmentSatisfaction ,ncol = 1,scales = "free")+coord_flip()+labs(title = "EnvironmentSatisfaction Rating (1-4)",y="The Number of Employees moving out of the company. ",fill="Age Group")
+ggplotly(x)
+```
+As we can see in the above graph we can infer that 
+For the employee 's who 's monthly income is below 5000$ ,total working years is less than 5 ,we have only two job levels 
+
+For job level 1 these are the job roles and department :
+1:Laboratory Technician (Research & Development department)
+2:Research Scientist (Research & Development department)
+3:Sales Representative  (Sales department)
+4:Human Resources  (Human Resources department)
+
+For job level 2 these are the job roles and department :
+1:Manufacturing Director (Research & Development department)
+2:Sales Executive (Sales department)
+3:Healthcare Representative  (Research & Development department)
+4:Sales Representative  (Sales department)
+5:Laboratory Technician (Research & Development department)
+
+By seing the EnvironmentSatisfaction  rating of the employee who  are leaving the company we can infer that :
+
+At Laboratory Technician job role we have very high number of employees turnover,their Environment satisfaction rating is low in all the age group 's of the employee.  
+
+
+
+
+
+
+We can see from the above graph in job role of Sales Representative(Sales department),Research Scientist (Research & Development department),Laboratory Technician (Research & Development department) these employee are leaving the company in a larger scale as compare to the other job roles..
+
+ Age           YearsAtCompany  EnvironmentSatisfaction            MaritalStatus 
+
+Now I am going to look age,yearsAtcompany,Environmentsatisfaction,MaritalStatus.of the employees who 's job role are  Sales Representative(Sales department),Research Scientist (Research & Development department),Laboratory Technician (Research & Development department)
+```{r,echo=FALSE}
+ggplot(hr[MonthlyIncome <= 5000 & TotalWorkingYears <= 5& (JobLevel == 2 |  JobLevel == 1)  & Attrition=="Yes",.N,by=list(Age,YearsAtCompany,EnvironmentSatisfaction,MaritalStatus,WorkLifeBalance )], aes(x="", y=N, group=MaritalStatus, color=MaritalStatus, fill=MaritalStatus)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar("y", start=0) + facet_wrap(~WorkLifeBalance) +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid  = element_blank())+labs(title = "Work Life Balance Rating(1-4)",y="The Number of Employees moving out of the company")
+```
+
+
+```{r}
+nn <- hr[,list(Age,YearsAtCompany,EnvironmentSatisfaction,MaritalStatus)]
+
+d3tree(list(root = df2tree(rootname = 'Overall',struct = as.data.frame(nn)),
+   layout = 'collapse'))
+```
+
+
+
+
+```{r}
+str(hr)
+```
+
+
+
+```{r}
+str(hr)
+```
+
+
+
+
+```{r}
+convert_to_character <- c("Attrition", "BusinessTravel","Department","Education","EducationField","EnvironmentSatisfaction","Gender","JobInvolvement","JobLevel","JobRole","JobSatisfaction","MaritalStatus","OverTime","PerformanceRating","RelationshipSatisfaction","StockOptionLevel","WorkLifeBalance")
+hr_encoded=hr
+hr_encoded[, convert_to_character] <- hr[, lapply(.SD, as.numeric), .SDcols = convert_to_character]
+```
+
+
+
+
+Handling the high correlation betweeen independent variable
+```{r}
+hr_encoded <- one_hot(as.data.table(hr),dropUnusedLevels=TRUE)
+hr_encoded<-hr_encoded[,-"Attrition_No"]
+```
+
+
+This graph shows the correlation with decreasing order.
+```{r}
+hr_encoded<-as.data.frame(hr_encoded)
+# remove features which are not used for correlation analysis
+training <- select(hr_encoded, -c(Attrition_Yes))
+
+# calculate correlation coefficient of each feature with survival
+feature <- names(training)
+
+corrSurvived <- data.frame(feature = feature, coef = rep(NA, length(feature)))
+for (iFeature in 1:length(feature)){
+    corrSurvived$coef[iFeature] <- cor(training[, iFeature],hr_encoded$Attrition_Yes)
+}
+# sort by correlation coefficient
+corrSurvivedOrder <- corrSurvived[order(corrSurvived$coef, decreasing = FALSE), ]
+
+ggplot(corrSurvivedOrder, aes(x = factor(feature, levels = feature), y = coef,fill=coef)) + 
+    geom_bar(stat = "identity") + 
+    coord_flip() + 
+    xlab("Feature") + 
+    ylab("Correlation Coefficient")
+```
+correlation plot
+```{r}
+# function to calculate plot feature correlation matrix
+getCorrMatrix <- function(featureList, showPlot = TRUE){
+    # remove Survived from training set and order feature with respect to correlation coefficient to survived
+    passengerCorr <- hr_encoded[, as.character(featureList)]
+    # calculate correlation matrix
+    corrMatrix <- cor(passengerCorr)
+    # plot matrix
+    if (showPlot) {corrplot(corrMatrix, method = "color", type = "upper")}
+    corrMatrix
+}
+
+corrMatrix <- getCorrMatrix(rev(corrSurvivedOrder$feature))
+```
+
+```{r}
+# function to get data frame with pairwise correlation of features
+getPairCorrelation <- function(corrMatrix){
+    featureName <- colnames(corrMatrix)
+    nFeature <- length(featureName)
+    
+    # set lower triangle of matrix to NA (these values are all redundant)
+    corrMatrix[lower.tri(corrMatrix, diag = TRUE)] <- NA
+    
+    # convert matrix to data frame
+    featurePair <- data.frame(feature1 = rep(featureName, nFeature), feature2 = rep(featureName, each = nFeature), coef = as.vector(corrMatrix))
+    # remove NAs
+    featurePair <- featurePair[!is.na(featurePair$coef), ]
+    # calculate absolute value of correlation coefficient
+    featurePair$coefAbs <- abs(featurePair$coef)
+    # order by coefficient
+    featurePair <- featurePair[order(featurePair$coefAbs, decreasing = TRUE), ]
+    
+    featurePair
+}    
+
+featureCorr <- getPairCorrelation(corrMatrix) 
+```
+
+Lets have a look at the ten feature pairs with the highes correlations:
+```{r}
+kable(featureCorr[1:10, ]) %>% kable_styling(full_width = FALSE)
+```
+```{r}
+# plot histogram of correlation factors
+ggplot(featureCorr, aes(coef)) + geom_histogram(binwidth = 0.1) + xlab("Correlation Coefficient")
+
+```
+4 Feature Reduction
+
+1)Greedy Elimination
+```{r}
+# features to be eliminated
+nFeature <- length(corrSurvivedOrder$feature)
+featureEliminate <- character(nFeature)
+
+# data frame with all features 
+featureRest <- featureCorr
+featureRest$feature1 <- as.character(featureRest$feature1)
+featureRest$feature2 <- as.character(featureRest$feature2)
+
+# calculate absolute value of correlation coefficient with attrition
+corrSurvived$coefAbs <- abs(corrSurvived$coef)
+
+for (iFeature in 1:(nFeature - 1)){
+    # get correlation coefficient to attrition
+    coefAbs1 <- corrSurvived$coefAbs[corrSurvived$feature == featureRest$feature1[1]]
+    coefAbs2 <- corrSurvived$coefAbs[corrSurvived$feature == featureRest$feature2[1]]
+    
+    # choose which feature has lower absolute correlation coefficient to attrition
+    if (coefAbs1 <= coefAbs2) {
+        # eliminate feature 1
+        featureRemove <- featureRest$feature1[1]
+        featureKeep <- featureRest$feature2[1]
+    } else {
+        # eliminate feature 2
+        featureRemove <- featureRest$feature2[1]
+        featureKeep <- featureRest$feature1[1]
+    }
+    
+    # add selected feature to elimination list
+    featureEliminate[iFeature] <- featureRemove
+    
+    # remove feature from featureRest
+    featureRest <- featureRest[featureRest$feature1 != featureRemove & featureRest$feature2 != featureRemove, ]
+}
+
+# add last remaining feature to elimination list
+featureEliminate[nFeature] <- featureKeep
+
+# reverse elimination list
+featureGE <- rev(featureEliminate)
+
+featureGE
+```
+
+PCA for feature reduction
+```{r}
+trainingMatrix <- as.matrix(hr_encoded)
+# execute PCA on training data
+pcaTraining <- summary(prcomp(trainingMatrix, scale. = TRUE))
+pcaTraining
+# plot cummulated R2 with respect to number of components
+#plotData <- data.frame(component = 1:nFeature, R2 = pcaTraining$importance[3, ])
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+y<-ggplot(hr[TotalWorkingYears > 0 & TotalWorkingYears < 10,.N,by=list(Attrition,OverTime)],aes(x=OverTime,y=N,fill=Attrition))+geom_bar(stat = "identity",width = 0.2,position = "dodge")+geom_text(aes(label=N), vjust=-0.30)+labs(x ="overtime", y = "Number of Employee")+ylim(0,400)
+ggplotly(y)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The conclusion ,the most of the employees who have worked  0-5 years , their salary is less than 5000$,and are doing overtime and the job level 1 have higher probabilty of leaving the company.
+
+
+JobRole ,Age, EnvironmentSatisfaction ,YearsAtCompany 
+```{r}
+x<-ggplot(hr,aes(YearsAtCompany,MonthlyIncome,color=EnvironmentSatisfaction,shape=Age))+geom_point()+facet_wrap(~Attrition)+labs(x = "Years At the Company",y="Monthly_Income")
+ggplotly(x)
+```
+As we can see above that the employee of  age group 20-30,number of years in this company is less than 5  and monthly salary is belowe $5000 are leaving the company the most. 
+
+
+Now we are knowe that at job level 1 the most of the employee 's are leaving.
+so now i am going to check in job level 1 in which role the employees are leaving the most.
+
+plotting the bar plot for the data representation.
+```{r}
+ggplot(hr[JobLevel==1 & MonthlyIncome<5000 &TotalWorkingYears<=5 &YearsAtCompany<5 & Age=="20-30",.N,by=list(JobRole,Attrition,Department)],aes(x=JobRole,y=N,fill=Department))+geom_bar(stat = "identity",width = 0.2)+labs(x ="jobRole", y = "Number of employees")+facet_wrap(~Attrition)+coord_flip()+geom_text(aes(label=N), vjust=-0.2)
+```
+from this we can conclude that in job level 1,Age group is 20-30 ,monthly income is less than 5000$ ,totalworking years are less than 5 years,and years at company less than equal to 5 
+In job level one There are three department
+1)Human Resource
+2)Research and development
+3)sales.
+
+In job level one we have 4 job roles in a Department :-
+1)Laboratory Technician
+2)Research Scientist
+3)Sales Representative
+4)Human Resources 
+
+where the most of the employee 's are leaving in job role of Laboratory Technician of Research and development department and  Sales Representative Sales department.
+
+MaritalStatus,WorkLifeBalance 
+```{r}
+x<-ggplot(hr,aes(WorkLifeBalance,MonthlyIncome ,color=MaritalStatus))+geom_point()+facet_wrap(~Attrition)+labs(x = "WorkLifeBalance",y="Monthly_Income")
+ggplotly(x)
+
+```
+By this graph we can conclude that the employees who 's monthy income is less than 10000$ ,Marital status is single and worklife balance are Better are leaving the company.
+
+
+```{r}
+
+```
+

@@ -1,0 +1,6 @@
+"0","```r
+apply(data_analysis,2,function(x)sum(is.na(x)))
+```"
+"1","location      so2      no2     rspm      spm    pm2_5     date     type  seasons     year    month 
+       0      108       55      153     1535     3471        0        0        0        0        0 
+"

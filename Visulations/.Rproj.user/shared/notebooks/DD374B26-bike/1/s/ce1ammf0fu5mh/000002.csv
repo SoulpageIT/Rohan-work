@@ -1,0 +1,6 @@
+"0","```r
+library(forecast)
+#arima_fit = auto.arima(adenoTS[,2])
+model_Arima<-auto.arima(timeseries)
+plot(forecast(model_Arima))
+```"

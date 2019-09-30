@@ -1,0 +1,27 @@
+"0","```r
+library(dplyr)
+
+```"
+"1","
+Attaching package: ã¤¼ã¸±dplyrã¤¼ã¸²
+
+The following objects are masked from ã¤¼ã¸±package:plyrã¤¼ã¸²:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise, summarize
+
+The following object is masked from ã¤¼ã¸±package:gridExtraã¤¼ã¸²:
+
+    combine
+
+The following objects are masked from ã¤¼ã¸±package:igraphã¤¼ã¸²:
+
+    as_data_frame, groups, union
+
+The following objects are masked from ã¤¼ã¸±package:statsã¤¼ã¸²:
+
+    filter, lag
+
+The following objects are masked from ã¤¼ã¸±package:baseã¤¼ã¸²:
+
+    intersect, setdiff, setequal, union
+"

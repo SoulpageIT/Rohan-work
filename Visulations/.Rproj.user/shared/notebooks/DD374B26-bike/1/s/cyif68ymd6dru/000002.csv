@@ -1,0 +1,17 @@
+"0","```r
+#data_1<-data.table(`Start Time` =seq.POSIXt(min(bikes$`Start Time`),max(bikes$`Start Time`),by=30*60))
+
+#data_1[,ts:=`Start Time`]
+
+
+#setkey(data_1,`Start Time`)
+#setkey(bikes, `Start Time`)
+#bikes
+#bikes <- data_1[bikes, roll = +Inf] #Join statement
+forcast<-bikes[,.N,by=list(ts)]
+#forcast[Gender==1,list(unique(ts)),by=list(N)]
+#forcast[Gender==2]
+#forcast1<-forcast[Gender==2,list(ts,N)]
+#forcast1
+#bikes[`Start Station Name` == starting_place,list(unique(`End Station Name`)), by = list(`Start Station Name`, dist)]
+```"

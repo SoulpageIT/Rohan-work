@@ -1,0 +1,20 @@
+"0","```r
+print(cv, verbose=TRUE)
+```"
+"1","##### xgb.cv 5-folds
+call:
+  xgb.cv(params = params, data = dtrain, nrounds = 50, nfold = 5, 
+    showsd = T, stratified = T, maximize = F, gamma = 0, print.every.n = 10, 
+    early.stop.round = 20)
+params (as set within xgb.cv):
+  booster = \"gbtree\", num_class = \"9\", objective = \"multi:softmax\", eta = \"0.2\", max_depth = \"4\", min_child_weight = \"2\", subsample = \"1\", colsample_bytree = \"1\", gamma = \"0\", print_every_n = \"10\", early_stop_round = \"20\", silent = \"1\"
+callbacks:
+  cb.print.evaluation(period = print_every_n, showsd = showsd)
+  cb.evaluation.log()
+  cb.early.stop(stopping_rounds = early_stopping_rounds, maximize = maximize, 
+    verbose = verbose)
+niter: 50
+best_iteration: 50
+best_ntreelimit: 50
+evaluation_log:
+"

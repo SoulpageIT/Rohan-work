@@ -1,0 +1,4 @@
+"0","```r
+class(iris)
+iris<-data.table()
+```"

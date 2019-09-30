@@ -1,0 +1,37 @@
+"0","```r
+summary(data)
+
+```"
+"1","    stn_code       sampling_date               state              location     
+ 193    :  1428   19-03-15:   253   Maharashtra   : 60384   Guwahati  :  9984  
+ 519    :  1280   12-02-15:   237   Uttar Pradesh : 42816   Hyderabad :  9667  
+ 708    :  1273   19-02-15:   236   Andhra Pradesh: 26368   Delhi     :  8551  
+ 541    :  1270   05-11-15:   235   Punjab        : 25634   Chandigarh:  8520  
+ 710    :  1269   11-11-15:   234   Rajasthan     : 25589   Jaipur    :  7850  
+ (Other):285145   (Other) :434544   Kerala        : 24728   (Other)   :391167  
+ NA's   :144077   NA's    :     3   (Other)       :230223   NA's      :     3  
+                                                                    agency                                       type             so2        
+ Maharashtra State Pollution Control Board                             : 27857   Residential, Rural and other Areas:179014   Min.   :  0.00  
+ Uttar Pradesh State Pollution Control Board                           : 22686   Industrial Area                   : 96091   1st Qu.:  5.00  
+ Andhra Pradesh State Pollution Control Board                          : 19139   Residential and others            : 86791   Median :  8.00  
+ Himachal Pradesh State Environment Proection & Pollution Control Board: 15287   Industrial Areas                  : 51747   Mean   : 10.83  
+ Punjab State Pollution Control Board                                  : 15232   Sensitive Area                    :  8980   3rd Qu.: 13.70  
+ (Other)                                                               :186060   (Other)                           :  7726   Max.   :909.00  
+ NA's                                                                  :149481   NA's                              :  5393   NA's   :34646   
+      no2              rspm             spm                                                       location_monitoring_station     pm2_5       
+ Min.   :  0.00   Min.   :   0.0   Min.   :   0.0   Regional Office                                             :  6261       Min.   :  3.0   
+ 1st Qu.: 14.00   1st Qu.:  56.0   1st Qu.: 111.0   Paonta Sahib                                                :  1599       1st Qu.: 24.0   
+ Median : 22.00   Median :  90.0   Median : 187.0   Head Office, Bamunimaidan, Guwahati                         :  1327       Median : 32.0   
+ Mean   : 25.81   Mean   : 108.8   Mean   : 220.8   ITI Building, Gopinath Nagar, Guwahati                      :  1280       Mean   : 40.8   
+ 3rd Qu.: 32.20   3rd Qu.: 142.0   3rd Qu.: 296.0   Bank of Baroda Building, Near Pimpri-Chinchwad M.C. Building:  1273       3rd Qu.: 46.0   
+ Max.   :876.00   Max.   :6307.0   Max.   :3380.0   (Other)                                                     :396511       Max.   :504.0   
+ NA's   :16233    NA's   :40222    NA's   :237387   NA's                                                        : 27491       NA's   :426428  
+         date       
+ 2015-03-19:   253  
+ 2015-02-12:   237  
+ 2015-02-19:   236  
+ 2015-11-05:   235  
+ 2015-11-11:   234  
+ (Other)   :434540  
+ NA's      :     7  
+"

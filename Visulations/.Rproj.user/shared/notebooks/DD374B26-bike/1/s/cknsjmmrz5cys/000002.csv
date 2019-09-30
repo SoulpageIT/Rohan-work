@@ -1,0 +1,5 @@
+"0","```r
+bikes[,.N,by=list(`Start Station Name`,`End Station Name`)]
+bikes$`Start Station Name`=as.factor(bikes$`Start Station Name`)
+bikes$`End Station Name`=as.factor(bikes$`End Station Name`)
+```"

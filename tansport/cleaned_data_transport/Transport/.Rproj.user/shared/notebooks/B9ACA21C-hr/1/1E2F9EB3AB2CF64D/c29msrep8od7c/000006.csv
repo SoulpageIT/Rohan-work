@@ -1,0 +1,2 @@
+"0","y<-ggplot(hr[TotalWorkingYears > 0 & TotalWorkingYears < 10,.N,by=list(Attrition,OverTime)],aes(x=OverTime,y=N,fill=Attrition))+geom_bar(stat = ""identity"",width = 0.4,position = ""dodge"")+geom_text(aes(label=N), vjust=-0.3)+labs(x =""overtime"", y = ""Number of Employee"")"
+"0","ggplotly(y)"

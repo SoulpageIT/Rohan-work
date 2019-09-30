@@ -1,0 +1,5 @@
+"0","test[,employee_id:=NULL]"
+"0","train[,employee_id:=NULL]"
+"0","trainindex<-createDataPartition(train$is_promoted,p=0.7,list=F)"
+"0","trainData<-train[trainindex,]"
+"0","testData<-train[-trainindex,]"

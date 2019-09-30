@@ -1,0 +1,4 @@
+"0","data$year=year(data$DateTime)"
+"0","data$month=month(data$DateTime)"
+"0","data$weekDays=weekdays(data$DateTime)"
+"0","data$hours = hour(data$DateTime)"

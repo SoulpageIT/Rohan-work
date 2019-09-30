@@ -1,0 +1,25 @@
+"0","```r
+getmap<-function(year,Gender){
+
+ subset<-Bikedata[year(`Start Time`)==year & Gender==Gender]
+ geo_lines <- gcIntermediate(
+ subset %>%
+   select(`Start Station Longitude`, `Start Station Latitude`),
+ subset %>%
+   select(`End Station Longitude`, `End Station Latitude`),
+ sp = TRUE, # SpatialLines are what Leaflet wants
+ addStartEnd = TRUE, # By default this is FALSE, and would be inaccurate
+ n = 50 # number of intermediate points
+)
+ mytext1=paste(\"Departure Time: \", subset[,`Start Time`], \"<br/>\", \"Location: \", subset[,`Start Station Name`], \"<br/>\", sep=\"\")%>%lapply(htmltools::HTML)
+ mytext2=paste(\"Arrival Time: \", subset[,`Stop Time`], \"<br/>\", \"Location: \", subset[,`End Station Name`], \"<br/>\",  sep=\"\") %>% lapply(htmltools::HTML)
+ leaflet() %>%
+ addTiles() %>%
+ addPolylines(data = geo_lines, color = \"#2c7bb6\", opacity = 0.5)%>%
+ addCircleMarkers(
+   lat=subset[,`Start Station Latitude`], lng=subset[,`Start Station Longitude`],
+   color= \"green\",label=mytext1) %>%
+ addMarkers(
+   lat=subset[,`End Station Latitude`], lng=subset[,`End Station Longitude`],label = mytext2)
+   }
+```"

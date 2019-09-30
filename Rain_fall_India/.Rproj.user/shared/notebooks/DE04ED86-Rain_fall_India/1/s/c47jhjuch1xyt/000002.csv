@@ -1,0 +1,1 @@
+"0","data<-fread(""Sub_Division_IMD_2017.csv"",stringsAsFactors = T)"

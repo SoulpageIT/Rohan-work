@@ -1,0 +1,459 @@
+---
+title: "Predict Surface Type"
+output: html_notebook
+date: 3/5/2019
+
+---
+
+# Problem Statement:
+
+Help the device to recognise the floor on which it is standing.
+
+#Data insights 
+
+In the data we found 13 features with 487680 records and data contains information related to angular velocity,orientation, and linear acceleration.
+
+
+# Solutions 
+According to Data, surface is classified into 9 types 
+1-fine_concrete                
+2-concrete   
+3-soft_tiles
+4-tiled 
+5-soft_pvc   
+6-hard_tiles_large_space
+7-carpet
+8-hard_tiles    
+9-wood  
+With Machine Learning and Deep learning technologies  we can predict surface type. 
+
+```{r Import Libraries, message=FALSE, warning=FALSE, paged.print=FALSE,echo=FALSE}
+library(data.table)
+library(corrplot)
+library(nnet)
+library(caret)
+library(dplyr)
+library(plotly)
+library(DMwR)
+library(DiscriMiner)
+library(MASS)
+#install.packages("mlbench")
+library(mlbench)
+#library("xgboost")
+library("nnet")
+#library("adabag")
+library(doParallel)
+library(reticulate)
+library(car)
+library(devtools)
+#devtools::install_github("rstudio/tensorflow")
+library(tensorflow)
+#install_tensorflow()
+#devtools::install_github("rstudio/keras")
+library(keras)
+library(kerasR)
+#install_keras()
+
+```
+
+```{r,echo=FALSE}
+#train data
+Xtrain<-fread("X_train.csv",drop = "row_id")
+Ytrain<-fread("Y_train.csv",drop = "group_id")
+#test data
+Xtest<-fread("X_test.csv",drop = "row_id")
+```
+
+```{r,echo=FALSE}
+unique(Ytrain$surface)
+```
+There are 9 types of surface
+
+```{r,echo=FALSE}
+colnames(Xtrain)
+colnames(Ytrain)
+colnames(Xtest)
+```
+
+First we need to merge labels into test data set by seried id
+```{r,echo=FALSE}
+sum(duplicated(Ytrain$series_id))
+
+```
+
+Add labels to train data
+```{r,echo=FALSE}
+newdata<-merge(Xtrain,Ytrain,by="series_id")
+```
+
+Data Types of data
+```{r,echo=FALSE}
+str(newdata)
+```
+
+```{r,echo=FALSE}
+anyNA(newdata)
+sum(newdata==" ")
+
+```
+
+
+
+Find correlation between variables
+```{r,echo=FALSE}
+R<-cor(newdata[,-c("surface","series_id")])
+# print(R)
+corrplot(R,method = "circle", type = "lower", tl.cex = 0.75, tl.srt = 45, tl.col = "blue")
+
+#corrplot(R, method="number")
+```
+orientation_w and orientation_X variable are highly correlated and similarly orientation_z and orientation_y are highly positively correlated
+angular velocity_z and y are moderately negatively correlated.
+
+
+
+# Model Building
+
+#Data Partition
+```{r,echo=FALSE}
+set.seed(123)
+#newdata$surface<-as.numeric(as.factor(newdata$surface))-1
+training.samples <- newdata$surface %>% 
+  createDataPartition(p = 0.8, list = FALSE)
+train.data  <-newdata[training.samples, ]
+test.data <- newdata[-training.samples, ]
+```
+
+
+# Check if surface type is balanced or not
+
+```{r,echo=FALSE}
+p <- plot_ly() %>%
+  add_pie(data = count(newdata,surface), labels = ~surface, values = ~n,
+          name = "surface", domain = list(row = 0, column = 0)) %>%
+      layout(showlegend = T,
+         grid=list(rows=1, columns=2),
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = TRUE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = TRUE))
+
+p
+```
+As we can see that hard tiles is only 0.55% and carpet is only 4.96% 
+so we need to maintain balance among classes by smote techniques and then check the accuracy 
+At first we will create our model by using different classification methods without any treatment of imbalanced data.
+
+
+
+#Multinomial Classification
+
+without Smote
+
+```{r,echo=FALSE}
+# Fit the model
+model <- multinom(surface ~., data = train.data[,-"series_id"])
+# Summarize the model
+summary(model)
+
+```
+
+# Make predictions
+```{r,echo=FALSE}
+
+predicted.classes <- model %>% predict(test.data[,-"series_id"])
+
+head(predicted.classes)
+predicted.classes<-data.frame(predicted.classes)
+```
+
+
+#Model accuracy
+```{r,echo=FALSE}
+mean(predicted.classes == test.data$surface)
+```
+
+#Confusion matrix
+```{r,echo=FALSE}
+table(test.data$surface,predicted.classes$predicted.classes)
+```
+Multinomial logistic regression giving very less accuracy so we are going to apply another model which is suitable for multiclass classification.
+
+
+
+#Linear Discriminant Analysis
+Discriminant is typically used when we have a categorical response variable and a set of independent variables which are continuous in nature.
+
+#MANOVA test
+Before applying LDA we need to do MANOVA test 
+Manova output shows that the means of the categorical variable are significantly different, thereby rejecting the null hypothesis that there is no difference (in means) between the factors presumed to be impacting the response, only then Discriminant analysis will do a good job of differentiating and classifying the response variable (in the Discriminant Model).
+
+As we already checked that there are some variables are highly correlated. now test with MANOVA
+
+```{r,echo=FALSE}
+#Manova Test
+X<-as.matrix(train.data[,-c("series_id","surface")])
+Y<-train.data[,surface]#list of surface type
+M<-manova(X~Y)
+M
+
+```
+
+```{r,echo=FALSE}
+summary(M)
+```
+p value and F statics is significant means all null hypothesis is rejected and we can say that means of all variable is different for the 9 surface type
+
+#Individually significant variable
+```{r,echo=FALSE}
+summary.aov(M)
+```
+From the output above, it can be seen that the most of the  variables are highly significantly different among surface type except measurement_number, linear_acceleration_Z
+
+#LDA Model
+```{r,echo=FALSE}
+
+Model2<-linDA(X,Y)
+discPower(X,Y)
+```
+
+```{r,echo=FALSE}
+#Build Model
+LDAModel1<-lda(surface~., data = train.data[,-c("series_id")])
+LDAModel1
+```
+
+
+```{r,echo=FALSE}
+#Predictions
+LDAPred<-as.data.frame(predict(LDAModel1, test.data[,-c("series_id","surface")]))
+CM.LDA<-confusionMatrix(LDAPred$class,factor(test.data$surface))
+CM.LDA$overall
+
+
+```
+
+#Evaluation Matrix
+```{r,echo=FALSE}
+CM.LDA$byClass
+```
+
+```{r,echo=FALSE}
+# par(mfrow=c(9,2))
+# ldahist(LDAPred$x.LD1, g= LDAPred$class)
+# plot shows how the surface type has been classified by the LDA classifier. The X-axis shows the value of line defined by the co-efficient of linear discriminant for LDA model.
+
+```
+
+```{r,echo=FALSE}
+# par(mfrow=c(1,1))
+# plot(LDAPred$x.LD1, LDAPred$class, col=test.data$surface+10)
+```
+
+Accuracy, and F1 score is not satisfactory now create the model with only significant variables
+
+```{r,echo=FALSE}
+LDAModel2<-lda(surface~., data = train.data[,-c("series_id","measurement_number","linear_acceleration_Z")])
+LDAModel2
+LDAPred2<-as.data.frame(predict(LDAModel2, test.data[,-c("series_id","surface","measurement_number","linear_acceleration_Z")]))
+CM.LDA2<-confusionMatrix(LDAPred2$class,factor(test.data$surface))
+CM.LDA2$overall
+```
+
+
+```{r,echo=FALSE}
+#Quadratic Discriminant Analysis (QDA)
+# QDA is a better option for large data sets, as it tends to have a lower bias and a higher variance.
+# On the other hand, LDA is more suitable for smaller data sets, and it has a higher bias, and a lower variance.
+# qda.model = qda (factor(surface)~., data=train.data[,-"series_id"])
+# qda.model
+
+```
+
+```{r,echo=FALSE}
+# QDA<-as.data.frame(predict(qda.model, test.data[,-c("series_id","surface")]))
+# CM.QDA<-confusionMatrix(QDA$class,factor(test.data$surface))
+# CM.LDA2$overall
+
+```
+
+#Deep learning model
+Using Keras R package we can solve a classification problem
+First we need to convert categories into numeric form 
+
+```{r,echo=FALSE}
+set.seed(123)
+newdata1<-newdata
+newdata1$surface<-as.numeric(as.factor(newdata$surface))-1
+training.samples <- newdata1$surface %>% 
+  createDataPartition(p = 0.8, list = FALSE)
+train.data  <-newdata1[training.samples, ]
+test.data <- newdata1[-training.samples, ]
+```
+
+
+
+Scale the data for keras model building and define label as catagorical by using to_categorical function.
+```{r,echo=FALSE}
+#traindata processing
+X_train <- scale(train.data[,-c("series_id","surface")])
+  
+y_train <- to_categorical(train.data$surface,9)
+#test.data processing
+
+X_test <- scale(test.data[,-c("series_id","surface")])
+  
+y_test <- to_categorical(test.data$surface,9)
+
+#final test data processing
+Finaltest <- scale(Xtest[,-c("series_id")])
+
+```
+
+
+Define baseline model and dense layer using the popular relu activation , dropout layer to prevent overfitting, then add output layer with the sigmoid activation function.
+we use a "softmax" activation function in the output layer. This is to ensure the output values are in the range of 0 and 1 and may be used as predicted probabilities.
+
+```{r,echo=FALSE}
+model <- keras_model_sequential()
+
+
+model %>% 
+  layer_dense(units = 256, activation = 'relu', input_shape = ncol(X_train)) %>% #unit is hidden nodes
+  layer_dropout(rate = 0.4) %>% 
+  layer_dense(units = 128, activation = 'relu') %>%
+  layer_dropout(rate = 0.3) %>%
+  layer_dense(units = 9, activation = 'softmax')#softmax for multiclass
+
+summary(model)
+```
+
+#Compile model
+network uses the efficient Adam gradient descent optimization algorithm with a logarithmic loss function, which is called "categorical_crossentropy" in Keras.logarithmic loss function, which is called "categorical_crossentropy" in Keras.
+
+```{r,echo=FALSE}
+#compile,adom optimizer for gradient descent,categorical crossentropy for multiclass labels.
+
+
+history<-model %>% compile(
+  optimizer = 'adam', 
+  loss = 'categorical_crossentropy',
+  metrics = c('accuracy')
+)
+
+```
+
+#Train model 
+run the model on 50 epochs using a batch size of 5 and a 30% validation split.Debugging is turned off when training by setting verbose to 0.
+```{r,echo=FALSE}
+#epochs 100-200
+
+model %>% fit(X_train, y_train, epochs = 50,batch_size=5,verbose=0,validation_split=0.3)
+
+
+```
+
+
+#Model Summary
+```{r,echo=FALSE}
+summary(model)
+
+```
+
+
+#Evaluate the Model 
+We'll check the training loss and its accuracy.
+```{r,echo=FALSE}
+score <- model %>% evaluate(X_test, y_test)
+
+cat('Test loss:', score$loss, "\n")
+cat('Test accuracy:', score$acc, "\n")
+#tune the parameters further to ensure the testing loss is decreasing.
+
+```
+we got 74% test accuracy with 50 epochs
+
+
+```{r,echo=FALSE}
+#Visualize model loss
+#plot(history)
+# plot(history$metrics$loss, main="Model Loss", xlab = "epoch", ylab="loss", col="orange", type="l")
+# lines(history$metrics$val_loss, col="skyblue")
+# legend("topright", c("Training","Testing"), col=c("orange", "skyblue"), lty=c(1,1))
+```
+
+
+```{r,echo=FALSE}
+#Visualize Model Accuracy
+# plot(history$metrics$acc, main="Model Accuracy", xlab = "epoch", ylab="accuracy", col="orange", type="l")
+# lines(history$metrics$val_acc, col="skyblue")
+# legend("topleft", c("Training","Testing"), col=c("orange", "skyblue"), lty=c(1,1))
+```
+
+
+
+```{r,echo=FALSE}
+#Predictions
+predictions <- model %>% predict(X_test)
+```
+
+#Predict classes
+```{r,echo=FALSE}
+class_pred <- model %>% predict_classes(X_test)
+class_pred[1:20]
+```
+
+#Confusion matrix
+```{r,echo=FALSE}
+# table(factor(class_pred, levels=min(test.data$surface):max(test.data$surface)),factor(test.data$surface, levels=min(test.data$surface):max(test.data$surface)))
+
+confusionMatrix(factor(test.data$surface),factor(class_pred))
+
+```
+
+#save the model
+```{r,echo=FALSE}
+#conda install h5py
+#save_model_hdf5(model, "rkerasmodel.h5")
+
+model <- load_model_hdf5("rkerasmodel.h5")
+```
+
+#Prediction  on new data
+```{r,echo=FALSE}
+
+final_pred <- model %>% predict_classes(Finaltest)
+final_pred<-as.data.frame(final_pred)
+#final_pred[1:20]
+```
+
+#Decode the categories
+```{r,echo=FALSE}
+Decoding<-function(x){
+ if(x==0){
+   return("carpet")
+ }else if(x==1){
+   return("concrete")
+ }else if(x==2){
+   return("fine_concrete")
+ }else if(x==3){
+   return("hard_tiles")
+ }else if(x==4){
+   return("hard_tiles_large_space")
+ }else if(x==5){
+   return("soft_pvc")
+ }else if(x==6){
+   return("soft_tiles")
+ }else if(x==7){
+   return("tiled")
+ }else{
+   return("wood ")
+ }
+}
+```
+
+```{r,echo=FALSE}
+surface<-as.data.frame(sapply(final_pred$final_pred, Decoding))
+output<-cbind("series_id"=Xtest$series_id,"surface"=surface)
+colnames(output)[2]<-"surface"
+head(surface)
+```
+

@@ -1,0 +1,5 @@
+"0","```r
+data$date<-as.Date(data$date,'%Y-%m-%d')
+data$month<-month(data$date)
+data$year<-year(data$date)
+```"

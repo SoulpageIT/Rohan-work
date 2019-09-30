@@ -1,0 +1,12 @@
+"0","```r
+bing_word_counts %>%
+  filter(n > 3) %>%
+  mutate(n = if_else(sentiment == \"negative\", -n, n)) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(word, n, fill = sentiment)) +
+  geom_bar(stat = \"identity\") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(y=\"Contribution to sentiment\",title=\"bing sentiments\")+
+#scale_fill_manual(values=viridis_pal(option = \"D\")(2))
+ scale_fill_viridis(end = 0.85, discrete=TRUE, direction = 1)
+```"

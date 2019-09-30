@@ -1,0 +1,4 @@
+"0","```r
+#now i am capping in the value to 7 for this feature
+data.set.analyse$sessions_before[data.set.analyse$sessions_before > 7]<-7
+```"

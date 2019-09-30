@@ -1,0 +1,3 @@
+"0","```r
+data[,.N,c(\"spd\",\"drst\",\"next_stop\")]
+```"

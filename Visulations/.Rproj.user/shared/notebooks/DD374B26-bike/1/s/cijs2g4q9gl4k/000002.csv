@@ -1,0 +1,6 @@
+"0","```r
+geom_text(data=label_data, aes(x=id, y=dist+10, label=V1, hjust=hjust), color=\"black\", fontface=\"bold\",alpha=0.6, size=2.5, angle= label_data$angle, inherit.aes = FALSE ) +
+  
++
+geom_text(data=base_data, aes(x = title, y = -18, label=`Start Station Name`), colour = \"black\", alpha=0.8, size=0.9, fontface=\"bold\", inherit.aes = FALSE)
+```"

@@ -1,0 +1,9 @@
+"0","```r
+X.quanti_test <- splitmix(testData)$X.quanti
+X.quali_test <- splitmix(testData)$X.quali
+#pca<-PCAmix(X.quanti,X.quali,ndim=4)
+pca_test<-PCAmix(X.quanti_test,X.quali_test[,-10],ndim=19,graph=FALSE,rename.level = TRUE)
+pca_test$eig
+PCscores_test<-as.data.frame(pca_test$ind$coord)
+
+```"

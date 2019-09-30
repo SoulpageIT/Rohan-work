@@ -1,0 +1,166 @@
+---
+title: "Visulation Assignment"
+output: html_notebook
+---
+#Problem 
+Station create visualization of all the important transactional variables. Post this, the Analytics Manager will get the visual of the key features and consider it in their next planning review.
+
+#Data dictionary 
+Record: Record ID Gender: Gender of the applicant. No_kids: Number of kids. Education: Education level of the individual. HasCar: whether the individual has car or not. Income: income level of the individual. PropertyValue: Property Value of the Flat / House (in USD) Loan_Period: period of the loan (in months) Credit_Record: value of 1, if the Credit Record is good and 0, if it is not. Housing_type: category of housing property – (Affordable, Mid-Range and Premium) Property_Purchased: takes the value ‘Y’, if the inquiry led to Purchase of the property, and ‘N’ if the property was not Purchased.
+
+The library used in the assignments 1. Load the required libraries and the data.
+```{r}
+library(data.table)
+library(ggplot2)
+library(plotly)
+```
+
+Now reading the data into r
+```{r}
+data<-fread("b0078brlpa.csv",stringsAsFactors = T)
+```
+
+2. Understand the data structure and provide concise summary on the following –
+• no of observations
+• total number of variables
+• number of continuous variables
+• number of categorical variables
+• number of variables which have missing values 
+
+```{r}
+#Number of observations
+cat("\nThe Number observations are :- ", nrow(data),"\n")
+#Numberof continuous variable
+cat("\nThe   continuous variable and factors  are :- ",str(data))
+#checking for NA 's
+cat("\nThe Number of NA 'S at   data set: ", sum(is.na(data)))
+#checking for the empty sells in the table
+cat("\nThe Number of blank cell 'S at  data set: ", sum(data==""))
+```
+3. Create a scatter plot between Credit_Record on x-axis and Income on y-axis.
+• Is the plot satisfying, if not, what could be the reason?
+• Change the command executed in the previous line so that Credit_Record is
+treated as factor.
+• what is the change in the above two plots?
+```{r}
+ggplotly(ggplot(data,aes(x=Credit_Record,y=Income))+geom_point()+labs(title = "Scatter plot Credit_record VS Income",x="Credit Record", y = "Income")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+No the graph is not ok because on X axis the credit record is factor but on graph its represented as integer or num.
+
+The correct way is this.
+```{r}
+ggplotly(ggplot(data,aes(x=as.factor(Credit_Record),y=Income))+geom_point()+labs(title = "Scatter plot Credit_record VS Income",x="Credit Record", y = "Income")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+Now Credit Record is taken as integer.
+
+4. Create a scatter plot between Income on x-axis and PropertyValue on y-axis.
+• In the above plot, add the color argument which should be dependent on the
+No_kids of the applicant
+• In the above plot, now add the size argument which should be dependent on
+the No_kids of the applicant.
+• Now, in the above plot, please add the smooth line using the geom_smooth()
+function.
+```{r}
+ggplotly(ggplot(data,aes(x=Income,y=PropertyValue,color=as.factor(No_kids),size=as.factor(No_kids)))+geom_point()+geom_smooth(method = 'lm')+labs(title = "Scatter plot Income  VS Property Value",x="Income", y = "Property Value",color="Kids No",size="Kids No")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+
+
+5. ggplot comparson with Base plot :  • Using the base package plot(), make a scatter plot with Income on the x-axis and PropertyValue on the y-axis, colored according to No of kids (use the col argument). • Now, Change No_kids in previous step to a factor • Now, Make the same plot as in the first instruction - 5a • Now, recreate the same plot as above  using the ggplot functon.
+```{r}
+plot(data$Income,data$PropertyValue, main="Scatter plot Income  VS Property Value", 
+   xlab="Income", ylab="Property value", pch=19,col=factor(data$No_kids))
+```
+
+```{r}
+ggplotly(ggplot(data,aes(x=Income,y=PropertyValue,color=as.factor(No_kids)))+geom_point()+labs(title = "Scatter plot Income  VS Property Value",x="Income", y = "Property Value",color="Kids No")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+The ggplot package is best for visulation.
+
+6. Aesthetics: 
+• Map Income to x and Property Value to y 
+• Reverse: Map Property Value to x and Income to y 
+• Map Income to x and Property Value to y and No of kids to col • Change shape and size of the points in the above plot. 
+```{r}
+ggplotly(ggplot(data,aes(x=Income,y=PropertyValue,color=as.factor(No_kids)))+geom_point()+labs(title = "Scatter plot Income  VS Property Value",x="Income", y = "Property Value",color="Kids No")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+
+```{r}
+ggplotly(ggplot(data,aes(x=PropertyValue,y=Income,color=as.factor(No_kids)))+geom_point()+labs(title = "Scatter plot Income  VS Property Value",x="property value", y = "Income",color="Kids No")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+
+```{r}
+ggplotly(ggplot(data,aes(x=Income,y=PropertyValue,color=as.factor(No_kids),shape=as.factor(No_kids),size=as.factor(No_kids)))+geom_point()+labs(title = "Scatter plot Income  VS Property Value",x="Income", y = "Property Value",color="Kids No")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+
+7. Geometry: 
+• Start with creating a scatter plot mapping Income to x and Property Value to y. 
+• Make a plot With geom_jitter() function 
+• Now, in the above plot, Set width in geom_jitter(). Take the width value as 0.1 
+```{r}
+ggplotly(ggplot(data,aes(x=Income,y=PropertyValue))+geom_jitter(width = 3)+labs(title = "Scatter plot Income  VS Property Value",x="Income", y = "Property Value",color="Kids No")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+8. Histogram:  
+• Make a univariate histogram on Income 
+• In the above plot, add set binwidth to 100 in the geom layer 
+• In the above plot,  MAP ..density.. to the y aesthetic (i.e. in a second aes() function) 
+• Finally, in the above plot, plus SET the fill attribute to "#377EB8". 
+```{r}
+ggplotly(ggplot(data, aes(x=Income,y=..density..,fill="#377EB8")) +
+  geom_histogram()+labs(title = "univariate histogram on Income")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+9. Bar Plot:  
+• Draw a bar plot of Property_Purchased, filled according to Education 
+• In the above plot, Change the position argument to "stack" 
+• In the above plot, Change the position argument to "fill" 
+• In the above plot, Change the position argument to "dodge" 
+#dodge
+```{r}
+ggplotly(ggplot(data, aes(x=Property_Purchased,fill=Education)) +
+  geom_bar(position ="dodge",width = 0.3)+geom_text(stat='count', aes(label=..count..), vjust=-2)+labs(title = "Frequency of property purchased by Education ")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+#stack
+```{r}
+ggplotly(ggplot(data, aes(x=Property_Purchased,fill=Education)) +
+  geom_bar(position ="stack",width = 0.3)+geom_text(stat='count', aes(label=..count..), vjust=-2)+labs(title = "Frequency of property purchased by Education ")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+#Fill
+```{r}
+ggplotly(ggplot(data, aes(x=Property_Purchased,fill=Education)) +
+  geom_bar(position ="fill",width = 0.3)+geom_text(stat='count', aes(label=..count..), vjust=-2)+labs(title = "Frequency of property purchased by Education ")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+
+```
+10. Overlapping bar plots:  
+• Take the last plot form the previous exercise 
+• In the above plot, Define posn_d with position_dodge(). Take value as 0.7 
+• Change the position argument to posn_d in the last plot made in Step 9(d) 
+• Use posn_d as position and adjust alpha to 0.6 - can you see the overlap in bars. If not, change the value of alpha 
+```{r}
+ggplotly(ggplot(data, aes(x=Property_Purchased,fill=Education)) +
+  geom_bar(position =position_dodge(0.7),width = 0.3)+geom_text(stat='count', aes(label=..count..), vjust=-2)+labs(title = "Frequency of property purchased by Education ")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+11. Overlapping histograms:  
+• A basic histogram, add coloring defined by Income and filled by HasCar, select a suitable binwidth 
+• In the above plot, In the above chart, Change position to identity 
+```{r}
+ggplotly(ggplot(data, aes(x=Income,fill=as.factor(HasCar))) +
+  geom_histogram()+labs(title = "univariate histogram on Income",fill="HasCar")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+```{r}
+ggplotly(ggplot(data, aes(x=Property_Purchased,fill=Education)) +
+  geom_bar(position ="identity",width = 0.3)+geom_text(stat='count', aes(label=..count..), vjust=-2)+labs(title = "Frequency of property purchased by Education ")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+12. Faceting:  
+• Now create a basic scatter plot between income and property value variables  
+• In the above plot, Separate rows according to HasCar
+• In plot made in step 12b, Separate columns according to No of kids 
+• In plot made in step 12b, , Separate by both HasCar and No of kids 
+```{r}
+ggplotly(ggplot(data,aes(x=Income,y=PropertyValue,color=as.factor(No_kids)))+geom_point()+facet_wrap(~as.factor(No_kids) ,ncol = 1,scales = "free")+labs(title = "Scatter plot Income  VS Property Value",x="Income", y = "Property Value",color="Kids No",shape="HasCare")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+```{r}
+ggplotly(ggplot(data,aes(x=Income,y=PropertyValue,color=as.factor(No_kids)))+geom_point()+facet_wrap(~as.factor(HasCar))+labs(title = "Scatter plot Income  VS Property Value",x="Income", y = "Property Value",color="Kids No",shape="HasCare")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+```{r}
+ggplotly(ggplot(data,aes(x=Income,y=PropertyValue,color=as.factor(No_kids)))+geom_point()+facet_wrap(~as.factor(HasCar))+labs(title = "Scatter plot Income  VS Property Value",x="Income", y = "Property Value",color="Kids No",shape="HasCare")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black")))
+```
+

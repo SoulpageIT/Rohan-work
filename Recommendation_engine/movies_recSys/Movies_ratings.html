@@ -1,0 +1,410 @@
+<!doctype html>
+<html>
+<head>
+ <title>Amazon Customer Rating</title>
+ <meta charset="utf-8">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+    body {
+		font-family: 'Segoe UI Local', 'Segoe UI Web';
+		//background: url(https://image.architonic.com/img_pro2-4/131/3774/maxfine2-produkt-ivory-black-b.jpg);
+		background:#fff; 
+		padding: 0 10px;
+		display:block;
+		height:100%;
+		overflow: hidden;
+	}
+    text {
+        fill: white;
+    }
+
+    svg {
+        position: relative;
+    }
+	.title {
+		font-size: 15px;
+		color: rgba(0,0,0,0.6);
+		text-align: left;
+		padding-left: 15px;
+		font-weight:bold;
+		margin-top:10px;
+		padding-left: 10px !important;
+	}
+    path {
+        fill: none;
+        fill-opacity: .8;
+    }
+	#circle{
+		pointer-events: all;
+	}
+    #mapid {
+        position: absolute;
+        height: 98%;
+        width: 0px;
+        background-color: #333;
+        
+    }
+	#chart{
+		height: 98%;
+        width: 88%;
+		float:middle;
+	}
+	
+	.tooltip{
+		  position      : absolute;
+		  text-align    : center;
+		  padding       : 8px;
+		  border        : none;
+		  border-radius : 8px;
+		  background    : rgb(0,0,0,.8);
+		  color         : white;
+		  pointer-events: none;
+	  }
+.link {
+		stroke: #bbb;
+		stroke-width: 1px;
+	}
+	.node {
+		cursor: move;
+		fill: #000;
+	}
+	.node.fixed {
+		fill: #f00;
+	}
+	.tooltip{
+		  position      : absolute;
+		  text-align    : center;
+		  padding       : 8px;
+		  border        : none;
+		  border-radius : 8px;
+		  background    : rgb(0,0,0,.5);
+		  color         : white;
+		  pointer-events: none;
+		  font-size:13px;
+	  }
+	  .checked {
+		  color: orange;
+		}
+</style>
+
+</head>
+<body>
+
+	<script src="https://d3js.org/d3.v3.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+	<p id="title">Amazon Customer Ratings</p>
+	<div id="chart">
+
+</div>
+
+    <script>
+	var movieRatings_data=[{"FIELD1":0,"genres":"Comedy","rating":0,"counts":14},{"FIELD1":1,"genres":"Comedy","rating":1,"counts":20},{"FIELD1":2,"genres":"Comedy","rating":2,"counts":114},{"FIELD1":3,"genres":"Comedy","rating":3,"counts":99},{"FIELD1":4,"genres":"Comedy","rating":4,"counts":262},{"FIELD1":5,"genres":"Comedy","rating":5,"counts":42},{"FIELD1":6,"genres":"Comedy|Drama","rating":0,"counts":3},{"FIELD1":7,"genres":"Comedy|Drama","rating":1,"counts":5},{"FIELD1":8,"genres":"Comedy|Drama","rating":2,"counts":33},{"FIELD1":9,"genres":"Comedy|Drama","rating":3,"counts":45},{"FIELD1":10,"genres":"Comedy|Drama","rating":4,"counts":139},{"FIELD1":11,"genres":"Comedy|Drama","rating":5,"counts":21},{"FIELD1":12,"genres":"Comedy|Drama|Romance","rating":0,"counts":4},{"FIELD1":13,"genres":"Comedy|Drama|Romance","rating":1,"counts":2},{"FIELD1":14,"genres":"Comedy|Drama|Romance","rating":2,"counts":42},{"FIELD1":15,"genres":"Comedy|Drama|Romance","rating":3,"counts":47},{"FIELD1":16,"genres":"Comedy|Drama|Romance","rating":4,"counts":178},{"FIELD1":17,"genres":"Comedy|Drama|Romance","rating":5,"counts":18},{"FIELD1":18,"genres":"Comedy|Romance","rating":0,"counts":4},{"FIELD1":19,"genres":"Comedy|Romance","rating":1,"counts":4},{"FIELD1":20,"genres":"Comedy|Romance","rating":2,"counts":79},{"FIELD1":21,"genres":"Comedy|Romance","rating":3,"counts":66},{"FIELD1":22,"genres":"Comedy|Romance","rating":4,"counts":161},{"FIELD1":23,"genres":"Comedy|Romance","rating":5,"counts":25},{"FIELD1":24,"genres":"Drama","rating":0,"counts":9},{"FIELD1":25,"genres":"Drama","rating":1,"counts":4},{"FIELD1":26,"genres":"Drama","rating":2,"counts":56},{"FIELD1":27,"genres":"Drama","rating":3,"counts":62},{"FIELD1":28,"genres":"Drama","rating":4,"counts":387},{"FIELD1":29,"genres":"Drama","rating":5,"counts":55}];
+var years=[];
+	 
+console.log(movieRatings_data);
+var parsedate=d3.time.format('%Y-%m-%dT%H:%M:%S.000Z').parse;
+
+	var ratingData1=d3.nest().key(function(d,i){
+					return d.genres;
+				}).key(function(d,i){
+						return d.rating;
+				}).rollup(function(d){return d3.sum(d,function(v){return v.counts;});})
+				.entries(movieRatings_data);
+		console.log(ratingData1);
+	var removeByAttr = function(arr, attr, value){
+		var i = arr.length;
+		while(i--){
+		   if( arr[i] 
+			   && arr[i].hasOwnProperty(attr) 
+			   && (arguments.length > 2 && arr[i][attr] === value ) ){ 
+
+			   arr.splice(i,1);
+
+		   }
+		}
+		return arr;
+	}
+	removeByAttr(ratingData1, 'key', "undefined");
+	ratingData1.forEach(function(d) {
+             d.name = d.key;
+             d.children = d.values;
+             var sev = d.children;
+             sev.forEach(function(v) {
+                 v.name = v.key;
+                 v.size = v.values;
+				 v.group= d.key
+                 delete v.key;
+				 delete v.values;
+             });
+             delete d.key;
+			 delete d.values;
+         });
+	ratingData1={'name':'Movie Ratings','children':ratingData1};
+console.log(ratingData1);
+var test_data=ratingData1;
+
+
+   var g = {
+       data: null,
+       force: null
+   };
+
+   var mousedown_node = null;
+
+   $(function() {
+
+     function mousedown() {
+       if (!mousedown_node ) {
+         chart.call(d3.behavior.zoom().on("zoom"), rescale);
+         return;
+       }
+     }
+
+       g.data = test_data;
+
+
+       var width = $(window).innerWidth(),
+           height = $(window).innerHeight();
+		var radius=Math.min(width,height);
+       var chart = d3.select("#chart")
+					.append("svg")
+					.attr("width", width)
+					.attr("height", height)
+					.attr("pointer-events", "all")
+					.call(d3.behavior.zoom()
+					.on("zoom", redraw))
+					.append('g')
+					.on("mousedown", mousedown);
+		
+   		  function redraw() {
+                   chart.attr("transform",
+                       "translate(" + d3.event.translate + ")" +
+                       " scale(" + d3.event.scale + ")");
+               }
+
+
+       g.link = chart.selectAll(".link"),
+           g.node = chart.selectAll(".node");
+
+
+       g.force = d3.layout.force()
+           .linkDistance(60)
+           .charge(-radius)
+           .gravity(0.05)
+           .size([width, height])
+           .on("tick", tick);
+
+
+       update();
+
+
+   });
+
+
+   function update() {
+
+       var nodes = flatten(g.data);
+		var tooltip = d3.select("body")
+				.append("div").attr('class','tooltip')
+				.style("display", "none");
+		var colorScale=d3.scale.ordinal()
+		.range(['#4679de','#f26522','#47cc91','#cb3f3f'])
+		//.domain(['2015','2016','2017','2018']);
+       var links = d3.layout.tree().links(nodes);
+g.force.nodes(nodes)
+           .links(links)
+           .start();
+      g.link = g.link.data(links, function(d) {
+           return d.target.id;
+       });
+
+       g.link.exit().remove();
+
+      g.link
+           .enter()
+           .insert("line", ".node")
+           .attr("class", "link");
+
+       g.node = g.node.data(nodes, function(d) {
+           return d.id;
+       });
+       g.node.exit().remove();
+        var nodeEnter = g.node.enter()
+           .append("g")
+           .attr("class", "node")
+           .on("click", click)
+           .on("mousedown",
+                  function(d) {
+                  d3.event.stopPropagation();
+                    mousedown_node = d;
+                  })
+           .call(g.force.drag);
+		   
+       nodeEnter.append("circle")
+           .attr("r", function(d) {
+				if(d.size){
+					if(d.size>0 && d.size<=20){
+						return 10;
+					}else if(d.size>20 && d.size<=50){
+						return 13;
+					}else if(d.size>50 && d.size<=100){
+						return 18;
+					}else if(d.size>100 && d.size<=1000){
+						return 20;
+					}else if(d.size>1000 && d.size<=1500){
+						return 22;
+					}else if(d.size>1500 && d.size<=2000){
+						return 25;
+					}else{
+						return 28;
+					}
+				}else{
+					return 6.5;
+				}
+           })
+		   .on("mouseover", function(d){
+				tooltip.style("display", "inline").style("opacity", 1);
+			})
+			.on("mousemove", function(d){
+				if(!d.size){
+					tooltip.html(d.name)
+							.style("top", (event.pageY-10)+"px")
+							.style("left",(event.pageX+10)+"px");
+				}else {
+					var checkClass,uncheckClass;
+					if(Number(d.name)>=1){
+						checkClass1='checked';
+					}else{
+						checkClass1='';
+					}
+					if(Number(d.name)>=2){
+						checkClass2='checked';
+					}else{
+						checkClass2='';
+					}
+					if(Number(d.name)>=3){
+						checkClass3='checked';
+					}else{
+						checkClass3='';
+					}
+					if(Number(d.name)>=4){
+						checkClass4='checked';
+					}else{
+						checkClass4='';
+					}
+					if(Number(d.name)==5){
+						checkClass5='checked';
+					}else{
+						checkClass5='';
+					}
+					tooltip.html("<span class='fa fa-star "+checkClass1+"'></span>"+
+								"<span class='fa fa-star "+checkClass2+"'></span>"+
+								"<span class='fa fa-star "+checkClass3+"'></span>"+
+								"<span class='fa fa-star "+checkClass4+"'></span>"+
+								"<span class='fa fa-star "+checkClass5+"'></span>"+
+					"</br><strong>Count : </strong>"+d.size)
+							.style("top", (event.pageY-10)+"px")
+							.style("left",(event.pageX+10)+"px");
+				}
+			})
+			.on("mouseout", function(){
+				tooltip.style("display", "none").style("opacity", 0);
+			});
+		nodeEnter.append("text")
+			.attr("dy", ".31em")
+			.attr("class","label-text")
+			.text(function(d){
+				if(d.name=='Movie Ratings'){
+					return '';
+				}else if(d.name.length>1){
+					return d.name;
+				}else {
+					return d.name+' : '+d.size;
+				}
+			})
+			.style('fill','black')
+
+		  d3.selectAll(".label-text")
+			.attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+			.attr("transform", function(d) { return d.x < 180 ? "translate("+25+")" : "rotate(360)translate(-"+25+")"; })
+		   g.node.select("circle")
+			   .style("fill", function(d){
+					if(d.group){
+						return colorScale(d.group);
+					}else{
+						return '#8c564b';
+					}
+			   });
+
+   }
+   function flatten(data) {
+       var nodes = [],
+           i = 0;
+       function recurse(node) {
+           if (node.children) node.children.forEach(recurse);
+           if (!node.id) node.id = ++i;
+           nodes.push(node);
+       }
+       recurse(data);
+
+       return nodes;
+   }
+
+
+   function color(d) {
+       return d._children ? "#3182bd"
+           :
+           d.children ? "#c6dbef"
+           :
+           "#fd8d3c";
+	}
+
+
+
+   function populateInfo(data) {
+   }
+
+var test = false;
+
+   function click(d) {
+     populateInfo(d);// to check before addnode
+       if (d3.event.defaultPrevented) return; // ignore drag
+       if (d.children) {
+           d._children = d.children;
+           d.children = null;
+       } else {
+           d.children = d._children;
+           d._children = null;
+       }
+       update();
+   }
+
+   //event handler for every time the force layout engine
+   //says to redraw everything:
+   function tick() {
+       //redraw position of every link within the link set:
+       g.link.attr("x1", function(d) {
+               return d.source.x;
+           })
+           .attr("y1", function(d) {
+               return d.source.y;
+           })
+           .attr("x2", function(d) {
+               return d.target.x;
+           })
+           .attr("y2", function(d) {
+               return d.target.y;
+           });
+       //same for the nodes, using a functor:
+       g.node.attr("transform", function(d) {
+           return "translate(" + d.x + "," + d.y + ")";
+       });
+   }
+
+	</script>
+</body>
+</html>

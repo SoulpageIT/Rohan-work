@@ -1,0 +1,7 @@
+"0","```r
+GlassdoorPages %>%
+    unnest_tokens(word, text)%>%
+  inner_join(get_sentiments(\"nrc\")) %>%
+  count(word, sentiment, sort = TRUE)%>%
+  spread( word,n,fill = 0)%>%head(5)
+```"

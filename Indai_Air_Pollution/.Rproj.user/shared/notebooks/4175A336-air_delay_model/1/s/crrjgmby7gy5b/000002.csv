@@ -1,0 +1,7 @@
+"0","```r
+#find best nround
+cv<-xgb.cv( params = params, data = dtrain, nrounds = 1000, nfold = 5,gamma=0, showsd = T, stratified = T, print.every.n = 10, early.stop.round = 20, maximize = F)
+cv$best_iteration
+print(cv)
+print(cv, verbose=TRUE)
+```"

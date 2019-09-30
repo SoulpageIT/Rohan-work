@@ -1,0 +1,6 @@
+"0","```r
+#Checking the NA 'S at entire data set.
+cat(\"The Number of NA 'S in the data: \", sum(data==\"NA\"))
+#checking for the empty sells in the entire data set.
+cat(\"\nThe Number of blank cell 'S in the data: \", sum(data==\"\"))
+```"

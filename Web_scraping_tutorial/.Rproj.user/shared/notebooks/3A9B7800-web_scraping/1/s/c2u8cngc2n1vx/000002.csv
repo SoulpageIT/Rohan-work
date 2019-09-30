@@ -1,0 +1,19 @@
+"0","```r
+  get_reviews <- function(html){
+      html %>% 
+        # The relevant tag
+        html_nodes('.review-body') %>%      
+        html_text() %>% 
+        # Trim additional white space
+        str_trim() %>%                       
+        # Convert the list into a vector
+        unlist()                             
+    }
+    get_reviewer_names <- function(html){
+      html %>% 
+        html_nodes('.user-review-name-link') %>% 
+        html_text() %>% 
+        str_trim() %>% 
+        unlist()
+    }
+```"

@@ -1,0 +1,5 @@
+"0","```r
+bikes %>%
+  group_by(`Start Time` = cut(`Start Time`, breaks=\"30 min\")) %>%
+  summarize(count = sum())
+```"

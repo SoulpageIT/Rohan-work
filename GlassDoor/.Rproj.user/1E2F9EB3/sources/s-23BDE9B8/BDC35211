@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1557998675554.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "BDC35211",
+    "lastKnownWriteTime" : 1558011068,
+    "last_content_update" : 1558011070814,
+    "path" : "C:/Users/Admin/Desktop/rohan/daily_task/GlassDoor/GlassDoor.Rmd",
+    "project_path" : "GlassDoor.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "23,11",
+        "scrollLine" : "0",
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

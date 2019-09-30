@@ -1,0 +1,2 @@
+"0","data_buffer<-merge(air_reserve,air_store_info,by=""air_store_id"",all=TRUE)"
+"0","data<-merge(data_buffer,store_id_relation,by=""air_store_id"",all=TRUE)"

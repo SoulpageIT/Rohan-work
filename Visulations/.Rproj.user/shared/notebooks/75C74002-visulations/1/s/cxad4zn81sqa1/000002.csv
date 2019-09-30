@@ -1,0 +1,4 @@
+"0","z<-ggplot(data,aes(x=as.factor(Year),y=`PeakSurplus(+) / Deficts(-)(%)`))+geom_bar(stat=""identity"", fill=""steelblue"")+geom_text(aes(label=`PeakSurplus(+) / Deficts(-)(%)`), vjust=-0.5)+ylim(-15,0)+labs(title = ""Year VS  suprplus/Deficts(%)"",x=""Year"", y = ""suprplus/Deficit(%)"")+ scale_y_reverse()+theme(plot.title = element_text(hjust =0.5 ,face = ""bold"",color = ""black""))"
+"2","Scale for 'y' is already present. Adding another scale for 'y', which will replace the existing scale.
+"
+"0","z"

@@ -1,0 +1,30 @@
+"0","```r
+#find best nround
+cv<-xgb.cv( params = params, data = dtrain, nrounds = 50, nfold = 5,gamma=0, showsd = T, stratified = T, print.every.n = 10, early.stop.round = 20, maximize = F)
+```"
+"1","'print.every.n' is deprecated.
+Use 'print_every_n' instead.
+See help(\"Deprecated\") and help(\"xgboost-deprecated\").'early.stop.round' is deprecated.
+Use 'early_stopping_rounds' instead.
+See help(\"Deprecated\") and help(\"xgboost-deprecated\").
+"
+"1","[1]	train-merror:0.351930+0.002603	test-merror:0.352816+0.003646 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 20 rounds.
+
+[11]	train-merror:0.214109+0.003833	test-merror:0.215639+0.005167 
+[21]	train-merror:0.172163+0.002382	test-merror:0.174437+0.003537 
+[31]	train-merror:0.142943+0.002307	test-merror:0.145601+0.002569 
+[41]	train-merror:0.124097+0.001695	test-merror:0.127124+0.001975 
+[50]	train-merror:0.111857+0.000658	test-merror:0.115286+0.000921 
+"
+"0","```r
+cv$best_iteration
+```"
+"1","[1] 50
+"
+"0","```r
+print(cv)
+```"
+"1","##### xgb.cv 5-folds
+"

@@ -1,0 +1,6 @@
+"0","```r
+#Encoding the training data set
+train_encoded<-one_hot(train)
+#Encoding the testing data set
+test_encoded<-one_hot(test)
+```"

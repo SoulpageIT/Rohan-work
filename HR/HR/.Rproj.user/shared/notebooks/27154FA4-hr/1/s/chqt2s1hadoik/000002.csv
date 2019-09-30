@@ -1,0 +1,6 @@
+"0","ggplot(hr[MonthlyIncome <= 5000 & TotalWorkingYears <= 5& (JobLevel == 2 |  JobLevel == 1)  & Attrition==""Yes"",.N,by=list(Age,YearsAtCompany,EnvironmentSatisfaction,MaritalStatus,WorkLifeBalance )], aes(x="""", y=N, group=MaritalStatus, color=MaritalStatus, fill=MaritalStatus)) +"
+"0","  geom_bar(width = 1, stat = ""identity"") +"
+"0","  coord_polar(""y"", start=0) + facet_wrap(~WorkLifeBalance) +"
+"0","  theme(axis.text = element_blank(),"
+"0","        axis.ticks = element_blank(),"
+"0","        panel.grid  = element_blank())+labs(title = ""Work Life Balance Rating(1-4)"",y=""The Number of Employees moving out of the company"")"

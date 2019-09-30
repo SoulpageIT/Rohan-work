@@ -1,0 +1,4 @@
+"0","autoplot(y) +"
+"0","  ggtitle(""Annual Rain Fall by Year"") +"
+"0","  ylab(""Annual Rain Fall"") +"
+"0","  xlab(""Year"")"

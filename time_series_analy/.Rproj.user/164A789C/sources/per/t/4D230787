@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1558949401782.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4020714655",
+    "id" : "4D230787",
+    "lastKnownWriteTime" : 1551333906,
+    "last_content_update" : 1551333906,
+    "path" : "E:/rohan_office_new/rohan/daily_task/time_series_analy/time_series.Rmd",
+    "project_path" : "time_series.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

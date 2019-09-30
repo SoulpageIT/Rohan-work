@@ -1,0 +1,2 @@
+"0","#colnames(data.set.analyse)"
+"0","data.set.analyse$target<-ifelse((data.set.analyse$coupon_run_on_checkout+data.set.analyse$coupon_run_on_cart+data.set.analyse$coupon_run_on_product) > 0,1,0)"

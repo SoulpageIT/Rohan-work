@@ -1,0 +1,1 @@
+"0","data_analysis<-data[,c(""location"",""so2"",""no2"",""rspm"",""spm"",""pm2_5"",""date"",""type"",""seasons"",""year"",""month"")]"

@@ -1,0 +1,5 @@
+"0","# Add label position"
+"0","data <- data %>%"
+"0","  arrange(desc(as.factor(drst))) %>%"
+"0","  mutate(lab.ypos = cumsum(spd) - 0.5*spd)"
+"0","data"

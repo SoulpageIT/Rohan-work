@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1557747675475.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "4C065330",
+    "lastKnownWriteTime" : 32088349215817839,
+    "last_content_update" : 1557747675475,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "BB072260",
+        "caption" : "air_visit_data",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=air_visit_data&cache_key=BB072260",
+        "displayedObservations" : 252108,
+        "environment" : "",
+        "object" : "air_visit_data",
+        "preview" : 0,
+        "totalObservations" : 252108,
+        "variables" : 3
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

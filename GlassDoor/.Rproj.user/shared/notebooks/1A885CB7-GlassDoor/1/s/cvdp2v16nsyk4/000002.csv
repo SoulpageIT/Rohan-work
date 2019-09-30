@@ -1,0 +1,6 @@
+"0","```r
+tidy_descr %>%
+count(word_stem) %>%
+mutate(word_stem = removeNumbers(word_stem)) %>%
+with(wordcloud(word_stem, n, max.words = 100, colors = palette_light()))
+```"

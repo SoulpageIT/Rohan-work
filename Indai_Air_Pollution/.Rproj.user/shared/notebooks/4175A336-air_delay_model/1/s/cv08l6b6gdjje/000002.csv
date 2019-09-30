@@ -1,0 +1,4 @@
+"0","```r
+#This command is use to see all the empty rows.
+train[`Tail Number`==\"\"]
+```"

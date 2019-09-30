@@ -1,0 +1,2 @@
+"0","GlassdoorPages <- tibble(date=as.Date(unlist(date)),page = seq(1, n),"
+"0","                      text = c(html))%>%arrange(desc(date))"

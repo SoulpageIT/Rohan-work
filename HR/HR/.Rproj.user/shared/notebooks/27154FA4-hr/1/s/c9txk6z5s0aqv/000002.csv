@@ -1,0 +1,1 @@
+"0","hr<-fread(""WA_Fn-UseC_-HR-Employee-Attrition.csv"",na.strings = ""NA"",stringsAsFactors = TRUE,drop = c(""Over18"",""EmployeeCount"",""EmployeeNumber"",""StandardHours""))"

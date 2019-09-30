@@ -1,0 +1,7 @@
+"0","dtm <- TermDocumentMatrix(corpus)"
+"0","m <- as.matrix(dtm)"
+"0","v <- sort(rowSums(m),decreasing=TRUE)"
+"0","d <- data.frame(word = names(v),freq=v)"
+"0","d<-as.data.table(d)"
+"0","d<- d[with(d,order(-freq)),]"
+"0","head(d, 20)"

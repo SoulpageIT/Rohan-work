@@ -1,0 +1,94 @@
+---
+title: "Linear Regression Class Practice."
+output: html_notebook
+---
+ 
+libraryies used 
+```{r}
+#By this library we can get boston data set.
+library(MASS)
+#Library for the correlation plot.
+#install.packages("corrplot")
+library(corrplot)
+#This library is used for sample.split function
+library(caTools)
+```
+
+Seigng the data
+```{r}
+data(Boston)
+Boston
+```
+Now we are finding the correlation between the variables as all the variable are numeric.
+```{r}
+#The cor function returns the matrix where the matrix contain the correlation values between each feature in the data set.
+corr<-cor(Boston)
+corr
+```
+
+Now we are ploting the correlation plot.
+```{r}
+corrplot(corr,type = "upper")
+```
+Now we are dividing our data into train and test data set.
+```{r}
+set.seed(2)
+#first parameter is target variable.
+#The second parameter is the percentage.
+split<-sample.split(Boston$medv,SplitRatio = 0.7)
+split
+```
+
+Dividing the data in to train and test data by subset function.
+```{r}
+train<-subset(Boston,split="True")
+test<-subset(Boston,split="False")
+```
+Now we are building the model.
+The lm()function is used to build the linear regression model.Its a Inbuild function no package is need.
+
+```{r}
+colnames(Boston)
+```
+
+```{r}
+#we have two methods to create the models.
+#Training the model method 1.
+model<-lm(medv~.,data=train)
+
+#Trainig the model method 2.
+model<-lm(medv~ +crim+zn+indus+chas+nox+rm+age+dis+rad+tax+ptratio+black+lstat,data=train)
+
+```
+
+Now we are going to see the model describtion
+```{r}
+summary(model)
+```
+The main two things we see to check whether our model is good or bad by checking the number of stars ,the more number of stars means the p_value is way less than 0.05 ,if there is no star that means the P_value is way greater than 0.05 ,if there is "." means the p_value is slightly greater than 0.05.
+
+The other important parameter we need to check is :
+R-squard .
+
+The R_square value should be near to 1 ,this means all the variation in the target variable is due to these predictors variables.
+
+For the good model the R_Square value should to be near to 1.
+
+Variation means pattern.
+
+Now we are going to predict with our model and see the accuracy.
+```{r}
+predict<-predict(model,test)
+predict
+```
+To comapre predict value and actual value we can use.
+```{r}
+plot(test$medv,type = "l",lty=1.8,col="green")
+lines(predict,type="l",col="blue")
+```
+#diagnostic 
+part if we get it know that model is just ok ok, we need to check these asumptions.
+```{r}
+
+```
+

@@ -1,0 +1,8 @@
+"0","```r
+out.range<-boxplot.stats(data.set.analyse$affil_after_p1_prev_session)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$affil_after_p1_prev_session)$stats  #this function show 's the value 's of upper bound and lower bound
+cat(\"The Values of outliers :- \",out.range,\"\n\")
+boxplot(data.set.analyse$affil_after_p1_prev_session)
+mtext(paste(\"outlier :- \",paste(out.range,collapse = \",\")),cex=0.7)#this function pasting the value of the outlier
+cat(\"The upper lower and in between bound values :- \",out.range_value,\"\n\")
+```"

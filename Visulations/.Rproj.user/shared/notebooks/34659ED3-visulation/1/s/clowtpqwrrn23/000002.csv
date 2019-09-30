@@ -1,0 +1,15 @@
+"0","```r
+p <- data %>% 
+  group_by(as.factor(drst)) %>%
+  plot_ly(labels = ~as.factor(drst), values = ~spd,color = ~as.factor(next_stop)) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title ,  showlegend = T,font=t,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))%>%
+  subplot(nrows = 5, shareX = TRUE)
+```"
+"1","n too large, allowed maximum for palette Set2 is 8
+Returning the palette you asked for with that many colors
+Error in (function (obj, domains)  : 
+  (list) object cannot be coerced to type 'double'
+"

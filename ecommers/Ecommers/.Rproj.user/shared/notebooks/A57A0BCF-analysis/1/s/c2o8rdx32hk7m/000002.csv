@@ -1,0 +1,10 @@
+"0","```r
+ggplot(data.set.analyse,aes(target))+geom_bar(bin = 50,width = 0.2,fill=\"steelblue\",col=\"black\")+labs(title = \"comparison between two class in target variable\")+theme(plot.title = element_text(hjust = 0.5,face = \"bold\",color = \"steelblue\"))+theme(panel.background = element_rect(fill = 'gray'))+geom_text(stat='count', aes(label=..count..), vjust=-0.2)
+```"
+"1","Ignoring unknown parameters: bin
+"
+"0","```r
+ggsave(\"previous_sessions.png\")
+```"
+"1","Saving 7.29 x 4.5 in image
+"

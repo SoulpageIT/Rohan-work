@@ -1,0 +1,4 @@
+"0","indx <- setNames( rep(c('winter', 'spring', 'summer',"
+"0","                   'fall'),each=3), c(12,1:11))"
+"0","#data1=data"
+"0","data$season<-unname(indx[as.character(data$month)])"

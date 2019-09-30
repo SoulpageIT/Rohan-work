@@ -1,0 +1,7 @@
+"0","```r
+#subsetting the data of NewYork.
+Dallas<-train[OriginAirPort==\"Dallas\"]
+#Adding the columns Longitude and Latitude.
+Dallas$`Start Station Longitude`<- -96.9830
+Dallas$`Start Station Latitude`<- 32.9614
+```"

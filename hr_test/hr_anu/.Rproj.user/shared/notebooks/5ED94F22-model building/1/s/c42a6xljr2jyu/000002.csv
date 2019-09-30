@@ -1,0 +1,6 @@
+"0","getmode <- function(v) {"
+"0","   uniqv <- unique(v)"
+"0","   uniqv[which.max(tabulate(match(v, uniqv)))]"
+"0","}"
+"0","train$education[is.na(train$education)] <- getmode(train$education)"
+"0","train$previous_year_rating[is.na(train$previous_year_rating)] <- getmode(train$previous_year_rating)"

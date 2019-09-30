@@ -1,0 +1,5 @@
+"0","```r
+```r
+unique(data_user_not_viewed$coupon_run_on_cart)
+```
+```"

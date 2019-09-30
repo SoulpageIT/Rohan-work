@@ -1,0 +1,7 @@
+"0","```r
+#subsetting the data of NewYork
+NewYork<-test[OriginAirPort==\"NewYork\"]
+#Adding the columns
+NewYork$`Start Station Longitude`<- -73.8630
+NewYork$`Start Station Latitude`<- 40.7636
+```"

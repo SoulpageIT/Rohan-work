@@ -1,0 +1,53 @@
+"0","```r
+print(str(heart.data))
+```"
+"1","'data.frame':	 obs. of  14 variables:
+ $ age     : num  63 67 67 37 41 56 62 57 63 53 ...
+ $ sex     : num  1 1 1 1 0 1 0 0 1 1 ...
+ $ cp      : num  1 4 4 3 2 2 4 4 4 4 ...
+ $ trestbps: num  145 160 120 130 130 120 140 120 130 140 ...
+ $ chol    : num  233 286 229 250 204 236 268 354 254 203 ...
+ $ fbs     : num  1 0 0 0 0 0 0 0 0 1 ...
+ $ restecg : num  2 2 2 0 2 0 2 0 2 2 ...
+ $ thalach : num  150 108 129 187 172 178 160 163 147 155 ...
+ $ exang   : num  0 1 1 0 0 0 0 1 0 1 ...
+ $ oldpeak : num  2.3 1.5 2.6 3.5 1.4 0.8 3.6 0.6 1.4 3.1 ...
+ $ slope   : num  3 2 2 3 1 1 3 1 2 3 ...
+ $ ca      : num  0 3 2 0 0 0 2 0 1 0 ...
+ $ thal    : num  6 3 7 3 3 3 3 3 7 7 ...
+ $ num     : int  0 2 1 0 0 0 3 0 2 1 ...
+NULL
+"
+"0","```r
+print(\"summary\")
+```"
+"1","[1] \"summary\"
+"
+"0","```r
+summary(heart.data)
+```"
+"1","      age             sex               cp           trestbps          chol            fbs        
+ Min.   :29.00   Min.   :0.0000   Min.   :1.000   Min.   : 94.0   Min.   :126.0   Min.   :0.0000  
+ 1st Qu.:48.00   1st Qu.:0.0000   1st Qu.:3.000   1st Qu.:120.0   1st Qu.:211.0   1st Qu.:0.0000  
+ Median :56.00   Median :1.0000   Median :3.000   Median :130.0   Median :241.0   Median :0.0000  
+ Mean   :54.44   Mean   :0.6799   Mean   :3.158   Mean   :131.7   Mean   :246.7   Mean   :0.1485  
+ 3rd Qu.:61.00   3rd Qu.:1.0000   3rd Qu.:4.000   3rd Qu.:140.0   3rd Qu.:275.0   3rd Qu.:0.0000  
+ Max.   :77.00   Max.   :1.0000   Max.   :4.000   Max.   :200.0   Max.   :564.0   Max.   :1.0000  
+                                                                                                  
+    restecg          thalach          exang           oldpeak         slope             ca        
+ Min.   :0.0000   Min.   : 71.0   Min.   :0.0000   Min.   :0.00   Min.   :1.000   Min.   :0.0000  
+ 1st Qu.:0.0000   1st Qu.:133.5   1st Qu.:0.0000   1st Qu.:0.00   1st Qu.:1.000   1st Qu.:0.0000  
+ Median :1.0000   Median :153.0   Median :0.0000   Median :0.80   Median :2.000   Median :0.0000  
+ Mean   :0.9901   Mean   :149.6   Mean   :0.3267   Mean   :1.04   Mean   :1.601   Mean   :0.6722  
+ 3rd Qu.:2.0000   3rd Qu.:166.0   3rd Qu.:1.0000   3rd Qu.:1.60   3rd Qu.:2.000   3rd Qu.:1.0000  
+ Max.   :2.0000   Max.   :202.0   Max.   :1.0000   Max.   :6.20   Max.   :3.000   Max.   :3.0000  
+                                                                                  NA's   :4       
+      thal            num        
+ Min.   :3.000   Min.   :0.0000  
+ 1st Qu.:3.000   1st Qu.:0.0000  
+ Median :3.000   Median :0.0000  
+ Mean   :4.734   Mean   :0.9373  
+ 3rd Qu.:7.000   3rd Qu.:2.0000  
+ Max.   :7.000   Max.   :4.0000  
+ NA's   :2                       
+"

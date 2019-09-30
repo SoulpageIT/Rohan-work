@@ -1,0 +1,32 @@
+---
+title: "Dummy"
+output: html_notebook
+---
+
+library
+```{r}
+library(readxl)
+library(data.table)
+```
+
+reading the dummy data
+```{r}
+dummy<-fread("dummy1.csv")
+```
+
+
+```{r}
+#Checking the NA 'S at entire data set.
+cat("The Number of NA 'S in the data: ", sum(dummy=="NA"))
+#checking for the empty sells in the entire data set.
+cat("\nThe Number of blank cell 'S in the data: ", sum(dummy==""))
+```
+
+```{r}
+apply(dummy,2,function(x)sum(is.na(x)))
+```
+
+```{r}
+apply(dummy,2,function(x)sum(x==""))
+```
+

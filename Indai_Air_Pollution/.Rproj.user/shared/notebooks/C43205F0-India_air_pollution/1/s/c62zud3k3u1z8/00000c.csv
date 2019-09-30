@@ -1,0 +1,1 @@
+"0","data<-data[,list(""avgNO2""=mean(no2),""avgSO2""=mean(so2)),by=c(""state"",""location"",""agency"",""type"",""so2"",""no2"" ,""date"" ,""seasons"",""month"", ""year"")]"

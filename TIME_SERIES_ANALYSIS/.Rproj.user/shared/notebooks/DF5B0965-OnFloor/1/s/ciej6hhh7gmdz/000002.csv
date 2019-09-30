@@ -1,0 +1,4 @@
+"0","```r
+#model prediction
+xgbpred <- predict (xgb1,dtestfinal)
+```"

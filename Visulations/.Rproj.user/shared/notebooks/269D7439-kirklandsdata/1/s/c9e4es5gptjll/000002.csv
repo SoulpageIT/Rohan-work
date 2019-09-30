@@ -1,0 +1,8 @@
+"0","```r
+
+traindata1<-S_trainData[,-c(19,22,11,17,10)]
+
+logit_scale<-glm(target~.,family = binomial,data = traindata1)
+save(logit_scale,file = \"logit_scale.rda\")
+summary(logit_scale)
+```"

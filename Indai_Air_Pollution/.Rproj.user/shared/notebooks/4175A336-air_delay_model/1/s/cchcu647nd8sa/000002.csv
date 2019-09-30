@@ -1,0 +1,4 @@
+"0","```r
+#first default - model training
+xgb1 <- xgb.train (params = params, data = dtrain, nrounds = 320, watchlist = list(val=dtestfinal,train=dtrain), print.every.n = 10, early.stop.round = 10, maximize = F , eval_metric = \"error\")
+```"

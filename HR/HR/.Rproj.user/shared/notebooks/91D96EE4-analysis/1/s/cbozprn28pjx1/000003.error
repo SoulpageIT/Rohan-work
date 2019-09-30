@@ -1,0 +1,1 @@
+{"frames":[{"character_number":0,"end_character_number":0,"end_line_number":0,"file":"","func":"plotly(g)","line_number":0},{"character_number":0,"end_character_number":0,"end_line_number":0,"file":"","func":"Sys.setenv(plotly_username = username)","line_number":0}],"message":"Error in Sys.setenv(plotly_username = username) : \n  wrong length for argument\n"}

@@ -1,0 +1,178 @@
+"0","```r
+na.omit(data$sampling_date)
+
+```"
+"1","   [1] February - M021990  February - M021990  February - M021990  March - M031990     March - M031990     March - M031990    
+   [7] April - M041990     April - M041990     April - M041990     May - M051990       May - M051990       June - M061990     
+  [13] June - M061990      June - M061990      July - M071990      July - M071990      July - M071990      August - M081990   
+  [19] August - M081990    August - M081990    September - M091990 September - M091990 September - M091990 October - M101990  
+  [25] October - M101990   October - M101990   November - M111990  November - M111990  November - M111990  January - M011991  
+  [31] January - M011991   January - M011991   February - M021991  February - M021991  February - M021991  March - M031991    
+  [37] March - M031991     March - M031991     April - M041991     April - M041991     April - M041991     May - M051991      
+  [43] May - M051991       May - M051991       June - M061991      June - M061991      June - M061991      July - M071991     
+  [49] July - M071991      July - M071991      August - M081991    August - M081991    August - M081991    September - M091991
+  [55] September - M091991 September - M091991 October - M101991   October - M101991   October - M101991   November - M111991 
+  [61] November - M111991  November - M111991  December - M121991  December - M121991  December - M121991  January - M011992  
+  [67] January - M011992   January - M011992   January - M011992   January - M011992   January - M011992   January - M011992  
+  [73] January - M011992   January - M011992   January - M011992   February - M021992  February - M021992  February - M021992 
+  [79] February - M021992  February - M021992  February - M021992  February - M021992  February - M021992  February - M021992 
+  [85] February - M021992  March - M031992     March - M031992     March - M031992     March - M031992     March - M031992    
+  [91] March - M031992     March - M031992     March - M031992     March - M031992     March - M031992     April - M041992    
+  [97] April - M041992     April - M041992     April - M041992     April - M041992     April - M041992     April - M041992    
+ [103] April - M041992     May - M051992       May - M051992       May - M051992       May - M051992       May - M051992      
+ [109] May - M051992       June - M061992      June - M061992      June - M061992      June - M061992      June - M061992     
+ [115] June - M061992      June - M061992      June - M061992      June - M061992      July - M071992      July - M071992     
+ [121] July - M071992      July - M071992      July - M071992      August - M081992    August - M081992    August - M081992   
+ [127] August - M081992    August - M081992    August - M081992    September - M091992 September - M091992 September - M091992
+ [133] September - M091992 September - M091992 September - M091992 October - M101992   October - M101992   October - M101992  
+ [139] October - M101992   October - M101992   October - M101992   November - M111992  November - M111992  November - M111992 
+ [145] November - M111992  November - M111992  December - M121992  December - M121992  December - M121992  December - M121992 
+ [151] December - M121992  December - M121992  January - M011993   January - M011993   January - M011993   February - M021993 
+ [157] February - M021993  February - M021993  March - M031993     March - M031993     March - M031993     April - M041993    
+ [163] April - M041993     April - M041993     May - M051993       May - M051993       May - M051993       June - M061993     
+ [169] June - M061993      June - M061993      July - M071993      July - M071993      July - M071993      August - M081993   
+ [175] August - M081993    August - M081993    September - M091993 September - M091993 September - M091993 October - M101993  
+ [181] October - M101993   October - M101993   November - M111993  November - M111993  November - M111993  December - M121993 
+ [187] December - M121993  December - M121993  January - M011994   January - M011994   January - M011994   January - M011994  
+ [193] January - M011994   January - M011994   February - M021994  February - M021994  February - M021994  February - M021994 
+ [199] February - M021994  February - M021994  March - M031994     March - M031994     March - M031994     March - M031994    
+ [205] March - M031994     March - M031994     April - M041994     April - M041994     April - M041994     April - M041994    
+ [211] April - M041994     April - M041994     May - M051994       May - M051994       May - M051994       May - M051994      
+ [217] May - M051994       June - M061994      June - M061994      June - M061994      June - M061994      June - M061994     
+ [223] July - M071994      July - M071994      July - M071994      July - M071994      July - M071994      August - M081994   
+ [229] August - M081994    August - M081994    August - M081994    August - M081994    August - M081994    September - M091994
+ [235] September - M091994 September - M091994 September - M091994 September - M091994 September - M091994 November - M111994 
+ [241] November - M111994  November - M111994  November - M111994  November - M111994  November - M111994  December - M121994 
+ [247] December - M121994  December - M121994  December - M121994  December - M121994  December - M121994  February_1995      
+ [253] March_1995          April_1995          May_1995            June_1995           July_1995           August_1995        
+ [259] November_1995       December_1995       January_1995        February_1995       March_1995          April_1995         
+ [265] May_1995            July_1995           August_1995         September_1995      October_1995        November_1995      
+ [271] December_1995       January_1995        February_1995       March_1995          April_1995          May_1995           
+ [277] June_1995           July_1995           August_1995         September_1995      October_1995        November_1995      
+ [283] December_1995       January_1995        February_1995       March_1995          April_1995          May_1995           
+ [289] June_1995           July_1995           August_1995         September_1995      October_1995        November_1995      
+ [295] December_1995       January_1995        February_1995       March_1995          April_1995          May_1995           
+ [301] July_1995           August_1995         September_1995      October_1995        November_1995       December_1995      
+ [307] January_1995        March_1995          April_1995          May_1995            June_1995           July_1995          
+ [313] August_1995         September_1995      December_1995       April_1995          May_1995            June_1995          
+ [319] July_1995           August_1995         September_1995      October_1995        November_1995       December_1995      
+ [325] April_1995          May_1995            June_1995           July_1995           August_1995         September_1995     
+ [331] October_1995        November_1995       December_1995       April_1995          May_1995            June_1995          
+ [337] July_1995           August_1995         September_1995      October_1995        November_1995       December_1995      
+ [343] January - M011996   January - M011996   January - M011996   January - M011996   January - M011996   January - M011996  
+ [349] January - M011996   January - M011996   January - M011996   February - M021996  February - M021996  February - M021996 
+ [355] February - M021996  February - M021996  February - M021996  February - M021996  February - M021996  February - M021996 
+ [361] March - M031996     March - M031996     March - M031996     March - M031996     March - M031996     March - M031996    
+ [367] March - M031996     March - M031996     April - M041996     April - M041996     April - M041996     April - M041996    
+ [373] April - M041996     April - M041996     April - M041996     April - M041996     April - M041996     May - M051996      
+ [379] May - M051996       May - M051996       May - M051996       May - M051996       May - M051996       May - M051996      
+ [385] May - M051996       June - M061996      June - M061996      June - M061996      June - M061996      June - M061996     
+ [391] June - M061996      June - M061996      June - M061996      June - M061996      July - M071996      July - M071996     
+ [397] July - M071996      July - M071996      July - M071996      July - M071996      July - M071996      August - M081996   
+ [403] August - M081996    August - M081996    August - M081996    August - M081996    August - M081996    August - M081996   
+ [409] August - M081996    September - M091996 September - M091996 September - M091996 September - M091996 September - M091996
+ [415] September - M091996 September - M091996 October - M101996   October - M101996   October - M101996   October - M101996  
+ [421] October - M101996   October - M101996   November - M111996  November - M111996  November - M111996  November - M111996 
+ [427] November - M111996  November - M111996  November - M111996  November - M111996  December - M121996  December - M121996 
+ [433] December - M121996  December - M121996  December - M121996  December - M121996  December - M121996  December - M121996 
+ [439] January - M011997   January - M011997   January - M011997   January - M011997   January - M011997   January - M011997  
+ [445] January - M011997   January - M011997   February - M021997  February - M021997  February - M021997  February - M021997 
+ [451] February - M021997  February - M021997  February - M021997  March - M031997     March - M031997     March - M031997    
+ [457] March - M031997     March - M031997     March - M031997     March - M031997     March - M031997     March - M031997    
+ [463] April - M041997     April - M041997     April - M041997     April - M041997     April - M041997     April - M041997    
+ [469] April - M041997     April - M041997     April - M041997     May - M051997       May - M051997       May - M051997      
+ [475] May - M051997       May - M051997       May - M051997       May - M051997       May - M051997       June - M061997     
+ [481] June - M061997      June - M061997      June - M061997      June - M061997      June - M061997      June - M061997     
+ [487] June - M061997      June - M061997      July - M071997      July - M071997      July - M071997      July - M071997     
+ [493] July - M071997      July - M071997      July - M071997      July - M071997      July - M071997      August - M081997   
+ [499] August - M081997    August - M081997    August - M081997    August - M081997    August - M081997    August - M081997   
+ [505] August - M081997    August - M081997    September - M091997 September - M091997 September - M091997 September - M091997
+ [511] September - M091997 September - M091997 October - M101997   October - M101997   October - M101997   October - M101997  
+ [517] October - M101997   October - M101997   November - M111997  November - M111997  November - M111997  November - M111997 
+ [523] November - M111997  November - M111997  November - M111997  November - M111997  November - M111997  December - M121997 
+ [529] December - M121997  December - M121997  December - M121997  December - M121997  December - M121997  December - M121997 
+ [535] December - M121997  December - M121997  January - M011998   January - M011998   January - M011998   January - M011998  
+ [541] January - M011998   January - M011998   January - M011998   January - M011998   January - M011998   February - M021998 
+ [547] February - M021998  February - M021998  February - M021998  February - M021998  February - M021998  February - M021998 
+ [553] February - M021998  February - M021998  March - M031998     March - M031998     March - M031998     March - M031998    
+ [559] March - M031998     March - M031998     March - M031998     March - M031998     March - M031998     April - M041998    
+ [565] April - M041998     April - M041998     April - M041998     April - M041998     April - M041998     May - M051998      
+ [571] May - M051998       May - M051998       May - M051998       May - M051998       May - M051998       June - M061998     
+ [577] June - M061998      June - M061998      June - M061998      June - M061998      July - M071998      July - M071998     
+ [583] July - M071998      July - M071998      July - M071998      July - M071998      August - M081998    August - M081998   
+ [589] August - M081998    September - M091998 September - M091998 September - M091998 October - M101998   October - M101998  
+ [595] October - M101998   November - M111998  November - M111998  November - M111998  November - M111998  November - M111998 
+ [601] November - M111998  December - M121998  December - M121998  December - M121998  December - M121998  December - M121998 
+ [607] December - M121998  December - M121998  December - M121998  December - M121998  January - M011999   January - M011999  
+ [613] January - M011999   January - M011999   January - M011999   January - M011999   January - M011999   January - M011999  
+ [619] January - M011999   February - M021999  February - M021999  February - M021999  February - M021999  February - M021999 
+ [625] February - M021999  February - M021999  February - M021999  February - M021999  March - M031999     March - M031999    
+ [631] March - M031999     March - M031999     March - M031999     March - M031999     March - M031999     March - M031999    
+ [637] March - M031999     April - M041999     April - M041999     April - M041999     April - M041999     April - M041999    
+ [643] April - M041999     April - M041999     April - M041999     April - M041999     May - M051999       May - M051999      
+ [649] May - M051999       May - M051999       May - M051999       May - M051999       May - M051999       May - M051999      
+ [655] May - M051999       June - M061999      June - M061999      June - M061999      June - M061999      June - M061999     
+ [661] June - M061999      June - M061999      June - M061999      June - M061999      July - M071999      July - M071999     
+ [667] July - M071999      July - M071999      July - M071999      July - M071999      July - M071999      July - M071999     
+ [673] July - M071999      August - M081999    August - M081999    August - M081999    August - M081999    August - M081999   
+ [679] August - M081999    August - M081999    August - M081999    August - M081999    September - M091999 September - M091999
+ [685] September - M091999 September - M091999 September - M091999 September - M091999 September - M091999 September - M091999
+ [691] September - M091999 October - M101999   October - M101999   October - M101999   October - M101999   October - M101999  
+ [697] October - M101999   October - M101999   October - M101999   October - M101999   November - M111999  November - M111999 
+ [703] November - M111999  November - M111999  November - M111999  November - M111999  November - M111999  November - M111999 
+ [709] November - M111999  December - M121999  December - M121999  December - M121999  December - M121999  December - M121999 
+ [715] December - M121999  December - M121999  December - M121999  December - M121999  January - M012000   January - M012000  
+ [721] January - M012000   January - M012000   January - M012000   January - M012000   January - M012000   January - M012000  
+ [727] January - M012000   February - M022000  February - M022000  February - M022000  February - M022000  February - M022000 
+ [733] February - M022000  February - M022000  February - M022000  February - M022000  March - M032000     March - M032000    
+ [739] March - M032000     March - M032000     March - M032000     March - M032000     March - M032000     March - M032000    
+ [745] March - M032000     April - M042000     April - M042000     April - M042000     April - M042000     April - M042000    
+ [751] April - M042000     April - M042000     April - M042000     April - M042000     May - M052000       May - M052000      
+ [757] May - M052000       May - M052000       May - M052000       May - M052000       May - M052000       May - M052000      
+ [763] May - M052000       June - M062000      June - M062000      June - M062000      June - M062000      June - M062000     
+ [769] June - M062000      June - M062000      June - M062000      June - M062000      July - M072000      July - M072000     
+ [775] July - M072000      July - M072000      July - M072000      July - M072000      July - M072000      July - M072000     
+ [781] July - M072000      August - M082000    August - M082000    August - M082000    August - M082000    August - M082000   
+ [787] August - M082000    August - M082000    August - M082000    August - M082000    September - M092000 September - M092000
+ [793] September - M092000 September - M092000 September - M092000 September - M092000 September - M092000 September - M092000
+ [799] September - M092000 October - M102000   October - M102000   October - M102000   October - M102000   October - M102000  
+ [805] October - M102000   October - M102000   October - M102000   October - M102000   November - M112000  November - M112000 
+ [811] November - M112000  November - M112000  November - M112000  November - M112000  November - M112000  November - M112000 
+ [817] November - M112000  December - M122000  December - M122000  December - M122000  December - M122000  December - M122000 
+ [823] December - M122000  December - M122000  December - M122000  December - M122000  January - M012001   February - M022001 
+ [829] March - M032001     April - M042001     May - M052001       June - M062001      July - M072001      August - M082001   
+ [835] September - M092001 October - M102001   November - M112001  December - M122001  January - M012001   February - M022001 
+ [841] March - M032001     April - M042001     May - M052001       June - M062001      July - M072001      August - M082001   
+ [847] September - M092001 October - M102001   November - M112001  December - M122001  January - M012001   February - M022001 
+ [853] March - M032001     April - M042001     May - M052001       June - M062001      July - M072001      August - M082001   
+ [859] September - M092001 October - M102001   November - M112001  December - M122001  January - M012001   February - M022001 
+ [865] March - M032001     April - M042001     May - M052001       June - M062001      July - M072001      August - M082001   
+ [871] September - M092001 October - M102001   November - M112001  December - M122001  January - M012001   February - M022001 
+ [877] March - M032001     April - M042001     May - M052001       June - M062001      July - M072001      August - M082001   
+ [883] September - M092001 October - M102001   November - M112001  December - M122001  January - M012001   February - M022001 
+ [889] March - M032001     April - M042001     May - M052001       June - M062001      July - M072001      August - M082001   
+ [895] September - M092001 October - M102001   November - M112001  December - M122001  January - M012001   February - M022001 
+ [901] March - M032001     April - M042001     May - M052001       September - M092001 October - M102001   November - M112001 
+ [907] December - M122001  January - M012001   February - M022001  March - M032001     April - M042001     May - M052001      
+ [913] June - M062001      July - M072001      August - M082001    September - M092001 October - M102001   November - M112001 
+ [919] December - M122001  January - M012001   February - M022001  March - M032001     April - M042001     May - M052001      
+ [925] June - M062001      July - M072001      August - M082001    September - M092001 October - M102001   November - M112001 
+ [931] December - M122001  January - M012002   February - M022002  March - M032002     April - M042002     May - M052002      
+ [937] June - M062002      July - M072002      August - M082002    September - M092002 October - M102002   November - M112002 
+ [943] December - M122002  January - M012002   February - M022002  March - M032002     April - M042002     May - M052002      
+ [949] June - M062002      July - M072002      August - M082002    September - M092002 October - M102002   November - M112002 
+ [955] December - M122002  January - M012002   February - M022002  March - M032002     April - M042002     May - M052002      
+ [961] June - M062002      July - M072002      August - M082002    September - M092002 October - M102002   November - M112002 
+ [967] December - M122002  January - M012002   February - M022002  March - M032002     April - M042002     May - M052002      
+ [973] June - M062002      July - M072002      August - M082002    September - M092002 October - M102002   November - M112002 
+ [979] December - M122002  January - M012002   February - M022002  March - M032002     April - M042002     May - M052002      
+ [985] June - M062002      July - M072002      August - M082002    September - M092002 October - M102002   November - M112002 
+ [991] December - M122002  January - M012002   February - M022002  March - M032002     April - M042002     May - M052002      
+ [997] June - M062002      July - M072002      August - M082002    September - M092002
+ [ reached getOption(\"max.print\") -- omitted 434739 entries ]
+attr(,\"na.action\")
+[1] 435740 435741 435742
+attr(,\"class\")
+[1] \"omit\"
+5485 Levels: 01-01-14 01-01-15 01-02-14 01-02-15 01-03-14 01-03-15 01-04-14 01-04-15 01-05-14 01-05-15 01-06-14 01-06-15 01-07-14 ... September_1995
+"

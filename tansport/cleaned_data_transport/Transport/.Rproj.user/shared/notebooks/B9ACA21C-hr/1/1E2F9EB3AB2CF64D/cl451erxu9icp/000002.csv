@@ -1,0 +1,7 @@
+"0","xgb <- xgboost(data = sparseMatrix(train[,-""target""]),label = as.matrix(train[,""target""]),eta = 0.2,max_depth = 30,nround=5,subsample = 0.5,colsample_bytree = 0.5,seed = 4,"
+"0","objective = ""binary:logistic"","
+"0","nthread = 3"
+"0",")"
+"2","Error in sparseMatrix(train[, -""target""]) : 
+  could not find function ""sparseMatrix""
+"

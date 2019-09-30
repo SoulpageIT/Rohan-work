@@ -1,0 +1,6 @@
+"0","```r
+data<-fread(\"sudeste.csv\")
+#subsetting the data 
+#we are subsetting our data.
+data<-data[yr>2011]
+```"

@@ -1,0 +1,12 @@
+"0","# Get the files names"
+"0","files = list.files(pattern=""*.csv"")"
+"0","# First apply read.csv, then rbind"
+"0","data = do.call(rbind, lapply(files, function(x) fread(x, stringsAsFactors = FALSE)))"
+"0","clean_data<-na.omit(data)"
+"0","names(clean_data)[names(clean_data) == 'V1'] <- 'No'"
+"0","names(clean_data)[names(clean_data) == 'V2'] <- 'text'"
+"0","names(clean_data)[names(clean_data) == 'V3'] <- 'date'"
+"0","clean_data$month<-as.factor(month(as.POSIXct(clean_data$date)))"
+"2","Error in as.POSIXlt.character(x, tz, ...) : 
+  character string is not in a standard unambiguous format
+"

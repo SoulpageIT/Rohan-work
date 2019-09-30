@@ -1,0 +1,3 @@
+"0","data_user_not_viewed<-data.set.analyse %>% filter(sessions_before==0)"
+"0","#View(table(data_user_not_viewed$target))"
+"0","#View(data_user_not_viewed)"

@@ -1,0 +1,4 @@
+"0","```r
+dtrain <- xgb.DMatrix(as.matrix(train_train_data[,-\"surface\"]), label = as.matrix(train_train_data$surface))
+dtestfinal<-xgb.DMatrix(as.matrix(test_train_data[,-\"surface\"]), label = as.matrix(test_train_data$surface))
+```"

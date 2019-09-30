@@ -1,0 +1,4 @@
+"0","```r
+#is.empty(data$temp)
+data[is.empty(prcp)==TRUE]
+```"

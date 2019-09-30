@@ -1,0 +1,4 @@
+"0","```r
+cat(\"\nThe Tota number of row in the data set :- \",nrow(data))
+cat(\"\nThe Total number of columns in the data set :- \",ncol(data))
+```"

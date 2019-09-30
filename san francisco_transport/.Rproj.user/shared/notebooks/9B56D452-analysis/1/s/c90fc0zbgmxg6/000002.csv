@@ -1,0 +1,8 @@
+"0","```r
+```r
+v<-ggplot(data_users_viewed,aes(x=products_viewed))+geom_bar(fill=\steelblue\, na.rm = TRUE)+labs(title = \Total number of producted pages viewed by the customers.\)+theme(plot.title = element_text(hjust = 0.5,face = \bold\,color = \blue\))+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = \black\))+annotate(\text\, x=0, y= 227209, label=\ 227209\)+xlim(-1,30)
+ggsave(\nnnnnnn.jpg\,plot=v,unit=\in\,width=7,height = 7,dpi=300)
+v
+```
+```"

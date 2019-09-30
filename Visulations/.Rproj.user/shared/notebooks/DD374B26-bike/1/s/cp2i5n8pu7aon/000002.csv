@@ -1,0 +1,5 @@
+"0","```r
+# When ploting, we can use different layouts:
+par(mfrow=c(2,2), mar=c(1,1,1,1))
+plot(net, layout=layout.sphere, main=\"sphere\")
+```"

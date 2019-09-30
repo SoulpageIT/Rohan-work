@@ -1,0 +1,6 @@
+"0","```r
+set.seed(1)
+sample = sample.split(bikesTimeSeries$Gender, SplitRatio = .70)
+train = subset(bikesTimeSeries, sample == TRUE)
+test  = subset(bikesTimeSeries, sample == FALSE)
+```"

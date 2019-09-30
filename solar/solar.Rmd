@@ -1,0 +1,109 @@
+---
+title: "solar  data "
+output: html_notebook
+author : rohan
+Date : 23/01/2019
+---
+All the libraries required for this project
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+library(data.table)
+library(dbplyr)
+library(docxtractr)
+library(stringr)
+library(tidyverse)
+library(lubridate)
+ library(zoo)
+library(DataExplorer)
+```
+
+Generating the table data_all
+```{r}
+generating_table <- function(file_na,doc_table1,file_names,data_set1){
+  i=2
+  j=1
+  while(i<=length(file_na)){
+    j=1
+    while(j<=length(doc_table1$ISD_Number)){
+      if(file_na[i]==doc_table1$ISD_Number[j]){
+        
+        data_set_buffer<-fread(file_names[i])
+        data_set_buffer1=data_set_buffer[,c(1, 2, 5, 8, 32)]
+        #data_set_buffer1$Lat_N<-doc_table1$Lat_N[which(file_na[i] %in% doc_table1$ISD_Number)]
+        #data_set_buffer1$Long_E<-doc_table1$Long_E[which(file_na[i] %in% doc_table1$ISD_Number)]
+        data_set_buffer1$ISD_Number<-doc_table1$ISD_Number[which(file_na[i] %in% doc_table1$ISD_Number)]
+        data_set_buffer1 <- within(data_set_buffer1, data_set_buffer1$time[time == "24:00"] <- "23:59")
+        data_set_buffer1$date_time<-as.POSIXct(mdy_hm(paste(data_set_buffer1$Date, data_set_buffer1$Time)), format="%m-%d-%Y %H:%M")
+        data_set1<-rbind(data_set1, data_set_buffer1)
+        j=j+1
+      }
+      j=j+1
+    }
+    i=i+1
+    
+  }
+  return(data_set1)
+}  
+
+```
+
+#The start of the analysis
+
+```{r}
+ path='C:\\Users\\Dell\\Desktop\\rohan'
+  file_names<-list.files(path, pattern=".csv", all.files=FALSE,full.names=FALSE)
+  
+  
+  doc<-read_docx("C:\\Users\\Dell\\Desktop\\rohan\\solar\\india_documentation.docx",track_changes = "accept")
+  doc_tables<-docx_extract_all_tbls(doc)
+  
+  doc_table1<-mcga(assign_colnames(doc_tables[[1]], 2))
+  doc_table1<-doc_table1[,-c(3,4)]
+  
+  
+  colnames(doc_table1)<-c("Names","ISD_Number","Lat_N","Long_E","Available Years")
+  
+  
+  file_na=str_sub(file_names, 1, str_length(file_names)-9)
+  
+  
+  data_set<-fread(file_names[1])
+  
+  data_set1 <- data_set[,c(1, 2, 5, 8, 32)]
+  
+  
+  #data_set1$Lat_N<-doc_table1$Lat_N[which(file_na[1] %in% doc_table1$ISD_Number)]
+  #data_set1$Long_E<-doc_table1$Long_E[which(file_na[1] %in% doc_table1$ISD_Number)]
+  #data_all$date_time <- mdy_hm(paste(data_all$Date, data_all$Time))
+  #data_all$date_time <-as.POSIXct(data_all$date_time,format='%m-%d-%Y %H:%M:%S')
+  data_set1$ISD_Number<-doc_table1$ISD_Number[which(file_na[1] %in% doc_table1$ISD_Number)]
+  data_set1 <- within(data_set1, Time[Time == "24:00"] <- "23:59")
+  	
+  #data_set1 <-within(data_set1, data_set1$time[time == "24:00"] <- "23:59")
+
+  data_set1$date_time<-as.POSIXct( mdy_hm(paste(data_set1$Date, data_set1$Time)), format="%m-%d-%Y %H:%M")
+  
+  
+  data_all<-generating_table(file_na,doc_table1,file_names,data_set1)
+  View(data_all)
+  
+```
+
+Here i am adding season to the data all
+```{r}
+  months <-month(data_all$date_time)
+  indx <- setNames( rep(c("winter","summer","monsoon"),each=4), c(11:12,1:10))
+  data_all$Season <- unname(indx[as.character(months)])
+  colnames(data_all)<-c("date","time","ghi","dni","dry_bulb","ISD_Number","datetime","season")
+  View(data_all)
+  #data_all <- within(data_all, time[time == "24:00"] <- "23:59")
+```
+
+aggerating the data by ISD_Numner ,month,season,year
+```{r}
+View(data_all)
+data_final <- data_all[,list(avg_ghi = mean(ghi), avg_dni = mean(dni), avg_dry_bulb = mean(dry_bulb), max_ghi= max(ghi), max_dni=max(dni),max_dry_bulb = max(dry_bulb), min_ghi= min(ghi), min_dni =min(dni),min_dry_bulb =min(dry_bulb)),by = list(ISD_Number,month(datetime),season,year(datetime))]
+View(data_final)
+```
+
+
+

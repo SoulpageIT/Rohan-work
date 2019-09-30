@@ -1,0 +1,5 @@
+"0","```r
+ggplotly(ggplot(data,aes(x=Income,y=PropertyValue,color=as.factor(No_kids),size=as.factor(No_kids)))+geom_point()+geom_smooth(method = 'lm')+labs(title = \"Scatter plot Income  VS Property Value\",x=\"Income\", y = \"Property Value\",color=\"Kids No\",size=\"Kids No\")+theme(plot.title = element_text(hjust = 0.5,face = \"bold\",color = \"black\")))
+```"
+"1","Using size for a discrete variable is not advised.
+"

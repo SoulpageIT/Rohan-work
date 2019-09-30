@@ -1,0 +1,4 @@
+"0","```r
+describe(bikes_parallel)
+str(bikes_parallel)
+```"

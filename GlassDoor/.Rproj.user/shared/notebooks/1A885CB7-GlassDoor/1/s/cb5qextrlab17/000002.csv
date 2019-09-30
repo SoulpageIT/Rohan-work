@@ -1,0 +1,4 @@
+"0","```r
+frequencies = DocumentTermMatrix(corpus)
+frequencies
+```"

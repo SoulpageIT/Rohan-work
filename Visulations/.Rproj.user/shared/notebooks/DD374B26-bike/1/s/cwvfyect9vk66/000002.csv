@@ -1,0 +1,6 @@
+"0","```r
+colnames(bikesTimeSeries)
+bikesTimeSeries
+bikesTimeSeries[,`:=`(month=month(`Start Time`),day=day(`Start Time`),year=year(`Start Time`))]
+bikesTimeSeries
+```"

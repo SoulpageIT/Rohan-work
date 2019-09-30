@@ -1,0 +1,6 @@
+"0","library(forecast)"
+"0","#arima_fit = auto.arima(adenoTS[,2])"
+"0","model_Arima<-auto.arima(y)"
+"2","Error in auto.arima(y) : 
+  auto.arima can only handle univariate time series
+"

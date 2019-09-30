@@ -1,0 +1,14 @@
+"0","```r
+```r
+```r
+```r
+set.seed(1)
+sample = sample.split(data.set.analyse, SplitRatio = .70)
+train = subset(data.set.analyse, sample == TRUE)
+test  = subset(data.set.analyse, sample == FALSE)
+View(train)
+View(test)
+```
+```
+```
+```"

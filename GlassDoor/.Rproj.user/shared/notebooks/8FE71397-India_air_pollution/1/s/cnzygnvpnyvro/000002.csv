@@ -1,0 +1,9 @@
+"0","```r
+colnames(data)
+
+```"
+"1"," [1] \"stn_code\"                    \"sampling_date\"               \"state\"                       \"location\"                   
+ [5] \"agency\"                      \"type\"                        \"so2\"                         \"no2\"                        
+ [9] \"rspm\"                        \"spm\"                         \"location_monitoring_station\" \"pm2_5\"                      
+[13] \"date\"                       
+"

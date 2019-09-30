@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1558009495853.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "78A3C9D0",
+    "lastKnownWriteTime" : 32088349215817839,
+    "last_content_update" : 1558009495853,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "DFB8C432",
+        "caption" : "GlassdoorPages",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=GlassdoorPages&cache_key=DFB8C432",
+        "displayedObservations" : 2983,
+        "environment" : "",
+        "object" : "GlassdoorPages",
+        "preview" : 0,
+        "totalObservations" : 2983,
+        "variables" : 1
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

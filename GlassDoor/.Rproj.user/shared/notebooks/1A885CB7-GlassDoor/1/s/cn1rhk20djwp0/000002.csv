@@ -1,0 +1,20 @@
+"0","```r
+FCA_sentiment %>%
+    count(sentiment, word) %>%
+    filter(sentiment %in% c(\"positive\", \"negative\", 
+                            \"joy\", \"trust\",\"fear\",\"sadness\")) %>%
+    group_by(sentiment) %>%
+    top_n(10) %>%
+    ungroup %>%
+    mutate(word = reorder(word, n)) %>%
+   mutate(sentiment = as.factor(sentiment))  %>%
+    ggplot(aes(word, n, fill = sentiment)) +
+    geom_bar(alpha = 0.8, show.legend = FALSE,stat = \"identity\") +
+    coord_flip() +
+    scale_y_continuous(expand = c(0,0)) +
+    facet_wrap(~sentiment, scales = \"free\") +
+   labs(y = \"Total number of occurrences\", x = \"\",
+         title = \"Sentiment analysis of NMFinancial  Employee Glassdoor Reviews\",
+         subtitle = \"Using the nrc lexicon\")+theme_bw()+
+scale_fill_manual(values=viridis_pal(option = \"D\")(6))
+```"

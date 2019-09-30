@@ -1,0 +1,5 @@
+"0","```r
+time_s <-xt(bikesTimeSeries)
+```"
+"1","Error in xt(bikesTimeSeries) : could not find function \"xt\"
+"

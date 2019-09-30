@@ -1,0 +1,13 @@
+"0","p<-sentiment %>%"
+"0","    count(sentiment, word) %>%"
+"0","    filter(sentiment %in% c(""positive"", ""negative"", "
+"0","                            ""joy"", ""trust"",""fear"",""sadness"")) %>%"
+"0","    group_by(sentiment) %>%"
+"0","    top_n(10) %>%"
+"0","    ungroup %>%"
+"0","    mutate(word = reorder(word, n)) %>%"
+"0","   mutate(sentiment = as.factor(sentiment)) "
+"2","Selecting by n
+"
+"0","  "
+"0","    "

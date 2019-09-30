@@ -1,0 +1,9 @@
+"0","```r
+top_terms <- date_lda_td %>%
+  group_by(topic) %>%
+  top_n(10, beta) %>%
+  ungroup() %>%
+  filter(grepl(\"[aâ€z]+\", term)) %>% # extract alphabets a-z
+  arrange(topic, -beta)
+top_terms%>%head()
+```"

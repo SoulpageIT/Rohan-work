@@ -1,0 +1,7 @@
+"0","```r
+traindata<-trainData[,-c(\"coupon_run_prev_ses_cart_session\",\"trialy_sessions\",\"daily_visitor\",\"sessions_before_with_cart\")]
+logit<-glm(target~.,family = binomial,data = traindata)
+save(logit,file = \"logit.rda\")
+load(\"logit.rda\")
+summary(logit)
+```"

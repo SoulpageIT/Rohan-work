@@ -1,0 +1,5 @@
+"0","library(ggplot2) "
+"0","df = melt(data.frame(A=c(2, 10), B=c(3, 20),experiment=c(""X"", ""X & Y"")),variable_name=""metric"")  "
+"2","Using experiment as id variables
+"
+"0","ggplot(df, aes(experiment, value, fill=variable)) + geom_bar(stat=""identity"",position=""dodge"")"

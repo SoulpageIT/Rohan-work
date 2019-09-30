@@ -1,0 +1,4 @@
+"0","data(quakes)"
+"0","# Show first 20 rows from the `quakes` dataset"
+"0","leaflet(data = quakes[1:20,]) %>% addTiles() %>%"
+"0","  addMarkers(~long, ~lat, popup = ~as.character(mag), label = ~as.character(mag))"

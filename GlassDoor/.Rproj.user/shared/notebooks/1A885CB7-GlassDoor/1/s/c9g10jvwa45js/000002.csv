@@ -1,0 +1,6 @@
+"0","```r
+user_topic<-tidy(dtm_lda, matrix = \"gamma\") %>%
+arrange(desc(gamma)) %>%
+group_by(document) %>%
+top_n(1, gamma)
+```"

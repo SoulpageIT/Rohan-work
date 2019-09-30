@@ -1,0 +1,4 @@
+"0","```r
+ggplotly(ggplot(data, aes(x=Property_Purchased,fill=Education)) +
+  geom_bar(position =\"stack\",width = 0.3)+geom_text(stat='count', aes(label=..count..), vjust=-2)+labs(title = \"Frequency of property purchased by Education \")+theme(plot.title = element_text(hjust = 0.5,face = \"bold\",color = \"black\")))
+```"

@@ -1,0 +1,10 @@
+"0","```r
+set.seed(1)
+## 75% of the sample size
+smp_size <- floor(0.75 * nrow(train_data))
+## set the seed to make your partition reproducible
+set.seed(123)
+train_ind <- sample(seq_len(nrow(train_data)), size = smp_size)
+train_train_data <- train_data[train_ind,]
+test_train_data <- train_data[-train_ind,]
+```"

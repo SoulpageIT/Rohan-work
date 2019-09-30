@@ -1,0 +1,14 @@
+"0","```r
+highchart(type = \"stock\") %>% 
+  hc_title(text = \"Sentiment analysis of NMFinancial  Employee Glassdoor Reviews\") %>% 
+  hc_subtitle(text = \"\") %>% 
+  hc_tooltip(valueDecimals = 2) %>% 
+  hc_add_series_times_values(ldat$date, ldat$average_sentiment,
+                             name = \"\",color=\"#440154FF\")%>% 
+  hc_add_theme(hc_theme_gridlight())%>%
+  hc_yAxis(title = list(text = \"Average AFINN sentiment score\"),labels = list(format = \"{value}\"), max = 4,min=-4,plotLines = list(
+             list(label = list(text = \"\"),
+                  color = \"red\",
+                  width = 2,
+                  value = 0)))
+```"

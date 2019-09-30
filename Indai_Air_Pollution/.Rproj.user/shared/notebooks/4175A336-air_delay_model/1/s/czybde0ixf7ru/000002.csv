@@ -1,0 +1,4 @@
+"0","```r
+#Inserting the holiday column. 
+test$Holiday<-as.factor(ifelse((test$months == \"1\" & test$weekDays==\"Monday\" & test$day==\"1\") | (test$months == \"1\" & test$weekDays==\"Monday\" & test$day==\"15\") | (test$months == \"2\" & test$weekDays==\"Monday\" & test$day==\"19\") | (test$months == \"3\" & test$weekDays==\"Saturday\" & test$day==\"31\") |(test$months == \"5\" & test$weekDays==\"Monday\" & test$day==\"28\") |(test$months == \"7\" & test$weekDays==\"Wednesday\" & test$day==\"4\") |(test$months == \"9\" & test$weekDays==\"Monday\" & test$day==\"3\") |(test$months == \"11\" & test$weekDays==\"Monday\" & test$day==\"12\") |(test$months == \"11\" & test$weekDays==\"Thursday\" & test$day==\"22\") |(test$months == \"11\" & test$weekDays==\"Friday\" & test$day==\"23\") |(test$months == \"12\" & test$weekDays==\"Tuesday\" & test$day==\"25\")== TRUE,1,0))
+```"

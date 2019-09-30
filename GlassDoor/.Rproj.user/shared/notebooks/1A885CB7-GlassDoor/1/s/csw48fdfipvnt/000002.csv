@@ -1,0 +1,7 @@
+"0","```r
+bing_word_counts <-tidy_FCA %>%
+  inner_join(get_sentiments(\"bing\")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  ungroup()
+bing_word_counts%>%spread(sentiment,n,fill = 0)%>%top_n(10)
+```"

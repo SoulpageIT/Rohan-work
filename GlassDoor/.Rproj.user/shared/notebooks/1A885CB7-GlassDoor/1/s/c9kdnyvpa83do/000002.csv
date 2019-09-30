@@ -1,0 +1,12 @@
+"0","```r
+den=GlassdoorPages %>%
+    unnest_tokens(word, text)%>%
+  inner_join(get_sentiments(\"bing\")) %>%
+  count(word, sentiment, sort = TRUE)%>%
+  spread(sentiment,n,fill=0)%>%
+  mutate(sentiment = positive -negative)
+#hchart(den,density(den$sentiment), type = \"area\", color = \"#B71C1C\", name = \"Density\")
+hchart(density(den$sentiment), type = \"area\", color =viridis_pal()(1), name = \"Sentiment\")%>%
+  hc_xAxis(min = -5, max =5)%>%
+  hc_yAxis(title = list(text = \"density\"),labels = list(format = \"{value}\"))
+```"

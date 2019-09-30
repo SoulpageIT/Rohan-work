@@ -1,0 +1,12 @@
+"0","```r
+# Set a number of 'empty bar' to add at the end of each group
+gr1=gr
+empty_bar=3
+to_add = data.table( matrix(NA, empty_bar*nlevels(gr1$`Start Station Name`), ncol(gr1)) )
+colnames(to_add) = colnames(gr1)
+to_add$`Start Station Name`=rep(levels(gr1$`Start Station Name`), each=empty_bar)
+gr1=rbind(gr1, to_add)
+gr1=gr1 %>% arrange(`Start Station Name`)
+gr1$id=seq(1, nrow(gr1))
+
+```"

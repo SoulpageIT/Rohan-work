@@ -1,0 +1,9 @@
+---
+title: "time_series analysis of goods"
+output: html_notebook
+---
+
+```{r}
+data<-read.table(result.txt, header = FALSE, sep = ",", dec = ".")
+```
+

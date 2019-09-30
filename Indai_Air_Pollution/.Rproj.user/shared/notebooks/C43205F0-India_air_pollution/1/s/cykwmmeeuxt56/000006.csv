@@ -1,0 +1,2 @@
+"0","ggplotly(ggplot(data[state==""Bihar"",list(""avgNO2""=mean(no2)),by=c(""year"",""month"",""location"")],aes(x=as.factor(month),y=avgNO2,fill=as.factor(month),group=1))+geom_bar(stat = ""identity"")+facet_wrap(~as.factor(location))+labs(title = ""Average No2 level in location by months"",x=""Months"", y = ""Average No2 value"",fill=""months"")+theme(plot.title = element_text(hjust = 0.5,face = ""bold"",color = ""black"")))"
+"2","Removed 41 rows containing missing values (position_stack)."

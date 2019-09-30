@@ -1,0 +1,12 @@
+"0","```r
+cat(\"\nThe Total number of NA 's in the train data is :- \",sum(is.na(train_data)))
+```"
+"1","
+The Total number of NA 's in the train data is :-  0
+"
+"0","```r
+cat(\"\nThe Total number of empty spaces 's in the train data is :- \",sum(train_data==\" \"))
+```"
+"1","
+The Total number of empty spaces 's in the train data is :-  0
+"

@@ -1,0 +1,4 @@
+"0","```r
+#default parameters
+params <- list(booster = \"gbtree\",num_class=9 ,objective = \"multi:softmax\", eta=0.2, max_depth=4, min_child_weight=2, subsample=1, colsample_bytree=1)
+```"

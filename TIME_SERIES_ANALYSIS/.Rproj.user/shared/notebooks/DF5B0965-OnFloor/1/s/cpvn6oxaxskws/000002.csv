@@ -1,0 +1,8 @@
+"0","```r
+colnames(train_data)
+
+```"
+"1"," [1] \"series_id\"             \"measurement_number\"    \"orientation_X\"         \"orientation_Y\"         \"orientation_Z\"        
+ [6] \"orientation_W\"         \"angular_velocity_X\"    \"angular_velocity_Y\"    \"angular_velocity_Z\"    \"linear_acceleration_X\"
+[11] \"linear_acceleration_Y\" \"linear_acceleration_Z\" \"surface\"              
+"

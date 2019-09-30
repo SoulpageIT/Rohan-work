@@ -1,0 +1,6 @@
+"0","```r
+#for movement
+#transition_states(EnvironmentSatisfaction, .01, .001)+ease_aes('cubic-in-out')
+#for plotting multiplot on one page 
+#multiplot(p1, p2, p3, p4, cols=2)
+```"

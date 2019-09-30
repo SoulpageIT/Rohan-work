@@ -1,0 +1,26 @@
+"0","```r
+# Start the plot
+p = ggplot(gr, aes(x=as.factor(V1), y=dist)) +ggtitle(\"The Exchange Place and Distances between the destination places\")+       # Note that id is a factor. If x is numeric, there is some space between the first bar
+  
+  # This add the bars with a blue color
+  geom_bar(stat=\"identity\", fill=alpha(\"skyblue\", 0.7)) +
+  
+  # Limits of the plot = very important. The negative value controls the size of the inner circle, the positive one is useful to add size over each bar
+  ylim(0.00000,6.42068) +
+  
+  # Custom the theme: no axis title and no cartesian grid
+  theme_minimal() +
+  theme(
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank(),
+    plot.margin = unit(rep(-1,4), \"cm\")      # Adjust the margin to make in sort labels are not truncated!
+  ) +
+  
+  # This makes the coordinate polar instead of cartesian.
+  coord_polar(start = 0) +
+  
+  # Add the labels, using the label_data dataframe that we have created before
+  geom_text(data=gr,title = \"The Exchange Place and Distances between the destination places\" ,aes(x=as.factor(V1), y=dist, label=as.factor(V1)), color=\"black\", fontface=\"bold\",alpha=0.9, size=2, inherit.aes = FALSE)   
+p
+```"

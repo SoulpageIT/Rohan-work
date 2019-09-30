@@ -1,0 +1,1 @@
+"0","data<-ddply(data,.(yearmonthf),transform,monthweek=1+week-min(week))"

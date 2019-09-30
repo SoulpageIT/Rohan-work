@@ -1,0 +1,71 @@
+"0","```r
+unique(data$agency)
+
+```"
+"1"," [1] <NA>                                                                  
+ [2] Andhra Pradesh  Pollution Control Board                               
+ [3] Andhra Pradesh State Pollution Control Board                          
+ [4] National Environmental Engineering Research Institute                 
+ [5] Arunachal Pradesh State Pollution Control Board                       
+ [6] ASPB                                                                  
+ [7] Assam State Pollution Control Board                                   
+ [8] Bihar Pollution Control Board                                         
+ [9] Bihar Sate Pollution Control Board                                    
+[10] Central Pollution Control Board                                       
+[11] Chandigarh Pollution Control Committee                                
+[12] Chattisgarh Environment Conservation Board                            
+[13] Daman Diu, Dadra & Nagar Heveli Pollution Control Committee           
+[14] Goa Pollution Control Board                                           
+[15] Goa State Pollution Control Board                                     
+[16] Gujarat Pollution Control Board                                       
+[17] NEER                                                                  
+[18] Gujarat State Pollution Control Board                                 
+[19] Haryana Pollution Control Board                                       
+[20] Haryana State Pollution Control Board                                 
+[21] Himachal Pradesh  Pollution Control Boar                              
+[22] Himachal Pradesh State Environment Proection & Pollution Control Board
+[23] Jammu & Kashmir State Pollution Control Board                         
+[24] Jharkhand State Pollution Control Board                               
+[25] Karnataka Pollution Control Board                                     
+[26] Karnataka State Pollution Control Board                               
+[27] Kerala Pollution Control Board                                        
+[28] Kerala State Pollution Control Board                                  
+[29] Madhya Pradesh  Pollution Control Board                               
+[30] Madhya Pradesh State Pollution Control Board                          
+[31] Maharashtra Pollution Control Board                                   
+[32] Maharashtra State Pollution Control Board                             
+[33] MAPB                                                                  
+[34] K.R.T.Arts,B.H.Commerce and A.M. Science College                      
+[35] ESPU                                                                  
+[36] Visveshwaraya National Institute Of Technology                        
+[37] VRCE                                                                  
+[38] Walchand Institute of Technology, Solapur                             
+[39] Thane Municipal Corporation                                           
+[40] University of Pune                                                    
+[41] MEPB                                                                  
+[42] Meghalaya State Pollution Control Board                               
+[43] Mizoram State Pollution Control Board                                 
+[44] Nagaland State Pollution Control Board                                
+[45] Orissa Pollution Control Board                                        
+[46] Odisha State Pollution Control Board                                  
+[47] PNPB                                                                  
+[48] Puducherry Pollution Conrol Committee                                 
+[49] Punjab Pollution Control Board                                        
+[50] Punjab State Pollution Control Board                                  
+[51] Rajasthan Pollution Control Board                                     
+[52] Rajasthan State Pollution Control Board                               
+[53] RJPB                                                                  
+[54] RPCB                                                                  
+[55] Tamil Nadu Pollution Control Board                                    
+[56] TNPC                                                                  
+[57] Tamilnadu State Pollution Control Board                               
+[58] Uttar Pradesh  Pollution Control Board                                
+[59] Uttar Pradesh Pollution Control Board                                 
+[60] Uttar Pradesh State Pollution Control Board                           
+[61] UPPB                                                                  
+[62] Uttarakhand Environment Protection and Pollution Control Board        
+[63] CMEC                                                                  
+[64] West Bengal Pollution Control Board                                   
+[65] West Bengal State Pollution Control Board                             
+64 Levels: ASPB Andhra Pradesh  Pollution Control Board ... West Bengal State Pollution Control Board
+"

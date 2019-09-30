@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1550635279985.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "A8CA9D59",
+    "lastKnownWriteTime" : 31244212044234864,
+    "last_content_update" : 1550635279985,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "39E54E70",
+        "caption" : "VechiclePosition1",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=VechiclePosition1&cache_key=39E54E70",
+        "displayedObservations" : "4993",
+        "environment" : "",
+        "object" : "VechiclePosition1",
+        "preview" : "0",
+        "totalObservations" : "4993",
+        "variables" : "18"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

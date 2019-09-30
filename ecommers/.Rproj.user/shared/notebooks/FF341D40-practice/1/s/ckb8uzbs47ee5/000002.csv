@@ -1,0 +1,11 @@
+"0","```r
+job<-c(rep(1,5),rep(2,5))
+class(job)
+```"
+"1","[1] \"numeric\"
+"
+"0","```r
+class(as.factor(job))
+```"
+"1","[1] \"factor\"
+"

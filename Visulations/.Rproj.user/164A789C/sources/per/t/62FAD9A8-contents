@@ -1,0 +1,15 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(plotly)
+library(ggplot2)
+```
+
+
+```{r}
+ggplotly(ggplot(data, aes(x = delay, y = spd, fill = as.factor(drst))) +labs(title="Delay vs speed and door status",x ="Delay",y = "spd",fill="Door \n status")+
+           geom_point()+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))+scale_fill_manual(breaks = c(0,1), 
+                                         values=c("white", "blue")))
+```

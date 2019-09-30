@@ -1,0 +1,7 @@
+"0","data1 %>%"
+"0","  group_by(Destination)  %>%"
+"0","  plot_ly(labels = ~as.factor(Destination), values = ~Throughput) %>%"
+"0","  add_pie(hole = 0.6) %>%"
+"0","  layout(title = ""The Population in BART Stations"",  showlegend = F,"
+"0","         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),"
+"0","         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))"

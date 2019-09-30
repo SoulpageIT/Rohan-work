@@ -1,0 +1,15 @@
+"0","```r
+FCA_sentiment %>%
+    count(date, date_total, sentiment) %>%
+    filter(sentiment %in% c(\"positive\", \"negative\", 
+                            \"joy\", \"trust\",\"fear\",\"sadness\"))%>%
+    mutate(sentiment = as.factor(sentiment)) %>%
+    #ggplot(aes(page, n / page_total, fill = sentiment)) +
+     ggplot(aes(x=date,y= n / sum(n), fill = sentiment,height=n / sum(n),group=sentiment)) +
+   geom_ridgeline_gradient() +
+    labs(y = \"Relative frequency\", x = \"Year\",
+         title = \"Sentiment analysis of NMFinancial  Employee  Glassdoor Reviews\",
+         subtitle = \"Using the nrc lexicon\")+theme_bw()+
+ scale_fill_viridis(discrete = TRUE, direction = -1) +
+   scale_y_continuous(labels = scales::percent)
+```"

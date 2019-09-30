@@ -1,0 +1,5 @@
+"0","```r
+gr1$`Start Station Name`<-as.factor(gr1$`Start Station Name`)
+gr1$V1<-as.factor(gr1$V1)
+str(gr1)
+```"

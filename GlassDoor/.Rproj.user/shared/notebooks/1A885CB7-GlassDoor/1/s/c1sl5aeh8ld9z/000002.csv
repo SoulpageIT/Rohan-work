@@ -1,0 +1,19 @@
+"0","```r
+data(stop_words)
+tidy_descr<-GlassdoorPages %>%
+unnest_tokens(word, text) %>% 
+mutate(word=removeNumbers(word))%>% 
+mutate(word_stem = wordStem(word)) %>%
+anti_join(stop_words, by = \"word\") %>%
+filter(!word_stem %in% stop_words$word) %>%
+filter(!word_stem %in% stop_user) 
+tidy_descr %>%
+count(word_stem, sort = TRUE) %>%
+filter(n > 30) %>%
+ggplot(aes(x = reorder(word_stem, n), y = n)) +
+geom_col(color = palette_light()[1], fill = palette_light()[1], alpha = 0.8) +
+coord_flip() +
+theme_tq() +
+labs(x = \"\",
+y = \"count of most common words\",titlt=\"Count of most common words\")
+```"

@@ -1,0 +1,5 @@
+"0","```r
+
+data_tree <- rpart(target~., method = \"class\", data = trainData,control = rpart.control(minsplit=10,cp=.01))
+
+```"

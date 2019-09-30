@@ -1,0 +1,11 @@
+"0","```r
+set.seed(400)
+trctrl <- trainControl(method = \"repeatedcv\", number = 10, repeats = 3) 
+SVM_fit <- train(`X.quali$target`~`dim 1`+`dim 2`+`dim 3`, data = PCscores, method = \"svmLinear\", trControl=trctrl,tuneLength = 10,metric=\"Accuracy\")
+save(SVM_fit,file=\"SVM_fit_model.rda\")
+load(\"SVM_fit_model.rda\")
+
+SVM_fit 
+
+
+```"

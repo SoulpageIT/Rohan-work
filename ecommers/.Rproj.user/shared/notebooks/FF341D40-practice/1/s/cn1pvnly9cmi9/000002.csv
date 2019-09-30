@@ -1,0 +1,11 @@
+"1","[1] \"Name\" \"Age\" 
+"
+"0","```r
+data$Name
+```"
+"1","[1] \"rohan\" \"kittu\" \"hello\"
+"
+"0","```r
+data$salary<-c(1000,2000,3000)
+head(data)
+```"

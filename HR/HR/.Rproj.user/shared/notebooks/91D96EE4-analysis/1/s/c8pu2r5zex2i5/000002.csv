@@ -1,0 +1,9 @@
+"0","```r
+quantile(data.set.analyse$sessions_before,probs = c(0.76,0.80,0.85,0.90,0.95,0.96,0.97,0.98,0.99))
+#found in quantile range that 99% of the data is less than 32 so now are going to see the row which is the max value.
+
+#removing the row.
+data.set.analyse1<-data.set.analyse[-c(which(data.set.analyse$sessions_before >= 292))]
+#checking the rows greater than 32 in column sessions_before.
+View(data.set.analyse1[data.set.analyse1$sessions_before >= 32])
+```"

@@ -1,0 +1,700 @@
+"0","install.packages('leaflet')
+"
+"2","also installing the dependencies ‘gridExtra’, ‘png’, ‘raster’, ‘sp’, ‘viridis’
+
+"
+"2","trying URL 'https://cran.rstudio.com/src/contrib/gridExtra_2.3.tar.gz'
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 1062844 bytes (1.0 MB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 1.0 MB
+
+"
+"2","trying URL 'https://cran.rstudio.com/src/contrib/png_0.1-7.tar.gz'
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 24990 bytes (24 KB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 24 KB
+
+"
+"2","trying URL 'https://cran.rstudio.com/src/contrib/raster_2.9-5.tar.gz'
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 971151 bytes (948 KB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 948 KB
+
+"
+"2","trying URL 'https://cran.rstudio.com/src/contrib/sp_1.3-1.tar.gz'
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 1133621 bytes (1.1 MB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 1.1 MB
+
+"
+"2","trying URL 'https://cran.rstudio.com/src/contrib/viridis_0.5.1.tar.gz'
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 1906320 bytes (1.8 MB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 1.8 MB
+
+"
+"2","trying URL 'https://cran.rstudio.com/src/contrib/leaflet_2.0.2.tar.gz'
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 2059752 bytes (2.0 MB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 2.0 MB
+
+"
+"2","* installing *source* package ‘gridExtra’ ...
+"
+"2","** package ‘gridExtra’ successfully unpacked and MD5 sums checked
+"
+"2","** R
+"
+"2","** inst
+"
+"2","** preparing package for lazy loading
+"
+"2","** help
+"
+"2","*** installing help indices
+"
+"2","** building package indices
+"
+"2","** installing vignettes
+"
+"2","** testing if installed package can be loaded
+"
+"2","* DONE (gridExtra)
+"
+"2","* installing *source* package ‘png’ ...
+"
+"2","** package ‘png’ successfully unpacked and MD5 sums checked
+"
+"2","** libs
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG   -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   `libpng-config --cflags` -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c read.c -o read.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG   -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   `libpng-config --cflags` -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c write.c -o write.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -shared -L/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/lib -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,-rpath,/home/rohan/anaconda3/envs/rstudio-1.1.456/lib -L/home/rohan/anaconda3/envs/rstudio-1.1.456/lib -Wl,-rpath-link,/home/rohan/anaconda3/envs/rstudio-1.1.456/lib -o png.so read.o write.o -L/home/rohan/anaconda3/envs/rstudio-1.1.456/lib -lpng16 -lm -lz -lm -L/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/lib -lR
+"
+"2","installing to /home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/png/libs
+"
+"2","** R
+"
+"2","** inst
+"
+"2","** preparing package for lazy loading
+"
+"2","** help
+"
+"2","*** installing help indices
+"
+"2","** building package indices
+"
+"2","** testing if installed package can be loaded
+"
+"2","* DONE (png)
+"
+"2","* installing *source* package ‘sp’ ...
+"
+"2","** package ‘sp’ successfully unpacked and MD5 sums checked
+"
+"2","** libs
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG   -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c Rcentroid.c -o Rcentroid.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG   -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c gcdist.c -o gcdist.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG   -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c init.c -o init.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG   -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c pip.c -o pip.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG   -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c pip2.c -o pip2.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG   -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c sp_xports.c -o sp_xports.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG   -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c surfaceArea.c -o surfaceArea.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG   -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c zerodist.c -o zerodist.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -shared -L/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/lib -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,-rpath,/home/rohan/anaconda3/envs/rstudio-1.1.456/lib -L/home/rohan/anaconda3/envs/rstudio-1.1.456/lib -Wl,-rpath-link,/home/rohan/anaconda3/envs/rstudio-1.1.456/lib -o sp.so Rcentroid.o gcdist.o init.o pip.o pip2.o sp_xports.o surfaceArea.o zerodist.o -L/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/lib -lR
+"
+"2","installing to /home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/sp/libs
+"
+"2","** R
+"
+"2","** data
+"
+"2","** demo
+"
+"2","** inst
+"
+"2","** preparing package for lazy loading
+"
+"2","** help
+"
+"2","*** installing help indices
+"
+"2","** building package indices
+"
+"2","** installing vignettes
+"
+"2","** testing if installed package can be loaded
+"
+"2","* DONE (sp)
+"
+"2","* installing *source* package ‘raster’ ...
+"
+"2","** package ‘raster’ successfully unpacked and MD5 sums checked
+"
+"2","** libs
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c RasterModule.cpp -o RasterModule.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c RcppExports.cpp -o RcppExports.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c aggregate.cpp -o aggregate.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c area.cpp -o area.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c bilinear.cpp -o bilinear.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c"
+"1"," broom.c -o broom.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c cellRowCol.cpp -o cellRowCol.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c"
+"1"," clamp.c -o clamp.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c distance.cpp -o distance.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c"
+"1"," edge.c -o edge.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c"
+"1"," focal_fun.c -o focal_fun.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c"
+"1"," focal_get.c -o focal_get.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c"
+"1"," focal_sum.c -o focal_sum.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c"
+"1"," geodesic.c -o geodesic.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c getPolygons.cpp -o getPolygons.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c"
+"1"," intersect.c -o intersect.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c"
+"1"," layerize.c -o layerize.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c memory.cpp -o memory.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c modal.cpp -o modal.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c ppmin.cpp -o ppmin.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c"
+"1"," r_terrain.c -o r_terrain.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c rasterize.cpp -o rasterize.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c rcpp_aggregate.cpp -o rcpp_aggregate.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c rcpp_distance.cpp -o rcpp_distance.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/s"
+"1","rc/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix -c rcpp_xyCell.cpp -o rcpp_xyCell.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c"
+"1"," reclass.c -o reclass.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c"
+"1"," util.c -o util.o
+"
+"1","x86_64-conda_cos6-linux-gnu-cc -I/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/include -DNDEBUG  -I""/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/Rcpp/include"" -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include   -fpic  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -I/home/rohan/anaconda3/envs/rstudio-1.1.456/include -fdebug-prefix-map==/usr/local/src/conda/- -fdebug-prefix-map==/usr/local/src/conda-prefix  -c"
+"1"," wirth.c -o wirth.o
+"
+"1","x86_64-conda_cos6-linux-gnu-c++ -std=gnu++11 -shared -L/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/lib -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,-rpath,/home/rohan/anaconda3/envs/rstudio-1.1.456/lib -L/home/rohan/anaconda3/envs/rstudio-1.1.456/lib -Wl,-rpath-link,/home/rohan/anaconda3/envs/rstudio-1.1.456/lib -o raster.so RasterModule.o RcppExports.o aggregate.o area.o bilinear.o broom.o cellRowCol.o clamp.o distance.o edge.o focal_fun.o focal_get.o f"
+"1","ocal_sum.o geodesic.o getPolygons.o intersect.o layerize.o memory.o modal.o ppmin.o r_terrain.o rasterize.o rcpp_aggregate.o rcpp_distance.o rcpp_xyCell.o reclass.o util.o wirth.o -L/home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/lib -lR
+"
+"2","installing to /home/rohan/anaconda3/envs/rstudio-1.1.456/lib/R/library/raster/libs
+"
+"2","** R
+"
+"2","** inst
+"
+"2","** preparing package for lazy loading
+"
+"2","in method for ‘brick’ with signature ‘x=""big.matrix""’: no definition for class “big.matrix”
+"
+"2","in method for ‘brick’ with signature ‘x=""kasc""’: no definition for class “kasc”
+"
+"2","in method for ‘brick’ with signature ‘x=""grf""’: no definition for class “grf”
+"
+"2","in method for ‘coerce’ with signature ‘""STFDF"",""RasterBrick""’: no definition for class “STFDF”
+"
+"2","in method for ‘coerce’ with signature ‘""STSDF"",""RasterBrick""’: no definition for class “STSDF”
+"
+"2","in method for ‘coerce’ with signature ‘""asc"",""RasterLayer""’: no definition for class “asc”
+"
+"2","in method for ‘coerce’ with signature ‘""RasterLayer"",""asc""’: no definition for class “asc”
+"
+"2","in method for ‘coerce’ with signature ‘""kasc"",""RasterBrick""’: no definition for class “kasc”
+"
+"2","in method for ‘coerce’ with signature ‘""kasc"",""RasterStack""’: no definition for class “kasc”
+"
+"2","in method for ‘coerce’ with signature ‘""kde"",""RasterLayer""’: no definition for class “kde”
+"
+"2","in method for ‘coerce’ with signature ‘""grf"",""RasterBrick""’: no definition for class “grf”
+"
+"2","in method for ‘coerce’ with signature ‘""grf"",""RasterLayer""’: no definition for class “grf”
+"
+"2","Creating a generic function for ‘ncol’ from package ‘base’ in package ‘raster’
+"
+"2","in method for ‘extent’ with signature ‘x=""sf""’: no definition for class “sf”
+"
+"2","in method for ‘extract’ with signature ‘x=""Raster"",y=""sf""’: no definition for class “sf”
+"
+"2","in method for ‘mask’ with signature ‘x=""Raster"",mask=""sf""’: no definition for class “sf”
+"
+"2","in method for ‘raster’ with signature ‘x=""big.matrix""’: no definition for class “big.matrix”
+"
+"2","in method for ‘raster’ with signature ‘x=""sf""’: no definition for class “sf”
+"
+"2","in method for ‘raster’ with signature ‘x=""kasc""’: no definition for class “kasc”
+"
+"2","in method for ‘raster’ with signature ‘x=""asc""’: no definition for class “asc”
+"
+"2","in method for ‘raster’ with signature ‘x=""kde""’: no definition for class “kde”
+"
+"2","in method for ‘raster’ with signature ‘x=""grf""’: no definition for class “grf”
+"
+"2","in method for ‘rasterize’ with signature ‘x=""sf"",y=""Raster""’: no definition for class “sf”
+"
+"2","Creating a generic function for ‘rowSums’ from package ‘base’ in package ‘raster’
+"
+"2","Creating a generic function for ‘colSums’ from package ‘base’ in package ‘raster’
+"
+"2","in method for ‘stack’ with signature ‘x=""kasc""’: no definition for class “kasc”
+"
+"2","** help
+"
+"2","*** installing help indices
+"
+"2","** building package indices
+"
+"2","** installing vignettes
+"
+"2","** testing if installed package can be loaded
+"
+"1","code for methods in class “Rcpp_SpExtent” was not checked for suspicious field assignments (recommended package ‘codetools’ not available?)
+code for methods in class “Rcpp_SpExtent” was not checked for suspicious field assignments (recommended package ‘codetools’ not available?)
+code for methods in class “Rcpp_SpPoly” was not checked for suspicious field assignments (recommended package ‘codetools’ not available?)
+code for methods in class “Rcpp_SpPoly” was not checked for suspic"
+"1","ious field assignments (recommended package ‘codetools’ not available?)
+code for methods in class “Rcpp_SpPolyPart” was not checked for suspicious field assignments (recommended package ‘codetools’ not available?)
+code for methods in class “Rcpp_SpPolyPart” was not checked for suspicious field assignments (recommended package ‘codetools’ not available?)
+code for methods in class “Rcpp_SpPolygons” was not checked for suspicious field assignments (recommended package ‘codetools’ no"
+"1","t available?)
+code for methods in class “Rcpp_SpPolygons” was not checked for suspicious field assignments (recommended package ‘codetools’ not available?)
+"
+"2","* DONE (raster)
+"
+"2","* installing *source* package ‘viridis’ ...
+"
+"2","** package ‘viridis’ successfully unpacked and MD5 sums checked
+"
+"2","** R
+"
+"2","** inst
+"
+"2","** preparing package for lazy loading
+"
+"2","** help
+"
+"2","*** installing help indices
+"
+"2","*** copying figures
+"
+"2","** building package indices
+"
+"2","** installing vignettes
+"
+"2","** testing if installed package can be loaded
+"
+"2","* DONE (viridis)
+"
+"2","* installing *source* package ‘leaflet’ ...
+"
+"2","** package ‘leaflet’ successfully unpacked and MD5 sums checked
+"
+"2","** R
+"
+"2","** data
+"
+"2","*** moving datasets to lazyload DB
+"
+"2","** inst
+"
+"2","** preparing package for lazy loading
+"
+"2","** help
+"
+"2","*** installing help indices
+"
+"2","** building package indices
+"
+"2","** testing if installed package can be loaded
+"
+"2","* DONE (leaflet)
+"
+"2","
+"
+"2","The downloaded source packages are in
+	‘/tmp/RtmpBqyPdw/downloaded_packages’"
+"2","
+"
+"2","Updating HTML index of packages in '.Library'
+"
+"2","Making 'packages.html' ..."
+"2"," done
+"

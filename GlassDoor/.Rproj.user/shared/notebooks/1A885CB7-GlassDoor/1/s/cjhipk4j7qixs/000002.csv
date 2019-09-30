@@ -1,0 +1,5 @@
+"0","```r
+FCA_sentiment <- tidy_FCA %>%
+    inner_join(get_sentiments(\"nrc\"))
+FCA_sentiment%>%head()
+```"

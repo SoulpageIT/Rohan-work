@@ -1,0 +1,6 @@
+"0","```r
+# Odds Ratio
+odds<-as.data.frame(exp(coef(logit)))#OR>1 positively correlated,OR<1 -ive correlation,lowest p value suggest highest association with response
+odds<-as.data.frame(cbind(\"Variables\"=row.names(odds),\"odds_ratio\"=odds$`exp(coef(logit))`))
+#write.csv(odds,\"odds.csv\",row.names = FALSE)
+```"

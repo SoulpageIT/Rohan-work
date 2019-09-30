@@ -1,0 +1,5 @@
+"0","```r
+lat_long<-as.data.table(read_excel(\"Lat_Long.xlsx\"))
+#converting string column as factor.
+lat_long$Destination<-as.factor(lat_long$Destination)
+```"

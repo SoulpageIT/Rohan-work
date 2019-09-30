@@ -1,0 +1,6 @@
+"0","```r
+dtrain <- xgb.DMatrix(as.matrix(train_encoded[,-\"Delay_1\"]), label = as.matrix(train_encoded$Delay_1))
+dtestfinal<-xgb.DMatrix(as.matrix(test_encoded[,-\"Delay_1\"]), label = as.matrix(test_encoded$Delay_1))
+#default parameters
+params <- list(booster = \"gbtree\", objective = \"binary:logistic\", eta=0.2, max_depth=4, min_child_weight=2, subsample=1, colsample_bytree=1)
+```"

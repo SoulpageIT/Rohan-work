@@ -1,0 +1,4 @@
+"0","```r
+corr<-cor(x_train)
+corrplot(corr,type = \"lower\")
+```"

@@ -1,0 +1,79 @@
+---
+title: "Linear Regression Assignment."
+output: html_notebook
+---
+
+Task 1: Usingthe salescolumnsof our data→Create a test set and training set→Create a new linear regression model using train set.→Predict the values for other sales for the test
+
+Library used.
+```{r}
+#By this library we can get boston data set.
+library(MASS)
+#Library for the correlation plot.
+#install.packages("corrplot")
+library(corrplot)
+#This library is used for sample.split function
+library(caTools)
+#library for reading the file.
+library(data.table)
+```
+
+Task 1:
+
+1) Usingthe salescolumnsof our data
+2) Create a test set and training set
+3)Create a new linear regression model using train set.
+4)Predict the values for other sales for the test.
+```{r}
+data<-fread("M4_Videogame.csv")
+```
+
+Checking the NA 's in the data set
+```{r}
+sum(is.na(data))
+```
+checking NA 's by column.
+```{r}
+data<-na.omit(data)
+```
+
+Now splitting the data into train and test
+```{r}
+split<-sample.split(data$Other_players,SplitRatio = 0.8)
+```
+
+New we are dividing the data into train test data.
+```{r}
+set.seed(101) 
+train<-subset(data,split== T)
+test<-subset(data,split==F)
+```
+
+```{r}
+#we have two methods to create the models.
+#Training the model method 1.
+model<-lm(Other_players~.,data=train)
+```
+
+
+```{r}
+summary(model)
+```
+
+
+
+```{r}
+predicted_value<-predict(model,test)
+```
+
+```{r}
+plot(test$Other_players,type = "l",lty=1.8,col="red")
+lines(predicted_value,type="l",col="blue")
+```
+
+```{r}
+library(Matrix)
+cat(rankMatrix(train), "\n")   #prints 4
+cat(rankMatrix(test), "\n")    #prints 3
+```
+

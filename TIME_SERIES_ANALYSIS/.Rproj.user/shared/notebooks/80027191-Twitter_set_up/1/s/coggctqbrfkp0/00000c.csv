@@ -1,0 +1,8 @@
+"0","#Donet chart which display the percentage of each class in the column"
+"0","p <- d[1:10,] %>%"
+"0"," group_by(word) %>%"
+"0"," plot_ly(labels = ~word, values = ~d[1:10,freq]) %>%"
+"0"," add_pie(hole = 0.6) %>%"
+"0"," layout(title = ""The Percentage of Sentiments of people behind the tweets on #MachineLearning"",  showlegend = F,"
+"0","         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))"
+"0","p"

@@ -1,0 +1,4 @@
+"0","```r
+gr$dist<-(gr$dist/1000)
+range(gr$dist)
+```"

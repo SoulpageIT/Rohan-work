@@ -1,0 +1,15 @@
+"0","```r
+bigram_counts %>%
+ mutate(word1 = removeNumbers(word1))%>%
+mutate(word2 = removeNumbers(word2))%>% 
+filter(n > 20) %>%
+ggplot(aes(x = reorder(word1,-n), y = reorder(word2,-n), fill = n)) +
+geom_tile(alpha = 0.8, color = \"white\") +
+scale_fill_gradientn(colours = c(palette_light()[[1]], palette_light()[[2]])) +
+coord_flip() +
+theme_tq() +
+theme(legend.position = \"right\") +
+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+labs(x = \"first word in pair\",
+y = \"second word in pair\")
+```"

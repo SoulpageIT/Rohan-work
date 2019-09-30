@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1557985139067.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1856239735",
+    "id" : "5D11B0AE",
+    "lastKnownWriteTime" : 1557988423,
+    "last_content_update" : 1557988423255,
+    "path" : "C:/Users/Admin/Desktop/rohan/daily_task/Web_scraping_tutorial/web_scraping.Rmd",
+    "project_path" : "web_scraping.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "15,0",
+        "scrollLine" : "8",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

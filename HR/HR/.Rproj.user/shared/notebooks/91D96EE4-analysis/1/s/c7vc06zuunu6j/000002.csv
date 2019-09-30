@@ -1,0 +1,5 @@
+"0","```r
+predictors<-data.set.analyse[,-c(32)]
+x<-cv.nfeaturesLDA(data = predictors,cl = data.set.analyse$target)
+summary(x)
+```"

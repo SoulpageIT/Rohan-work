@@ -1,0 +1,19 @@
+"0","```r
+# Transform a litte bit the dataset to make dots
+don = data_users_viewed %>% 
+  arrange(products_viewed) %>% # sort using the numeric variable that interest you
+  mutate(var_rounded = (products_viewed+1) - ( (products_viewed+1) %% 0.2 ) ) %>% # This attributes a bin to each observation. Here 0.2 is the size of the bin.
+  mutate(y=ave(var_rounded, var_rounded, FUN=seq_along)) # This calculates the position on the Y axis: 1, 2, 3, 4...
+ 
+# Make the plot (middle)
+gg<-ggplot(don, aes(x=var_rounded, y=y) ) +
+  geom_point( size=6, color=\"steelblue\" )+xlim(0,30)+ ylab('# of individual') +
+  theme_classic() +
+  theme(
+    legend.position=\"none\",
+    axis.line.y = element_blank(),
+    axis.text=element_text(size=15)
+  )+annotate(\"text\", x=3, y= 227400, label=\" 227209\")+ylim(0,227600)+labs(x =\"Number of product pages Viewed in current session\",y = \"Number of users\" , fill = NULL, title = \"The  Number of product pages viewed by the users. \")+theme(plot.title = element_text(hjust = 0.5))
+ggsave(\"product_page.jpg\",plot=gg,unit=\"in\",width=7,height = 7,dpi=300)
+gg
+```"

@@ -1,0 +1,2 @@
+"0","ggplotly(ggplot(data_analysis[,list(""avgsO2""=mean(so2)),by=c(""year"",""seasons"",""month"")],aes(x=as.factor(seasons),y=avgsO2,fill=as.factor(month),group=1))+"
+"0","  geom_line(linetype = ""dashed"",color=""black"")+geom_point()+facet_wrap(~as.factor(year))+labs(title = ""Average So2 level in HYD by years"",x=""Months"", y = ""Average So2 value"",fill=""years"")+theme(plot.title = element_text(hjust = 0.5,face = ""bold"",color = ""black""))+coord_flip())"

@@ -1,0 +1,4 @@
+"0","```r
+attr(timeseries,'frequency')<-30
+plot(stats::decompose(as.ts(timeseries)))
+```"

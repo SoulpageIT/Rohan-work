@@ -1,0 +1,7 @@
+"0","```r
+#used for reading the data ,data subsetting
+library(data.table)
+#used for anabling parallel processing
+library(doMC)
+library(rapportools)
+```"

@@ -1,0 +1,14 @@
+"0","```r
+ tidy_FCA %>%
+    inner_join(get_sentiments(\"bing\"))%>%
+  group_by(sentiment)%>%count()%>%
+ggplot(aes(x = reorder(sentiment, n), y = n,fill=palette_light()[1])) +
+geom_col(  alpha = 0.8,width = 0.5) +
+coord_flip() +
+theme_tq()+
+labs(y=\"sentiments \",title=\"bing lexicon sentiment count\" ,x=\"frequency\")+
+  theme(legend.position=\"none\")+
+#scale_fill_viridis(end = 0.85, discrete=TRUE, direction = 1,option = \"D\") 
+#scale_fill_manual(values=viridis_pal(option = \"A\")(2))
+scale_fill_tq()
+```"

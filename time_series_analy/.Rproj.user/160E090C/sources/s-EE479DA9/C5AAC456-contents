@@ -1,0 +1,473 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+libraries
+```{r}
+library(data.table)
+library(ggplot2)
+library(corrplot)
+library(animation)
+library(caTools)
+```
+The function to check weather a particular row is valied or invalied.
+```{r}
+```
+reading the table
+```{r}
+data.set<-fread("kirklandsdata.csv",na.strings = c('?','-','*','$','^','NA'))
+```
+Viewing the data 
+```{r}
+str(data.set)
+```
+summary of the data set
+```{r}
+summary(data.set)
+```
+filtering out the unwanted features.
+```{r}
+data.set.analyse<-data.set[,c(-1,-2,-3)]
+View(data.set.analyse)
+```
+
+
+```{r}
+str(data.set.analyse)
+#View(data.set.analyse)
+str(data.set.analyse)
+summary(data.set.analyse)
+```
+showing the names of the feature.and creating the target variable.
+```{r}
+#colnames(data.set.analyse)
+data.set.analyse$target<-ifelse((data.set.analyse$coupon_run_on_checkout+data.set.analyse$coupon_run_on_cart+data.set.analyse$coupon_run_on_product) > 0,1,0)
+```
+now converting some feature values into factors.
+```{r}
+data.set.analyse[,c("daily_visitor","trialy_visitor","quintally_visitor","tenally_visitor", "previous_session_cart", "previous_session_checkout" ,"previous_session_product","entry_product","first_page_affil" , "coupon_run_on_checkout", "coupon_run_on_cart" ,"coupon_run_on_product" ,"mal_cb","target")] <- lapply(data.set.analyse[,c("daily_visitor","trialy_visitor","quintally_visitor","tenally_visitor", "previous_session_cart", "previous_session_checkout" ,"previous_session_product","entry_product","first_page_affil" , "coupon_run_on_checkout", "coupon_run_on_cart" ,"coupon_run_on_product" ,"mal_cb","target")], as.factor)
+```
+now seing the structure of the data set
+```{r}
+str(data.set.analyse)
+summary(data.set.analyse)
+```
+
+```{r}
+View(table(data.set.analyse$coupon_run_on_cart))
+```
+
+
+
+
+EDA of the data lets see what data talks
+now we are going to see total count of previous sessions.
+```{r}
+ggplot(data.set.analyse,aes(x=sessions_before))+geom_freqpoly(bin=50,)+labs(title = "total count of perious sessions frequency")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+theme(panel.background = element_rect(fill = 'skyblue'))
+```
+AS we can see,the graph says that very few people have done sessions before.
+
+Now we see the total count_of_previous session having affiliate frequency
+```{r}
+ggplot(data.set.analyse,aes(sessions_with_affil_before))+geom_histogram(bin = 50,fill="blue",col="black")+labs(title = "total count of perious sessions having affiliate frequency")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+theme(panel.background = element_rect(fill = 'skyblue'))
+#data.set.analyse1<-data.set.analyse[-c(which(data.set.analyse$sessions_before >= 292))]
+```
+we can see by graph that total number of people having affilate in previous session is also very less,this means there very less people have used affiliate.
+
+now we are going to find the frequency of total number of affilate found after page 1 till previous session.
+```{r}
+ggplot(data.set.analyse,aes(affil_after_p1_prev_session))+geom_histogram(bin = 50,fill="orange",col="black")+labs(title = "total count of affiliate found after page 1 till perevious session")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+theme(panel.background = element_rect(fill = 'gray'))
+
+```
+even we can see by the graph that total count of affilate on page 1 till previous session is also very less,this means very few people have used affiliates after page 1
+
+
+
+```{r}
+colnames(data.set.analyse)
+```
+
+
+```{r}
+ggplot(data.set.analyse,aes(x=coupon_run_prev_ses_cart_session))+geom_histogram(bin = 20,fill="red",col="black",stat = "count",width = 0.5)+labs(title = "total number of affilate run on cart page till previous session ")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+theme(panel.background = element_rect(fill = 'gray'))
+```
+As we can see in the above graph that very few people have run affilate on the cart page.the count of people who didnt use affilate on cart :- 765280
+who used affilate on cart :- 9,918 where 8222 number of people used affilate on cart page only 1 time.
+
+```{r}
+View(table(data.set.analyse$coupon_run_prev_ses_cart_session))
+```
+
+
+
+As we can see by the graph that very few people have run the affilate on the cart  till previous session.
+the number of people ran affilate is :-
+
+```{python}
+import numpy as np
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+now reducing the dimensions of the data set by LDA
+LDA :- linear discriminant analysis
+
+```{r}
+predictors<-data.set.analyse[,-c(32)]
+x<-cv.nfeaturesLDA(data = predictors,cl = data.set.analyse$target)
+summary(x)
+```
+
+```{r}
+set.seed(1)
+sample = sample.split(data.set.analyse$target, SplitRatio = .70)
+train = subset(data.set.analyse, sample == TRUE)
+test  = subset(data.set.analyse, sample == FALSE)
+View(train)
+View(test)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+now doing the outlier check 
+column names :- sessions_before
+
+The output of the code belowe
+
+LINE no :- 
+The quantile ranges values :
+76% 80% 85% 90% 95% 96% 97% 98% 99% 
+  4   4   5   7  12  13  16  21  32
+  
+LINE no :-   
+In the Viewing the row of the outlier we found that total count of previous sessions having affiliate is 1 but total number of affiliates found after page 1 till previous session is 3 which is logically impossiable,so we are going to remove this row
+```{r}
+quantile(data.set.analyse$sessions_before,probs = c(0.76,0.80,0.85,0.90,0.95,0.96,0.97,0.98,0.99))
+#found in quantile range that 99% of the data is less than 32 so now are going to see the row which is the max value.
+
+#removing the row.
+data.set.analyse1<-data.set.analyse[-c(which(data.set.analyse$sessions_before >= 292))]
+#checking the rows greater than 32 in column sessions_before.
+View(data.set.analyse1[data.set.analyse1$sessions_before >= 32])
+```
+
+column name :- sessions_with_affil_before
+the max value is 65 where up to third quantile is zero.
+
+The output of the code belowe
+
+LINE no :- 86
+The quantile ranges values :
+76% 80% 85% 90% 95% 96% 97% 98% 99% 
+  0   0   0   0  1  1     1  2  3
+  
+The 
+  
+LINE no :-   87
+In the Viewing the row of the outlier we found that total count of previous sessions having affiliate is 1 but total number of affiliates found after page 1 till previous session is 3 which is logically impossiable,so we are going to remove this row
+
+we have outliers in the column sessions_with_affil_before the value is 65 and 65 for both rows but the information is justifing all other columns in that particular row,so to have varity in our training we have left the outlier.
+```{r}
+quantile(data.set.analyse1$sessions_with_affil_before,probs = c(0.76,0.80,0.85,0.90,0.95,0.96,0.97,0.98,0.99))
+View(data.set.analyse1[data.set.analyse1$sessions_with_affil_before >= 65])
+```
+
+column name :- affil_after_p1_prev_session
+the max value is 117, where up to third quantile is 0 
+
+The output of the code belowe
+
+LINE no :- 86
+The quantile ranges values :
+76% 80% 85% 90% 95% 96% 97% 98% 99% 
+  0   0   0   0   1   1   2   2   4 
+  
+The 
+  
+LINE no :-   87
+In the Viewing the row of the outlier we found that total count of previous sessions having affiliate is 1 but total number of affiliates found after page 1 till previous session is 3 which is logically impossiable,so we are going to remove this row
+
+we have outliers in the column sessions_with_affil_before the value is 65 and 65 for both rows but the information is justifing all other columns in that particular row,so to have varity in our training we have left the outlier.
+```{r}
+quantile(data.set.analyse1$affil_after_p1_prev_session,probs = c(0.76,0.80,0.85,0.90,0.95,0.96,0.97,0.98,0.99))
+#View(data.set.analyse1[data.set.analyse1$affil_after_p1_prev_session >= 4])
+head(data.set.analyse1)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+checking and removing the outliers.
+column name :- sessions_before
+```{r}
+out.range<-boxplot.stats(data.set.analyse$sessions_before)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$sessions_before)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$sessions_before)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+A we see that there are many outliers in the above column.so now i am handling the outlier by back capping the values to the upper bound of the boxplot.
+```{r}
+#now i am capping in the value to 7 for this feature
+data.set.analyse$sessions_before[data.set.analyse$sessions_before > 7]<-7
+```
+Now checking outliers for other features.
+column name :- sessions_with_affil_before
+```{r}
+out.range<-boxplot.stats(data.set.analyse$sessions_with_affil_before)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$sessions_with_affil_before)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$sessions_with_affil_before)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+checking the outliers
+column name :- affil_after_p1_prev_session
+```{r}
+out.range<-boxplot.stats(data.set.analyse$affil_after_p1_prev_session)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$affil_after_p1_prev_session)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$affil_after_p1_prev_session)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+The outlier check for
+column name :-  sessions_before_with_checkout
+```{r}
+out.range<-boxplot.stats(data.set.analyse$sessions_before_with_checkout)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$sessions_before_with_checkout)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$sessions_before_with_checkout)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+The outlier check
+column name :- sessions_before_with_cart
+```{r}
+out.range<-boxplot.stats(data.set.analyse$sessions_before_with_cart)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$sessions_before_with_cart)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$sessions_before_with_cart)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+The outlier check
+column name :- sessions_before_with_product
+```{r}
+out.range<-boxplot.stats(data.set.analyse$sessions_before_with_product)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$sessions_before_with_product)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$sessions_before_with_product)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+AS the above result show 's that lower bound is 0 and upper bound is 5 so now i am capping all the value greater than zero to 5
+```{r}
+data.set.analyse$sessions_before_with_product[data.set.analyse$sessions_before_with_product > 5]<-5
+
+```
+outlier check
+column name :- daily_sessions
+```{r}
+out.range<-boxplot.stats(data.set.analyse$daily_sessions)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$daily_sessions)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$daily_sessions)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+AS we see above that lower bound is 0 and upper bound is 2 so i am capping all the values greater than 2 to 2
+```{r}
+data.set.analyse$daily_sessions[data.set.analyse$daily_sessions > 2]<-2
+```
+The outlier check :
+column names : trialy_sessions
+```{r}
+out.range<-boxplot.stats(data.set.analyse$trialy_sessions)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$trialy_sessions)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$trialy_sessions)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+AS we see above that lower bound is 0 and upper bound is 2 so i am capping all the values greater than 2 to 2
+```{r}
+data.set.analyse$trialy_sessions[data.set.analyse$trialy_sessions > 2]<-2
+```
+outlier check
+column name :- quintally_sessions
+```{r}
+out.range<-boxplot.stats(data.set.analyse$quintally_sessions)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$quintally_sessions)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$quintally_sessions)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+outlier check
+column name :- tenally_sessions
+```{r}
+out.range<-boxplot.stats(data.set.analyse$tenally_sessions)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$tenally_sessions)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$tenally_sessions)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+AS we see above that lower bound is 0 and upper bound is 2 so i am capping all the values greater than 2 to 2
+```{r}
+data.set.analyse$tenally_sessions[data.set.analyse$tenally_sessions > 2]<-2
+```
+outlier check
+column name :- coupon_run_prev_ses_checkout_session
+```{r}
+out.range<-boxplot.stats(data.set.analyse$coupon_run_prev_ses_checkout_session)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$coupon_run_prev_ses_checkout_session)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$coupon_run_prev_ses_checkout_session)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+outlier check
+column name :- coupon_run_prev_ses_cart_session
+```{r}
+out.range<-boxplot.stats(data.set.analyse$coupon_run_prev_ses_cart_session)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$coupon_run_prev_ses_cart_session)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$coupon_run_prev_ses_cart_session)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+
+```
+finding outlier
+column_name :- coupon_run_prev_ses_product_session
+```{r}
+out.range<-boxplot.stats(data.set.analyse$coupon_run_prev_ses_product_session)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$coupon_run_prev_ses_product_session)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$coupon_run_prev_ses_product_session)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+finding the outlier
+column_name :- day_between_previous_session
+```{r}
+out.range<-boxplot.stats(data.set.analyse$day_between_previous_session)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$day_between_previous_session)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$day_between_previous_session)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+as we saw above that 0 is the lower bound and 5 is the upper bound,so now i am caping which are greater than 5 to 5.
+```{r}
+data.set.analyse$day_between_previous_session[data.set.analyse$day_between_previous_session > 5]<-5
+```
+
+
+
+
+```{r}
+set.seed(1)
+sample = sample.split(data.set.analyse, SplitRatio = .70)
+train = subset(data.set.analyse, sample == TRUE)
+test  = subset(data.set.analyse, sample == FALSE)
+View(train)
+View(test)
+```
+
+
+```{r}
+
+```
+
+

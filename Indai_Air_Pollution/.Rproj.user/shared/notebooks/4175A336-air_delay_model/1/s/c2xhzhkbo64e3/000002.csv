@@ -1,0 +1,11 @@
+"0","```r
+#Removing from traing data
+train$`Actual elapsed time (Minutes)`<-NULL
+train$`Departure delay (Minutes)`<-NULL
+train$`Scheduled elapsed time (Minutes)`<-NULL
+
+#Removing from testing data
+test$`Actual elapsed time (Minutes)`<-NULL
+test$`Departure delay (Minutes)`<-NULL
+test$`Scheduled elapsed time (Minutes)`<-NULL
+```"

@@ -1,0 +1,7 @@
+"0","```r
+```r
+ggplot(daa, aes(x=pages, y=sum_total_number_sessions)) +
+  geom_segment( aes(x=pages, xend=pages, y=0, yend=sum_total_number_sessions)) +
+  geom_point( size=5, color=\steelblue\, fill=alpha(\steelblue\, 0.3), alpha=0.7, shape=21, stroke=2)+theme(panel.background = element_rect(fill = ' white'))+geom_text(aes(label=sum_total_number_sessions), vjust=0.30, color=\black\, size=3.4)+coord_flip()
+```
+```"

@@ -1,0 +1,7 @@
+"0","```r
+tune <- tuneRF(train[,-14],train$medv , stepFactor=1.2, improve=0.01, ntree=100,plot=TRUE)
+```"
+"1","mtry = 4  OOB error = 1.947745 
+Searching left ...
+Searching right ...
+"

@@ -1,0 +1,33 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1558934031782.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "92C609CE",
+    "lastKnownWriteTime" : 5263030523585890857,
+    "last_content_update" : 1558934031782,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "AB0A04DD",
+        "caption" : "rain_fall",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=rain_fall&cache_key=AB0A04DD",
+        "displayedObservations" : "1393",
+        "environment" : "",
+        "expression" : "rain_fall",
+        "object" : "rain_fall",
+        "preview" : "0",
+        "totalObservations" : "1393",
+        "variables" : "2"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

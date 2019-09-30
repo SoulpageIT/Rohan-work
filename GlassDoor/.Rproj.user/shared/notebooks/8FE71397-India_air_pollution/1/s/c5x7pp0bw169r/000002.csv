@@ -1,0 +1,997 @@
+"0","```r
+unique(data$location_monitoring_station)
+```"
+"1","  [1] <NA>                                                                                   
+  [2] C.I.T.D., Balanagar, Plot no. A1 to A8, IDA, Hyderabad                                 
+  [3] Uppal, Modern Foods & Industries IDA, Hyderabad                                        
+  [4] Jublee Hills Hyderabad                                                                 
+  [5] Paradise, Hyderabad                                                                    
+  [6] Charminar, Hyderabad                                                                   
+  [7] Industrial Estate, Marripalem, Visakhapatnam                                           
+  [8] Panchayat Raj office, Mindi, Visakhapatnam                                             
+  [9] Police Barracks, Visakhapatnam                                                         
+ [10] INS-Virabahu, Naval Area, Visakhapatnam                                                
+ [11] Seethammadhara, Visakhapatnam                                                          
+ [12] C.I.T.D. Balanagar                                                                     
+ [13] Nacharam                                                                               
+ [14] Uppal                                                                                  
+ [15] ABIDS Circle                                                                           
+ [16] Charminar                                                                              
+ [17] Jubilee Hills                                                                          
+ [18] Paradise                                                                               
+ [19] Tarnaka                                                                                
+ [20] Reg.Science Centre                                                                     
+ [21] Benz Circle                                                                            
+ [22] Industrial Estate                                                                      
+ [23] Panchayat Raj Office                                                                   
+ [24] Police Barracks                                                                        
+ [25] Seethammadhara                                                                         
+ [26] INS-VIRBAHU                                                                            
+ [27] Zoo Park                                                                               
+ [28] Mourya Inn                                                                             
+ [29] Police Station                                                                         
+ [30] RTC Bus Depot                                                                          
+ [31] Autonagar                                                                              
+ [32] Ganapuram Area                                                                         
+ [33] Hindu College Guntur                                                                   
+ [34] RO APPCB                                                                               
+ [35] Venkatareddy Nagar                                                                     
+ [36] CWMP, RAMKY                                                                            
+ [37] Pedagantyada V                                                                         
+ [38] KUDA Office                                                                            
+ [39] GNC Toll Gate Tirumala , Chittoor Dist.                                                
+ [40] Near Hindu College, Market Road, Guntur                                                
+ [41] Tarnaka, NEERI Lab. IICT Campus, Hyderabad                                             
+ [42] Nacharam, Industrial Estate, Premises of IICT (APIDC), Hyderabad                       
+ [43] ABIDS Circle General Post Office Building, Hyderabad                                   
+ [44] CER Club,S.C.C.L. township, writter basti, Kothagudem, Khammam Dist.                   
+ [45] Mourya Inn, Kurnool                                                                    
+ [46] Beside Regional Office, APPCB Nalgonda                                                 
+ [47] Venkatareddy nagar, Vedayapalem, Nellore                                               
+ [48] Police Station, Medak, Patencheru                                                      
+ [49] RTC Bus Depot, Karim Nagar, Ramagundam                                                 
+ [50] Regional Science Centre, Chittoor Bypass Road, Tirupati                                
+ [51] Benz Circle, Vijayawada                                                                
+ [52] Autonagar, Vijayawada                                                                  
+ [53] Ganapuram Area, Visakhapatnam                                                          
+ [54] Coastal Waste Management Project (RAMKY) Pharma City, Parawada (M), Visakhapatnam      
+ [55] KUDA Office, Hanumakonda, Warangal Dist.                                               
+ [56] Zoo Park, Hyderabad                                                                    
+ [57] Top of the Office Building Ramanayyapeta, Kakinada                                     
+ [58] Kamalanagar, Ananthapur                                                                
+ [59] Near Nutrine Confectionery, Palamaner Road, Chittor                                    
+ [60] ASRAM Diagnostic Center, Eluru                                                         
+ [61] Industrial Association office, IDA, Jeedimetla                                         
+ [62] Near ICL Industries, Yerrangunta, Kadapa District                                      
+ [63] DIC Building, Karimnagar                                                               
+ [64] Jalasoudha, Khammam                                                                    
+ [65] Administrative Building of M/s Srini Pharmaceuticals Ltd, Choutuppal, Nalgonda District
+ [66] Nizamabad Town                                                                         
+ [67] Near Court Centre, Ongole, Parkasam District                                           
+ [68] Staff Club Building, M/s A.P. Paper Mill, Rajahmundry                                  
+ [69] Hetero Lab Unit-I, Gaddapotharam, Zinnaram (M), Medak District                         
+ [70] Muncipal office, Sangareddy                                                            
+ [71] IDA, Pydibheemavaram, Srikakulam                                                       
+ [72] Police Control Room, Krishna District Vijaywada                                        
+ [73] Pedagantyada (V), Gajuwada (M), Visakhapatnam                                          
+ [74] Industrial Growth Centre, Bobbili, Vizianagaram                                        
+ [75] Mee Seva Center, Muncipal Office Building, Warangal                                    
+ [76] Compound of PCCF's Office building                                                     
+ [77] Compound of APSPCB office building                                                     
+ [78] Head Office, Bamunimaidan, Guwahati                                                    
+ [79] Paltanbazar, Guwahati                                                                  
+ [80] Barpara Office Bldg                                                                    
+ [81] Birjhoria Science Co                                                                   
+ [82] Fire Brigade Station                                                                   
+ [83] Head Office                                                                            
+ [84] Paltanbazar                                                                            
+ [85] B.R.P.L.                                                                               
+ [86] Dibrugarh Off. Bldg                                                                    
+ [87] Golaghat Off. Bldg.                                                                    
+ [88] Gopinath Nagar                                                                         
+ [89] Santipur                                                                               
+ [90] CISF Campus                                                                            
+ [91] Sibasagar Off. Bldg                                                                    
+ [92] Tezpur Office Bldg                                                                     
+ [93] Campus of Oil India                                                                    
+ [94] Office Building RLO                                                                    
+ [95] Barpara Office Building, Bongaigaon                                                    
+ [96] Campus of Oil India Ltd. PS-6, Bongaigaon, Chirang                                     
+ [97] Daranga, Baska district, BATAD,Assam near Sandoop Jhankar town of Bhutan               
+ [98] Dibrugarh Office Building, Dibrugarh                                                   
+ [99] Golaghat Office Building, Golaghat                                                     
+[100] Boargaon, Dist- Kamrup,Guwahati                                                        
+[101] Guwahati University Campus, Dist- Kamrup, Guwahati                                     
+[102] ITI Building, Gopinath Nagar, Guwahati                                                 
+[103] Khanapara, Central Dairy, Guwahati, Dist Kamrup                                        
+[104] Near Pragjyotish College, Santipur, Guwahati                                           
+[105] Bazar Patti, North Lakhimpur Town,Lakhimpur, Assam                                     
+[106] Water Resources Division Office Campus, Christian Patty, near Nagaon College           
+[107] Campus of PWD Rural Division, near Gordon Boy's GS School, Dist- Nalbari               
+[108] ONGC Colony, Sivasagar                                                                 
+[109] Janiganj, Silcher                                                                      
+[110] Office building of RLO, near Ithkola Market, Ghaniwala road                            
+[111] Tezpur Office Building, Tezpur                                                         
+[112] Digboi Carbon Factory Campus, Borguri, Tinsukia                                        
+[113] Coal India Office Complex, Margherita,Tinsukia,Assam                                   
+[114] Borguri, Tinsukia                                                                      
+[115] Sibasagar Office Building, Sibasagar                                                   
+[116] Beltron Bhawan, Shastri Nagar, Patna                                                   
+[117] Gandhi Maidan Test Centre,Patna                                                        
+[118] Beltron Bhawan                                                                         
+[119] Gandhi Maidan T C                                                                      
+[120] Modern Foods, Industrial Area, Chandigarh                                              
+[121] Sector-17 C, Chandigarh                                                                
+[122] Punjab Engineering College, Sector-12, Chandigarh                                      
+[123] Industrial Area                                                                        
+[124] Modern Foods                                                                           
+[125] Kaimbwala Village                                                                      
+[126] Punjab Eng College                                                                     
+[127] Sector -39                                                                             
+[128] Sector-17 C                                                                            
+[129] Sector-39                                                                              
+[130] IMTECH Sector 39, Chandigarh                                                           
+[131] Kaimbwala Village, Chandigarh                                                          
+[132] Pragati Nagar NTPC Colony, Korba                                                       
+[133] HIG 21,22.Near Ghantaghar, M.P. Extension, Korba                                       
+[134] I.T.I., Rampur, Korba                                                                  
+[135] M.P.L.U. Nigam                                                                         
+[136] Regional Office                                                                        
+[137] Visak Hostel                                                                           
+[138] I.T.I, Rampur                                                                          
+[139] Near Ghantaghar                                                                        
+[140] Pragati Nagar                                                                          
+[141] Wool Worth I.Pvt.Ltd                                                                   
+[142] New HIG - 9, Hirapur                                                                   
+[143] Yatayat Thana                                                                          
+[144] Visak Hostel, Sector-4, Bhilai                                                         
+[145] R.O., 5/32 Banglow Office Building, Bhilai                                             
+[146] M.P. Laghu Udyog Nigam, Bhilai                                                         
+[147] New HIG-9, Hirapur, Raipur                                                             
+[148] M/S Wool Worth India Pvt. Ltd. Sarora Raipur                                           
+[149] Yatayat Thana, Near Jai Stambh Chowk, Raipur                                           
+[150] Regional Office, CECB Vyapar Vihar, Bilashpur                                          
+[151] Khadoli Ind. Area                                                                      
+[152] Chetan Guest House                                                                     
+[153] Khadoli Industrial Area, Village- Khadoli, Silvassa                                    
+[154] Kadaiya Ind. Area                                                                      
+[155] Airport Road                                                                           
+[156] Kadaiya Industrial Area, Village- Kadaiya, Daman (Industrial Area)                     
+[157] Nizamuddin, Delhi                                                                      
+[158] Ashok Vihar, Delhi                                                                     
+[159] Shahzada Bagh, Delhi                                                                   
+[160] Shahadra, Delhi                                                                        
+[161] Janakpuri, Delhi                                                                       
+[162] Siri Fort, Delhi                                                                       
+[163] Mayapuri Indl. Area                                                                    
+[164] Shahdara                                                                               
+[165] Shahzada Bagh                                                                          
+[166] Ashok Vihar                                                                            
+[167] BSZ Marg                                                                               
+[168] DCE                                                                                    
+[169] Janakpuri                                                                              
+[170] N.Y. School                                                                            
+[171] Nizamuddin                                                                             
+[172] Siri Fort                                                                              
+[173] Town Hall                                                                              
+[174] Pritampura                                                                             
+[175] Pritampura, Delhi                                                                      
+[176] N.Y. SCHOOL, Sarojini Nagar, Delhi                                                     
+[177] Town Hall, Ayurvedic Dispensary, Chandni Chowk, Delhi                                  
+[178] Mayapuri Industrial Area, Delhi                                                        
+[179] On the roof of Fuse Call Office of Elec. Dept.,Vasco, Goa                              
+[180] Infront of Old GSPCB premises, Patto, Panaji, Goa                                      
+[181] Above the Fire Brigade Station, Near Birth 5A & 6A of Mormugao,Port Trust, Vasco       
+[182] Near Old GSPCB                                                                         
+[183] Electricity Deptt.                                                                     
+[184] Mormugao Port Trust                                                                    
+[185] Amona, Goa                                                                             
+[186] Assanora Junction, Goa                                                                 
+[187] Bicholim, Goa                                                                          
+[188] Codli Tisk, Goa                                                                        
+[189] Curchorem, Goa                                                                         
+[190] Honda Junction, Goa                                                                    
+[191] Usgao Plae, Junction                                                                   
+[192] Kundaim Industrial Estate                                                              
+[193] Mapusa Town                                                                            
+[194] Margao Town                                                                            
+[195] Ponda Town                                                                             
+[196] Near Railway Station at Kalem, Sanguem                                                 
+[197] Quepem, Tilamol                                                                        
+[198] Cuncolim Industrial Estate                                                             
+[199] Sardhara Industrial Corporation, Rajkot                                                
+[200] S.V.R. Engg. College, Surat                                                            
+[201] B.R.C. High School, Udhna, Surat                                                       
+[202] Near Air India Office, Surat                                                           
+[203] Nyaymandir                                                                             
+[204] GPCB Office, Geri Vasahat, Vadodara                                                    
+[205] I.P.C.L.                                                                               
+[206] Naroda, G.I.D.C., Ahmadabad                                                            
+[207] Rallis India Ltd. Ankaleshwar                                                          
+[208] Vapi Nagar Palika, Vapi                                                                
+[209] GEB, IIIrd Phase, GIDC, Vapi                                                           
+[210] Fisheries Office, Jamnagar.                                                            
+[211] Cadilla Bridge Narol                                                                   
+[212] Naroda                                                                                 
+[213] Shardaban Hospital                                                                     
+[214] AZL, Behrampura                                                                        
+[215] L.D. Eng. College                                                                      
+[216] R.C. High School                                                                       
+[217] Rallies India Ltd                                                                      
+[218] Durga Traders                                                                          
+[219] Fisheries Office                                                                       
+[220] Sardhara Indl.Corp.                                                                    
+[221] B.R.C. High School                                                                     
+[222] Near A.I. Office                                                                       
+[223] S.V.R. Eng. College                                                                    
+[224] CETP                                                                                   
+[225] Dandia Bazar                                                                           
+[226] GPCB Office                                                                            
+[227] Subhanpura                                                                             
+[228] GEB                                                                                    
+[229] Vapi Nagar Palika                                                                      
+[230] Behrampura                                                                             
+[231] Cadilla Bridge Narol, Ahmadabad                                                        
+[232] L.D. Engineering College, Ahmadabad                                                    
+[233] Shardaben Hospital, Saraspur, Ahmadabad                                                
+[234] R.C. High School, Mirzapur, Ahmadabad                                                  
+[235] AZL Behrampura, Ahmadabad                                                              
+[236] Durga Traders, Bhavanafarm Society , Ankaleshwar                                       
+[237] Regional Offce, Rajkot                                                                 
+[238] Dandia Bazaar, Vadodara                                                                
+[239] CETP Nandesari, Vadodara                                                               
+[240] Reliable Products, 61/62 Ilaben estate,PIRANA DUMP SITE,NAROL                          
+[241] Bhagavathi Estate ,KEVAL KANTA ROAD,RAKHIYAL                                           
+[242] GIDC OFFICE TERRACE, GIDC ESTATE JHAGADIA                                              
+[243] GIDC OFFICE TERRACE, GIDC ESTATE JHAGADIA,ANKLESHWAR                                   
+[244] Panoli Ind.Asso. & Emergency Response Centre,Plot-913/10-20, GIDC, Panoli,ANKLESHWAR   
+[245] Yasho Industries Phase-III, GIDC,VAPI                                                  
+[246] Dahez SEZ Part â€“II Office,Bharuch                                                      
+[247] Learning centre Saraswati Township of RIL,Bharuch                                      
+[248] Amrut Chambers, Baroi Road, Mundra, Kutch,Bhuj                                         
+[249] Eagle sanatory wares, Vill-Jambudiya,MORBI                                             
+[250] Fire Brigade station,MORBI                                                             
+[251] Zydas Infratech-Pharmez matoda GIDC NH-8A, Changodar,SANAND                            
+[252] Tristar Intermediate, Unit-II, Plot no-3321,GIDC Sarigam,Sarigam                       
+[253] Ballarpur Industries, Yamunanagar                                                      
+[254] Regional Office, Haryana State Pollution Control Board                                 
+[255] Shivalic Global Industries, Faridabad                                                  
+[256] Shivalic Global Ind.                                                                   
+[257] Guru Jambeshwar Uni                                                                    
+[258] Urban Estate-II                                                                        
+[259] Ballarpur Industries                                                                   
+[260] Urban Estate - II, Hissar                                                              
+[261] Guru Jambehswar University,Hissar                                                      
+[262] Paonta Sahib                                                                           
+[263] Gondhpur Industrial Area, Paonta Sahib                                                 
+[264] AC Office Building, Parwanoo                                                           
+[265] Regional Office, Sector- 4, Parwanoo                                                   
+[266] Tekka Bench Ridge, Simla                                                               
+[267] Bus Stand, Winterfield, Simla                                                          
+[268] Regional Office, Damtal                                                                
+[269] Old Road, Damtal                                                                       
+[270] Industry Department                                                                    
+[271] Old Road                                                                               
+[272] Gondpur Indl. Area                                                                     
+[273] AC Office Bldg.                                                                        
+[274] Regional Ofice                                                                         
+[275] Bus Stand                                                                              
+[276] Tekka Bench Ridge                                                                      
+[277] Trilok Pur                                                                             
+[278] Central Laboratory                                                                     
+[279] AHC                                                                                    
+[280] Housing Board                                                                          
+[281] M. C.                                                                                  
+[282] Industry Department Office Building, Baddi                                             
+[283] Kala Amb Industrial Area                                                               
+[284] Kala Amb Town                                                                          
+[285] Municipal Council  MC                                                                  
+[286] Nehru Park, Manali, District Kullu                                                     
+[287] Office building HPSPCB, Hadimba Road, Manali, District Kullu                           
+[288] Regional Laboratory, HPSPCB, BBMB Colony, Sunder Nagar, Distt. Mandi                   
+[289] Regional Office, Una                                                                   
+[290] DIC Building, Mehatpur, Una                                                            
+[291] Office premises of Muncipal Council, NH-21, Sunder Nagar, Distt. Mandi                 
+[292] Municipal Council MC                                                                   
+[293] Kotwali Bazar Dharamshala                                                              
+[294] Daari, Dharamshala                                                                     
+[295] B. Brahamana I. Area                                                                   
+[296] M.A. Stadium                                                                           
+[297] Regional Office, Jammu                                                                 
+[298] M.A. Stadium, Jewel Chowk, Jammu                                                       
+[299] Bari Brahamana Industrial Area, Jammu                                                  
+[300] R.O. Dhanbad                                                                           
+[301] BIT, Sindri                                                                            
+[302] M.A.D.A., Jharia                                                                       
+[303] Albert Ekka Chowk, Main Road, Ranchi                                                   
+[304] Bistupur Vehical Testing Centre, Jamshedpur                                            
+[305] Golmuri Vehicle Testing Centre, Jamshedpur                                             
+[306] Bistupur Vehicle  TC                                                                   
+[307] Golmuri Vehical TC                                                                     
+[308] M.A.D.A.                                                                               
+[309] Albert Ekka Chowk                                                                      
+[310] BIT                                                                                    
+[311] Barajamda, Taurian Guest House, Dist- West Singhbhum                                   
+[312] EMTI, Bastacola, Dist- Dhanbad                                                         
+[313] CGM Office, Kusunda, Dist- Dhanbad                                                     
+[314] RO Building, Adityapur, Dist- Saraikela Kharsawan                                      
+[315] Graphite India, White Field Road, Bangalore                                            
+[316] AMCO Batteries, Mysore Road, Bangalore                                                 
+[317] Ananda Rao Circle, Bangalore                                                           
+[318] KHB Industrial Area, Near R.R. Founders, Yelahanka, Bangalore                          
+[319] Peenya Industrial Area, Bangalore                                                      
+[320] Victoria Hospital, Bangalore                                                           
+[321] K.R.Circle, Visvesvaraya Bldg., Mysore                                                 
+[322] K.I.A.D.B. Bldg.                                                                       
+[323] AMCO Batteries                                                                         
+[324] Graphite India                                                                         
+[325] KHB Indl Area                                                                          
+[326] Peenya Indl. Area                                                                      
+[327] Victoria Hospital                                                                      
+[328] Karnataka SPCB                                                                         
+[329] Govt. Hospital                                                                         
+[330] N.R. Circle                                                                            
+[331] L. Industrial Area                                                                     
+[332] Rani C. Circle                                                                         
+[333] Stides Premises                                                                        
+[334] K.R. Circle                                                                            
+[335] KSPCB Building                                                                         
+[336] Yeshwanthpura                                                                          
+[337] Anand Rao Circle                                                                       
+[338] Yeshwanthpura, Bangalore                                                               
+[339] Department of Environmental Science, Jnanabharathi Campus, Bangalore University        
+[340] Karnataka SPCB Office Building, Belgaum                                                
+[341] Mothi Talkies P.B. Road, Devengere                                                     
+[342] KSPCB Office Premises, Devengere                                                       
+[343] Lakkamanahalli Industrial Area, Dharwar                                                
+[344] Government Hospital, Gulbarga                                                          
+[345] Narashima Raja Circle, Hassan                                                          
+[346] Rani Chennamma Circle, Hubli                                                           
+[347] Stides Premises, Baikampady Industrial Area, Mangalore                                 
+[348] KSPCB Bldg. Hebbal Ind. Area, Mysore                                                   
+[349] KSPCB Office Premises, Bidar                                                           
+[350] Vittal Medi health Care Pvt Ltd, Domlur                                                
+[351] KSPCB Office Premises, Chitradurga                                                     
+[352] HPF Ltd., Water intake well, Ranebennur                                                
+[353] KSPCB Office Premises, Kolar                                                           
+[354] KSPCB Office Premises, Mandya                                                          
+[355] KSPCB Office Premises, Raichur                                                         
+[356] The VISL, Oxygen Plant, Shimoga                                                        
+[357] Tumkur University, Tumkur                                                              
+[358] KSPCB Office Premises, Bijapur                                                         
+[359] Eloor                                                                                  
+[360] Irumpanam                                                                              
+[361] Ernakulum South                                                                        
+[362] Vadavathoor                                                                            
+[363] Kottayam                                                                               
+[364] Nallalam                                                                               
+[365] Kozhikode City                                                                         
+[366] Carboradum U Ltd.                                                                      
+[367] Hi Tech Chackai                                                                        
+[368] PRS Hospital                                                                           
+[369] Sasthamangalam                                                                         
+[370] SMV School                                                                             
+[371] Carboradum/SEPR                                                                        
+[372] FACT Udyogmandal                                                                       
+[373] CSIR Complex                                                                           
+[374] M.G. Road                                                                              
+[375] FCI, OEN C. O. Bldg                                                                    
+[376] sasthamangalam                                                                         
+[377] District Office, Alissery Road, Alappuzha                                              
+[378] DC Mills Pathirapally, Alappuzha                                                       
+[379] FACT Udyogmandal, Ambalamughal, Kochi                                                  
+[380] Eloor, Kochi                                                                           
+[381] Irumpanam, Kochi                                                                       
+[382] Ernakulum South, Kochi                                                                 
+[383] FCI, OEN Connectors Office Building                                                    
+[384] MG Road Bank Ernakulum, Kochi                                                          
+[385] CSIR Complex, Kochi                                                                    
+[386] KSPCB, District Office, Kadappakada, Kollam                                            
+[387] KMML Chavara, Kollam                                                                   
+[388] Kozhikode City, Kozhikode                                                              
+[389] Nallalam, Kozhikode                                                                    
+[390] Kakkanchery, near KINFRA, Malappuram                                                   
+[391] M/S Carborandum Universal Ltd. P.B. NO. 1, KanjIkode West P.O. Palakad                 
+[392] PRS Hospital, Thiruvanathapuram                                                        
+[393] SMV School, Thiruvananthapuram                                                         
+[394] HiTech Chackai, Thiruvananthapuram                                                     
+[395] Sasthamangalam, Thiruvananthapuram                                                     
+[396] Near District Office KSPCB, Makkamkunnu, Pathanamthitta                                
+[397] KSPCB, District Office, Poonkunnam, Thrissur                                           
+[398] Sulthan Bathery, Wayanad                                                               
+[399] Carborandum Universal Company, Kochi                                                   
+[400] Vijay Nagar, Jabalpur                                                                  
+[401] M.P. Laghu Udyog, Pologround, Indore                                                   
+[402] Kothari Market, M.G. Road, Indore                                                      
+[403] Telephone Nagar, 26 A, Kanadia Road Indore                                             
+[404] Hamidia Road, M.P. Hastshilp Vikas Nigam, Bhopal                                       
+[405] Govindpura, AKUN, Bhopal                                                               
+[406] Government Nutan Subhash Higher Sec. School, T.T. Nagar, Bhopal                        
+[407] Govindpura                                                                             
+[408] Arera Colony                                                                           
+[409] Hamidia Road                                                                           
+[410] T.T.Nagar                                                                              
+[411] Dindayal Nagar                                                                         
+[412] M.P. Laghu Udyog                                                                       
+[413] Kothari Market                                                                         
+[414] Telephone Nagar                                                                        
+[415] Vijay Nagar                                                                            
+[416] Chem. D. Labour Club                                                                   
+[417] BCI Labour Club                                                                        
+[418] Grasim Kalyan Kendra                                                                   
+[419] Sub-Divisional Off.                                                                    
+[420] EID Perry (I) Ltd.                                                                     
+[421] Dewas Metal Section                                                                    
+[422] Vikas Nagar                                                                            
+[423] Maharaj Bada                                                                           
+[424] Near Arch. Museum                                                                      
+[425] Near Jain Temple                                                                       
+[426] Pt. Deendayal Nagar                                                                    
+[427] Jayant Township                                                                        
+[428] N.T.P.C., Vidyanagar                                                                   
+[429] Waidhan                                                                                
+[430] District Office                                                                        
+[431] Mahakal Temple                                                                         
+[432] EID Perry (I) Limited, Dewas                                                           
+[433] Dewas Metal Section, Dewas                                                             
+[434] Vikas Nagar, Dewas                                                                     
+[435] Dindayal Nagar, Gwalior                                                                
+[436] Maharaj Bada, Gwalior                                                                  
+[437] Grasim Kalyan Kendra, Nagda                                                            
+[438] B C I Labour Club, Nagda                                                               
+[439] Pt.Deendayal Nagar, Housing Board Colony, Sagar                                        
+[440] Sub-divisional Office E/M Light Machniery, Satna                                       
+[441] Regional Office MPPCB,Dharwari GaliNo.5,House No.318, Satna                            
+[442] Jayant Township, Singrauli                                                             
+[443] N.T.P.C., Vidyanagar, Singrauli                                                        
+[444] Waidhan, Singrauli                                                                     
+[445] District Office, Ujjain                                                                
+[446] Regional Office, Ujjain                                                                
+[447] Mahakal Temple, Ujjain                                                                 
+[448] Government Nutan Subhash Higher Sec. School,  T.T. Nagar, Bhopal                       
+[449] Chemical Division Labour Club, Nagda                                                   
+[450] Chamunda Mata Chouraha, Ujjain                                                         
+[451] Kolar Thana, Kolar Road, Bhopal                                                        
+[452] AKVN Office, Industrial Area Mandideep, Raisen                                         
+[453] Udaipur Beverage Racchai                                                               
+[454] HIG -33, Front of Geetanali Park Housing Board Colony, Chadangaon                      
+[455] Hindustan Unileaver, Narsinghpur Road                                                  
+[456] HJI                                                                                    
+[457] OPM                                                                                    
+[458] Vikas Bhavan, Sector-2, Ind. Area, Pithampur                                           
+[459] RCC Over Head Tank No. 1, Sector-3, Ind. Area, Pithampur                               
+[460] RTO Colony Tank, Nasik                                                                 
+[461] VIP Industrial Area, MIDC Satpura, Nasik                                               
+[462] Nasik Municipal Council Bldg. Nasik                                                    
+[463] Swargate, Pune                                                                         
+[464] Nal Stop, Pune                                                                         
+[465] Bhosari, Pune                                                                          
+[466] Worli, Mumbai                                                                          
+[467] Bank of India, Kalbadevi Branch, Kalbadevi, Mumbai                                     
+[468] Parel T.T., BMC Southward Office, DR. Ambedkar Road, Mumbai                            
+[469] Terrace Of Maternity Hospital,Dhobighat,Kopri, Thane East                              
+[470] Terrace Of Shahu Market,Naupada, Thane West                                            
+[471] Balkum/Kolshet,Thane West                                                              
+[472] WIT Campus, Solapur                                                                    
+[473] Chitale Clinic, Solapur                                                                
+[474] Institution of Engineers.                                                              
+[475] MIDC Office,Hingna Road,Nagpur                                                         
+[476] Govt.Polytechnic College,Nagpur.                                                       
+[477] C.A.D.A. Office                                                                        
+[478] S.B.E.S. College                                                                       
+[479] Bibi-Ka-Maqbara                                                                        
+[480] M.I.D.C.                                                                               
+[481] Nagar Parishad                                                                         
+[482] SRO, Bapat Nagar                                                                       
+[483] Dombivalli MIDC                                                                        
+[484] Municipal Council                                                                      
+[485] Mahadwar Road                                                                          
+[486] S.T. Stand                                                                             
+[487] Shivaji University                                                                     
+[488] MIDC Industrial Area                                                                   
+[489] MIDC Office                                                                            
+[490] Govt. Poly. College                                                                    
+[491] Institution of Eng.                                                                    
+[492] Maskasath                                                                              
+[493] NEERI Lab                                                                              
+[494] VIP Industrial Area                                                                    
+[495] NMC Building                                                                           
+[496] RTO Colony Tank                                                                        
+[497] Bhosari                                                                                
+[498] Nalstop                                                                                
+[499] Swargate                                                                               
+[500] WIT Campus                                                                             
+[501] Chitale Clinic                                                                         
+[502] Balkum/Kolshet                                                                         
+[503] Kopri                                                                                  
+[504] Naupada                                                                                
+[505] Apurva Oil and Ind.                                                                    
+[506] Govt. Coll. of Engg.                                                                   
+[507] Rajkamal Square                                                                        
+[508] M/S Chemiequip Ltd                                                                     
+[509] MIDC WTP                                                                               
+[510] Pump House, CETP                                                                       
+[511] Chalke Wadi                                                                            
+[512] MIDC Taloja                                                                            
+[513] MPCB Central Lab                                                                       
+[514] Airoli                                                                                 
+[515] MSEB Power Station                                                                     
+[516] Nerul                                                                                  
+[517] Panvel Res. Area                                                                       
+[518] Panvel Water Works                                                                     
+[519] MIDC Office Compound                                                                   
+[520] Police Chowki                                                                          
+[521] Sports Stadium                                                                         
+[522] Parel                                                                                  
+[523] Kalbadevi                                                                              
+[524] Worli                                                                                  
+[525] Kharghar                                                                               
+[526] EHS, Mahad                                                                             
+[527] MNP, Phulle Hall                                                                       
+[528] WTP Bhirwadi                                                                           
+[529] Rajkamal Square, Family Planning Centre Building of Vaneeta Samaj, Dts Amravati        
+[530] Electronics and Tel. Dept., Govt College of Engineering, Amravati Dist.                
+[531] M/s Apurva Oil and Industries Pvt. Ltd., A-23, MIDC, Amravati Dist.                    
+[532] S.B.E.S. College, Aurangabad                                                           
+[533] Bibi-Ka-Maqbara, Aurangabad                                                            
+[534] C.A.D.A. Office, Aurangabad                                                            
+[535] BIWA House, Badlapur                                                                   
+[536] Sub-Regional Office, Bapat Nagar, Chandrapur                                           
+[537] M.I.D.C. Chandrapur.                                                                   
+[538] Nagar Parishad, Chandrapur                                                             
+[539] Gadchandur Gram Panchayat, Rajura, Chandrapur                                          
+[540] MIDC, Tadali, Chandrapur                                                               
+[541] Muncipal Council, Ballarshah, Chandrapur                                               
+[542] Sub R. O. Office, Old B. J. Market, Jalgaon                                            
+[543] Girna water tank, Ramanand Nagar, Jalgaon                                              
+[544] University Campus, Shivaji University, Kolhapur                                        
+[545] Ruikar Trust, Dabholkar Corner, S.T. Stand,Kolhapur                                    
+[546] Mahadwar Road, Near Mahalaxmi Temple, Kolhapur                                         
+[547] MIDC, Water Works, Latur                                                               
+[548] Shyamnagar, Terrence of Keshavraj Vidyalaya, Latur                                     
+[549] Ganjgolai, Terrance of Siddheshwar Sahkari Bank, Latur                                 
+[550] Chalke Wadi, Lote                                                                      
+[551] Pump House, CETP, Lote                                                                 
+[552] Terrace of water treatment plant, Bhirwadi, Mahad                                      
+[553] Terrace of Environment Health Safty (EHS) building of M/s Privi organics Ltd , Unit no.
+[554] Terrace of Mahad Nagar Parishad , Mahatma Phule Hall & vegetable market Mahad          
+[555] MIDC Industrial Area, MIDC Office, Hingna,Nagpur                                       
+[556] Nagpur Corporation Building, Maskasath, Itwari, Nagpur                                 
+[557] NEERI Lab, Nehru Marg, National Highway No. 7,Nagpur                                   
+[558] Terrace of Meghe College of Engineering, Airoli, TTC, Navi Mumbai                      
+[559] Terrace of Dr. D.Y. Patil College, Nerul, TTC Navi Mumbai                              
+[560] Terrace of MPCB Central Lab, Mhape, TTC Navi Mumbai                                    
+[561] Terrace of MSEB Power Station, Kharghar, Taloja Navi Mumbai                            
+[562] Panvel Residential Area, Taloja, Navi Mumbai                                           
+[563] Terrace of MIDC Collom Faciolity Building, MIDC Taloja Navi Mumbai                     
+[564] Terrace of Roha Industrial Association office, Roha                                    
+[565] Terrace of Filter House of MIDC Water works, Roha                                      
+[566] Krishna Valley School, Sangli                                                          
+[567] Terrace Of Maternity Hospital,Dhobighat,Kopri, Thane  East                             
+[568] Smt. C. H. M. College Campus, Ulhasnagar                                               
+[569] Octroi Naka, Pawai-Chowk, Vithalwadi, Ulhasnagar                                       
+[570] L.R.T. Commerce College, Ratanlal Plot, Civil Lines, Akola                             
+[571] MIDC Water Work, Phash-II, MIDC Akola                                                  
+[572] MIDC Office, Jalgaon                                                                   
+[573] Krishidhan Seeds Ltd, MIDC Area, Jalna                                                 
+[574] Bachat Bhawan, Near S P Office, Jalna                                                  
+[575] Ganesh Nagar, Nanded                                                                   
+[576] Industrial Area, MIDC, CIDCO, Nanded                                                   
+[577] Mutha Chowk, Vazirabad, Nanded                                                         
+[578] MPCB Sub R.O. Udyog Bhawan, Nashik                                                     
+[579] Bank of Baroda Building, Near Pimpri-Chinchwad M.C. Building                           
+[580] SRO, MPCB Sangli                                                                       
+[581] Sangli- Miraj Primary school Building, Sangli                                          
+[582] College Of Engineering and Technology, Akola                                           
+[583] Dombivali MIDC Phase-II                                                                
+[584] Ambernath Municipal Council Office, Ambernath                                          
+[585] MPCB Office Premises, Civil Lines, Nagpur                                              
+[586] Secretariat Building                                                                   
+[587] Boards Office Permises, Lumpyngngad, Shillong                                          
+[588] State Tuberculosis Hospital, Shillong                                                  
+[589] Boards Office                                                                          
+[590] Tuberculosis Hosp.                                                                     
+[591] Export Promotion Industrial Park (EPIP). Byrnihat,Ri-Bhoi dist Meghalaya               
+[592] Terrace building, Dawki, Jaintia Hills District, Meghalaya                             
+[593] Office building of Add Chief Engineer,PHED, Araimille, Tura West Garo Hills District   
+[594] Office Premises of the O/o BDO, C & RD Block, Khliehriat                               
+[595] Office Premises of the O/o SDO, PHED, Nongstoin                                        
+[596] Umiam Industrial Complex, Ri-Bhoi District                                             
+[597] Bawngkawn                                                                              
+[598] Khatla                                                                                 
+[599] Laipuitlang                                                                            
+[600] Khatla, M.G-Road, Roof  Top of  Mizoram SPCB                                           
+[601] Laipuitlang, Residence of  Er. Dunglena, Chairman, MPCB                                
+[602] Bawngkawn , Roof  Top of  Mr.K.L. Beremaâ€™s residence.                                  
+[603] Lengpui Airport, Residential Quarter (Type-III), Model Veng, Lengpui, Aizawl           
+[604] Dawrpui Y.M.A, Building, Dawrpui, Aizawl                                               
+[605] D.T.O Office Building, Kahrawt veng, Champhai                                          
+[606] Lalzidinga building, Champhai Vengthlang, Champhai                                     
+[607] Synod Bookroom, Building Diakkawn, Kolasib                                             
+[608] H. Lalthuama Building, Near D.C. Office, Project Veng, Kolasib                         
+[609] Thangkhuma Building, Salem Veng, Lunglei                                               
+[610] K.Lalliantluanga, Chanmari I, Lunglei                                                  
+[611] Khatla, M.G-Road, Roof Top of Mizoram SPCB                                             
+[612] Laipuitlang, Residence of Er. Dunglena, Chairman, MPCB                                 
+[613] Bawngkawn , Roof Top of Mr.K.L. Beremaâ€™s residence.                                    
+[614] Bank Colony                                                                            
+[615] Dhobinala                                                                              
+[616] Hongkong Market                                                                        
+[617] Bank Colony,Dimapur,Nagaland                                                           
+[618] Dhobinala, Dimapur, Nagaland                                                           
+[619] Opposite War Cemetery, Kohima                                                          
+[620] Opposite NST Office, Kohima                                                            
+[621] T.T.P.S.Colony, Talcher                                                                
+[622] Industrial Estate, Angul                                                               
+[623] IDL Police Out-post, Sonaparbat, Rourkela                                              
+[624] Regional Office Orissa SPCB, Rayagada                                                  
+[625] LPS High School, Jaykaypur                                                             
+[626] NALCO Township, Angul                                                                  
+[627] SPCB Building, Bhubaneshwar                                                            
+[628] Regional Office, ORPB, Rourkela                                                        
+[629] NALCO Township                                                                         
+[630] Capital Police Stn.                                                                    
+[631] IRC                                                                                    
+[632] OSPCB Bldg                                                                             
+[633] Badambi, Cuttack                                                                       
+[634] LPS H. School                                                                          
+[635] IDL Police Out-post                                                                    
+[636] PHD Ofice, Sambalpur                                                                   
+[637] T.T.P.S Colony                                                                         
+[638] R.O. Cuttack                                                                           
+[639] Coal Field Area                                                                        
+[640] Sahadevkhunta                                                                          
+[641] Sahadevkhunta, Balasore                                                                
+[642] Regional Office, Berhampur                                                             
+[643] Capital Police Station, Bhubaneshwar                                                   
+[644] IRC Vilage, Bhubaneshwar                                                               
+[645] Roof of Traffic Tower, Badambadi, Cuttack                                              
+[646] R.O. Cuttack Office, Surya Vihar, Cuttack                                              
+[647] Roof of Filter Plant, PHD Office, Modipara, sambalpur                                  
+[648] Coal Field Area, Talcher                                                               
+[649] Chandrasekharpur. Bhubneswar                                                           
+[650] Water works, Palasuni, Bhubneswar                                                      
+[651] Patrapada, Bhubneswar                                                                  
+[652] DIC, Office, Angaragadia                                                               
+[653] Rasulpur, Near Balgopalpur Industrial Area                                             
+[654] Near Barabati Stadium, Tulasipur                                                       
+[655] Over the roof of Dalmia Research Institute, Rajgangpur                                 
+[656] Roof of maintenance Office of M/s NINL, Duburi                                         
+[657] Over the Guest House of M/s NINL                                                       
+[658] Over the STP of M/s IFFCO Ltd.                                                         
+[659] Over the Guest House of M/s PPL                                                        
+[660] Near Overhead Water Tank of M/s PPT                                                    
+[661] Regional Office, Keonjhar                                                              
+[662] Konark police station, Konark                                                          
+[663] Sadar Police Station, Puri                                                             
+[664] Town Police                                                                            
+[665] Roof of RO OFFICE BUILDING                                                             
+[666] DSTC Office Upstairs, PHB 3rd Floor, AnnaNagar. Pondicherry-5.                         
+[667] PIPDIC Ind. Estate Mettupalayam, Pondicherry                                           
+[668] Chamber Of Commerce, Pondicherry                                                       
+[669] PIPDIC                                                                                 
+[670] Chamber of Commerce                                                                    
+[671] DSTC Office Upstairs                                                                   
+[672] DSTC Office                                                                            
+[673] B.Ed College (PKCE), Nehru Nagar, Karaikal                                             
+[674] Govt. Tourist Home, Kovilpathu, Karaikal                                               
+[675] M/s Puducherry Power Corporation Limited, Polagam, T.R. Pattinam, Karaikal             
+[676] The Ludhiana Dist. Coop. Milk Producers Union Ltd., Ferozpur Road, Ludhiana.           
+[677] PPCB Office Building, Ludhiana                                                         
+[678] Rita Sewing Machines, Ludhiana                                                         
+[679] Regional Office, Jalandhar                                                             
+[680] Inderson's Leather Pvt. Ltd.                                                           
+[681] Beat all Sports                                                                        
+[682] M/s Raj Steel Rolling Mills, Mandi Gobindgarh                                          
+[683] M/s Modi Oil and General Mills, Mandi Gobindgarh                                       
+[684] Raj Steel                                                                              
+[685] Modi Oil & GM                                                                          
+[686] Focal Point                                                                            
+[687] Punjab Maltex                                                                          
+[688] MC Tube Well No.27                                                                     
+[689] Milk Plant                                                                             
+[690] Rita Sewing Machines                                                                   
+[691] Bharat Nagar Chowk                                                                     
+[692] PPCB Office Bldg.                                                                      
+[693] NFL Guest House                                                                        
+[694] Punjab Alkalies                                                                        
+[695] Nagina Soap Factory                                                                    
+[696] A-1 Platters                                                                           
+[697] Bathinda Milk Plant                                                                    
+[698] Bhanakarpur Road                                                                       
+[699] Winsome Yarns Ltd                                                                      
+[700] United Rolling Mills                                                                   
+[701] Markfed Vanaspati                                                                      
+[702] A S School                                                                             
+[703] Nagina Soap Factory, Batala Road, Amritsar                                             
+[704] A-1,Platers, Amritsar                                                                  
+[705] M/s Bathinda Dist Coop Milk Producers Union Ltd., Dabwali Road, Bathinda               
+[706] M/s Punjab Chemicals and Crop Protection Ltd., Bhanakarpur Road, Derabassi             
+[707] M/s Winsome Yarns Ltd., Barwala Road, Derabassi                                        
+[708] United Rolling Mills, Mandi Gobindgarh                                                 
+[709] Municipal Council Tubewell No. 27, Jalandhar                                           
+[710] Markfed Vanaspati, Khanna                                                              
+[711] AS School, Khanna                                                                      
+[712] Bharat Nagar Chowk, Ludhiana                                                           
+[713] The Ludhiana Dist. Coop. Milk Producers Union Ltd., Ferozpur Road,  Ludhiana.          
+[714] M/s Punjab Alkalis & Chemicals Ltd., Naya Nangal                                       
+[715] M/s NFL Guest House,Naya Nangal                                                        
+[716] C-PYTE Building at Dera Baba Nanak                                                     
+[717] Ceylon Industries, Factory Area, Patiala                                               
+[718] Fire Brigade Station, Bahera Road, Patiala                                             
+[719] Focal Point, Jalandhar                                                                 
+[720] M/s Punjab Maltex Pvt. Ltd. Sports and Surgical Complex, Kapurthala Road, Jalandhar    
+[721] Gurudwara Gangsar Sahib Village Kilabharian, District Sangrur                          
+[722] Gurudwara Guru ki Dhab, Jaitu Kotkapura Road, Village Guru Ki Dhab                     
+[723] Shriguru Harkishan Public School, Village Rasulpur Kalan, District Amritsar            
+[724] Govt. Senior Sec. School, Mukandpur, Nawashahar, Shahid Bhagat Singh Nagar             
+[725] Regional Office, RJPB, Anantpura, Kota                                                 
+[726] RIICO Pump House, MIA, Alwar                                                           
+[727] Sojati Gate, Jodhpur                                                                   
+[728] Basni Industrial Area, RIICO Office, Jodhpur                                           
+[729] Udaipur                                                                                
+[730] Town Hall,Udaipur                                                                      
+[731] Ajmeri Gate,Jaipur                                                                     
+[732] VKIA,Jaipur                                                                            
+[733] RJPB Office,Jhalana Doongari,Jaipur                                                    
+[734] Samcore Glass Ltd., Kota                                                               
+[735] Municipal Corporation Building, Kota                                                   
+[736] Regional Office, Rajasthan State Pollution Control Board, Alwar                        
+[737] Gaurav Solvex Ltd. MIA, Alwar                                                          
+[738] Maha Mandir Police Thane. Jodhpur.                                                     
+[739] Gaurav Solvex Ltd.                                                                     
+[740] RIICO Pump House                                                                       
+[741] MIA                                                                                    
+[742] VKIA                                                                                   
+[743] Ajmeri Gate                                                                            
+[744] Chandpole                                                                              
+[745] RSPCB Office                                                                           
+[746] Vidyadhar Nagar                                                                        
+[747] Basni Indl. Area                                                                       
+[748] DIC                                                                                    
+[749] HB                                                                                     
+[750] M M Police Thane                                                                       
+[751] Shashtri Nagar                                                                         
+[752] Sojati Gate                                                                            
+[753] Municipal C. Bldg                                                                      
+[754] Samcore Glass Ltd.                                                                     
+[755] Regional Office, MIA                                                                   
+[756] Ambamata                                                                               
+[757] Samcore Glass                                                                          
+[758] RIICO Pump House,  MIA, Alwar                                                          
+[759] Office of District Education Officer, Chandpole, Jaipur                                
+[760] RIICO Office, M.I.A., Jaipur                                                           
+[761] Regional Office ( North), RSPCB, Vidyadhar Nagar, Jaipur                               
+[762] DIC Office, Industrial Estate, Jodhpur                                                 
+[763] Office of Housing Board, Chopasani Road, Jodhpur                                       
+[764] Shastri Nagar Police Thana, Jodhpur                                                    
+[765] Ambamata, Udaipur.                                                                     
+[766] Regional Office,MIA,Udaipur                                                            
+[767] White Hall Complex                                                                     
+[768] Madras Medical College, Chennai                                                        
+[769] NEERI, CSIR Campus Chennai                                                             
+[770] Thiruvottiyur Municipal Office, Chennai                                                
+[771] SIDCO Office, Coimbatore                                                               
+[772] Distt. Collector's Office, Coimbatore                                                  
+[773] Coimbatore                                                                             
+[774] Govt. High School                                                                      
+[775] Kathivakkam                                                                            
+[776] Thiruvottiyur                                                                          
+[777] Madras Med. College                                                                    
+[778] NEERI CSIR Campus                                                                      
+[779] SIDCO Office                                                                           
+[780] Dist. Coll. Office                                                                     
+[781] Ponniyarajapuram                                                                       
+[782] Fenners (I) Ltd.                                                                       
+[783] Highway Bldg.                                                                          
+[784] Kunnathur Chatram                                                                      
+[785] Sowdeswari College                                                                     
+[786] Raja Agencies                                                                          
+[787] AVM Jewellery Bldg.                                                                    
+[788] Fisheries College                                                                      
+[789] M C Thiruvottiyur                                                                      
+[790] Kathivakkam, Municipal Kalyana Mandapam, Chennai                                       
+[791] Govt. High School, Manali, Chennai.                                                    
+[792] Thiruvottiyur,  Chennai                                                                
+[793] Poniarajapuram, On the top of DEL, Coimbatore                                          
+[794] Highway (Project -I) Building, Madurai                                                 
+[795] Fenner (I) Ltd. Employees Assiciation Building Kochadai, Madurai                       
+[796] Kunnathur Chatram East Avani Mollai Street, Madurai                                    
+[797] Sowdeswari College Building, Salem                                                     
+[798] Fisheries College, Tuticorin                                                           
+[799] Raja Agencies, Tuticorin                                                               
+[800] AVM Jewellery Building, Tuticorin                                                      
+[801] Gandhi Market, Trichy                                                                  
+[802] Main Guard Gate, Tirchy                                                                
+[803] Bishop Heber College, Tirchy                                                           
+[804] Golden Rock, Trichy                                                                    
+[805] Central Bus Stand, Trichy                                                              
+[806] Adyar, Chennai                                                                         
+[807] Anna Nagar, Chennai                                                                    
+[808] Thiyagaraya Nagar, Chennai                                                             
+[809] Kilpauk, Chennai                                                                       
+[810] Raman Nagar, Mettur                                                                    
+[811] SIDCO Industrial Complex, Mettur                                                       
+[812] SIPCOT Industrial Complex, Cuddalore                                                   
+[813] District Environmental Engineer Office, Imperial Road, Cuddalore                       
+[814] Eachangadu Villagae                                                                    
+[815] Thiruvottiyur, Chennai                                                                 
+[816] Vallalar Nagar, Chennai                                                                
+[817] APIIC Building, IDA, Pashamylaram                                                      
+[818] Kothur, Mahaboobnagar District                                                         
+[819] M/S Associated Chem Pvt Ltd, Fazalganj, Kanpur                                         
+[820] Deputy Ka Parao, Kanpur                                                                
+[821] Forest & Training Centre, Kidwai Nagar, Kanpur                                         
+[822] Dabauli, Kanpur                                                                        
+[823] Jajmau,Kanpur                                                                          
+[824] Regional Office, Jawahar Nagar, Varanasi.                                              
+[825] Anpara Colony, Sonabhadra, Anpara                                                      
+[826] Renusagar Colony, Sonabhadra, Anpara                                                   
+[827] Indira Chowk, J.P. Nagar, Gajraula                                                     
+[828] Raunaq Auto Ltd, J.P. Nagar, Gajraula                                                  
+[829] M/s Atlas Cycles Industries Ltd, Sahibabad Industrial Area, Ghaziabad                  
+[830] Regional Office, Bodla, Agra                                                           
+[831] Nunhai, Agra                                                                           
+[832] Bulandshaar Road Industrial Area, Ghaziabad                                            
+[833] Gee-Pee Electroplating and Engineering Works, NOIDA.                                   
+[834] Center for Development of Glass Industry ( CDGI), Firozabad                            
+[835] Tilak Nagar, Firozabad                                                                 
+[836] Raza ka Tal, Firozabad                                                                 
+[837] Regional Office, UP Pollution Control Board, E-12/1, Sector - 1, Noida                 
+[838] Kapoor Hotel, Hazratganj, Lucknow                                                      
+[839] Talkatora, Lucknow                                                                     
+[840] Mahanagar, Lucknow                                                                     
+[841] Aminabad, Lucknow                                                                      
+[842] Chandganj Garden, Lucknow                                                              
+[843] Nunhai                                                                                 
+[844] DIC, Nunhai                                                                            
+[845] Itmad-ud-daulah                                                                        
+[846] Rambagh                                                                                
+[847] Taj Mahal                                                                              
+[848] Anpara Colony                                                                          
+[849] Renusagar Colony                                                                       
+[850] CDGI                                                                                   
+[851] Raza Ka Tal                                                                            
+[852] Tilak Nagar                                                                            
+[853] Raunaq Auto Ltd                                                                        
+[854] Indira Chowk                                                                           
+[855] Atlas Cycles Ltd                                                                       
+[856] Bulandshahar R.I.A.                                                                    
+[857] Fazal Ganj                                                                             
+[858] Jajmau                                                                                 
+[859] Dabauli                                                                                
+[860] Deputy Ka Parao                                                                        
+[861] Kidwai nagar                                                                           
+[862] Talkatora                                                                              
+[863] Aminabad                                                                               
+[864] Chandganj  Nagar                                                                       
+[865] Kapoor Hotel                                                                           
+[866] Mahanagar                                                                              
+[867] GEE-PEE                                                                                
+[868] R.O, UPPB                                                                              
+[869] Jail Chauraha                                                                          
+[870] Veeranga Nagar                                                                         
+[871] CGCRI                                                                                  
+[872] Ahirpara                                                                               
+[873] Shivpuri                                                                               
+[874] Bharat Yantra Nigam                                                                    
+[875] Square Crossing                                                                        
+[876] Begum Bridge                                                                           
+[877] Thana Railway Road                                                                     
+[878] Sigra                                                                                  
+[879] Square crossing circle of Laxmi Talkies                                                
+[880] Bharat Yantra Nigam Ltd                                                                
+[881] Jail Chauraha, Jhansi                                                                  
+[882] Veeranga Nagar, Jhansi                                                                 
+[883] Central Glass & Ceramic Research Institute (CGCRI),Khurja                              
+[884] Ahirpara, Khurja                                                                       
+[885] Begum Bridge, Meerut                                                                   
+[886] Thana Railway Road, Meerut                                                             
+[887] Sigra, Varanasi                                                                        
+[888] Taj Mahal, Agra                                                                        
+[889] DIC Nunhai, Agra                                                                       
+[890] Etmad-uddaulah, Agra                                                                   
+[891] Rambagh, Agra                                                                          
+[892] IVRI Izatnagar, Bareilly                                                               
+[893] Petrol Pump, Civil Lines, Near Prabha Cinema                                           
+[894] India Glycol Ltd. Gida, Gorakhpur                                                      
+[895] M. M.M. Engineering College, Gorakhpur                                                 
+[896] Jalkal, Muncipal Corporation, Golghar, Gorakhpur                                       
+[897] I.I.T. Campus, Kanpur                                                                  
+[898] Dada Nagar, Kanpur                                                                     
+[899] Ramadevi, Kanpur                                                                       
+[900] Vikas Nagar, Kanpur                                                                    
+[901] R.O. UPPCB, 65 Baldevpuri, Maholi Road, Mathura                                        
+[902] CETP, Industrial Area, Mathura                                                         
+[903] Hindu College, Main Gate, Buddh Bazar, Station Road                                    
+[904] Central Police Hospital, Police traning Centre, Civil Lines                            
+[905] Ahmadnagar Town Hall Colony Gulab Road, Rai Bareilly                                   
+[906] Khoya Mandi, Tiraha Lucknow Road, Rai Bareilly                                         
+[907] E-23, Ind. Area, Amawan Road, Rai Bareilly                                             
+[908] Library Roof, IIT Roorkee, Saharanpur Campus                                           
+[909] UPCL S.E. Office, Near Clock Tower, Saharanpur                                         
+[910] ICA Building, Industrial Area, Site 10, Unnao                                          
+[911] H. No. 5, Krishna Nagar, Unnao                                                         
+[912] Agriculture University, C.S. Azad Agriculatural University, Crop Physiological Departme
+[913] Sewage Pumping Stations, Alopibagh                                                     
+[914] Co-operative Bank, Jhonstonganj                                                        
+[915] Parag Dairy, Rambagh                                                                   
+[916] Clock Tower, PWD Guest House, Dehradun                                                 
+[917] Clock Tower                                                                            
+[918] Raipur Road                                                                            
+[919] Raipur Road, Near parag Diary, Dehradun                                                
+[920] Himalaya Drug Co. Near ISBT                                                            
+[921] Govt. Women Hospital, Haldwani                                                         
+[922] SIDCUL, Haridwar                                                                       
+[923] BSNL Office, Kashipur                                                                  
+[924] Nagar Palika Parishad, Rishikesh                                                       
+[925] Sidcul Office, Rudrapur                                                                
+[926] Howrah Municipal Corporation, Howrah                                                   
+[927] Bandhaghat, Howrah                                                                     
+[928] Naskarpara Pump House, Ghuseri, Howrah                                                 
+[929] Bator, Howrah                                                                          
+[930] WBIIDC, Haldia                                                                         
+[931] Super Market, Haldia                                                                   
+[932] Dew India Limited, PCBL More, Durgapur                                                 
+[933] Kwality Hotel, Benachiti, Durgapur                                                     
+[934] PCBL Club, Biddhanagar, Durgapur                                                       
+[935] Asansol Municipal Corporation, Asansol                                                 
+[936] Cossipore Police Station, B.T. Road, Kolkata                                           
+[937] Lal-Bazar, Dalhousie Square, Lal Bazzar Police Headquarter, Kolkata                    
+[938] CESE, Mandevitle Garden (Gariahat)                                                     
+[939] Asansol M.C.                                                                           
+[940] Dew India Ltd                                                                          
+[941] Kwality Hotel                                                                          
+[942] PCBL Club                                                                              
+[943] Super Market                                                                           
+[944] WBIIDC                                                                                 
+[945] Bandhaghat                                                                             
+[946] Howrah MC                                                                              
+[947] Bator                                                                                  
+[948] Naskarpara                                                                             
+[949] Cossipore Police Stn                                                                   
+[950] J.D. Park                                                                              
+[951] Kasba                                                                                  
+[952] Lal Bazar                                                                              
+[953] Behala Chowrasta                                                                       
+[954] Dunlop Bridge                                                                          
+[955] Baishnabghata                                                                          
+[956] Minto Park                                                                             
+[957] Moulali                                                                                
+[958] Salt Lake                                                                              
+[959] Port Cannings                                                                          
+[960] Kangsabati Spinning Mill, Barjora                                                      
+[961] Burnpur Town Department, Burnpur                                                       
+[962] Barrackpore, Barrackpore                                                               
+[963] Dum Dum, Barrackpore                                                                   
+[964] Khardah, Barrackpore                                                                   
+[965] DMC Water Works, Angadpur                                                              
+[966] Bhabanipur, Haldia                                                                     
+[967] Bhunia Raichak, Haldia                                                                 
+[968] Salt lake, Kolkata                                                                     
+[969] Moulali, Kolkata                                                                       
+[970] Minto Park, Kolkata                                                                    
+[971] Dunlop Bridge, Kolkata                                                                 
+[972] Behala Chowrasta,Kolkata                                                               
+[973] Baishnabghata,Kolkata                                                                  
+[974] Raniganj, Raniganj                                                                     
+[975] Mangalpur, Raniganj                                                                    
+[976] Jamuria, Raniganj                                                                      
+[977] Sankrail, Sankrail                                                                     
+[978] Bagnan, Sankrail                                                                       
+[979] Dhulagarh, Sankrail                                                                    
+[980] Amta, Sankrail                                                                         
+[981] Tollygunge, South Suburban                                                             
+[982] Baruipur, South Suburban                                                               
+[983] Amtala, South Suburban                                                                 
+[984] Kasba, Kolkata                                                                         
+[985] Rooftop of old Mrigala Gram Panchayet Building,DANKUNI                                 
+[986] Rooftop of Ruchi Soya,HALDIA                                                           
+[987] Rooftop of Kalyani Medical Hospital,Kalyani                                            
+[988] Rooftop of Manicktala Fire Station Building,Ultadanga                                  
+[989] Rooftop of Shyambazar Tennis Club Building,Shyambazar                                  
+[990] Rooftop Maldah Regional Office, WBPCB,MALDAH                                           
+[991] Rooftop of Siliguri Industrial Estate Development Association,SILIGURI                 
+[992] Inside Rampal Industries,ULUBERIA                                                      
+991 Levels: A S School A-1 Platters A-1,Platers, Amritsar ABIDS Circle ABIDS Circle General Post Office Building, Hyderabad ... sasthamangalam
+"

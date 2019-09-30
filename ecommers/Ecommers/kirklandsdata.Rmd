@@ -1,0 +1,416 @@
+---
+title: "Ecom Data"
+output: html_notebook
+author: Anushree Tomar
+date: 12-02-2019
+---
+
+```{r Import Libraries, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(data.table)
+library(caret)
+library(DMwR)
+library(car)
+library(rpart)
+library(rattle)
+library(randomForest)
+library(PCAmixdata)
+library(kernlab)
+library(vcd)
+```
+
+Importing data creating target variable
+```{r}
+kirklandsdata<-fread("kirklandsdata.csv",na.strings = "NA")
+kirklandsdata$target<-ifelse (kirklandsdata$coupon_run_on_cart|kirklandsdata$coupon_run_on_checkout|kirklandsdata$coupon_run_on_product==1,1,0)
+kirklandsdata<-kirklandsdata[,-c("coupon_run_on_cart","coupon_run_on_checkout","coupon_run_on_product")]
+table(kirklandsdata$target)
+```
+```{r}
+max(kirklandsdata$sessions_before)
+max(kirklandsdata$products_viewed)
+```
+
+```{r}
+str(kirklandsdata)
+```
+
+
+```{r}
+summary(kirklandsdata)
+```
+
+Exploratory data Analysis
+```{r}
+anyNA(kirklandsdata)
+colnames(kirklandsdata)
+```
+`
+
+
+Data Partition to scale data
+```{r}
+set.seed(100)
+data<-kirklandsdata[,-c("visitor","session","browser")]
+trainDataIndex <- createDataPartition(data$target, p=0.7, list = F)  # 70% training data
+trainData <-data[trainDataIndex, ]
+testData <- data[-trainDataIndex, ]
+
+```
+
+
+Handling unbalanced data
+```{r}
+table(trainData$target)
+trainData$target<-as.factor(trainData$target)
+trainData<- SMOTE(target~., trainData, perc.over = 600,perc.under=100)
+table(trainData$target)
+```
+
+scale train and test data 
+```{r}
+S_trainData<-as.data.frame(scale(trainData[,-"target"]))
+S_trainData$target<-trainData$target
+
+
+S_testData<-as.data.frame(scale(testData[,-"target"]))
+S_testData$target<-testData$target
+```
+
+
+
+convert int variable to factor
+```{r}
+kirklandsdata[,c("daily_visitor","trialy_visitor","quintally_visitor","tenally_visitor","previous_session_cart","previous_session_checkout","entry_product","first_page_affil","mal_cb","target")]<-
+lapply(kirklandsdata[,c("daily_visitor","trialy_visitor","quintally_visitor","tenally_visitor","previous_session_cart","previous_session_checkout","entry_product","first_page_affil","mal_cb","target")], as.factor)
+```
+
+
+```{r}
+str(kirklandsdata)
+```
+
+
+Data Partition
+```{r}
+set.seed(100)
+data<-kirklandsdata[,-c("visitor","session","browser")]
+trainDataIndex <- createDataPartition(data$target, p=0.7, list = F)  # 70% training data
+trainData <-data[trainDataIndex, ]
+testData <- data[-trainDataIndex, ]
+
+```
+
+
+
+Handling Unbalanced  Data
+
+Synthetic minority sampling technique (SMOTE): down samples the majority class and synthesizes new minority instances by interpolating between existing ones
+SMOTE:can generate a new "SMOTEd" data set that addresses the class unbalance problem. Alternatively, it can also run a classification algorithm on this new data set and return the resulting model.
+perc.over:	
+A number that drives the decision of how many extra cases from the minority class are generated (known as over-sampling).
+perc.under:	
+A number that drives the decision of how many extra cases from the majority classes are selected for each case generated from the minority class (known as under-sampling)
+learner:	
+Optionally you may specify a string with the name of a function that implements a classification algorithm that will be applied to the resulting SMOTEd data set (defaults to NULL).
+
+```{r}
+table(trainData$target)
+trainData <- SMOTE(target  ~., trainData, perc.over = 600,perc.under=100)
+table(trainData$target)
+
+```
+
+
+graph.
+```{r}
+p<-ggplot(trainData,aes(target))+geom_bar(bin = 50,width = 0.2,fill="steelblue",col="black")+labs(title = "comparison between two class in target variable after smote method")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+theme(panel.background = element_rect(fill = 'gray'))+geom_text(stat='count', aes(label=..count..), vjust=-1)
+ggplotly(p)
+```
+
+```{r}
+library(plotly)
+py<-plot_ly(username="r_user_guide",key="mw5isa4yqp")
+py$ggplotly(p)
+```
+```{r}
+class(p)
+```
+
+
+
+Logistic regression classifier
+```{r}
+traindata<-trainData[,-c("coupon_run_prev_ses_cart_session","trialy_sessions","daily_visitor","sessions_before_with_cart")]
+logit<-glm(target~.,family = binomial,data = traindata)
+save(logit,file = "logit.rda")
+load("logit.rda")
+summary(logit)
+```
+
+
+Checking Multicolinearity
+ Multicollinearity is what happens when a given predictor in the model can be approximated by a linear combination of the other predictors in the model. This means that your inputs to the model are not independent of each other. This has the effect of increasing the variance of model coefficients. We want to decrease the variance to make our models more significant, more robust. That's why it's a good idea to omit variables from the model which exhibit a high degree of multicollinearity.
+```{r}
+vif(logit)
+#eliminate variables with a VIF higher than 2
+```
+
+
+
+
+```{r}
+# Confusion matrix table 
+prob <- predict(logit,type="response",testData)
+head(prob)
+confusion<-table(prob>0.5,testData$target)
+confusion
+#threshold for dichotomizing according to predicted probability=0.5
+
+# Model Accuracy 
+Accuracy<-sum(diag(confusion)/sum(confusion))
+Accuracy
+
+
+```
+we can get the odds ratio by exponentiating the coefficient 
+```{r}
+# Odds Ratio
+odds<-as.data.frame(exp(coef(logit)))#OR>1 positively correlated,OR<1 -ive correlation,lowest p value suggest highest association with response
+odds<-as.data.frame(cbind("Variables"=row.names(odds),"odds_ratio"=odds$`exp(coef(logit))`))
+#write.csv(odds,"odds.csv",row.names = FALSE)
+```
+
+Odd ratio calculation
+```{r}
+OR <- oddsratio(confusion, log=FALSE) # odds ratio
+OR
+
+```
+
+
+
+
+Logistic regression classifier on scale data
+```{r}
+
+traindata1<-S_trainData[,-c(19,22,11,17,10)]
+
+logit_scale<-glm(target~.,family = binomial,data = traindata1)
+save(logit_scale,file = "logit_scale.rda")
+summary(logit_scale)
+```
+
+Prediction Accuracy on Scaled data
+```{r}
+# Confusion matrix table 
+prob_scale <- predict(logit_scale,type="response",S_testData)
+head(prob_scale)
+confusion<-table(prob_scale>0.5,S_testData$target)
+confusion
+
+
+# Model Accuracy 
+Accuracy<-sum(diag(confusion)/sum(confusion))
+Accuracy
+
+
+```
+
+
+
+
+
+
+
+Classification Tree
+```{r}
+
+data_tree <- rpart(target~., method = "class", data = trainData,control = rpart.control(minsplit=10,cp=.01))
+
+```
+
+Plot Tree
+```{r}
+rpart.plot(data_tree)
+```
+
+
+Display Cp results
+```{r}
+printcp(data_tree)
+```
+
+
+Plot approximate R-squared and relative error for different splits 
+```{r}
+rsq.rpart(data_tree)
+```
+
+```{r}
+prob_final <- predict(data_tree,testData)
+class_final <- predict(data_tree,testData,type="class")
+mean(class_final==testData$target)
+```
+
+```{r}
+confusionMatrix(table(class_final,testData$target))
+
+```
+
+Random Forest Classification
+```{r}
+fit <- randomForest(target~.,   data=trainData,importance=TRUE)
+plot(fit)
+print(fit) # view results 
+importance(fit)
+varImpPlot(fit,type = 2)
+```
+
+
+
+
+
+Tune RF for optimal mtry value with respective to out of bag error
+```{r}
+bestmtry<-tuneRF(trainData[,-"target"],as.factor(trainData$target),stepFactor = 1.2,improve = 0.01,trace = TRUE,plot = TRUE)
+
+```
+
+
+Prediction and Accuracy
+```{r}
+pred_forest<-predict(fit,testData,type="class")
+mean(testData$target==pred_forest)
+confusionMatrix(table(testData$target,pred_forest))
+```
+
+
+
+
+
+Principal component analysis of mixed data
+```{r}
+X.quanti <- splitmix(trainData)$X.quanti
+X.quali <- splitmix(trainData)$X.quali
+#pca<-PCAmix(X.quanti,X.quali,ndim=4)
+pca<-PCAmix(X.quanti,X.quali[,-10],ndim=19,graph=FALSE,rename.level = TRUE)
+pca$eig
+PCscores<-as.data.frame(pca$ind$coord)
+PCscores<-cbind(PCscores,X.quali$target)
+dim(PCscores)
+```
+
+
+PCA test data
+```{r}
+X.quanti_test <- splitmix(testData)$X.quanti
+X.quali_test <- splitmix(testData)$X.quali
+#pca<-PCAmix(X.quanti,X.quali,ndim=4)
+pca_test<-PCAmix(X.quanti_test,X.quali_test[,-10],ndim=19,graph=FALSE,rename.level = TRUE)
+pca_test$eig
+PCscores_test<-as.data.frame(pca_test$ind$coord)
+
+```
+
+SVM classification
+```{r}
+set.seed(400)
+trctrl <- trainControl(method = "repeatedcv", number = 10, repeats = 3) 
+SVM_fit <- train(`X.quali$target`~`dim 1`+`dim 2`+`dim 3`, data = PCscores, method = "svmLinear", trControl=trctrl,tuneLength = 10,metric="Accuracy")
+save(SVM_fit,file="SVM_fit_model.rda")
+load("SVM_fit_model.rda")
+
+SVM_fit 
+
+
+```
+
+
+```{r}
+SVM_pred <- predict(SVM_fit, newdata = PCscores_test)
+
+#Test set Statistics 
+confusionMatrix(table(SVM_pred, testData$target))  
+
+```
+
+SVM classification with Selected Variables by Random Forest
+
+```{r}
+
+RF_train<-trainData[,list(sessions_with_affil_before,sessions_before_with_cart,affil_after_p1_prev_session,page_depth,products_viewed,sessions_before_with_checkout,day_between_previous_session,first_page_affil,daily_sessions,mal_cb,sessions_before,sessions_before_with_product,time_spent,entry_home,target)]
+
+RF_test<-testData[,list(sessions_with_affil_before,sessions_before_with_cart,affil_after_p1_prev_session,page_depth,products_viewed,sessions_before_with_checkout,day_between_previous_session,first_page_affil,daily_sessions,mal_cb,sessions_before,sessions_before_with_product,time_spent,entry_home,target)]
+
+RF_train_scale<-as.data.frame(scale(RF_train[,1:14]))
+RF_train_scale$target<-RF_train$target
+
+RF_test_scale<-as.data.frame(scale(RF_test[,1:14]))
+RF_test_scale$target<-RF_test$target
+
+
+  str(RF_train)
+```
+
+
+SVM on selected variables(scaled)
+```{r}
+set.seed(400)
+
+trctrl <- trainControl(method = "repeatedcv", number = 10, repeats = 3) 
+SVM_fit_RF_train <- train(RF_train_scale[,c(1:14)], RF_train_scale$target, data = RF_train, method = "svmLinear", trControl=trctrl,tuneLength =10,metric="Accuracy",na.action=na.fail)
+save(SVM_fit_RF_train,file="SVM_fit_RFtrain.rda")
+load("SVM_fit_RF_train.rda")
+
+SVM_fit_RF_train
+
+```
+
+
+
+
+```{r}
+SVM_pred_RF_test <- predict(SVM_fit_RF_train, newdata = RF_test_scale[,1:14])
+
+#Test set Statistics 
+confusionMatrix(table(SVM_pred_RF_test, RF_test_scale$target))  
+```
+
+
+
+with all variables on scaled data
+```{r}
+SVM_fit_train <- train(S_trainData[,1:28], S_trainData$target, data = S_trainData, method = "svmLinear", trControl=trctrl,tuneLength =10,metric="Accuracy",na.action=na.fail)
+save(SVM_fit_train,file="SVM_fit_train.rda")
+load("SVM_fit_train.rda")
+
+SVM_pred_test <- predict(SVM_fit_train, newdata = S_testData[,-29])
+
+#Test set Statistics 
+confusionMatrix(table(SVM_pred_test, S_testData$target))  
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

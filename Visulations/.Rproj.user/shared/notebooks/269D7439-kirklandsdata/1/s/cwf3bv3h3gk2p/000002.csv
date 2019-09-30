@@ -1,0 +1,8 @@
+"0","```r
+S_trainData<-as.data.frame(scale(trainData[,-\"target\"]))
+S_trainData$target<-trainData$target
+
+
+S_testData<-as.data.frame(scale(testData[,-\"target\"]))
+S_testData$target<-testData$target
+```"

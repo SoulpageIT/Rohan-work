@@ -1,0 +1,28 @@
+"0","```r
+#Here i am reading all the training data from different files.
+
+#Reading the 2016 data of origin airport Dallas.
+train<-fread(\"2016_city1.csv\",skip = 7,nrows = 5526,stringsAsFactors = TRUE,drop = c(\"V18\",\"V19\",\"V20\",\"V21\",\"V22\",\"V23\",\"V24\",\"V25\",\"V26\",\"V27\",\"V28\",\"V29\",\"V30\"))
+#Adding the origin airport column.
+train$OriginAirPort<-as.factor(\"Dallas\")
+#Reading the 2016 data of origin airport NewYork.
+train1<-fread(\"2016_city2.csv\",stringsAsFactors = TRUE)
+#Adding the origin airport column. 
+train1$OriginAirPort<-as.factor(\"NewYork\")
+#Joining the 2016 data by rows.
+train<-rbind(setDT(train), setDT(train1), fill=TRUE)
+#Reading the 2017 data of origin airport Dallas.
+train1<-fread(\"2017_city1.csv\",stringsAsFactors = TRUE)
+#Adding the origin airport column.
+train1$OriginAirPort<-as.factor(\"Dallas\")
+#joining this data to train data.
+train<-rbind(setDT(train), setDT(train1), fill=TRUE)
+#Reading the 2017 data of origin airport NewYork
+train1<-fread(\"2017_city2.csv\",stringsAsFactors = TRUE)
+train1$OriginAirPort<-as.factor(\"NewYork\")
+#Binding the above read data to train data.
+train<-rbind(setDT(train), setDT(train1), fill=TRUE)
+#Now removing the unwanted duplicate data.table from the r session
+rm(train1)
+
+```"

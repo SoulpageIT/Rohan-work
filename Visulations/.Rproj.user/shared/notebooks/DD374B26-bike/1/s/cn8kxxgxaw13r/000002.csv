@@ -1,0 +1,24 @@
+"0","```r
+# Make the plot
+ggplot(gr1, aes(x=as.factor(id), y=dist, fill=`Start Station Name`)) +       # Note that id is a factor. If x is numeric, there is some space between the first bar
+  
+  geom_bar(aes(x=as.factor(id), y=dist, fill=`Start Station Name`), stat=\"identity\", alpha=0.5) +
+  
+  # Add a val=100/75/50/25 lines. I do it at the beginning to make sur barplots are OVER it.
+   # Add a val=100/75/50/25 lines. I do it at the beginning to make sur barplots are OVER it.
+  ylim(0,8679125) +
+  theme_minimal() +
+  theme(
+    legend.position = \"none\",
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank(),
+    plot.margin = unit(rep(-1,4), \"cm\") 
+  ) +
+  coord_polar() + 
+  # Add base line information
+  geom_segment(data=base_data, aes(x = start, y = 0, xend = end, yend = 8679125), colour = \"black\", alpha=0.8, size=0.6 , inherit.aes = FALSE )+
+  geom_text(data=label_data, aes(x=id, y=dist+10, label=V1, hjust=hjust), color=\"black\", fontface=\"bold\",alpha=0.6, size=2.5, angle= label_data$angle, inherit.aes = FALSE ) +
+  
+geom_text(data=base_data, aes(x = title, y = -18, label=`Start Station Name`), colour = \"black\", alpha=0.8, size=0.5, fontface=\"bold\", inherit.aes = FALSE)
+```"

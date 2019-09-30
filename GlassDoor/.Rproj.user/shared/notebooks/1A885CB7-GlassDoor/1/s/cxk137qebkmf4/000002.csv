@@ -1,0 +1,4 @@
+"0","```r
+get_sentiments(lexicon = \"nrc\")%>%
+    count(sentiment, sort = TRUE)
+```"

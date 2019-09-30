@@ -1,0 +1,5 @@
+"0","```r
+OR <- oddsratio(confusion, log=FALSE) # odds ratio
+OR
+
+```"

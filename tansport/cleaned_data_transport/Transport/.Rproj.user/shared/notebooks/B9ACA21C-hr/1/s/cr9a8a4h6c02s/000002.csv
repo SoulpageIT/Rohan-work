@@ -1,0 +1,2 @@
+"0","x<-ggplot(hr,aes(YearsAtCompany,MonthlyIncome,color=Age,shape=EnvironmentSatisfaction))+geom_point()+facet_wrap(~Attrition)+labs(x = ""Years At the Company"",y=""Monthly_Income"")"
+"0","ggplotly(x)"

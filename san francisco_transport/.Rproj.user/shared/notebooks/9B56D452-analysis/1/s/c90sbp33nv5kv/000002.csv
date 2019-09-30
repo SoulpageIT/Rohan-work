@@ -1,0 +1,5 @@
+"0","```r
+```r
+data.set.analyse$daily_sessions[data.set.analyse$daily_sessions > 2]<-2
+```
+```"

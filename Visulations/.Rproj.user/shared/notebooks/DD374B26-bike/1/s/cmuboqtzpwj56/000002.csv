@@ -1,0 +1,4 @@
+"0","```r
+setkey(gr,V1)
+gr<- gr[!\"Indiana\"]
+```"

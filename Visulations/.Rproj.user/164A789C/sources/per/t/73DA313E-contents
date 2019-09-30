@@ -1,0 +1,1036 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+libraries
+```{r}
+library(data.table)
+library(ggplot2)
+library(corrplot)
+library(animation)
+library(caTools)
+library(tidyverse)
+library(dplyr)
+library(echarts4r)
+library(plotly)
+library(scales)
+library(plotrix)
+library(tidyverse)
+```
+The function to check weather a particular row is valied or invalied.
+```{r}
+clean <- function(e){
+  rm(dat)
+  return(e)
+}
+
+# # inspect
+# head(dat)
+# 
+# dat %>% 
+#   e_charts(speed) %>%
+#   clean() %>%
+#   e_scatter(dist)
+# 
+# 
+# # removed
+# # dat does not exist anymore
+# #dat
+# #Probably you could more easily filter the dataset to only keep the columns you want to plot, #thereby reducing the amount of data that is stored in your live memory as well as the copy.
+# 
+# #library(dplyr)
+# 
+# # select columns to plot 
+# # make sure to OVERRIDE the dataset otherwise there's no point in this operation
+# mtcars <- mtcars %>%
+#   select(wt, qsec)
+# 
+# mtcars %>% 
+#   e_charts(qsec) %>%
+#   e_scatter(wt)
+# """
+```
+reading the table
+```{r}
+data.set<-fread("kirklandsdata.csv",na.strings = c('?','-','*','$','^','NA'))
+```
+Viewing the data 
+```{r}
+str(data.set)
+```
+summary of the data set
+```{r}
+View(data.set)
+summary(data.set)
+```
+filtering out the unwanted features.
+```{r}
+data.set.analyse<-data.set[,c(-1,-2,-3)]
+View(data.set.analyse)
+```
+
+
+```{r}
+str(data.set.analyse)
+#View(data.set.analyse)
+str(data.set.analyse)
+summary(data.set.analyse)
+```
+showing the names of the feature.and creating the target variable.
+```{r}
+#colnames(data.set.analyse)
+data.set.analyse$target<-ifelse((data.set.analyse$coupon_run_on_checkout+data.set.analyse$coupon_run_on_cart+data.set.analyse$coupon_run_on_product) > 0,1,0)
+```
+now converting some feature values into factors.
+```{r}
+data.set.analyse[,c("daily_visitor","trialy_visitor","quintally_visitor","tenally_visitor", "previous_session_cart", "previous_session_checkout" ,"previous_session_product","entry_product","first_page_affil" , "coupon_run_on_checkout", "coupon_run_on_cart" ,"coupon_run_on_product" ,"mal_cb","target")] <- lapply(data.set.analyse[,c("daily_visitor","trialy_visitor","quintally_visitor","tenally_visitor", "previous_session_cart", "previous_session_checkout" ,"previous_session_product","entry_product","first_page_affil" , "coupon_run_on_checkout", "coupon_run_on_cart" ,"coupon_run_on_product" ,"mal_cb","target")], as.factor)
+```
+now seing the structure of the data set
+```{r}
+str(data.set.analyse)
+summary(data.set.analyse)
+```
+
+
+
+now we are going to check the users who has done the previous sessions and having affilate.
+
+
+
+EDA of the data lets see what data talks
+now we are going to see total count of previous sessions.
+```{r}
+q<-ggplot(data.set.analyse,aes(x=sessions_before))+geom_bar(bin=100,col="black",fill="steelblue")  +labs(title = "Number of users per Session",x="Number of Sessions", y = "Number of users")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "black"))+theme(panel.background = element_rect(fill = ' white'))+xlim(0,50)+ annotate("text", x=4, y=207000, label="206560") 
+ggsave("number_users_per_session.jpg",plot=q,unit="in",width=7,height = 7,dpi=300)
+q
+```
+AS we can see,the graph says that very few people have done sessions before.
+
+Now we see the total count_of_previous session having affiliate frequency
+```{r}
+ggplot(data.set.analyse,aes(sessions_with_affil_before))+geom_histogram(bin = 50,fill="blue",col="black")+labs(title = "total count of perious sessions having affiliate frequency")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+theme(panel.background = element_rect(fill = 'skyblue'))
+ggsave("previous_sessions.png")
+#data.set.analyse1<-data.set.analyse[-c(which(data.set.analyse$sessions_before >= 292))]
+```
+we can see by graph that total number of people having affilate in previous session is also very less,this means there very less people have used affiliate.
+
+now we are going to find the frequency of total number of affilate found after page 1 till previous session.
+```{r}
+ggplot(data.set.analyse,aes(affil_after_p1_prev_session))+geom_histogram(bin = 50,fill="orange",col="black")+labs(title = "total count of affiliate found after page 1 till perevious session")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+theme(panel.background = element_rect(fill = 'gray'))
+
+```
+even we can see by the graph that total count of affilate on page 1 till previous session is also very less,this means very few people have used affiliates after page 1
+
+
+
+```{r}
+colnames(data.set.analyse)
+```
+
+
+```{r}
+ggplot(data.set.analyse,aes(x=coupon_run_prev_ses_cart_session))+geom_histogram(bin = 20,fill="red",col="black",stat = "count",width = 0.5)+labs(title = "total number of affilate run on cart page till previous session ")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+theme(panel.background = element_rect(fill = 'gray'))
+```
+As we can see in the above graph that very few people have run affilate on the cart page.the count of people who didnt use affilate on cart :- 765280
+who used affilate on cart :- 9,918 where 8222 number of people used affilate on cart page only 1 time.
+
+```{r}
+View(table(data.set.analyse$coupon_run_prev_ses_cart_session))
+```
+
+
+
+As we can see by the graph that very few people have run the affilate on the cart  till previous session.
+the number of people ran affilate is :-
+
+
+the target variable
+```{r}
+ggplot(data.set.analyse,aes(target))+geom_bar(bin = 50,width = 0.2,fill="steelblue",col="black")+labs(title = "comparison between two class in target variable")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "steelblue"))+theme(panel.background = element_rect(fill = 'gray'))+geom_text(stat='count', aes(label=..count..), vjust=-0.2)
+ggsave("previous_sessions.png")
+```
+```{r}
+ggplot(data.set.analyse[,.N,by=target], aes(x=target,y=N)) +
+  geom_segment( aes(x=target, xend=target, y=0, yend=N)) +
+  geom_point( size=5, color="steelblue", fill=alpha("steelblue", 0.3), alpha=0.7, shape=21, stroke=2)+theme(panel.background = element_rect(fill = ' white'))+geom_text(aes(label=N), vjust=0.30, color="black", size=3.4)+
+```
+
+```{r}
+model_names <-c("Logistic_regression","Logistic_regression(scaled data)","DecisionTree","RandomForest","SVM (scaled data)","XGBoost")
+accuracy <- c(89,50,93,97,51,96)
+
+data_accuracy<-data.frame(model_names,accuracy)
+```
+
+
+
+```{r}
+ggplot(data_accuracy,aes(x=model_names,y = accuracy))+geom_bar(bin = 50,width = 0.3,fill="steelblue",col="black",stat="identity")+labs(title = "comparison between the accuracy of the models")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+theme(panel.background = element_rect(fill = 'gray'))+ geom_text(aes(label=accuracy), vjust=-0.3, color="black", size=3.5)
+ggsave("accuracy.png")
+```
+Donut chart
+```{r}
+library(ggplot2)
+
+# Create test data.
+#dat = data.frame(count=c(10, 60, 30), category=c("A", "B", "C"))
+
+# Add addition columns, needed for drawing with geom_rect.
+data_accuracy$fraction = data_accuracy$accuracy / sum(data_accuracy$accuracy)
+data_accuracy = data_accuracy[order(data_accuracy$accuracy), ]
+data_accuracy$ymax = cumsum(data_accuracy$fraction)
+data_accuracy$ymin = c(0, head(data_accuracy$ymax, n=-1))
+
+p1 = ggplot(data_accuracy, aes(fill=model_names, ymax=ymax, ymin=ymin, xmax=6, xmin=6)) +
+     geom_rect() +
+     coord_polar(theta="y") +
+     xlim(c(0, 4)) +
+     labs(title="Basic ring plot")
+
+p2 = ggplot(data_accuracy, aes(fill=model_names, ymax=ymax, ymin=ymin, xmax=6, xmin=6)) +
+     geom_rect(colour="grey30") +
+     coord_polar(theta="y") +
+     xlim(c(0, 4)) +
+     theme_bw() +
+     theme(panel.grid=element_blank()) +
+     theme(axis.text=element_blank()) +
+     theme(axis.ticks=element_blank()) +
+     labs(title="Customized ring plot")
+
+
+library(gridExtra)
+png("ring_plots_1.png", height=4, width=8, units="in", res=120)
+x<-grid.arrange(p1, p2, nrow=1)
+dev.off()
+```
+
+```{r}
+qq<-ggplot(data_accuracy, aes(x=model_names, y=accuracy)) +
+  geom_segment( aes(x=model_names, xend=model_names, y=0, yend=accuracy)) +
+  geom_point( size=5, color="steelblue", fill=alpha("steelblue", 0.3), alpha=0.7, shape=21, stroke=2)+theme(panel.background = element_rect(fill = ' white'))+geom_text(aes(label=accuracy), vjust=0.30, color="black", size=3.4)+coord_flip()+labs(title = "Comparison of accuracy between different models.",x="Model_Names",y="Accuracy value in terms of percentage.")
+ggsave("accuracy.jpg",plot=qq,unit="in",width=7,height = 7,dpi=300)
+qq
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+ncol(data_users_viewed)
+```
+not done the previous sessions
+```{r}
+data_user_not_viewed<-data.set.analyse %>% filter(sessions_before==0)
+#View(table(data_user_not_viewed$target))
+#View(data_user_not_viewed)
+```
+
+```{r}
+unique(data_user_not_viewed$sessions_with_affil_before)
+```
+```{r}
+unique(data_user_not_viewed$affil_after_p1_prev_session)
+```
+```{r}
+unique(data_user_not_viewed$sessions_before_with_checkout)
+```
+```{r}
+unique(data_user_not_viewed$sessions_before_with_cart)
+```
+```{r}
+unique(data_user_not_viewed$sessions_before_with_product)
+
+```
+```{r}
+unique(data_user_not_viewed$daily_sessions)
+```
+```{r}
+unique(data_user_not_viewed$trialy_sessions)
+```
+```{r}
+unique(data_user_not_viewed$quintally_sessions)
+```
+```{r}
+unique(data_user_not_viewed$tenally_sessions)
+```
+```{r}
+unique(data_user_not_viewed$coupon_run_prev_ses_checkout_session)
+```
+```{r}
+unique(data_user_not_viewed$coupon_run_prev_ses_cart_session)
+```
+```{r}
+unique(data_user_not_viewed$coupon_run_prev_ses_product_session)
+
+```
+```{r}
+unique(data_user_not_viewed$time_spent)
+```
+```{r}
+unique(data_user_not_viewed$day_between_previous_session)
+```
+```{r}
+unique(data_user_not_viewed$daily_visitor)
+```
+```{r}
+unique(data_user_not_viewed$trialy_visitor)
+```
+```{r}
+unique(data_user_not_viewed$quintally_visitor)
+```
+```{r}
+unique(data_user_not_viewed$tenally_visitor)
+```
+```{r}
+unique(data_user_not_viewed$previous_session_cart)
+```
+```{r}
+unique(data_user_not_viewed$previous_session_checkout)
+```
+```{r}
+unique(data_user_not_viewed$previous_session_product)
+```
+yes
+```{r}
+unique(data_user_not_viewed$entry_home)
+```
+```{r}
+unique(data_user_not_viewed$entry_product)
+```
+```{r}
+unique(data_user_not_viewed$page_depth)
+```
+```{r}
+unique(data_user_not_viewed$first_page_affil)
+
+```
+```{r}
+unique(data_user_not_viewed$coupon_run_on_checkout)
+```
+```{r}
+unique(data_user_not_viewed$coupon_run_on_cart)
+```
+```{r}
+unique(data_user_not_viewed$coupon_run_on_product)
+```
+```{r}
+unique(data_user_not_viewed$products_viewed)
+```
+```{r}
+unique(data_user_not_viewed$mal_cb)
+```
+```{r}
+unique(data_user_not_viewed$target)
+```
+keeping the columns which have some use in the analysis for users who have not done any previous sessions.
+```{r}
+important_user_not_viewed<-data_user_not_viewed[,c("time_spent","entry_home","entry_product","page_depth","first_page_affil","coupon_run_on_checkout","coupon_run_on_cart","coupon_run_on_product","products_viewed","mal_cb","target")]
+
+str(important_user_not_viewed)
+
+```
+
+
+
+```{r}
+data_users_viewed<-data.set.analyse %>% filter(sessions_before > 0)
+#View(data_users_viewed)
+#View(important_user_not_viewed)
+```
+
+now plotting the graph for on the users who have done the perious sessions having affiliate.
+```{r}
+g<-ggplot(data_users_viewed,aes(x=sessions_with_affil_before))+geom_freqpoly(bin=50)+labs(title = "Total count of previous session having affiliate ")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+theme(panel.background = element_rect(fill = ' gray'))
+plotly(g)
+```
+
+we can make out by the graph that ,the users who have done previous session ,in this group very few people have affiliate on the previous sessions.
+
+
+
+now are seing the frequency of the total count previous sessions having product of the users who have done previous sessions
+```{r}
+ggplot(data_users_viewed,aes(x=sessions_before_with_product))+geom_freqpoly(bin=50)+labs(title = "Total count previous session having product")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+theme(panel.background = element_rect(fill = ' gray'))
+
+```
+The users who have done the previous sessions ,the maximum users didnt have product.the very few users had product in their previous sessions.
+
+
+
+the frequency of the malicious users who have previous sessions.
+```{r}
+data_users_viewed %>% ggplot(aes(x= mal_cb),fill = target)+geom_bar(width = 0.2)
+```
+The total number of maclicious user ,who have done previous sessions are :- 22183
+The total number users who were not malicious are :-  546455
+
+
+
+```{r}
+str(data_users_viewed)
+
+```
+
+
+
+
+```{r}
+pages <-c("checkout page","cart page","product page")
+sum_total_number_sessions <- c(sum(as.numeric(  data_users_viewed$coupon_run_prev_ses_checkout_session)),sum( as.numeric(  data_users_viewed$coupon_run_prev_ses_cart_session)),sum(as.numeric(data_users_viewed$coupon_run_prev_ses_product_session)))
+daa<-data.frame(pages,sum_total_number_sessions)
+```
+
+
+
+
+```{r}
+bp<- ggplot(daa, aes(x="", y=sum_total_number_sessions, fill=pages))+
+geom_bar(width = 1, stat = "identity")
+
+pie <- bp + coord_polar("y", start=0)
+
+blank_theme <- theme_minimal()+
+  theme(
+  axis.title.x = element_blank(),
+  axis.title.y = element_blank(),
+  panel.border = element_blank(),
+  panel.grid=element_blank(),
+  axis.ticks = element_blank(),
+  plot.title=element_text(size=14, face="bold")
+  )
+
+
+pie + scale_fill_grey() +  blank_theme +
+  theme(axis.text.x=element_blank()) +
+  geom_text(label = percent(max_total_number_sessions/100) ,size=5))
+
+#daa,aes(x=pages,y = max_total_number_sessions)
+#ggsave("maxtotalsession.png")
+```
+round((number_of_affile/sum(number_of_affile))*100
+```{r}
+# Create a basic bar
+
+
+```
+
+Pie chart by plotly
+```{r}
+#pie3D(daa$max_total_number_sessions, labels = daa$pages, main = "An exploded 3D pie chart", explode=0.1, radius=.9, labelcex = #1.2,  start=0.7)
+pie = ggplot(daa, aes(x="", y=sum_total_number_sessions, fill=pages)) + geom_bar(stat="identity", width=1)
+
+# Convert to pie (polar coordinates) and add labels
+pie = pie + coord_polar("y", start=0) + geom_text(aes(label = paste0(round((sum_total_number_sessions/sum(sum_total_number_sessions))*100),"%")), position = position_stack(vjust = 0.5))
+
+# Add color scale (hex colors)
+pie = pie + scale_fill_manual(values=c( "steelblue","slateblue4","deepskyblue1" )) 
+
+# Remove labels and add title
+pie = pie + labs(x ="The Types of pages",y = NULL , fill = NULL, title = "Percentage of number of sessions on which affiliate ran on.")
+
+# Tidy up the theme
+pie = pie + theme_classic() + theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          plot.title = element_text(hjust = 0.5, color = "#666666"))
+
+ggsave("pie.jpg",plot=pie,unit="in",width=7,height = 7,dpi=300)
+pie
+```
+
+
+
+```{r}
+ggplot(daa, aes(x=pages, y=sum_total_number_sessions)) +
+  geom_segment( aes(x=pages, xend=pages, y=0, yend=sum_total_number_sessions)) +
+  geom_point( size=5, color="steelblue", fill=alpha("steelblue", 0.3), alpha=0.7, shape=21, stroke=2)+theme(panel.background = element_rect(fill = ' white'))+geom_text(aes(label=sum_total_number_sessions), vjust=0.30, color="black", size=3.4)+coord_flip()
+```
+
+
+
+
+```{r}
+coupon_check_out<-as.data.frame(table(data_users_viewed$coupon_run_on_checkout))
+coupon_cart<-as.data.frame(table(data_users_viewed$coupon_run_on_cart))
+coupon_product<-as.data.frame(table(data_users_viewed$coupon_run_on_product))
+number_coupon_check_out<-coupon_check_out[2,2]
+number_coupon_cart<-coupon_cart[2,2]
+number_coupon_product<-coupon_product[2,2]
+
+
+
+
+pages <-c("checkout page","cart page","product page")
+number_of_affile <- c(number_coupon_check_out,number_coupon_cart,number_coupon_product)
+daa<-data.frame(pages,number_of_affile)
+
+```
+
+```{r}
+ggplot(daa,aes(x=pages,y =number_of_affile))+geom_bar(bin = 50,width = 0.2,fill="steelblue",col="black",stat="identity")+labs(title = "The  ")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))
+```
+
+```{r}
+gg<-ggplot(daa,aes(x=pages,y =number_of_affile)) +
+  geom_segment( aes(x=pages, xend=pages, y=0, yend=number_of_affile)) +
+  geom_point( size=5, color="steelblue", fill=alpha("steelblue", 0.3), alpha=0.7, shape=21, stroke=2)+theme(panel.background = element_rect(fill = ' white'))+geom_text(aes(label=number_of_affile), vjust=-1.5, color="black", size=3.4)+labs(x ="Type of pages",y = "Number of affiliates" , fill = NULL, title = "The Total Number of affiliates ran on particular page ")+ylim(0,4000)+ theme(plot.title = element_text(hjust = 0.5))
+ggsave("affiliate_number.jpg",plot=gg,unit="in",width=7,height = 7,dpi=300)
+gg
+```
+
+
+```{r}
+v<-ggplot(data_users_viewed,aes(x=products_viewed))+geom_bar(fill="steelblue", na.rm = TRUE)+labs(title = "Total number of producted pages viewed by the customers.")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black"))+annotate("text", x=0, y= 227209, label=" 227209")+xlim(-1,30)
+ggsave("nnnnnnn.jpg",plot=v,unit="in",width=7,height = 7,dpi=300)
+v
+```
+
+```{r}
+# Transform a litte bit the dataset to make dots
+don = data_users_viewed %>% 
+  arrange(products_viewed) %>% # sort using the numeric variable that interest you
+  mutate(var_rounded = (products_viewed+1) - ( (products_viewed+1) %% 0.2 ) ) %>% # This attributes a bin to each observation. Here 0.2 is the size of the bin.
+  mutate(y=ave(var_rounded, var_rounded, FUN=seq_along)) # This calculates the position on the Y axis: 1, 2, 3, 4...
+ 
+# Make the plot (middle)
+gg<-ggplot(don, aes(x=var_rounded, y=y) ) +
+  geom_point( size=6, color="steelblue" )+xlim(0,30)+ ylab('# of individual') +
+  theme_classic() +
+  theme(
+    legend.position="none",
+    axis.line.y = element_blank(),
+    axis.text=element_text(size=15)
+  )+annotate("text", x=3, y= 227400, label=" 227209")+ylim(0,227600)+labs(x ="Number of product pages Viewed in current session",y = "Number of users" , fill = NULL, title = "The  Number of product pages viewed by the users. ")+theme(plot.title = element_text(hjust = 0.5))
+ggsave("product_page.jpg",plot=gg,unit="in",width=7,height = 7,dpi=300)
+gg
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+now plotting the graph for the users who did not do previous sessions
+```{r}
+
+coupon_check_out<-as.data.frame(table(important_user_not_viewed$coupon_run_on_checkout))
+coupon_cart<-as.data.frame(table(important_user_not_viewed$coupon_run_on_cart))
+coupon_product<-as.data.frame(table(important_user_not_viewed$coupon_run_on_product))
+number_coupon_check_out<-coupon_check_out[2,2]
+number_coupon_cart<-coupon_cart[2,2]
+number_coupon_product<-coupon_product[2,2]
+
+
+
+
+pages <-c("checkout page","cart page","product page")
+number_of_affile <- c(number_coupon_check_out,number_coupon_cart,number_coupon_product)
+daa<-data.frame(pages,number_of_affile)
+```
+
+
+
+
+
+
+```{r}
+ggplot(daa,aes(x=pages,y =number_of_affile))+geom_bar(bin = 50,width = 0.2,fill="steelblue",col="black",stat="identity")+labs(title = "The max of Total number of affiliate run on the pages ")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+theme(panel.background = element_rect(fill = 'gray'))+  geom_text(aes(label=number_of_affile), vjust=-0.3, color="black", size=3.5)
+ggsave("maxtotalaffiliate.png")
+```
+the number of producted pages viewed by the customers
+```{r}
+q<-ggplot(important_user_not_viewed,aes(x=products_viewed))+geom_bar(bin=50,fill="steelblue")+labs(title = "Total Number of producted pages viewed by the customers.")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+xlim(-1,30)+annotate("text", x=0, y=64029 , label="64029")+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black"))
+ggsave("zzzzzzz.jpg",plot=q,unit="in",width=7,height = 4,dpi=300)
+q
+```
+
+
+
+```{r}
+don = important_user_not_viewed %>% 
+  arrange(products_viewed) %>% # sort using the numeric variable that interest you
+  mutate(var_rounded = (products_viewed+1) - ( (products_viewed+1) %% 0.2 ) ) %>% # This attributes a bin to each observation. Here 0.2 is the size of the bin.
+  mutate(y=ave(var_rounded, var_rounded, FUN=seq_along)) # This calculates the position on the Y axis: 1, 2, 3, 4...
+ 
+# Make the plot (middle)
+gg<-ggplot(don, aes(x=var_rounded, y=y) ) +
+  geom_point( size=6, color="steelblue" )+xlim(0,30)+ ylab('# of individual') +
+  theme_classic() +
+  theme(
+    legend.position="none",
+    axis.line.y = element_blank(),
+    axis.text=element_text(size=15)
+  )+ylim(0,70000)+annotate("text", x=1, y= 70000, label=" 64029")+labs(x ="Number of product pages Viewed in current session",y = "Number of users" , fill = NULL, title = "The  Number of product pages viewed by the users. ")+theme(plot.title = element_text(hjust = 0.5))
+ggsave("bub1.jpg",plot=gg,unit="in",width=7,height = 7,dpi=300)
+gg
+```
+
+The data before smote
+```{r}
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+z<-ggplot(daa,aes(x=names,y = max_total_number_sessions ))+geom_bar(bin = 50,width = 0.2,fill="black",col="black",stat="identity")+labs(title = "The max of total number of sessions affiliate run on particular page ")+theme(plot.title = element_text(hjust = 0.5,face = "bold",color = "blue"))+theme(panel.background = element_rect(fill = 'gray'))
+z
+```
+
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+class(iris)
+iris<-data.table()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+now reducing the dimensions of the data set by LDA
+LDA :- linear discriminant analysis
+
+```{r}
+predictors<-data.set.analyse[,-c(32)]
+x<-cv.nfeaturesLDA(data = predictors,cl = data.set.analyse$target)
+summary(x)
+```
+
+```{r}
+set.seed(1)
+sample = sample.split(data.set.analyse$target, SplitRatio = .70)
+train = subset(data.set.analyse, sample == TRUE)
+test  = subset(data.set.analyse, sample == FALSE)
+View(train)
+View(test)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+now doing the outlier check 
+column names :- sessions_before
+
+The output of the code belowe
+
+LINE no :- 
+The quantile ranges values :
+76% 80% 85% 90% 95% 96% 97% 98% 99% 
+  4   4   5   7  12  13  16  21  32
+  
+LINE no :-   
+In the Viewing the row of the outlier we found that total count of previous sessions having affiliate is 1 but total number of affiliates found after page 1 till previous session is 3 which is logically impossiable,so we are going to remove this row
+```{r}
+quantile(data.set.analyse$sessions_before,probs = c(0.76,0.80,0.85,0.90,0.95,0.96,0.97,0.98,0.99))
+#found in quantile range that 99% of the data is less than 32 so now are going to see the row which is the max value.
+
+#removing the row.
+data.set.analyse1<-data.set.analyse[-c(which(data.set.analyse$sessions_before >= 292))]
+#checking the rows greater than 32 in column sessions_before.
+View(data.set.analyse1[data.set.analyse1$sessions_before >= 32])
+```
+
+column name :- sessions_with_affil_before
+the max value is 65 where up to third quantile is zero.
+
+The output of the code belowe
+
+LINE no :- 86
+The quantile ranges values :
+76% 80% 85% 90% 95% 96% 97% 98% 99% 
+  0   0   0   0  1  1     1  2  3
+  
+The 
+  
+LINE no :-   87
+In the Viewing the row of the outlier we found that total count of previous sessions having affiliate is 1 but total number of affiliates found after page 1 till previous session is 3 which is logically impossiable,so we are going to remove this row
+
+we have outliers in the column sessions_with_affil_before the value is 65 and 65 for both rows but the information is justifing all other columns in that particular row,so to have varity in our training we have left the outlier.
+```{r}
+quantile(data.set.analyse1$sessions_with_affil_before,probs = c(0.76,0.80,0.85,0.90,0.95,0.96,0.97,0.98,0.99))
+View(data.set.analyse1[data.set.analyse1$sessions_with_affil_before >= 65])
+```
+
+column name :- affil_after_p1_prev_session
+the max value is 117, where up to third quantile is 0 
+
+The output of the code belowe
+
+LINE no :- 86
+The quantile ranges values :
+76% 80% 85% 90% 95% 96% 97% 98% 99% 
+  0   0   0   0   1   1   2   2   4 
+  
+The 
+  
+LINE no :-   87
+In the Viewing the row of the outlier we found that total count of previous sessions having affiliate is 1 but total number of affiliates found after page 1 till previous session is 3 which is logically impossiable,so we are going to remove this row
+
+we have outliers in the column sessions_with_affil_before the value is 65 and 65 for both rows but the information is justifing all other columns in that particular row,so to have varity in our training we have left the outlier.
+```{r}
+quantile(data.set.analyse1$affil_after_p1_prev_session,probs = c(0.76,0.80,0.85,0.90,0.95,0.96,0.97,0.98,0.99))
+#View(data.set.analyse1[data.set.analyse1$affil_after_p1_prev_session >= 4])
+head(data.set.analyse1)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+checking and removing the outliers.
+column name :- sessions_before
+```{r}
+out.range<-boxplot.stats(data.set.analyse$sessions_before)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$sessions_before)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$sessions_before)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+A we see that there are many outliers in the above column.so now i am handling the outlier by back capping the values to the upper bound of the boxplot.
+```{r}
+#now i am capping in the value to 7 for this feature
+data.set.analyse$sessions_before[data.set.analyse$sessions_before > 7]<-7
+```
+Now checking outliers for other features.
+column name :- sessions_with_affil_before
+```{r}
+out.range<-boxplot.stats(data.set.analyse$sessions_with_affil_before)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$sessions_with_affil_before)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$sessions_with_affil_before)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+checking the outliers
+column name :- affil_after_p1_prev_session
+```{r}
+out.range<-boxplot.stats(data.set.analyse$affil_after_p1_prev_session)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$affil_after_p1_prev_session)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$affil_after_p1_prev_session)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+The outlier check for
+column name :-  sessions_before_with_checkout
+```{r}
+out.range<-boxplot.stats(data.set.analyse$sessions_before_with_checkout)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$sessions_before_with_checkout)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$sessions_before_with_checkout)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+The outlier check
+column name :- sessions_before_with_cart
+```{r}
+out.range<-boxplot.stats(data.set.analyse$sessions_before_with_cart)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$sessions_before_with_cart)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$sessions_before_with_cart)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+The outlier check
+column name :- sessions_before_with_product
+```{r}
+out.range<-boxplot.stats(data.set.analyse$sessions_before_with_product)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$sessions_before_with_product)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$sessions_before_with_product)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+AS the above result show 's that lower bound is 0 and upper bound is 5 so now i am capping all the value greater than zero to 5
+```{r}
+data.set.analyse$sessions_before_with_product[data.set.analyse$sessions_before_with_product > 5]<-5
+
+```
+outlier check
+column name :- daily_sessions
+```{r}
+out.range<-boxplot.stats(data.set.analyse$daily_sessions)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$daily_sessions)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$daily_sessions)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+AS we see above that lower bound is 0 and upper bound is 2 so i am capping all the values greater than 2 to 2
+```{r}
+data.set.analyse$daily_sessions[data.set.analyse$daily_sessions > 2]<-2
+```
+The outlier check :
+column names : trialy_sessions
+```{r}
+out.range<-boxplot.stats(data.set.analyse$trialy_sessions)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$trialy_sessions)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$trialy_sessions)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+AS we see above that lower bound is 0 and upper bound is 2 so i am capping all the values greater than 2 to 2
+```{r}
+data.set.analyse$trialy_sessions[data.set.analyse$trialy_sessions > 2]<-2
+```
+outlier check
+column name :- quintally_sessions
+```{r}
+out.range<-boxplot.stats(data.set.analyse$quintally_sessions)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$quintally_sessions)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$quintally_sessions)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+outlier check
+column name :- tenally_sessions
+```{r}
+out.range<-boxplot.stats(data.set.analyse$tenally_sessions)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$tenally_sessions)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$tenally_sessions)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+AS we see above that lower bound is 0 and upper bound is 2 so i am capping all the values greater than 2 to 2
+```{r}
+data.set.analyse$tenally_sessions[data.set.analyse$tenally_sessions > 2]<-2
+```
+outlier check
+column name :- coupon_run_prev_ses_checkout_session
+```{r}
+out.range<-boxplot.stats(data.set.analyse$coupon_run_prev_ses_checkout_session)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$coupon_run_prev_ses_checkout_session)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$coupon_run_prev_ses_checkout_session)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+outlier check
+column name :- coupon_run_prev_ses_cart_session
+```{r}
+out.range<-boxplot.stats(data.set.analyse$coupon_run_prev_ses_cart_session)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$coupon_run_prev_ses_cart_session)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$coupon_run_prev_ses_cart_session)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+
+```
+finding outlier
+column_name :- coupon_run_prev_ses_product_session
+```{r}
+out.range<-boxplot.stats(data.set.analyse$coupon_run_prev_ses_product_session)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$coupon_run_prev_ses_product_session)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$coupon_run_prev_ses_product_session)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+finding the outlier
+column_name :- day_between_previous_session
+```{r}
+out.range<-boxplot.stats(data.set.analyse$day_between_previous_session)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$day_between_previous_session)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$day_between_previous_session)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+as we saw above that 0 is the lower bound and 5 is the upper bound,so now i am caping which are greater than 5 to 5.
+```{r}
+data.set.analyse$day_between_previous_session[data.set.analyse$day_between_previous_session > 5]<-5
+```
+
+
+
+
+```{r}
+set.seed(1)
+sample = sample.split(data.set.analyse, SplitRatio = .70)
+train = subset(data.set.analyse, sample == TRUE)
+test  = subset(data.set.analyse, sample == FALSE)
+View(train)
+View(test)
+```
+
+before smote
+
+```{r}
+
+```
+
+

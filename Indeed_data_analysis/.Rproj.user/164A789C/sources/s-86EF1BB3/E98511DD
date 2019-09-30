@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1559627430941.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "185956779",
+    "id" : "E98511DD",
+    "lastKnownWriteTime" : 1558011164,
+    "last_content_update" : 1559627456336,
+    "path" : "E:/rohan_office_new/rohan/daily_task/Indeed_data_analysis/Indeed.Rmd",
+    "project_path" : "Indeed.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

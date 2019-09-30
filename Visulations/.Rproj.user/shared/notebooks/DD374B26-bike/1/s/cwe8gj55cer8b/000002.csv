@@ -1,0 +1,18 @@
+"0","```r
+age_user_type_graph<-function(age_range){
+  if(age_range==\"A\"){
+    str=\"40 and above\"
+  }else if(age_range==\"B\"){
+    str=\"30 to 40\"
+  }else if(age_range==\"C\"){
+    str=\"19 to 30\"
+  }else{
+    str=\"19 below\"
+  }
+  ggplot(data=bikes[age_group ==age_range,.N,by=list(Gender,`User Type`)],aes(x=as.factor(Gender),y=N,fill=`User Type`))+geom_bar(position = 'dodge',stat = \"identity\",width = 0.2,col=\"black\")+
+   geom_text(aes(label=N), position=position_dodge(width=0.9), vjust=-0.5)+
+  labs(x = \"The Gender\")+
+  labs(y = \"count\")+labs(title = paste(\"The count of gender in age group \",str,\" and the type of users.\", sep=\" \"))
+}
+
+```"

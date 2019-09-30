@@ -1,0 +1,1 @@
+"0","ggplot(hr,aes(x=Attrition,fill=Attrition))+geom_bar(width = 0.2)+geom_text(stat=""count"", aes(label=..count..), vjust=-0.3)+labs(title = ""The class imbalance check on complete data set"",x =""classes"", y = ""Their frequency"")"

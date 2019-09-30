@@ -1,0 +1,7 @@
+"0","```r
+```r
+quantile(data.set.analyse1$affil_after_p1_prev_session,probs = c(0.76,0.80,0.85,0.90,0.95,0.96,0.97,0.98,0.99))
+#View(data.set.analyse1[data.set.analyse1$affil_after_p1_prev_session >= 4])
+head(data.set.analyse1)
+```
+```"

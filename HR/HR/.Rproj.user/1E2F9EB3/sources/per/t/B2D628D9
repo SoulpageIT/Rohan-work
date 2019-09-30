@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1554108759307.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "166568493",
+    "id" : "B2D628D9",
+    "lastKnownWriteTime" : 1556879427,
+    "last_content_update" : 1556879427703,
+    "path" : "C:/Users/Admin/Desktop/rohan/daily_task/HR/HR/hr.Rmd",
+    "project_path" : "hr.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "408,64",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

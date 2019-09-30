@@ -1,0 +1,5 @@
+"0","leaflet(quakes) %>% addTiles() %>% addMarkers("
+"0","  clusterOptions = markerClusterOptions()"
+"0",")"
+"2","Assuming ""long"" and ""lat"" are longitude and latitude, respectively
+"

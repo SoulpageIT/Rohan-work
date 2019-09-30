@@ -1,0 +1,4 @@
+"0","ggplotly(ggplot(d[1:10,],aes(x=reorder(word,freq),y=freq,fill=as.factor(word)))+geom_bar(stat = ""identity"")+ geom_text(aes(label=freq), vjust=10)+labs(title = ""The Top 10 frequently used words"",x=""Words"", y = ""Frequency of Words"",fill=""Words"")+theme(plot.title = element_text(hjust = -10,face = ""bold"",color = ""black""))+coord_flip())"
+"2","Error in ggplotly(ggplot(d[1:10, ], aes(x = reorder(word, freq), y = freq,  : 
+  could not find function ""ggplotly""
+"

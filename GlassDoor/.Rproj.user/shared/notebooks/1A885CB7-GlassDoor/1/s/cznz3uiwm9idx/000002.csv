@@ -1,0 +1,15 @@
+"0","```r
+FCA_sentiment <- tidy_FCA %>%
+    inner_join(get_sentiments(\"bing\"))
+FCA_sentiment %>%
+    count(date, date_total, sentiment)%>%
+    mutate(sentiment = as.factor(sentiment))%>%
+    ggplot(aes(date, n / date_total, fill = sentiment)) +
+    geom_area(position = \"identity\", alpha = 0.5) +
+    labs(y = \"Relative frequency\", x = \"Page\",
+         title = \"Sentiment analysis NMFinancial  Employee Glassdoor Reviews\",
+         subtitle = \"Using the nrc\")+theme_bw()+
+# scale_fill_manual(values=viridis_pal(option = \"plasma\")(2))+
+   scale_y_continuous(labels = scales::percent)
+
+```"

@@ -1,0 +1,4 @@
+"0","```r
+plot(data$Income,data$PropertyValue, main=\"Scatter plot Income  VS Property Value\", 
+   xlab=\"Income\", ylab=\"Property value\", pch=19,col=factor(data$No_kids))
+```"

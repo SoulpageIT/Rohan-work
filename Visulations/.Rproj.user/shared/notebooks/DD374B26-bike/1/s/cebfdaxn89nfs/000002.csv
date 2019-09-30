@@ -1,0 +1,11 @@
+"0","```r
+bikes[,age_group :=as.factor( ifelse(
+  `Birth Year` >= 1960 &  `Birth Year`<= 1975, 'A',
+    ifelse(`Birth Year` > 1975 & `Birth Year`<= 1986,'B' ,
+      ifelse(`Birth Year` > 1986 & `Birth Year`<=1997, 'C', 'D')
+    )
+  )
+)
+]
+colnames(bikes)
+```"

@@ -1,0 +1,15 @@
+"0","```r
+date_dtm<-GlassdoorPages %>%
+mutate(year=year(date))%>%  
+unnest_tokens(word, text) %>%
+anti_join(stop_words)%>%
+anti_join(stop_user2)  %>%
+filter(!word %in% stop_user2) %>%
+mutate(word=removeNumbers(word))%>% 
+mutate(word = wordStem(word))%>%
+filter(word != \"\") %>%
+count(year, word, sort = TRUE) %>%
+ungroup()%>%
+cast_dtm(year, word, n)
+ 
+```"

@@ -1,0 +1,5 @@
+"0","#data=as.data.frame.table(data)"
+"0","df1 = melt(data.frame(A=data$`Peak_Demand(MW)`, B=data$`Peak_Met(MW)`,experiment=data$Year),variable_name=""metric"")"
+"2","Using A, B, experiment as id variables
+"
+"0","#ggplot(df, aes(experiment, value, fill=metric)) + geom_bar(position=""dodge"")"

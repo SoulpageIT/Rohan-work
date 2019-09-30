@@ -1,0 +1,23 @@
+"0","```r
+Decoding<-function(x){
+  if(x==0){
+    return(\"carpet\")
+  }else if(x==1){
+    return(\"concrete\")
+  }else if(x==2){
+    return(\"fine_concrete\")
+  }else if(x==3){
+    return(\"hard_tiles\")
+  }else if(x==4){
+    return(\"hard_tiles_large_space \")
+  }else if(x==5){
+    return(\"soft_pvc\")
+  }else if(x==6){
+    return(\"soft_tiles\")
+  }else if(x==7){
+    return(\"tiled\")
+  }else{
+    return(\"wood\")
+  }
+}
+```"

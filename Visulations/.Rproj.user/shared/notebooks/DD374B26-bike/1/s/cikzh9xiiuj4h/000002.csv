@@ -1,0 +1,8 @@
+"0","```r
+person1 <- c(\"underwear\", \"socks\", \"pants\", \"shirt\", \"tie\", \"shoes\", \"jacket\")
+person2 <- c(\"underwear\", \"pants\",  \"socks\", \"shirt\", \"tie\", \"jacket\", \"shoes\")
+person3 <- c(\"socks\", \"underwear\",  \"pants\", \"shirt\", \"tie\", \"shoes\", \"jacket\")
+person4 <- c(\"underwear\", \"socks\", \"shirt\", \"pants\", \"tie\", \"shoes\", \"jacket\")
+person5 <- c(\"underwear\", \"socks\", \"shirt\", \"tie\", \"pants\", \"jacket\", \"shoes\")
+person6 <- c(\"underwear\", \"socks\", \"pants\", \"shirt\") 
+```"

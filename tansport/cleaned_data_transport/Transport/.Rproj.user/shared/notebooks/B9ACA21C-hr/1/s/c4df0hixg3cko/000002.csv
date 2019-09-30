@@ -1,0 +1,1 @@
+"0","ggplot(hr[,.N,by=list(Age,BusinessTravel,Gender)],aes(x=Age,y=N,fill=Gender))+geom_bar(stat = ""identity"",width = 0.6,position = ""dodge"")+facet_grid(~BusinessTravel)+geom_text(aes(label=N), vjust=-0.3)+labs(x =""The Age Groups"", y = ""Number of Employee"")"

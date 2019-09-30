@@ -1,0 +1,4 @@
+"0","```r
+setkey(train,`Tail Number`)
+train<-train[!\"\"]
+```"

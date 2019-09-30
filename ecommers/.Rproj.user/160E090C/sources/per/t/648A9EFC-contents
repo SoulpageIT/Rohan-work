@@ -1,0 +1,98 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+libraries
+```{r}
+library(data.table)
+library(corrplot)
+```
+reading the table
+```{r}
+data.set<-fread("kirklandsdata.csv",na.strings = c('?','-','*','$','^','NA'))
+```
+Viewing the data 
+```{r}
+str(data.set)
+```
+summary of the data set
+```{r}
+summary(data.set)
+```
+filtering out the unwanted features.
+```{r}
+data.set.analyse<-data.set[,c(-1,-2,-3)]
+View(data.set.analyse)
+```
+
+```{r}
+str(data.set.analyse)
+#View(data.set.analyse)
+str(data.set.analyse)
+summary(data.set.analyse)
+```
+showing the names of the feature.
+```{r}
+colnames(data.set.analyse)
+```
+now converting some feature values into factors.
+```{r}
+data.set.analyse[,c("daily_visitor","trialy_visitor","quintally_visitor","tenally_visitor", "previous_session_cart", "previous_session_checkout" ,"previous_session_product","entry_product","first_page_affil" , "coupon_run_on_checkout", "coupon_run_on_cart" ,"coupon_run_on_product" ,"mal_cb")] <- lapply(data.set.analyse[,c("daily_visitor","trialy_visitor","quintally_visitor","tenally_visitor", "previous_session_cart", "previous_session_checkout" ,"previous_session_product","entry_product","first_page_affil" , "coupon_run_on_checkout", "coupon_run_on_cart" ,"coupon_run_on_product" ,"mal_cb")], as.factor)
+```
+
+```{r}
+str(data.set.analyse)
+```
+```{r}
+table(data.set.analyse$coupon_run_on_checkout)
+```
+checking and removing the outliers.
+```{r}
+out.range<-boxplot.stats(data.set.analyse$sessions_before)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$sessions_before)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$sessions_before)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+A we see that there are many outliers in the above column.so now i am handling the outlier by back capping the values to the upper bound of the boxplot.
+```{r}
+#now i am capping in the value to 7 for this feature
+data.set.analyse$sessions_before[data.set.analyse$sessions_before > 7]<-7
+```
+Now checking outliers for other features.
+
+```{r}
+out.range<-boxplot.stats(data.set.analyse$sessions_with_affil_before)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$sessions_with_affil_before)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$sessions_with_affil_before)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+
+```{r}
+out.range<-boxplot.stats(data.set.analyse$affil_after_p1_prev_session)$out #this function show 's the outlier values
+out.range_value<-boxplot.stats(data.set.analyse$affil_after_p1_prev_session)$stats  #this function show 's the value 's of upper bound and lower bound
+cat("The Values of outliers :- ",out.range,"\n")
+boxplot(data.set.analyse$affil_after_p1_prev_session)
+mtext(paste("outlier :- ",paste(out.range,collapse = ",")),cex=0.7)#this function pasting the value of the outlier
+cat("The upper lower and in between bound values :- ",out.range_value,"\n")
+```
+
+
+```{r}
+set.seed(1)
+sample = sample.split(data.set.analyse, SplitRatio = .70)
+train = subset(data.set.analyse, sample == TRUE)
+test  = subset(data.set.analyse, sample == FALSE)
+View(train)
+View(test)
+```
+
+
+```{r}
+
+```
+
+

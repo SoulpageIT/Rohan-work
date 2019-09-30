@@ -1,0 +1,4 @@
+"0","```r
+bikes$dist<-(bikes$dist/1000)
+sta=\"5 Corners Library\"
+```"

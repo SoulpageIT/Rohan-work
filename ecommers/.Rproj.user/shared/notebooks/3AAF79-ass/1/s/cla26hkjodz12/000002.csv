@@ -1,0 +1,7 @@
+"0","ass.data$Age<-as.numeric(ass.data$Age)"
+"0","#ommiting the null values from the non_ numeric columns. "
+"0","ass.data<-ass.data[na.omit(is.numeric(ass.data[,names(ass.data)])==FALSE)]"
+"0","#replacing null values from the average value of the column as null value present in only numeric col"
+"0","ass.data$Age[is.na(ass.data$Age)]<-mean(ass.data$Age,na.rm = TRUE)"
+"0","ass.data$timesupper[is.na(ass.data$timesupper)]<-mean(ass.data$timesupper,na.rm = TRUE)"
+"0","#"

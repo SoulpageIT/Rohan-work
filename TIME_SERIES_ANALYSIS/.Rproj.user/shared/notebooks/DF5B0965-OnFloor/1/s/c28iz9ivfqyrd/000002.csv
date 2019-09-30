@@ -1,0 +1,6 @@
+"0","```r
+predicted_value<-predict (xgb1,dtestfinal)
+class(predicted_value)
+```"
+"1","[1] \"numeric\"
+"

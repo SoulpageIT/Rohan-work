@@ -1,0 +1,6 @@
+"0","p<-GlassdoorPages %>%"
+"0","    unnest_tokens(word, text)%>%"
+"0","  inner_join(get_sentiments(""nrc"")) %>%"
+"0","  count(word, sentiment, sort = TRUE)"
+"2","Joining, by = ""word""
+"

@@ -1,0 +1,4 @@
+"0","#clean up by removing stop words"
+"0","corpus<-Corpus(VectorSource(df_lower))"
+"0","corpus <- tm_map(corpus, function(x)removeWords(x,stopwords()))"
+"2","transformation drops documents"

@@ -1,0 +1,12 @@
+"0","```r
+ggplot(data, aes(x =as.factor(drst) , y = spd, fill = as.factor(drst))) +
+  geom_bar(stat = \"identity\", color = \"white\") +
+  coord_polar(theta = \"y\", start = 0)+
+  geom_text(aes(y = lab.ypos, label = spd), color = \"white\")+
+  scale_fill_manual(values = mycols) +
+  theme_void()+
+  xlim(0.5, 2.5)+facet_grid()
+```"
+"1","Error in data.frame(PANEL = panel, ROW = rows, COL = cols, base, check.names = FALSE,  : 
+  arguments imply differing number of rows: 0, 1
+"
